@@ -1,0 +1,18 @@
+開發使用的 python 版本
+3.4.4
+
+使用 pip 安裝的第三方庫
+pip install Django==1.9.6
+
+資料庫版本
+MySQL 5.6.28.0
+
+GitHub
+https://github.com/muchu1983/findfine
+
+專案管理
+trello
+
+共同開發工程師
+mark (muchu1983@gmail.com)
+josh (shiueih@gmail.com)
