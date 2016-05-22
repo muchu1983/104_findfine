@@ -2,7 +2,7 @@
 3.4.4
 
 使用 pip 安裝的第三方庫
-pip install Django==1.9.6
+pip install "Django<1.9"
 
 資料庫版本
 MySQL 5.6.28.0
