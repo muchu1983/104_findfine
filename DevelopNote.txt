@@ -16,3 +16,7 @@ trello
 共同開發工程師
 mark (muchu1983@gmail.com)
 josh (shiueih@gmail.com)
+
+Django 架構
+startproject findfine
+startapp account
