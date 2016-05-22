@@ -79,8 +79,8 @@ DATABASES = {
     'default': {
         'ENGINE': 'mysql.connector.django',
         'NAME': 'findfine',
-        'USER': 'muchu',
-        'PASSWORD': 'bee520BEE520',
+        'USER': 'findfine_db_root',
+        'PASSWORD': 'asdfASDF1234',
         'HOST': '127.0.0.1',
         'PORT': '3306',
         'OPTIONS': {
