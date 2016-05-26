@@ -32,3 +32,4 @@ findfine_web_root/asdfASDF1234
 
 參考 template
 http://www.tourradar.com/
+http://www.comparealltravel.com/
