@@ -26,6 +26,7 @@ josh (shiueih@gmail.com)
 Django 架構
 startproject findfine
 startapp account
+startapp trip
 
 Django 後台 root 帳號/密碼 (透過 manage.py syncdb 設定)
 findfine_web_root/asdfASDF1234

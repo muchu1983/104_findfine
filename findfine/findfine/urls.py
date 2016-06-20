@@ -15,9 +15,11 @@ Including another URLconf
 """
 from django.conf.urls import url
 from django.contrib import admin
-from account.views import showIndexPage
+from account import views as account_views
+from trip import views as trip_views
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
-    url(r'^index.html$', showIndexPage)
-]
+    url(r'^account/index.html$', account_views.showIndexPage),
+    url(r'^trip/filter$', trip_views.filter),
+    ]
