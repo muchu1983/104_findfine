@@ -122,6 +122,14 @@ def filter(request):
             dicTripData = {}
             convertTripDataToJsonDic(matchedTrip=matchedTrip, dicTripData=dicTripData)
             lstDicTripData.append(dicTripData)
+    if strDateFrom and strDateTo:
+        dtDateFrom = datetime.datetime.strptime(strDateFrom, "%Y-%m-%d")
+        dtDateTo = datetime.datetime.strptime(strDateTo, "%Y-%m-%d")
+        lstMatchedTrip = Trip.objects.filter(dtDatetimeFrom__gte=dtDateFrom, dtDatetimeTo__lte=dtDateTo)
+        for matchedTrip in lstMatchedTrip:
+            dicTripData = {}
+            convertTripDataToJsonDic(matchedTrip=matchedTrip, dicTripData=dicTripData)
+            lstDicTripData.append(dicTripData)
     if strMinDurationHour and strMaxDurationHour:
         intMinDurationHour = int(strMinDurationHour)
         intMaxDurationHour = int(strMaxDurationHour)
