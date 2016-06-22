@@ -2,6 +2,7 @@ import datetime
 from django.shortcuts import render
 from django.http import JsonResponse
 from trip.models import Trip
+from itertools import chain
 
 # Create your views here.
 def filter(request):
@@ -94,6 +95,7 @@ def filter(request):
     strStyle = request.GET.get("style", None)
     strGuideLanguage = request.GET.get("guide_language", None)
     strOption = request.GET.get("option", None)
+    strOrderBy = request.GET.get("order_by", None)
     # filter 
     lstDicTripData = []
     if strKeyword:
@@ -152,3 +154,6 @@ def convertTripDataToJsonDic(matchedTrip=None, dicTripData=None):
     dicTripData["strStyle"] = matchedTrip.strStyle
     dicTripData["strGuideLanguage"] = matchedTrip.strGuideLanguage
     dicTripData["intOption"] = matchedTrip.intOption
+    
+def orderByField(strOrderBy=None, querySet=None):
+    pass
