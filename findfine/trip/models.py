@@ -5,6 +5,7 @@ class Trip(models.Model):
     strTitle = models.CharField(max_length=30)
     strLocation = models.TextField()
     intUsdCost = models.IntegerField()
+    strOriginUrl = models.TextField()
     strIntroduction = models.TextField()
     dtDatetimeFrom = models.DateTimeField()
     dtDatetimeTo = models.DateTimeField()
