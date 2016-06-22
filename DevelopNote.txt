@@ -46,4 +46,5 @@ mockup 工具
 https://app.moqups.com
 
 需要使用爬蟲的資料來源
-https://www.klook.com/zh-TW/
+https://www.kkday.com/zh-tw/home/index2
+http://www.visitacity.com/
