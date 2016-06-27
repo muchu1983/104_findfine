@@ -1,1 +1,0 @@
-$(document).ready(function() {$('.slideshowDiv').cycle({fx: 'fade',speed:4000,delay: -5000});});
