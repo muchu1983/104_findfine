@@ -138,5 +138,3 @@ def convertTripDataToJsonDic(matchedTrip=None, dicTripData=None):
     dicTripData["strGuideLanguage"] = matchedTrip.strGuideLanguage
     dicTripData["intOption"] = matchedTrip.intOption
     
-def orderByField(strOrderBy=None, querySet=None):
-    pass

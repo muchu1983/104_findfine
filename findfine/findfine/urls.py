@@ -17,9 +17,12 @@ from django.conf.urls import url
 from django.contrib import admin
 from account import views as account_views
 from trip import views as trip_views
+from page import views as page_views
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^account/index.html$', account_views.showIndexPage),
     url(r'^trip/filter$', trip_views.filter),
+    url(r'^page/home$', page_views.showHomePage),
+    url(r'^page/find$', page_views.showFindPage),
     ]
