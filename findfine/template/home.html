@@ -3,7 +3,7 @@
      <title>home</title>
 	 <link rel="stylesheet" type="text/css" href="/static/css/home.css">
      <script type="text/javascript" src="/static/js/jquery.min.js"></script>
-	 <script type="text/javascript" src="/static/js/index.js"></script>	  
+	 <script type="text/javascript" src="/static/js/home.js"></script>	  
   </head>
   <body>
   <!-- 語言 幣別 登入 -->
@@ -39,10 +39,14 @@
   <!-- 搜尋 -->  
   <div class="findDiv">
       <span>Where r u want to go ? </span>
-      <input type="text" name="" placeholder="Enter Something"/>
-      <button type="button">Find</button>
+      <input id="strFilterText" type="text" name="" placeholder="Enter Something"/>
+      <button id="btnFindTrip" type="button">Find</button>
   </div>
-  
+  <!-- 搜尋結果 -->
+  <div class="findResultDiv" style="display: none;">
+    <ul class="lstTripData">
+    </ul>
+  </div>
   <!-- 城市推薦 -->
   <div class="cityDiv">
      <p>POP City</p>
