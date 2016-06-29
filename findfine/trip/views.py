@@ -98,48 +98,31 @@ def filter(request):
     strOrderBy = request.GET.get("order_by", None)
     # filter 
     lstDicTripData = []
+    qsetMatchedTrip = Trip.objects.all().filter()
     if strKeyword:
-        lstMatchedTrip = Trip.objects.filter(strTitle__iregex="^.*%s.*$"%strKeyword)
-        for matchedTrip in lstMatchedTrip:
-            dicTripData = {}
-            convertTripDataToJsonDic(matchedTrip=matchedTrip, dicTripData=dicTripData)
-            lstDicTripData.append(dicTripData)
+        qsetMatchedTrip = qsetMatchedTrip.filter(strTitle__iregex="^.*%s.*$"%strKeyword)
     if strStyle:
-        lstMatchedTrip = Trip.objects.filter(strStyle__iregex="^.*%s.*$"%strStyle)
-        for matchedTrip in lstMatchedTrip:
-            dicTripData = {}
-            convertTripDataToJsonDic(matchedTrip=matchedTrip, dicTripData=dicTripData)
-            lstDicTripData.append(dicTripData)
+        qsetMatchedTrip = qsetMatchedTrip.filter(strStyle__iregex="^.*%s.*$"%strStyle)
     if strGuideLanguage:
-        lstMatchedTrip = Trip.objects.filter(strGuideLanguage__iregex="^.*%s.*$"%strGuideLanguage)
-        for matchedTrip in lstMatchedTrip:
-            dicTripData = {}
-            convertTripDataToJsonDic(matchedTrip=matchedTrip, dicTripData=dicTripData)
-            lstDicTripData.append(dicTripData)
+        qsetMatchedTrip = qsetMatchedTrip.filter(strGuideLanguage__iregex="^.*%s.*$"%strGuideLanguage)
     if strMinBudget and strMaxBudget:
         intMinBudget = int(strMinBudget)
         intMaxBudget = int(strMaxBudget)
-        lstMatchedTrip = Trip.objects.filter(intUsdCost__lte=intMaxBudget, intUsdCost__gte=intMinBudget)
-        for matchedTrip in lstMatchedTrip:
-            dicTripData = {}
-            convertTripDataToJsonDic(matchedTrip=matchedTrip, dicTripData=dicTripData)
-            lstDicTripData.append(dicTripData)
+        qsetMatchedTrip = qsetMatchedTrip.filter(intUsdCost__lte=intMaxBudget, intUsdCost__gte=intMinBudget)
     if strDateFrom and strDateTo:
         dtDateFrom = datetime.datetime.strptime(strDateFrom, "%Y-%m-%d")
         dtDateTo = datetime.datetime.strptime(strDateTo, "%Y-%m-%d")
-        lstMatchedTrip = Trip.objects.filter(dtDatetimeFrom__gte=dtDateFrom, dtDatetimeTo__lte=dtDateTo)
-        for matchedTrip in lstMatchedTrip:
-            dicTripData = {}
-            convertTripDataToJsonDic(matchedTrip=matchedTrip, dicTripData=dicTripData)
-            lstDicTripData.append(dicTripData)
+        qsetMatchedTrip = qsetMatchedTrip.filter(dtDatetimeFrom__gte=dtDateFrom, dtDatetimeTo__lte=dtDateTo)
     if strMinDurationHour and strMaxDurationHour:
         intMinDurationHour = int(strMinDurationHour)
         intMaxDurationHour = int(strMaxDurationHour)
-        lstMatchedTrip = Trip.objects.filter(intDurationHour__lte=intMaxDurationHour, intDurationHour__gte=intMinDurationHour)
-        for matchedTrip in lstMatchedTrip:
-            dicTripData = {}
-            convertTripDataToJsonDic(matchedTrip=matchedTrip, dicTripData=dicTripData)
-            lstDicTripData.append(dicTripData)
+        qsetMatchedTrip = qsetMatchedTrip.filter(intDurationHour__lte=intMaxDurationHour, intDurationHour__gte=intMinDurationHour)
+    if strOrderBy:
+        qsetMatchedTrip = qsetMatchedTrip.order_by(strOrderBy)
+    for matchedTrip in qsetMatchedTrip:
+        dicTripData = {}
+        convertTripDataToJsonDic(matchedTrip=matchedTrip, dicTripData=dicTripData)
+        lstDicTripData.append(dicTripData)
     return JsonResponse(lstDicTripData, safe=False)
     
 def convertTripDataToJsonDic(matchedTrip=None, dicTripData=None):
