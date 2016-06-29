@@ -126,3 +126,20 @@ body{
    height: 50px;
    background: green;
 }
+
+/* mark test */
+ul li{
+    list-style-type:none;
+}
+
+div.tripImgDiv{
+    float:left;
+}
+
+div.tripTitleDiv{
+    float:right;
+}
+div.tripIntroDiv{
+    float:right;
+}
+/* mark test */
