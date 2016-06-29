@@ -1,0 +1,128 @@
+body{
+   margin: 0 0 0 0;
+   background: silver;
+}
+
+.topDiv{
+   height: 600px;
+   background: pink;
+}
+
+.LogDiv{
+   height: 50px;
+   width: 100px;
+   float:left;
+   background: blue;
+}
+.LoginDiv{
+   height: 50px;
+   width: 100px;
+   float:right;
+}
+
+.LanguageDiv{
+   height: 50px;
+   width: 150px;
+   background: yellow;
+   float:right;
+}
+
+.CurrencyDiv{
+   height: 50px;
+   width: 150px;
+   background: red;
+   float:right;
+}
+
+
+
+
+
+
+
+
+.findDiv{
+   height: 50px;
+   width: auto;
+   background: white;
+   float : bottom;
+   padding-left:400px;
+}
+
+
+
+
+
+
+
+
+.cityDiv{
+   margin: 0 auto;
+   width: 1200px;
+   height: 900px;
+   background: yellow;
+}
+
+.cityBigDiv{
+   margin-left:10px;
+   margin-top:10px;
+   width: 550px;
+   height:250px;
+   background: white;
+   float:left;
+}
+
+.citySmallDiv{
+   margin-left:10px;
+   margin-top:10px;
+   width: 300px;
+   height:250px;
+   background: purple;
+   float:left;
+}
+
+.cityBigDiv img{
+   width:100%;
+   height:100%;
+   background-size: cover;
+}
+
+.citySmallDiv img{
+   width:100%;
+   height:100%;
+   background-size: cover;
+}
+
+
+
+
+
+
+
+
+.treatyDiv{
+   margin: 0 auto;
+   width: 1200px;
+   height:300px;
+   background: blue;
+   
+}
+
+.treatyDetailDiv {
+   margin-left:20px;
+   height: 250px;
+   width: 350px;
+   background: orange;
+   float:left;
+}
+
+
+
+
+
+.bottomDiv{
+   margin: 0 auto;
+   width: 1200px;
+   height: 50px;
+   background: green;
+}
