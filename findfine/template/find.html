@@ -1,10 +1,10 @@
 <html>
   <head>
      <title>home</title>
-	 <link rel="stylesheet" type="text/css" href="../css/find.css">
-     <script type="text/javascript" src="../js/jquery.min.js"></script>
-	 <script type="text/javascript" src="../js/find.js"></script>	
-     <script type="text/javascript" src="../js/jquery.easyui.min.js"></script>
+	 <link rel="stylesheet" type="text/css" href="/static/css/find.css">
+     <script type="text/javascript" src="/static/js/jquery.min.js"></script>
+	 <script type="text/javascript" src="/static/js/find.js"></script>	
+     <script type="text/javascript" src="/static/js/jquery.easyui.min.js"></script>
      <link rel="stylesheet" type="text/css" href="http://www.jeasyui.com/easyui/themes/default/easyui.css">
      <link rel="stylesheet" type="text/css" href="http://www.jeasyui.com/easyui/themes/icon.css">
      <link rel="stylesheet" type="text/css" href="http://www.jeasyui.com/easyui/demo/demo.css">	 
@@ -18,7 +18,7 @@
                 if (!frozen && rowData.itemid){
                     var aa = rowData.itemid.split('-');
                     var img = 'shirt' + aa[1] + '.gif';
-                    cc.push('<img src="images/' + img + '" style="width:150px;float:left">');
+                    cc.push('<img src="/static/img/' + img + '" style="width:150px;float:left">');
                     cc.push('<div style="float:left;margin-left:20px;">');
                     for(var i=0; i<fields.length; i++){
                         var copts = $(target).datagrid('getColumnOption', fields[i]);
@@ -58,7 +58,7 @@
     </script>
   </head>
   <body>
-  <!-- »y¨¥ ¹ô§O µn¤J -->
+  <!-- èªè¨€ å¹£åˆ¥ ç™»å…¥ -->
   <div class="topDiv">
 
     <div class="LogDiv">
@@ -88,7 +88,7 @@
 	
   </div>
   
-  <!-- ·j´M -->  
+  <!-- æœå°‹ -->  
   <div class="findDiv">
       <span>Where r u want to go ? </span>
       <input type="text" name="" placeholder="Enter Something"/>
@@ -100,19 +100,19 @@
     <div class="placeAndBudgetDivDiv">
 	   
 	   <div class="placeDiv">
-   	    <span>¬w</span>
+   	    <span>æ´²</span>
         <select name="">
           <option value="USD">USD</option>
           <option value="EUR">EUR</option>
 	      <option value="RMB">RMB</option>
         </select>
-	    <span>°ê</span>
+	    <span>åœ‹</span>
         <select name="">
           <option value="USD">USD</option>
           <option value="EUR">EUR</option>
 	      <option value="RMB">RMB</option>
         </select>
-	    <span>«°¥«</span>
+	    <span>åŸå¸‚</span>
         <select name="">
           <option value="USD">USD</option>
           <option value="EUR">EUR</option>
@@ -122,11 +122,11 @@
 	
 	
 	   <div class="budgetDiv">
-         <span>¹wºâ : </span>
+         <span>é ç®— : </span>
          <input type="text" name="" placeholder="Enter Something"/>
 	     <span>~</span>
          <input type="text" name="" placeholder="Enter Something"/>
-	     <span>¹ô§O</span>
+	     <span>å¹£åˆ¥</span>
 	     <select name="">
            <option value="USD">USD</option>
            <option value="EUR">EUR</option>
@@ -142,20 +142,20 @@
     
 	<div class="goAndPeopleDiv"> 	
         <div class="goDiv"> 	  
-	      <span>±Òµ{¤é : </span>
+	      <span>å•Ÿç¨‹æ—¥ : </span>
           <input type="date">
-	      <span>~¦^µ{¤é: </span>
+	      <span>~å›ç¨‹æ—¥: </span>
 	      <input type="date">
 	    </div>    
         
         
         
         <div class="peopleDiv"> 	
-	      <span>¤H¼Æ : </span>
+	      <span>äººæ•¸ : </span>
           <input type="text" name="" placeholder="Enter Something"/>
 	      <span>~</span>
 	      <input type="text" name="" placeholder="Enter Something"/>
-	      <span>¤H</span>
+	      <span>äºº</span>
 	    </div>
     </div>
   
@@ -175,7 +175,7 @@
 	
 	<div class="longAndTimeDiv"> 		
 	    <div class="longDiv"> 	  
-	      <span>®Èµ{ªø«× : </span>
+	      <span>æ—…ç¨‹é•·åº¦ : </span>
 	      <input  type="checkbox" name="size" value="10"> 1Hr
           <input  type="checkbox" name="size" value="12"> 3Hr
 	      <input  type="checkbox" name="size" value="12"> 6HR
@@ -186,7 +186,7 @@
         
 	    
 	    <div class="timeDiv"> 	  
-	      <span>®Èµ{®É¬q°_ : </span>
+	      <span>æ—…ç¨‹æ™‚æ®µèµ· : </span>
 	        <select>
                <option>00:00</option>
                <option>02:00</option>
@@ -200,7 +200,7 @@
 	    	   <option>20:00</option>
 	    	   <option>22:00</option>
             </select>
-	    	<span>®Èµ{®É¬q¨´ : </span>
+	    	<span>æ—…ç¨‹æ™‚æ®µè¿„ : </span>
 	        <select>
                <option>00:00</option>
                <option>02:00</option>
@@ -220,14 +220,14 @@
 	
 	<div class="typeAndGlDiv"> 
 	   <div class="typeDiv"> 	
-	     <span>Ãş«¬ : </span>
-	     <input  type="checkbox" name="size" value="10"> ¤å«C
-         <input  type="checkbox" name="size" value="12"> ¹B°Ê
-	     <input  type="checkbox" name="size" value="12"> ¾ú¥v
+	     <span>é¡å‹ : </span>
+	     <input  type="checkbox" name="size" value="10"> æ–‡é’
+         <input  type="checkbox" name="size" value="12"> é‹å‹•
+	     <input  type="checkbox" name="size" value="12"> æ­·å²
 	   </div>   
 	   
 	   <div class="glDiv">  
-	     <span>¾ÉÄı»y¨¥ : </span>
+	     <span>å°è¦½èªè¨€ : </span>
 	     <input  type="checkbox" name="size" value="10"> English
          <input  type="checkbox" name="size" value="12"> Chinese
        </div> 
@@ -237,7 +237,7 @@
 	  
 	  
   </div>
-    <div>ÃöÁä¦r¬d¸ß</div>
+    <div>é—œéµå­—æŸ¥è©¢</div>
   	<div class="googlemapDiv">
 	  <input id="pac-input" class="controls" type="text" placeholder="Search Box">
       <div id="map"></div>
