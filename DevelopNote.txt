@@ -49,3 +49,6 @@ https://app.moqups.com
 需要使用爬蟲的資料來源
 https://www.kkday.com/zh-tw/home/index2
 http://www.visitacity.com/
+
+api 範例
+https://www.withlocals.com/api/v1/affiliates/feeds/base.xml
