@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 """
-Copyright (C) 2015, MuChu Hsu
+Copyright (C) 2016, MuChu Hsu
 Contributed by Muchu Hsu (muchu1983@gmail.com)
 This file is part of BSD license
 
@@ -13,46 +13,48 @@ import re
 import random
 from selenium import webdriver
 from selenium.common.exceptions import NoSuchElementException
-from cameo.utility import Utility
-from cameo.localdb import LocalDbForTECHCRUNCH
+from bennu.filesystemutility import FileSystemUtility as FilesysUtility
+#from findfine_crawler.utility import Utility as FfUtility
+from findfine_crawler.localdb import LocalDbForKKDAY
 """
-抓取 TechCrunch html 存放到 source_html 
+爬取 KKDAY 資料存至 資料庫
 """
-class SpiderForTECHCRUNCH:
+class CrawlerForKKDAY:
     
     #建構子
     def __init__(self):
-        self.SOURCE_HTML_BASE_FOLDER_PATH = u"cameo_res\\source_html"
-        self.PARSED_RESULT_BASE_FOLDER_PATH = u"cameo_res\\parsed_result"
-        self.strWebsiteDomain = u"https://techcrunch.com/"
+        #self.SOURCE_HTML_BASE_FOLDER_PATH = u"cameo_res\\source_html"
+        #self.PARSED_RESULT_BASE_FOLDER_PATH = u"cameo_res\\parsed_result"
+        #self.strWebsiteDomain = u"https://techcrunch.com/"
         self.dicSubCommandHandler = {
-            "index":self.downloadIndexPage,
-            "topic":self.downloadTopicPage,
-            "news":self.downloadNewsPage
+            "index":self.crawlIndexPage,
+            "country":self.crawlCountryPage,
+            "product":self.crawlProductPage
         }
-        self.utility = Utility()
-        self.db = LocalDbForTECHCRUNCH()
+        #self.ffUtil = FfUtility()
+        self.fileUtil = FilesysUtility()
+        self.db = LocalDbForKKDAY()
         self.driver = None
         
     #取得 spider 使用資訊
     def getUseageMessage(self):
-        return ("- TECHCRUNCH -\n"
-                "useage:\n"
-                "index - download topic index page of TECHCRUNCH \n"
-                "topic - download not obtained topic page \n"
-                "news [topic_page_1_url] - download not obtained news [of given topic_page_1_url] \n")
+        return (
+            "- KKDAY -\n"
+            "useage:\n"
+            "index - crawl index page of KKDAY \n"
+            "country - crawl not obtained country page \n"
+            "product [country_page_1_url] - crawl not obtained product page [of given country_page_1_url] \n"
+        )
     
     #取得 selenium driver 物件
     def getDriver(self):
-        chromeDriverExeFilePath = "cameo_res\\chromedriver.exe"
+        chromeDriverExeFilePath = self.fileUtil.getPackageResourcePath(strPackageName="findfine_crawler.resource", strResourceName="chromedriver.exe")
         driver = webdriver.Chrome(chromeDriverExeFilePath)
-        #phantomjsDriverExeFilePath = "cameo_res\\phantomjs.exe"
-        #driver = webdriver.PhantomJS(phantomjsDriverExeFilePath)
         return driver
         
     #初始化 selenium driver 物件
     def initDriver(self):
-        if self.driver is None:
+        if not self.driver:
             self.driver = self.getDriver()
         
     #終止 selenium driver 物件
@@ -65,8 +67,8 @@ class SpiderForTECHCRUNCH:
         self.quitDriver()
         self.initDriver()
         
-    #執行 spider
-    def runSpider(self, lstSubcommand=None):
+    #執行 crawler
+    def runCrawler(self, lstSubcommand=None):
         strSubcommand = lstSubcommand[0]
         strArg1 = None
         if len(lstSubcommand) == 2:
@@ -75,18 +77,30 @@ class SpiderForTECHCRUNCH:
         self.dicSubCommandHandler[strSubcommand](strArg1)
         self.quitDriver() #quit selenium driver
         
-    #下載 index 頁面 
-    def downloadIndexPage(self, uselessArg1=None):
-        logging.info("download topic index page")
-        strIndexHtmlFolderPath = self.SOURCE_HTML_BASE_FOLDER_PATH + u"\\TECHCRUNCH"
-        if not os.path.exists(strIndexHtmlFolderPath):
-            os.mkdir(strIndexHtmlFolderPath) #mkdir source_html/TECHCRUNCH/
-        #TECHCRUNCH topic index 頁面
-        self.driver.get("https://techcrunch.com/topic/")
-        #儲存 html
-        strIndexHtmlFilePath = strIndexHtmlFolderPath + u"\\index.html"
-        self.utility.overwriteSaveAs(strFilePath=strIndexHtmlFilePath, unicodeData=self.driver.page_source)
-        
+    #爬取 index 頁面 
+    def crawlIndexPage(self, uselessArg1=None):
+        logging.info("crawl index page")
+        #KKDAY index 頁面
+        self.driver.get("https://www.kkday.com/en/home")
+        #點擊搜尋
+        self.driver.find_element_by_css_selector("#header-main-keywordSearch-button").click()
+        time.sleep(5)
+        #一一點擊區域
+        lstEleAreaA = self.driver.find_elements_by_css_selector("#area_country_menu ul.slideTogglePage[role=area] li a")
+        for indexOfLstEleAreaA in range(len(lstEleAreaA)):
+            lstEleAreaA[indexOfLstEleAreaA].click()
+            time.sleep(5)
+            #解析國家超連結
+            lstEleCountryA = self.driver.find_elements_by_css_selector("#area_country_menu ul.slideTogglePage[role=country] li a")
+            for eleCountryA in lstEleCountryA:
+                strCountryHref = eleCountryA.get_attribute("href")
+                #儲存國家超連結至 localdb
+                self.db.insertCountryIfNotExists(strCountryPage1Url=strCountryHref)
+                logging.info("save country url: %s"%strCountryHref)
+            self.driver.find_element_by_css_selector("#previousBtn").click()
+            time.sleep(5)
+            lstEleAreaA = self.driver.find_elements_by_css_selector("#area_country_menu ul.slideTogglePage li a")
+    
     #找出下一頁 topic 的 url
     def findNextTopicPageUrl(self):
         strNextTopicPageUrl = None
@@ -95,8 +109,8 @@ class SpiderForTECHCRUNCH:
             strNextTopicPageUrl = elesNextPageA[0].get_attribute("href")
         return strNextTopicPageUrl
         
-    #下載 topic 頁面
-    def downloadTopicPage(self, uselessArg1=None):
+    #爬取 country 頁面
+    def crawlCountryPage(self, uselessArg1=None):
         logging.info("download topic page")
         strTopicHtmlFolderPath = self.SOURCE_HTML_BASE_FOLDER_PATH + u"\\TECHCRUNCH\\topic"
         if not os.path.exists(strTopicHtmlFolderPath):
@@ -135,19 +149,19 @@ class SpiderForTECHCRUNCH:
             finally:
                 self.restartDriver() #重啟
             
-    #下載 news 頁面 (strTopicPage1Url == None 會自動找尋已下載完成之 topic)
-    def downloadNewsPage(self, strTopicPage1Url=None):
+    #爬取 product 頁面 (strCountryPage1Url == None 會自動找尋已爬取完成之 country)
+    def crawlProductPage(self, strCountryPage1Url=None):
         if strTopicPage1Url is None:
-            #未指定 topic
+            #未指定 country
             lstStrObtainedTopicUrl = self.db.fetchallCompletedObtainedTopicUrl()
             for strObtainedTopicUrl in lstStrObtainedTopicUrl:
                 self.downloadNewsPageWithGivenTopicUrl(strTopicPage1Url=strObtainedTopicUrl)
         else:
-            #有指定 topic url
+            #有指定 country url
             self.downloadNewsPageWithGivenTopicUrl(strTopicPage1Url=strTopicPage1Url)
             
-    #下載 news 頁面 (指定 topic url)
-    def downloadNewsPageWithGivenTopicUrl(self, strTopicPage1Url=None):
+    #爬取 product 頁面 (指定 country url)
+    def crawlProductPageWithGivenCountryUrl(self, strCountryPage1Url=None):
         logging.info("download news page with topic %s"%strTopicPage1Url)
         strNewsHtmlFolderPath = self.SOURCE_HTML_BASE_FOLDER_PATH + u"\\TECHCRUNCH\\news"
         if not os.path.exists(strNewsHtmlFolderPath):
@@ -179,4 +193,4 @@ class SpiderForTECHCRUNCH:
                     logging.warning("selenium driver crashed. skip get news: %s"%strNewsUrl)
                 finally:
                     self.restartDriver() #重啟 
-            
+    
