@@ -14,7 +14,7 @@ import random
 from selenium import webdriver
 from selenium.common.exceptions import NoSuchElementException
 from bennu.filesystemutility import FileSystemUtility as FilesysUtility
-#from findfine_crawler.utility import Utility as FfUtility
+from findfine_crawler.utility import Utility as FfUtility
 from findfine_crawler.localdb import LocalDbForKKDAY
 """
 爬取 KKDAY 資料存至 資料庫
@@ -23,17 +23,15 @@ class CrawlerForKKDAY:
     
     #建構子
     def __init__(self):
-        #self.SOURCE_HTML_BASE_FOLDER_PATH = u"cameo_res\\source_html"
-        #self.PARSED_RESULT_BASE_FOLDER_PATH = u"cameo_res\\parsed_result"
-        #self.strWebsiteDomain = u"https://techcrunch.com/"
         self.dicSubCommandHandler = {
             "index":self.crawlIndexPage,
             "country":self.crawlCountryPage,
             "product":self.crawlProductPage
         }
-        #self.ffUtil = FfUtility()
+        self.ffUtil = FfUtility()
         self.fileUtil = FilesysUtility()
         self.db = LocalDbForKKDAY()
+        self.lstDicParsedProductJson = []  #product.json 資料
         self.driver = None
         
     #取得 spider 使用資訊
@@ -156,48 +154,57 @@ class CrawlerForKKDAY:
             finally:
                 self.restartDriver() #重啟
             
+    #解析 product 頁面
+    def parseProductPage(self, strProductUrl=None):
+        dicProductJson = {}
+        #strOriginUrl
+        dicProductJson["strOriginUrl"] = strProductUrl
+        #strTitle
+        #strLocation
+        #intUsdCost
+        #strIntroduction
+        #intDurationHour
+        #strGuideLanguage
+        #intOption
+        #strStyle
+        self.lstDicParsedProductJson.append(dicProductJson)
+    
     #爬取 product 頁面 (strCountryPage1Url == None 會自動找尋已爬取完成之 country)
     def crawlProductPage(self, strCountryPage1Url=None):
-        if strTopicPage1Url is None:
+        if not strCountryPage1Url:
             #未指定 country
-            lstStrObtainedTopicUrl = self.db.fetchallCompletedObtainedTopicUrl()
-            for strObtainedTopicUrl in lstStrObtainedTopicUrl:
-                self.downloadNewsPageWithGivenTopicUrl(strTopicPage1Url=strObtainedTopicUrl)
+            lstStrObtainedCountryUrl = self.db.fetchallCompletedObtainedCountryUrl()
+            for strObtainedCountryUrl in lstStrObtainedCountryUrl:
+                self.crawlProductPageWithGivenCountryUrl(strCountryPage1Url=strObtainedCountryUrl)
         else:
             #有指定 country url
-            self.downloadNewsPageWithGivenTopicUrl(strTopicPage1Url=strTopicPage1Url)
-            
+            self.crawlProductPageWithGivenCountryUrl(strCountryPage1Url=strCountryPage1Url)
+        
     #爬取 product 頁面 (指定 country url)
     def crawlProductPageWithGivenCountryUrl(self, strCountryPage1Url=None):
-        logging.info("download news page with topic %s"%strTopicPage1Url)
-        strNewsHtmlFolderPath = self.SOURCE_HTML_BASE_FOLDER_PATH + u"\\TECHCRUNCH\\news"
-        if not os.path.exists(strNewsHtmlFolderPath):
-            os.mkdir(strNewsHtmlFolderPath) #mkdir source_html/TECHCRUNCH/news/
-        #取得 DB 紀錄中，指定 strTopicPage1Url topic 的 news url
-        lstStrNewsUrl = self.db.fetchallNewsUrlByTopicUrl(strTopicPage1Url=strTopicPage1Url)
-        intDownloadedNewsCount = 0#紀錄下載 news 頁面數量
-        timeStart = time.time() #計時開始時間點
-        timeEnd = None #計時結束時間點
-        for strNewsUrl in lstStrNewsUrl:
-            #檢查是否已下載
-            if not self.db.checkNewsIsGot(strNewsUrl=strNewsUrl):
-                if intDownloadedNewsCount%10 == 0: #計算下載10筆news所需時間
-                    timeEnd = time.time()
-                    timeCost = timeEnd - timeStart
-                    logging.info("download 10 news cost %f sec"%timeCost)
-                    timeStart = timeEnd
-                intDownloadedNewsCount = intDownloadedNewsCount+1
-                time.sleep(random.randint(5,9)) #sleep random time
+        logging.info("crawl product page with country %s"%strCountryPage1Url)
+        #清空計憶體殘留資料
+        self.lstDicParsedProductJson = []
+        intProductJsonIndex = 1
+        #取得 DB 紀錄中，指定 strCountryPage1Url country 的 product url
+        lstStrProductUrl = self.db.fetchallProductUrlByCountryUrl(strCountryPage1Url=strCountryPage1Url)
+        for strProductUrl in lstStrProductUrl:
+            #檢查 product 是否已下載
+            if not self.db.checkProductIsGot(strProductUrl=strProductUrl):
+                time.sleep(random.randint(5,8)) #sleep random time
                 try:
-                    self.driver.get(strNewsUrl)
-                    #儲存 html
-                    strNewsName = re.match("^https://techcrunch.com/[\d]{4}/[\d]{2}/[\d]{2}/(.*)/$", strNewsUrl).group(1)
-                    strNewsHtmlFilePath = strNewsHtmlFolderPath + u"\\%s_news.html"%strNewsName
-                    self.utility.overwriteSaveAs(strFilePath=strNewsHtmlFilePath, unicodeData=self.driver.page_source)
-                    #更新news DB 為已抓取 (isGot = 1)
-                    self.db.updateNewsStatusIsGot(strNewsUrl=strNewsUrl)
+                    self.driver.get(strProductUrl)
+                    #解析 product 頁面
+                    self.parseProductPage(strProductUrl=strProductUrl)
+                    #更新 product DB 為已爬取 (isGot = 1)
+                    #self.db.updateProductStatusIsGot(strProductUrl=strProductUrl)
                 except:
-                    logging.warning("selenium driver crashed. skip get news: %s"%strNewsUrl)
+                    logging.warning("selenium driver crashed. skip get product: %s"%strProductUrl)
                 finally:
                     self.restartDriver() #重啟 
-    
+            if len(self.lstDicParsedProductJson) == 1000:
+                strJsonFileName = "%d_product.json"%(intProductJsonIndex*1000)
+                strProductJsonFilePath = self.fileUtil.getPackageResourcePath(strPackageName="findfine_crawler.resource.parsed_json", strResourceName=strJsonFileName)
+                self.ffUtil.writeObjectToJsonFile(dicData=self.lstDicParsedProductJson, strJsonFilePath=strProductJsonFilePath)
+                intProductJsonIndex = intProductJsonIndex+1
+                self.lstDicParsedProductJson = []
