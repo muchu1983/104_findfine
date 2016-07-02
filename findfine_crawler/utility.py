@@ -22,7 +22,7 @@ class Utility:
     #儲存檔案
     def overwriteSaveAs(self, strFilePath=None, unicodeData=None):
         with open(strFilePath, "w+") as file:
-            file.write(unicodeData.encode("utf-8"))
+            file.write(unicodeData)
     
     #讀取 json 檔案內容，回傳 dict 物件
     def readObjectFromJsonFile(self, strJsonFilePath=None):
