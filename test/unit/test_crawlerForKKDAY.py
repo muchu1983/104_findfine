@@ -29,7 +29,7 @@ class CrawlerForKKDAYTest(unittest.TestCase):
     def test_crawlIndexPage(self):
         logging.info("CrawlerForKKDAYTest.test_crawlIndexPage")
         self.crawler.crawlIndexPage()
-    """
+    
     #測試爬取 country page
     def test_crawlCountryicPage(self):
         logging.info("CrawlerForKKDAYTest.test_crawlCountryicPage")
@@ -39,7 +39,7 @@ class CrawlerForKKDAYTest(unittest.TestCase):
     def test_crawlProductPage(self):
         logging.info("CrawlerForKKDAYTest.test_crawlProductPage")
         self.crawler.crawlProductPage(strCountryPage1Url=None)
-    """
+    
 #測試開始
 if __name__ == "__main__":
     unittest.main(exit=False)
