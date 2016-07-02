@@ -1,36 +1,46 @@
 body{
+   font-size:28px;
+   font-family:cursive;
    margin: 0 0 0 0;
-   background: silver;
+   //background: silver;
 }
 
 .topDiv{
    height: 100px;
-   background: pink;
+   //background: pink;
 }
 
 .LogDiv{
    height: 50px;
    width: 100px;
    float:left;
-   background: blue;
+   //background: blue;
 }
 .LoginDiv{
    height: 50px;
-   width: 100px;
+   width: 150px;
    float:right;
+}
+
+.LoginDiv button{
+   width:120px;
+   height:40px;
+   font-size:30px;
+   margin: 10 10 10 10;
 }
 
 .LanguageDiv{
    height: 50px;
-   width: 150px;
-   background: yellow;
+   width: 180px;
+   //background: yellow;
    float:right;
 }
 
 .CurrencyDiv{
+   margin: 0 30 0 0;
    height: 50px;
    width: 150px;
-   background: red;
+   //background: red;
    float:right;
 }
 
@@ -44,27 +54,28 @@ body{
 .findMainDiv{
    margin: 0 auto;
    height: 400px;
-   width: 1200px;
-   background: yellow;
+   width: 1400px;
+   //background: yellow;
 }
 
 .findMainLeftDiv{
    height: 400px;
-   width: 600px;
-   background: green;
+   width: 750px;
+   //background: green;
    float:left;
 }
 
 .findMainLeftDiv div{
    margin: 20 20 20 20;
+   //background: brown;
    float:left;
 }
 
 .findMainRightDiv{
    margin: 0 0 0 0;
    height: 400px;
-   width: 600px;
-   background: blue;
+   width: 650px;
+   //background: blue;
    float:left;
 }
 
@@ -72,16 +83,16 @@ body{
 .findDetailDiv{
    display:none;
    margin: 0 auto;
-   height: 240px;
-   width: 1000px;
-   background: red;
+   height: 360px;
+   width: 1400px;
+   //background: red;
 }
 
 .findDetailSmallDiv{
-   margin: 5px 0 5px 0;
-   border-style:solid;
-   height: 60px;
-   width: 490;
+   margin: 10px 30px 5px 0;
+   //border-style:solid;
+   height: 90px;
+   width: 600px;
    float:left;
 }
 
@@ -91,14 +102,29 @@ body{
    margin: 0 auto;
    height: 50px;
    width: 150px;
-   background: white;
+   //background: white;
+}
+
+.hideButtonDiv button{
+
+   height: 50px;
+   width: 150px;
+   font-size:30px;
+   margin: 10 10 10 10;
 }
 
 .searchDiv{
    margin: 0 auto;
    height: 50px;
-   width: 350px;
-   background: brown;
+   width: 450px;
+   //background: brown;
+}
+
+.searchDiv button{
+   width:120px;
+   height:40px;
+   font-size:30px;
+   margin: 10 10 10 10;
 }
 
 
@@ -112,7 +138,7 @@ body{
    margin:0 auto;
    width:1200px;
    height:300px;
-   background:red;
+   //background:red;
 }
 
 #map {
@@ -149,8 +175,6 @@ body{
   font-size: 15px;
   font-weight: 300;
   margin-top: 0px 0px 0px 0px;
-   width:300px;
-   height:300px;
   text-overflow: ellipsis;
   width: 300px;
 }

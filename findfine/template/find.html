@@ -1,11 +1,13 @@
 <html>
   <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
     <title>find</title>
     <link rel="stylesheet" type="text/css" href="/static/css/find.css">
     <script type="text/javascript" src="/static/js/countryState.js"></script>
     <script type="text/javascript" src="/static/js/jquery.min.js"></script>
     <script type="text/javascript" src="/static/js/find.js"></script>
-    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBNW1g69sGY8q_45F0Ob1lMbZn3fWyiL1o&libraries=places&signed_in=true&callback=initMap" async defer></script>
+    <script type="text/javascript" src="/static/js/home.js"></script>
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBNW1g69sGY8q_45F0Ob1lMbZn3fWyiL1o&signed_in=true&libraries=places&callback=initAutocomplete" async defer></script>
   </head>
   <body>
   <!-- 語言 幣別 登入 -->
@@ -163,14 +165,17 @@
      <button id="hideButton" type="button" onclick="swithDetail()">Expand</button>
   </div>
 
+  </br>
 
   <!--search-->
   <div class="searchDiv">
-     <span>Paint your life in</span>
-     <input id="strFilterText" type="text" name="" placeholder="Destination"/>
-     <button type="button">search</button>
+     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span>Paint your life in</span>
+     <div id="locationField">
+     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input id="autocomplete" placeholder="Destination" onFocus="geolocate()" type="text"></input>
+     </div>
+     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<button id="btnFindTrip" type="button">Find</button>
   </div>
-  
+
   </body>
 <html/>
 
