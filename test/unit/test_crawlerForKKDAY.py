@@ -24,7 +24,7 @@ class CrawlerForKKDAYTest(unittest.TestCase):
     #收尾
     def tearDown(self):
         self.crawler.quitDriver()
-    
+    """
     #測試爬取 index page
     def test_crawlIndexPage(self):
         logging.info("CrawlerForKKDAYTest.test_crawlIndexPage")
@@ -34,7 +34,7 @@ class CrawlerForKKDAYTest(unittest.TestCase):
     def test_crawlCountryicPage(self):
         logging.info("CrawlerForKKDAYTest.test_crawlCountryicPage")
         self.crawler.crawlCountryPage()
-    
+    """
     #測試爬取 product page
     def test_crawlProductPage(self):
         logging.info("CrawlerForKKDAYTest.test_crawlProductPage")
