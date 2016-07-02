@@ -101,51 +101,58 @@ class CrawlerForKKDAY:
             time.sleep(5)
             lstEleAreaA = self.driver.find_elements_by_css_selector("#area_country_menu ul.slideTogglePage li a")
     
-    #找出下一頁 topic 的 url
-    def findNextTopicPageUrl(self):
-        strNextTopicPageUrl = None
-        elesNextPageA = self.driver.find_elements_by_css_selector("div.river-nav ol.pagination li.next a")
-        if len(elesNextPageA) == 1:
-            strNextTopicPageUrl = elesNextPageA[0].get_attribute("href")
-        return strNextTopicPageUrl
+    #解析 country 頁面
+    def parseCountryPage(self, strCountryPage1Url=None):
+        #找尋 product 超連結
+        elesProductA = self.driver.find_elements_by_css_selector("article.product-listview div.product-info-container div div a")
+        for eleProductA in elesProductA:
+            strProductUrl = eleProductA.get_attribute("href")
+            #儲存 product 超連結至 localdb
+            logging.info("insert product url: %s"%strProductUrl)
+            self.db.insertProductUrlIfNotExists(strProductUrl=strProductUrl, strCountryPage1Url=strCountryPage1Url)
+    
+    #檢查 country 有無下一頁
+    def checkNextCountryPageExist(self):
+        isNextCountryPageExist = False
+        strNextPageAText = self.driver.find_element_by_css_selector("ul.pagination li.a-page:last-child a.toPage").text
+        if strNextPageAText and strNextPageAText == "»":
+            isNextCountryPageExist = True
+        return isNextCountryPageExist
         
     #爬取 country 頁面
     def crawlCountryPage(self, uselessArg1=None):
-        logging.info("download topic page")
-        strTopicHtmlFolderPath = self.SOURCE_HTML_BASE_FOLDER_PATH + u"\\TECHCRUNCH\\topic"
-        if not os.path.exists(strTopicHtmlFolderPath):
-            os.mkdir(strTopicHtmlFolderPath) #mkdir source_html/TECHCRUNCH/topic/
+        logging.info("crawl country page")
         #取得 Db 中尚未下載的 topic url
-        lstStrNotObtainedTopicPage1Url = self.db.fetchallNotObtainedTopicUrl()
-        for strNotObtainedTopicPage1Url in lstStrNotObtainedTopicPage1Url:
-            #topic 頁面
+        lstStrNotObtainedCountryPage1Url = self.db.fetchallNotObtainedCountryUrl()
+        for strNotObtainedCountryPage1Url in lstStrNotObtainedCountryPage1Url:
+            #re 找出 country 名稱
+            strCountryName = re.match("^https://www.kkday.com/en/product/productlist/.*countryname=(.*)$", strNotObtainedCountryPage1Url).group(1)
+            #country 頁面
             try:
-                #re 找出 topic 名稱
-                strTopicNamePartInUrl = re.match("^https://techcrunch.com/topic/(.*)/$", strNotObtainedTopicPage1Url).group(1)
-                strTopicName = re.sub(u"/", u"__", strTopicNamePartInUrl)
-                #topic 第0頁
-                intPageNum = 0
+                intCountryPageNum = 1
+                #country 第1頁
                 time.sleep(random.randint(2,5)) #sleep random time
-                self.driver.get(strNotObtainedTopicPage1Url)
-                #儲存 html
-                strTopicHtmlFilePath = strTopicHtmlFolderPath + u"\\%d_%s_topic.html"%(intPageNum, strTopicName)
-                self.utility.overwriteSaveAs(strFilePath=strTopicHtmlFilePath, unicodeData=self.driver.page_source)
-                #topic 下一頁
-                strNextTopicPageUrl = self.findNextTopicPageUrl()
-                while strNextTopicPageUrl: # is not None
-                    time.sleep(random.randint(2,5)) #sleep random time
-                    intPageNum = intPageNum+1
-                    self.driver.get(strNextTopicPageUrl)
-                    #儲存 html
-                    strTopicHtmlFilePath = strTopicHtmlFolderPath + u"\\%d_%s_topic.html"%(intPageNum, strTopicName)
-                    self.utility.overwriteSaveAs(strFilePath=strTopicHtmlFilePath, unicodeData=self.driver.page_source)
-                    #tag 再下一頁
-                    strNextTopicPageUrl = self.findNextTopicPageUrl()
-                #更新tag DB 為已抓取 (isGot = 1)
-                self.db.updateTopicStatusIsGot(strTopicPage1Url=strNotObtainedTopicPage1Url)
-                logging.info("got topic %s"%strTopicName)
-            except:
-                logging.warning("selenium driver crashed. skip get topic: %s"%strNotObtainedTopicPage1Url)
+                strCountryUrlPageSuffix = "&sort=hdesc&page=%d"%intCountryPageNum
+                self.driver.get(strNotObtainedCountryPage1Url + strCountryUrlPageSuffix)
+                #解析 product 超連結
+                self.parseCountryPage(strCountryPage1Url=strNotObtainedCountryPage1Url)
+                #檢查 country 有無下一頁
+                isNextCountryPageExist = self.checkNextCountryPageExist()
+                while isNextCountryPageExist:
+                    time.sleep(random.randint(5,8)) #sleep random time
+                    intCountryPageNum = intCountryPageNum+1
+                    strCountryUrlPageSuffix = "&sort=hdesc&page=%d"%intCountryPageNum
+                    self.driver.get(strNotObtainedCountryPage1Url + strCountryUrlPageSuffix)
+                    #解析 product 超連結
+                    self.parseCountryPage(strCountryPage1Url=strNotObtainedCountryPage1Url)
+                    #檢查 country 有無下一頁
+                    isNextCountryPageExist = self.checkNextCountryPageExist()
+                #更新 country DB 為已抓取 (isGot = 1)
+                self.db.updateCountryStatusIsGot(strCountryPage1Url=strNotObtainedCountryPage1Url)
+                logging.info("got country %s find %d pages"%(strCountryName, intCountryPageNum))
+            except Exception as e:
+                logging.warning(str(e))
+                logging.warning("selenium driver crashed. skip get country: %s"%strCountryName)
             finally:
                 self.restartDriver() #重啟
             
