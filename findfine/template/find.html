@@ -2,68 +2,15 @@
   <head>
     <title>find</title>
     <link rel="stylesheet" type="text/css" href="/static/css/find.css">
+    <script type="text/javascript" src="/static/js/countryState.js"></script>
     <script type="text/javascript" src="/static/js/jquery.min.js"></script>
-    <script type="text/javascript" src="/static/js/find.js"></script>	
-    <script type="text/javascript" src="/static/js/jquery.easyui.min.js"></script>
-    <link rel="stylesheet" type="text/css" href="http://www.jeasyui.com/easyui/themes/default/easyui.css">
-    <link rel="stylesheet" type="text/css" href="http://www.jeasyui.com/easyui/themes/icon.css">
-    <link rel="stylesheet" type="text/css" href="http://www.jeasyui.com/easyui/demo/demo.css">    
-    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBNW1g69sGY8q_45F0Ob1lMbZn3fWyiL1o&libraries=places&callback=initAutocomplete" async defer></script>
-    <script>
-        var cardview = $.extend({}, $.fn.datagrid.defaults.view, {
-            renderRow: function(target, fields, frozen, rowIndex, rowData){
-                var cc = [];
-                cc.push('<td colspan=' + fields.length + ' style="padding:10px 5px;border:0;">');
-                if (!frozen && rowData.itemid){
-                    var aa = rowData.itemid.split('-');
-                    var img = 'shirt' + aa[1] + '.gif';
-                    cc.push('<img src="/static/img/' + img + '" style="width:150px;float:left">');
-                    cc.push('<div style="float:left;margin-left:20px;">');
-                    for(var i=0; i<fields.length; i++){
-                        var copts = $(target).datagrid('getColumnOption', fields[i]);
-                        cc.push('<p><span class="c-label">' + copts.title + ':</span> ' + rowData[fields[i]] + '</p>');
-                    }
-                    cc.push('</div>');
-                }
-                cc.push('</td>');
-                return cc.join('');
-            }
-        });
-
-        $(function(){
-            $('#tt').datagrid({
-                view: cardview,
-                               data:{"total":10,"rows":[
-                                                        {"itemid":"FI-SW-01" ,"listprice":"Koi"          ,"unitcost":10.00,"attr1":"P","status":36.50 },
-                                                        {"itemid":"K9-DL-01" ,"listprice":"Dalmation"    ,"unitcost":12.00,"attr1":"P","status":18.50 },
-                                                        {"itemid":"RP-SN-01" ,"listprice":"Rattlesnake"  ,"unitcost":12.00,"attr1":"P","status":38.50 },
-                                                        {"itemid":"RP-SN-01" ,"listprice":"Rattlesnake"  ,"unitcost":12.00,"attr1":"P","status":26.50 },
-                                                        {"itemid":"RP-LI-02" ,"listprice":"Iguana"       ,"unitcost":12.00,"attr1":"P","status":35.50 },
-                                                        {"itemid":"FL-DSH-01","listprice":"Manx"         ,"unitcost":12.00,"attr1":"P","status":158.50},
-                                                        {"itemid":"FL-DSH-01","listprice":"Manx"         ,"unitcost":12.00,"attr1":"P","status":83.50 },
-                                                        {"itemid":"FL-DLH-02","listprice":"Persian"      ,"unitcost":12.00,"attr1":"P","status":23.50 },
-                                                        {"itemid":"FL-DLH-02","listprice":"Persian"      ,"unitcost":12.00,"attr1":"P","status":89.50 },
-                                                        {"itemid":"AV-CB-01" ,"listprice":"Amazon Parrot","unitcost":92.00,"attr1":"P","status":63.50 }
-                                                        ]},
-                /*
-                onLoadSuccess:function(data){
-                 alert("onLoadSuccess " +data);
-                },
-                onLoadError:function(XMLHttpRequest, textStatus, errorThrown){
-                 alert("onLoadError " +XMLHttpRequest + textStatus + errorThrown);
-                }
-                */
-            });
-        });
-    </script>
+    <script type="text/javascript" src="/static/js/find.js"></script>
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBNW1g69sGY8q_45F0Ob1lMbZn3fWyiL1o&libraries=places&signed_in=true&callback=initMap" async defer></script>
   </head>
   <body>
   <!-- 語言 幣別 登入 -->
   <div class="topDiv">
-
-    <div class="LogDiv">
-      Log
-    </div>
+    <div class="LogDiv">Log</div>
   
     <div class="LoginDiv">
       <button type="button">Login</button>
@@ -78,102 +25,97 @@
     </div>
 
     <div class="CurrencyDiv">
-        <span>Currency</span>
+      <span>Currency</span>
       <select name="">
         <option value="USD">USD</option>
         <option value="EUR">EUR</option>
-       <option value="RMB">RMB</option>
+        <option value="RMB">RMB</option>
+        <option value="GBP">GBP</option>
+        <option value="JPY">JPY</option>
+        <option value="AUD">AUD</option>
+        <option value="NZD">NZD</option>
+        <option value="SGD">SGD</option>
+        <option value="HKD">HKD</option>
+        <option value="TWD">TWD</option>
       </select>
     </div>
-
   </div>
-  
-  <!-- 搜尋 -->  
-  <div class="findDiv">
-      <span>Where r u want to go ? </span>
-      <input type="text" name="" placeholder="Enter Something"/>
-  </div>
-  
-  <div class="findDetailDiv">
-  
-  
-    <div class="placeAndBudgetDivDiv">
-      
-      <div class="placeDiv">
-          <span>洲</span>
-        <select name="">
-          <option value="USD">USD</option>
-          <option value="EUR">EUR</option>
-         <option value="RMB">RMB</option>
-        </select>
-       <span>國</span>
-        <select name="">
-          <option value="USD">USD</option>
-          <option value="EUR">EUR</option>
-         <option value="RMB">RMB</option>
-        </select>
-       <span>城市</span>
-        <select name="">
-          <option value="USD">USD</option>
-          <option value="EUR">EUR</option>
-         <option value="RMB">RMB</option>
-        </select>
-       </div>   
 
-       
-      <div class="budgetDiv">
-         <span>預算 : </span>
-         <input type="text" name="" placeholder="Enter Something"/>
-        <span>~</span>
-         <input type="text" name="" placeholder="Enter Something"/>
-        <span>幣別</span>
+  <!--查詢 時間 地點 錢 主要-->
+  <div class="findMainDiv">
+  
+    <div class="findMainLeftDiv">
+      <div>
+       <!-- 有些國家不屬於洲 或又不屬於洋
+       <span>Continent</span>
         <select name="">
-           <option value="USD">USD</option>
-           <option value="EUR">EUR</option>
-          <option value="RMB">RMB</option>
-         </select>
+          <option value=""></option>
+          <option value=""></option>
+         <option value=""></option>
+        </select>
+        -->
+
+       <span>Country</span>
+        <select id="country" name="country"></select>
+       <span>State</span>
+        <select name="state" id="state"></select>
       </div>
+
+      <div>
+         <span>Budget : </span>
+         <input type="text" name="" placeholder="Enter Something"/>
+         <span>~</span>
+         <input type="text" name="" placeholder="Enter Something"/>
+         <span>Currency</span>
+      </div>
+
+      <div>
+         <span>Start from : </span>
+         <input type="date">
+         <span>~To:</span>
+         <input type="date">
+      </div>
+
     </div>
- 
- 
- 
- 
+    <div class="findMainRightDiv">
+    <input id="pac-input" class="controls" type="text" placeholder="Search Box">
+    <div id="map"></div>
+    </div>
   
-    <div class="goAndPeopleDiv">
-        <div class="goDiv">
-           <span>啟程日 : </span>
-           <input type="date">
-           <span>~回程日: </span>
-           <input type="date">
-        </div>    
-        
-        
-        
-        <div class="peopleDiv">
-          <span>人數 : </span>
+  </div>
+
+  <!--查詢 細部-->
+  <div class="findDetailDiv">
+
+       <div class="findDetailSmallDiv">
+         <span>Duration : </span>
+         <input  type="checkbox" name="size" value="10"> 1Hr
+         <input  type="checkbox" name="size" value="12"> 3Hr
+         <input  type="checkbox" name="size" value="12"> 4~6HR
+         <input  type="checkbox" name="size" value="12"> 1 Day
+         <input  type="checkbox" name="size" value="12"> More than 1 Day
+       </div>
+
+       <div class="findDetailSmallDiv">
+          <span>Passenger : </span>
           <input type="text" name="" placeholder="Enter Something"/>
           <span>~</span>
           <input type="text" name="" placeholder="Enter Something"/>
-          <span>人</span>
-        </div>
-    </div>
-
-
-
-    <div class="longAndTimeDiv">
-       <div class="longDiv">
-         <span>旅程長度 : </span>
-         <input  type="checkbox" name="size" value="10"> 1Hr
-         <input  type="checkbox" name="size" value="12"> 3Hr
-         <input  type="checkbox" name="size" value="12"> 6HR
-         <input  type="checkbox" name="size" value="12">12HR
-         <input  type="checkbox" name="size" value="12">1 Day
-         <input  type="checkbox" name="size" value="12">more than 1 Day
+          <span></span>
+       </div>
+       
+       <div class="findDetailSmallDiv">
+          <span>Style : </span>
+          <input type="checkbox" name="" value="">Cultural tours
+          <input type="checkbox" name="" value="">Food tours
+          <input type="checkbox" name="" value="">Fashion tours
+          <input type="checkbox" name="" value="">Wild life tours
+          <input type="checkbox" name="" value="">Sports tours
+          <input type="checkbox" name="" value="">Eco tours
        </div>
 
-
-       <div class="timeDiv">      
-         <span>旅程時段起 : </span>
+       <div class="findDetailSmallDiv">
+          <span>Tour starts : </span>
             <select>
                <option>00:00</option>
                <option>02:00</option>
@@ -187,8 +129,8 @@
                <option>20:00</option>
                <option>22:00</option>
             </select>
-           <span>旅程時段迄 : </span>
-           <select>
+          <span>Tour ends : </span>
+            <select>
                <option>00:00</option>
                <option>02:00</option>
                <option>06:00</option>
@@ -202,59 +144,37 @@
                <option>22:00</option>
             </select>
        </div>
-    </div>
-    
-    
-    <div class="typeAndGlDiv">
-      <div class="typeDiv">
-        <span>類型 : </span>
-        <input  type="checkbox" name="size" value="10">文青
-         <input  type="checkbox" name="size" value="12">運動
-        <input  type="checkbox" name="size" value="12">歷史
-      </div>
-      
-      <div class="glDiv">
-        <span>導覽語言 : </span>
-        <input  type="checkbox" name="size" value="10">English
-        <input  type="checkbox" name="size" value="12">Chinese
+
+       <div class="findDetailSmallDiv">
+           <span>Guide's language : </span>
+           <input type="checkbox" name="" value="">English
+           <input type="checkbox" name="" value="">Chinese
        </div>
-    </div>
 
-
-
-
+       <div class="findDetailSmallDiv">
+           <span>Available : </span>
+           <input type="checkbox" name="" value="">Instant confirmation
+           <input type="checkbox" name="" value="">On request
+       </div>
   </div>
-    <div>關鍵字查詢</div>
-    <div class="googlemapDiv">
-     <input id="pac-input" class="controls" type="text" placeholder="Search Box">
-     <div id="map"></div>
-     <div></div>
-    </div> 
 
-    <div class="findButtonDiv">
-      <button type="button">find</button>
-    </div>
-
-    <div class="rsDiv">
-         <table id="tt" style="width:100%;height:350px"  title="DataGrid - CardView" singleSelect="true" fitColumns="true" remoteSort="false"
-                 url="sample.json" pagination="true" sortOrder="desc" sortName="itemid">
-             <thead>
-                 <tr>
-                     <th field="itemid" width="80" sortable="true">Item ID</th>
-                     <th field="listprice" width="120" sortable="true">List Price</th>
-                     <th field="unitcost" width="80" sortable="true">Unit Cost</th>
-                     <th field="attr1" width="250" sortable="true">Attribute</th>
-                     <th field="status" width="60" sortable="true">Status</th>
-                 </tr>
-             </thead>
-         </table>
-    </div>
-
-  
-  
-  <!-- COPYRIGHT -->
-  <div class="bottomDiv">
-     <p>COPYRIGHT</p>
+  <!--隱藏 細部查詢 按鈕-->
+  <div class="hideButtonDiv">
+     <button id="hideButton" type="button" onclick="swithDetail()">Expand</button>
   </div>
+
+
+  <!--search-->
+  <div class="searchDiv">
+     <span>Paint your life in</span>
+     <input id="strFilterText" type="text" name="" placeholder="Destination"/>
+     <button type="button">search</button>
+  </div>
+  
   </body>
 <html/>
+
+
+<script language="javascript">
+            populateCountries("country", "state");
+</script>

@@ -41,193 +41,89 @@ body{
 
 
 
-.findDiv{
-   height: 50px;
-   width: auto;
-   background: white;
-   float : bottom;
-   padding-left:400px;
-}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-.bottomDiv{
+.findMainDiv{
    margin: 0 auto;
+   height: 400px;
    width: 1200px;
-   height: 50px;
-   background: green;
+   background: yellow;
 }
 
+.findMainLeftDiv{
+   height: 400px;
+   width: 600px;
+   background: green;
+   float:left;
+}
+
+.findMainLeftDiv div{
+   margin: 20 20 20 20;
+   float:left;
+}
+
+.findMainRightDiv{
+   margin: 0 0 0 0;
+   height: 400px;
+   width: 600px;
+   background: blue;
+   float:left;
+}
 
 
 .findDetailDiv{
-   margin:0 auto;
-   width: 1200px;
-   height: 200px;
-      background: skyblue;
-}
-
-.placeAndBudgetDiv{
-   margin:0 auto;
-   width: 1200px;
-   height: 50px;
-}
-
-
-.placeDiv{
-   margin-left:10px;
-   width: 400px;
-   height: 50px;
-   background: green;
-         float:left;
-}
-
-.budgetDiv{
-   margin-left:10px;
-   width: 600px;
-   height: 50px;
-   background: green;
-         float:left;
-}
-
-
-.goAndPeopleDiv{
-   margin:0 auto;
-   width: 1200px;
-   height: 50px;
-
-
-}
-
-
-.goDiv{
-   margin-left:10px;
-   width: 550px;
-   height: 50px;
-   background: green;
-      float:left;
-}
-
-
-.peopleDiv{
-   margin-right:10px;
-   width: 550;
-   height: 50px;
-   background: blue;
-      float:right;
-}
-
-
-
-.longAndTimeDiv{
-   margin:0 auto;
-   width: 1200px;
-   height: 50px;
-
-
-}
-
-
-.longDiv{
-   margin-left:10px;
-   width: 550px;
-   height: 50px;
-   background: green;
-      float:left;
-}
-
-
-.timeDiv{
-   margin-right:10px;
-   width: 550;
-   height: 50px;
-   background: blue;
-      float:right;
-}
-
-
-.typeAndGlDiv{
-   margin:0 auto;
-   width: 1200px;
-   height: 50px;
-
-}
-
-
-.typeDiv{
-   margin-left:10px;
-   width: 550px;
-   height: 50px;
-   background: green;
-      float:left;
-}
-
-
-.glDiv{
-   margin-right:10px;
-   width: 550;
-   height: 50px;
-   background: blue;
-      float:right;
-}
-
-
-.bottomDiv{
-   width: 1200px;
-   height: 60px;
-      background: yellow;
-
-}
-
-
-.findButtonDiv{
-   height: 50px;
-   width: auto;
-   background: white;
-   float : bottom;
-   padding-left:400px;
-}
-
-.googlemapDiv{
-   margin:0 auto;
-   width: 1200px;
-   height: 300px;
+   display:none;
+   margin: 0 auto;
+   height: 240px;
+   width: 1000px;
    background: red;
 }
 
+.findDetailSmallDiv{
+   margin: 5px 0 5px 0;
+   border-style:solid;
+   height: 60px;
+   width: 490;
+   float:left;
+}
+
+
+
+.hideButtonDiv{
+   margin: 0 auto;
+   height: 50px;
+   width: 150px;
+   background: white;
+}
+
+.searchDiv{
+   margin: 0 auto;
+   height: 50px;
+   width: 350px;
+   background: brown;
+}
+
+
+
+
+
+
+
+
+.googlemapDiv{
+   margin:0 auto;
+   width:1200px;
+   height:300px;
+   background:red;
+}
+
 #map {
-        height: 100%;
-		width: 100%;
+   height:100%;
+   width:100%;
       }
-	  
-	  
+
 .rsDiv{
    margin:0 auto;
-   width: 1200px;
-   height: 300px;
+   width:1200px;
+   height:300px;
 }
 
 .c-label{
@@ -236,7 +132,6 @@ body{
     font-weight:bold;
 }
 
-	  
 .controls {
   margin-top: 10px;
   border: 1px solid transparent;
@@ -253,8 +148,9 @@ body{
   font-family: Roboto;
   font-size: 15px;
   font-weight: 300;
-  margin-left: 12px;
-  padding: 0 11px 0 13px;
+  margin-top: 0px 0px 0px 0px;
+   width:300px;
+   height:300px;
   text-overflow: ellipsis;
   width: 300px;
 }
