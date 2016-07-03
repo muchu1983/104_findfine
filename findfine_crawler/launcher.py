@@ -7,8 +7,7 @@ This file is part of BSD license
 <https://opensource.org/licenses/BSD-3-Clause>
 """
 import logging
-from cameo.cameoshell import CameoShell
-from cameo_api import flaskrunner
+from findfine_crawler.findfineshell import FindfineShell
 """
 程式進入點 (main)
 """
@@ -16,10 +15,8 @@ from cameo_api import flaskrunner
 def entry_point():
     logging.basicConfig(level=logging.INFO)
     #啟動爬蟲 shell
-    shell = CameoShell()
+    shell = FindfineShell()
     shell.openShell()
-    #啟動 flask http service (port 5000)
-    flaskrunner.start_flask_server()
 
 if __name__ == "__main__":
     entry_point()
