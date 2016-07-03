@@ -21,19 +21,19 @@ class Utility:
     
     #儲存檔案
     def overwriteSaveAs(self, strFilePath=None, unicodeData=None):
-        with open(strFilePath, "w+") as file:
+        with open(strFilePath, "w+", encoding="utf-8") as file:
             file.write(unicodeData)
     
     #讀取 json 檔案內容，回傳 dict 物件
     def readObjectFromJsonFile(self, strJsonFilePath=None):
         dicRet = None
-        with open(strJsonFilePath, "r") as jsonFile:
+        with open(strJsonFilePath, "r", encoding="utf-8") as jsonFile:
             dicRet = json.load(jsonFile, encoding="utf-8")
         return dicRet
     
     #將 dict 物件的內容寫入到 json 檔案內
     def writeObjectToJsonFile(self, dicData=None, strJsonFilePath=None):
-        with open(strJsonFilePath, "w+") as jsonFile:
+        with open(strJsonFilePath, "w+", encoding="utf-8") as jsonFile:
             jsonFile.write(json.dumps(dicData, ensure_ascii=False, indent=4, sort_keys=True))
     
     #取得子目錄的路徑

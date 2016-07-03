@@ -60,6 +60,10 @@ body{
    height: 400px;
    width: 1400px;
    //background: yellow;
+   background-image:url("/static/img/find.png");
+   background-repeat: no-repeat;
+   background-position: center;
+   background-size: cover;
 }
 
 .findMainLeftDiv{
@@ -129,10 +133,16 @@ body{
    height:40px;
    font-size:30px;
    margin: 10 10 10 10;
+   //background: yellow;
 }
 
 
-
+.bottomDiv{
+   margin: 130 auto;
+   width: 1200px;
+   height: 50px;
+   //background: green;
+}
 
 
 
