@@ -9,6 +9,7 @@ This file is part of BSD license
 import unittest
 import logging
 from findfine_crawler.localdb import LocalDbForKKDAY
+from findfine_crawler.localdb import LocalDbForJsonImporter
 """
 測試 本地端資料庫存取
 """
@@ -21,7 +22,7 @@ class LocalDbTest(unittest.TestCase):
     #收尾
     def tearDown(self):
         pass
-    
+    """
     #測試 kkday 本地端資料庫存取
     def test_localdb_for_kkday(self):
         logging.info("LocalDbTest.test_localdb_for_kkday")
@@ -40,7 +41,13 @@ class LocalDbTest(unittest.TestCase):
         db.updateProductStatusIsNotGot(strProductUrl="http://product/for/unit/test")
         self.assertFalse(db.checkProductIsGot(strProductUrl="http://product/for/unit/test"))
         db.clearTestData() #清除本次測試資料
-    
+    """
+    #測試 importer json 資料到 MySQL
+    def test_localdb_for_json_importer(self):
+        logging.info("LocalDbTest.test_localdb_for_json_importer")
+        db = LocalDbForJsonImporter()
+        db.insertTripIfNotExists()
+        
 #測試開始
 if __name__ == "__main__":
     unittest.main(exit=False)

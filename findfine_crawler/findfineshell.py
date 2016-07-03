@@ -7,6 +7,7 @@ This file is part of BSD license
 <https://opensource.org/licenses/BSD-3-Clause>
 """
 from findfine_crawler.crawlerForKKDAY import CrawlerForKKDAY
+from findfine_crawler.importerForKKDAY import ImporterForKKDAY
 """
 shell 操作介面
 """
@@ -21,7 +22,7 @@ class FindfineShell:
         }
         
         self.dicImporters = {
-            "kkday":None
+            "kkday":ImporterForKKDAY()
         }
         
     #顯示目前的目標網站

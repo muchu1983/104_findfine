@@ -7,11 +7,36 @@ This file is part of BSD license
 <https://opensource.org/licenses/BSD-3-Clause>
 """
 from bennu.localdb import SQLite3Db
+import mysql.connector as mysqlConnector
 """
 本地端資料庫存取
 """
+#Findfine MySQL localdb
+class LocalDbForJsonImporter:
+    
+    #建構子
+    def __init__(self):
+        self.mysqlConnection = mysqlConnector.connect(host="localhost", database="findfine", user="findfine_db_root", password="asdfASDF1234")
+    
+    #若無重覆，儲存 trip
+    def insertTripIfNotExists(self, dicTripData=None):
+        queryCursor = self.mysqlConnection.cursor(buffered=True)
+        upsertCursor = self.mysqlConnection.cursor(buffered=True)
+        strQuery = (
+            #"SELECT * FROM trip_trip WHERE strOriginUrl = '%s'"
+            "SELECT * FROM trip_trip"
+        )
+        #queryCursor.execute(strQuery, dicTripData["strOriginUrl"])
+        queryCursor.execute(strQuery)
+        for (tripId, strTitle, strLocation, intUsdCost, strOriginUrl, strIntroduction, dtDatetimeFrom, dtDatetimeTo, intDurationHour, srtStyle, strGuideLanguage, intOption) in queryCursor:
+            print(strOriginUrl)
+        
+    
+    #解構子
+    def __del__(self):
+        self.mysqlConnection.close()
 
-#KKDAY
+#KKDAY crawler localdb
 class LocalDbForKKDAY:
     
     #建構子
