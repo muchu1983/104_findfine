@@ -8,12 +8,12 @@ This file is part of BSD license
 """
 import unittest
 import logging
-from cameo.cameoshell import CameoShell
+from findfine_crawler.findfineshell import FindfineShell
 """
 測試 shell
 """
 
-class CameoShellTest(unittest.TestCase):
+class FindfineShellTest(unittest.TestCase):
 
     #準備
     def setUp(self):
@@ -26,8 +26,8 @@ class CameoShellTest(unittest.TestCase):
 
     #測試 open shell
     def test_openShell(self):
-        logging.info("CameoShellTest.test_openShell")
-        shell = CameoShell()
+        logging.info("FindfineShellTest.test_openShell")
+        shell = FindfineShell()
         shell.openShell()
 
 #測試開始
