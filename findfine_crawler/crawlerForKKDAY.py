@@ -63,6 +63,7 @@ class CrawlerForKKDAY:
     #重啟 selenium driver 物件
     def restartDriver(self):
         self.quitDriver()
+        time.sleep(5)
         self.initDriver()
         
     #執行 crawler
@@ -228,7 +229,6 @@ class CrawlerForKKDAY:
                 except Exception as e:
                     logging.warning(str(e))
                     logging.warning("selenium driver crashed. skip get product: %s"%strProductUrl)
-                finally:
                     self.restartDriver() #重啟 
             if len(self.lstDicParsedProductJson) == 1000:
                 strJsonFileName = "%d_product.json"%(intProductJsonIndex*1000)
