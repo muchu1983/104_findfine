@@ -46,7 +46,9 @@ class LocalDbTest(unittest.TestCase):
     def test_localdb_for_json_importer(self):
         logging.info("LocalDbTest.test_localdb_for_json_importer")
         db = LocalDbForJsonImporter()
-        db.insertTripIfNotExists()
+        db.clearTestData() #清除前次測試資料
+        db.insertTripIfNotExists(dicTripData={"strTitle":"test", "strOriginUrl":"https://test"})
+        #db.clearTestData() #清除本次測試資料
         
 #測試開始
 if __name__ == "__main__":

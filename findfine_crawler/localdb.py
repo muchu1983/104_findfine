@@ -18,24 +18,31 @@ class LocalDbForJsonImporter:
     def __init__(self):
         self.mysqlConnection = mysqlConnector.connect(host="localhost", database="findfine", user="findfine_db_root", password="asdfASDF1234")
     
+    #解構子
+    def __del__(self):
+        self.mysqlConnection.close()
+    
     #若無重覆，儲存 trip
     def insertTripIfNotExists(self, dicTripData=None):
         queryCursor = self.mysqlConnection.cursor(buffered=True)
         upsertCursor = self.mysqlConnection.cursor(buffered=True)
-        strQuery = (
-            #"SELECT * FROM trip_trip WHERE strOriginUrl = '%s'"
-            "SELECT * FROM trip_trip"
-        )
-        #queryCursor.execute(strQuery, dicTripData["strOriginUrl"])
-        queryCursor.execute(strQuery)
-        for (tripId, strTitle, strLocation, intUsdCost, strOriginUrl, strIntroduction, dtDatetimeFrom, dtDatetimeTo, intDurationHour, srtStyle, strGuideLanguage, intOption) in queryCursor:
-            print(strOriginUrl)
-        
+        strQuerySql = ("SELECT * FROM trip_trip WHERE strOriginUrl=%(strOriginUrl)s")
+        queryCursor.execute(strQuerySql, dicTripData)
+        if queryCursor.rowcount == 0:
+            strInsertSql = (
+                "INSERT INTO trip_trip (strTitle, strOriginUrl)"
+                "VALUES (%(strTitle)s, %(strOriginUrl)s)"
+            )
+            queryCursor.execute(strInsertSql, dicTripData)
+        self.mysqlConnection.commit()
     
-    #解構子
-    def __del__(self):
-        self.mysqlConnection.close()
-
+    #清除測試資料 (clear table)
+    def clearTestData(self):
+        deleteCursor = self.mysqlConnection.cursor(buffered=True)
+        strDeleteSql = ("DELETE FROM trip_trip")
+        deleteCursor.execute(strDeleteSql)
+        self.mysqlConnection.commit()
+        
 #KKDAY crawler localdb
 class LocalDbForKKDAY:
     
