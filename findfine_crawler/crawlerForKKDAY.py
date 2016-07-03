@@ -160,13 +160,40 @@ class CrawlerForKKDAY:
         #strOriginUrl
         dicProductJson["strOriginUrl"] = strProductUrl
         #strTitle
+        strTitle = self.driver.find_element_by_css_selector("div.productview div.container div.productPage-detail h1").text
+        dicProductJson["strTitle"] = strTitle.strip()
         #strLocation
+        strLocation = self.driver.find_element_by_css_selector("div.productview div.container div.productPage-detail div.col-md-pull-4 span.h5").text
+        strLocation = re.sub("The location：", "", strLocation)
+        dicProductJson["strLocation"] = strLocation.strip()
         #intUsdCost
+        strUsdCostText = self.driver.find_element_by_css_selector("div.lowestPrice div.text-right h2.h1").text
+        strUsdCostText = re.sub("[^\d]", "", strUsdCostText.strip())
+        dicProductJson["intUsdCost"] = int(strUsdCostText)
         #strIntroduction
+        strIntroduction = self.driver.find_element_by_css_selector("div.prod-intro span").text
+        dicProductJson["strIntroduction"] = strIntroduction.strip()
         #intDurationHour
+        intDurationHour = 0
+        strDurationText = self.driver.find_element_by_css_selector("div.productview div.container div.productPage-detail div.col-md-12 span.h5").text
+        strIntInDurationHourText = re.sub("[^\d]", "", strDurationText)
+        if "hour" in strDurationText:
+            intDurationHour = int(strIntInDurationHourText)
+        elif "day" in strDurationText:
+            intDurationHour = int(strIntInDurationHourText)*24
+        else:
+            pass
+        dicProductJson["intDurationHour"] = intDurationHour
         #strGuideLanguage
-        #intOption
-        #strStyle
+        lstStrGuideLanguage = []
+        elesGuideLanguageImg = self.driver.find_elements_by_css_selector("div.productview div.container div.productPage-detail div.guide_lang_image img")
+        for eleGuideLanguageImg in elesGuideLanguageImg:
+            lstStrGuideLanguage.append(eleGuideLanguageImg.get_attribute("data-original-title").strip())
+        dicProductJson["strGuideLanguage"] = ",".join(lstStrGuideLanguage)
+        #intOption (待確認)
+        dicProductJson["intOption"] = None
+        #strStyle (kkday 無該資料)
+        dicProductJson["strStyle"] = None
         self.lstDicParsedProductJson.append(dicProductJson)
     
     #爬取 product 頁面 (strCountryPage1Url == None 會自動找尋已爬取完成之 country)
@@ -198,7 +225,8 @@ class CrawlerForKKDAY:
                     self.parseProductPage(strProductUrl=strProductUrl)
                     #更新 product DB 為已爬取 (isGot = 1)
                     #self.db.updateProductStatusIsGot(strProductUrl=strProductUrl)
-                except:
+                except Exception as e:
+                    logging.warning(str(e))
                     logging.warning("selenium driver crashed. skip get product: %s"%strProductUrl)
                 finally:
                     self.restartDriver() #重啟 
