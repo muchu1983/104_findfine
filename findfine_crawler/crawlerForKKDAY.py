@@ -32,6 +32,7 @@ class CrawlerForKKDAY:
         self.fileUtil = FilesysUtility()
         self.db = LocalDbForKKDAY()
         self.lstDicParsedProductJson = []  #product.json 資料
+        self.intProductJsonIndex = 1
         self.driver = None
         
     #取得 spider 使用資訊
@@ -199,6 +200,9 @@ class CrawlerForKKDAY:
     
     #爬取 product 頁面 (strCountryPage1Url == None 會自動找尋已爬取完成之 country)
     def crawlProductPage(self, strCountryPage1Url=None):
+        #清空計憶體殘留資料
+        self.lstDicParsedProductJson = []
+        self.intProductJsonIndex = 1
         if not strCountryPage1Url:
             #未指定 country
             lstStrObtainedCountryUrl = self.db.fetchallCompletedObtainedCountryUrl()
@@ -207,13 +211,16 @@ class CrawlerForKKDAY:
         else:
             #有指定 country url
             self.crawlProductPageWithGivenCountryUrl(strCountryPage1Url=strCountryPage1Url)
-        
+        #將最後資料寫入 json
+        if len(self.lstDicParsedProductJson) > 0:
+            strJsonFileName = "%d_product.json"%(self.intProductJsonIndex*100)
+            strProductJsonFilePath = self.fileUtil.getPackageResourcePath(strPackageName="findfine_crawler.resource.parsed_json", strResourceName=strJsonFileName)
+            self.ffUtil.writeObjectToJsonFile(dicData=self.lstDicParsedProductJson, strJsonFilePath=strProductJsonFilePath)
+            self.lstDicParsedProductJson = []
+            
     #爬取 product 頁面 (指定 country url)
     def crawlProductPageWithGivenCountryUrl(self, strCountryPage1Url=None):
         logging.info("crawl product page with country %s"%strCountryPage1Url)
-        #清空計憶體殘留資料
-        self.lstDicParsedProductJson = []
-        intProductJsonIndex = 1
         #取得 DB 紀錄中，指定 strCountryPage1Url country 的 product url
         lstStrProductUrl = self.db.fetchallProductUrlByCountryUrl(strCountryPage1Url=strCountryPage1Url)
         for strProductUrl in lstStrProductUrl:
@@ -230,9 +237,12 @@ class CrawlerForKKDAY:
                     logging.warning(str(e))
                     logging.warning("selenium driver crashed. skip get product: %s"%strProductUrl)
                     self.restartDriver() #重啟 
-            if len(self.lstDicParsedProductJson) == 1000:
-                strJsonFileName = "%d_product.json"%(intProductJsonIndex*1000)
+            #顯示進度
+            logging.info("進度: %d/100"%len(self.lstDicParsedProductJson))
+            #寫入 json
+            if len(self.lstDicParsedProductJson) == 100:
+                strJsonFileName = "%d_product.json"%(self.intProductJsonIndex*100)
                 strProductJsonFilePath = self.fileUtil.getPackageResourcePath(strPackageName="findfine_crawler.resource.parsed_json", strResourceName=strJsonFileName)
                 self.ffUtil.writeObjectToJsonFile(dicData=self.lstDicParsedProductJson, strJsonFilePath=strProductJsonFilePath)
-                intProductJsonIndex = intProductJsonIndex+1
+                self.intProductJsonIndex = self.intProductJsonIndex+1
                 self.lstDicParsedProductJson = []

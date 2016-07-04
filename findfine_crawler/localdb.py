@@ -30,8 +30,8 @@ class LocalDbForJsonImporter:
         queryCursor.execute(strQuerySql, dicTripData)
         if queryCursor.rowcount == 0:
             strInsertSql = (
-                "INSERT INTO trip_trip (strTitle, strOriginUrl)"
-                "VALUES (%(strTitle)s, %(strOriginUrl)s)"
+                "INSERT INTO trip_trip (strOriginUrl, strTitle, intDurationHour, intUsdCost, strGuideLanguage, strIntroduction, strLocation)"
+                "VALUES (%(strOriginUrl)s, %(strTitle)s, %(intDurationHour)s, %(intUsdCost)s / 32.18, %(strGuideLanguage)s, %(strIntroduction)s, %(strLocation)s)"
             )
             queryCursor.execute(strInsertSql, dicTripData)
         self.mysqlConnection.commit()
