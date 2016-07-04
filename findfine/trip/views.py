@@ -1,6 +1,7 @@
 import datetime
 from django.shortcuts import render
 from django.http import JsonResponse
+from django.db.models import Q
 from trip.models import Trip
 from itertools import chain
 
@@ -22,9 +23,12 @@ def filter(request):
     lstDicTripData = []
     qsetMatchedTrip = Trip.objects.all().filter()
     if strKeyword:
-        qsetMatchedTrip = qsetMatchedTrip.filter(strTitle__iregex="^.*%s.*$"%strKeyword)
-        qsetMatchedTrip = qsetMatchedTrip.filter(strLocation__iregex="^.*%s.*$"%strKeyword)
-        qsetMatchedTrip = qsetMatchedTrip.filter(strIntroduction__iregex="^.*%s.*$"%strKeyword)
+        queryKeyword = Q(
+            strTitle__iregex="^.*%s.*$"%strKeyword | 
+            strLocation__iregex="^.*%s.*$"%strKeyword |
+            strIntroduction__iregex="^.*%s.*$"%strKeyword
+        )
+        qsetMatchedTrip = qsetMatchedTrip.filter(queryKeyword)
     if strStyle:
         qsetMatchedTrip = qsetMatchedTrip.filter(strStyle__iregex="^.*%s.*$"%strStyle)
     if strGuideLanguage:
