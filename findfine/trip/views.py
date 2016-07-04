@@ -23,11 +23,7 @@ def filter(request):
     lstDicTripData = []
     qsetMatchedTrip = Trip.objects.all().filter()
     if strKeyword:
-        queryKeyword = Q(
-            strTitle__iregex="^.*%s.*$"%strKeyword | 
-            strLocation__iregex="^.*%s.*$"%strKeyword |
-            strIntroduction__iregex="^.*%s.*$"%strKeyword
-        )
+        queryKeyword = Q(strTitle__iregex="^.*%s.*$"%strKeyword) | Q(strLocation__iregex="^.*%s.*$"%strKeyword) | Q(strIntroduction__iregex="^.*%s.*$"%strKeyword)
         qsetMatchedTrip = qsetMatchedTrip.filter(queryKeyword)
     if strStyle:
         qsetMatchedTrip = qsetMatchedTrip.filter(strStyle__iregex="^.*%s.*$"%strStyle)
