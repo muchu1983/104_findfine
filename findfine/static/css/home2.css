@@ -207,3 +207,21 @@ body{
         margin-bottom: 2px;
       }
 
+
+
+/* mark test */
+ul li{
+    list-style-type:none;
+}
+
+div.tripImgDiv{
+    float:left;
+}
+
+div.tripTitleDiv{
+    float:right;
+}
+div.tripIntroDiv{
+    float:right;
+}
+/* mark test */

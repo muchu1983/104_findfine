@@ -57,27 +57,30 @@ body{
 
 .findMainDiv{
    margin: 0 auto;
-   height: 400px;
-   width: 1400px;
+   height: 150px;
+   width: 100%;
    //background: yellow;
    background-image:url("/static/img/find.png");
    background-repeat: no-repeat;
    background-position: center;
    background-size: cover;
+   
 }
 
-.findMainLeftDiv{
+.findMainDiv div{
+   margin: 10 10 10 10;
+   height: 100px;
+   width: 400px;
+   float:left;
+}
+
+.googleMapDiv{
+   margin: 10 10 10 10;
    height: 400px;
-   width: 750px;
-   //background: green;
-   float:left;
+   width: 100%;
+   background: yellow;
 }
 
-.findMainLeftDiv div{
-   margin: 20 20 20 20;
-   //background: brown;
-   float:left;
-}
 
 .findMainRightDiv{
    margin: 0 0 0 0;
@@ -136,6 +139,60 @@ body{
    //background: yellow;
 }
 
+.findResultDiv{
+   display: none;
+   margin: 100 auto;
+   height: 1200px;
+   width: 1500px;
+   //background: green;
+}
+
+
+.tripData{
+   margin: 10px 10px 10px 10px;
+   font-size:14px;
+   width:660px;
+   height:200px;
+   border-width:3px;
+   border-style:dashed;
+   border-color:black;
+   float:left;
+}
+
+.tripImgDiv{
+   width:200px;
+   height:200px;
+   border-width:3px;
+   border-style:dashed;
+   border-color:#FFAC55;
+   float:left;
+}
+
+.tripImgDiv img{
+   background-size: contain;
+}
+
+.tripContentDiv{
+   width:300px;
+   height:200px;
+   border-width:3px;
+   border-style:dashed;
+   border-color:red;
+   float:left;
+}
+
+.tripPriceAndWishDiv{
+   width:100px;
+   height:200px;
+   border-width:3px;
+   border-style:dashed;
+   border-color:blue;
+   float:left;
+}
+
+.lstTripData{
+   list-style-type:none;
+}
 
 .bottomDiv{
    margin: 130 auto;
@@ -213,29 +270,3 @@ body{
   font-weight: 300;
 }
 
-/* trip card */
-div.findResultDiv{
-    border-color: #4d90fe;
-    background-color: #4d90fe;
-    padding: 10px 10px 10px 10px;
-}
-
-ul li{
-    list-style-type:none;
-}
-
-div.tripData{
-    
-}
-
-div.tripImgDiv{
-    float:left;
-}
-
-div.tripTitleDiv{
-    float:right;
-}
-div.tripIntroDiv{
-    float:right;
-}
-/* trip card */
