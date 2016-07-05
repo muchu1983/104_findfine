@@ -53,6 +53,7 @@ http://www.visitacity.com/
 Notepad++ 執行設定值 (執行爬蟲 code)
 CTRL + F10
 cmd /k cd "C:\Users\muchu\Desktop\caseWorkspace\004-findfine\FINDFINE_git_code" & c:\python34\python "$(FULL_CURRENT_PATH)" & ECHO & PAUSE & EXIT
+cmd /k cd "C:\Users\josh\Desktop\test01\findfine_code" & c:\python34\python "$(FULL_CURRENT_PATH)" & ECHO & PAUSE & EXIT
 
 api 範例
 https://www.withlocals.com/api/v1/affiliates/feeds/base.xml
