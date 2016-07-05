@@ -1,4 +1,53 @@
 <html>
+<<<<<<< HEAD
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+        <title>find</title>
+        <!-- jquery and jquery-ui -->
+        <script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
+        <script src="https://code.jquery.com/ui/1.11.4/jquery-ui.min.js"></script>
+        <link rel="stylesheet" type="text/css" href="https://code.jquery.com/ui/1.11.4/themes/blitzer/jquery-ui.css">
+        <!-- find -->
+        <script type="text/javascript" src="/static/js/find.js"></script>
+        <link rel="stylesheet" type="text/css" href="/static/css/find.css">
+        <!-- google map -->
+        <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBNW1g69sGY8q_45F0Ob1lMbZn3fWyiL1o&signed_in=true&libraries=places&callback=initAutocomplete" async defer></script>
+        <script type="text/javascript" src="/static/js/placesSearch.js"></script>
+        <!-- variable from server -->
+        <script type="text/javascript"> 
+            var strKeywordFromHome = "{{keyword}}";
+        </script>
+    </head>
+    <body>
+    <!-- 語言 幣別 登入 -->
+    <div class="topDiv">
+        <div class="LogDiv"></div>
+        <div class="LoginDiv">
+            <button type="button">Login</button>
+        </div>
+        <div class="LanguageDiv">
+            <span>Language</span>
+            <select name="">
+                <option value="EN">English</option>
+                <option value="ZH">Chinese</option>
+            </select>
+        </div>
+        <div class="CurrencyDiv">
+            <span>Currency</span>
+            <select name="">
+                <option value="USD">USD</option>
+                <option value="EUR">EUR</option>
+                <option value="RMB">RMB</option>
+                <option value="GBP">GBP</option>
+                <option value="JPY">JPY</option>
+                <option value="AUD">AUD</option>
+                <option value="NZD">NZD</option>
+                <option value="SGD">SGD</option>
+                <option value="HKD">HKD</option>
+                <option value="TWD">TWD</option>
+            </select>
+        </div>
+=======
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
     <title>find</title>
@@ -27,182 +76,140 @@
         <option value="EN">English</option>
         <option value="ZH">Chinese</option>
       </select>
+>>>>>>> 5eb63623ec128559b46205ea3720bf85b4e317f2
     </div>
 
-    <div class="CurrencyDiv">
-      <span>Currency</span>
-      <select name="">
-        <option value="USD">USD</option>
-        <option value="EUR">EUR</option>
-        <option value="RMB">RMB</option>
-        <option value="GBP">GBP</option>
-        <option value="JPY">JPY</option>
-        <option value="AUD">AUD</option>
-        <option value="NZD">NZD</option>
-        <option value="SGD">SGD</option>
-        <option value="HKD">HKD</option>
-        <option value="TWD">TWD</option>
-      </select>
+    <!--查詢 時間 地點 錢 主要-->
+    <div class="findMainDiv">
+        <div>
+            <span>Place:</span>
+            <input type="text" id="placeID" placeholder="Enter Something"/>
+        </div>
+        <div>
+            <span>Budget : </span>
+            <input type="text" name="" placeholder="Enter Something"/>
+            <span>~</span>
+            <input type="text" name="" placeholder="Enter Something"/>
+        </div>
+        <div>
+            <span>Start from : </span>
+            <input type="date">
+            <span>~To:</span>
+            <input type="date">
+        </div>
     </div>
-  </div>
-
-  <!--查詢 時間 地點 錢 主要-->
-  <div class="findMainDiv">
-  
-
-      <div>
-       <!-- 有些國家不屬於洲 或又不屬於洋
-       <span>Continent</span>
-        <select name="">
-          <option value=""></option>
-          <option value=""></option>
-         <option value=""></option>
-        </select>
-        -->
-       <span>Place:</span>
-       <input type="text" id="placeID" placeholder="Enter Something"/>
-      </div>
-
-      <div>
-         <span>Budget : </span>
-         <input type="text" name="" placeholder="Enter Something"/>
-         <span>~</span>
-         <input type="text" name="" placeholder="Enter Something"/>
-
-      </div>
-
-      <div>
-         <span>Start from : </span>
-         <input type="date">
-         <span>~To:</span>
-         <input type="date">
-      </div>
-
-
-<!--
-    <div class="findMainRightDiv">
-    <input id="pac-input" class="controls" type="text" placeholder="Search Box">
-    <div id="map"></div>
+    <div class="googleMapDiv">
+        <input id="pac-input" class="controls" type="text" placeholder="Search Box" onchange="placesChange()">
+        <div id="map">
+        </div>
     </div>
--->
-  </div>
-  <div class="googleMapDiv">
-    <input id="pac-input" class="controls" type="text" placeholder="Search Box" onchange="placesChange()">
-    <div id="map"></div>
-  </div>
-
-  <!--查詢 細部-->
-  <div class="findDetailDiv">
-
-       <div class="findDetailSmallDiv">
-         <span>Duration : </span>
-         <input  type="checkbox" name="size" value="10"> 1Hr
-         <input  type="checkbox" name="size" value="12"> 3Hr
-         <input  type="checkbox" name="size" value="12"> 4~6HR
-         <input  type="checkbox" name="size" value="12"> 1 Day</br>
-         <input  type="checkbox" name="size" value="12"> More than 1 Day
+    <!--查詢 細部-->
+    <div class="findDetailDiv">
+        <div class="findDetailSmallDiv">
+            <span>Duration : </span>
+            <input  type="checkbox" name="size" value="10"> 1Hr
+            <input  type="checkbox" name="size" value="12"> 3Hr
+            <input  type="checkbox" name="size" value="12"> 4~6HR
+            <input  type="checkbox" name="size" value="12"> 1 Day</br>
+            <input  type="checkbox" name="size" value="12"> More than 1 Day
+        </div>
+        <div class="findDetailSmallDiv">
+            <span>Passenger : </span>
+            <input type="text" name="" placeholder="Enter Something"/>
+            <span>~</span>
+            <input type="text" name="" placeholder="Enter Something"/>
+            <span></span>
        </div>
-
        <div class="findDetailSmallDiv">
-          <span>Passenger : </span>
-          <input type="text" name="" placeholder="Enter Something"/>
-          <span>~</span>
-          <input type="text" name="" placeholder="Enter Something"/>
-          <span></span>
-       </div>
-       
-       <div class="findDetailSmallDiv">
-          <span>Style : </span>
-          <input type="checkbox" name="" value="">Cultural tours
-          <input type="checkbox" name="" value="">Food tours</br>
-          <input type="checkbox" name="" value="">Fashion tours
-          <input type="checkbox" name="" value="">Wild life tours</br>
-          <input type="checkbox" name="" value="">Sports tours
-          <input type="checkbox" name="" value="">Eco tours
-       </div>
-
-       <div class="findDetailSmallDiv">
-          <span>Tour starts : </span>
+            <span>Style : </span>
+            <input type="checkbox" name="" value="">Cultural tours
+            <input type="checkbox" name="" value="">Food tours</br>
+            <input type="checkbox" name="" value="">Fashion tours
+            <input type="checkbox" name="" value="">Wild life tours</br>
+            <input type="checkbox" name="" value="">Sports tours
+            <input type="checkbox" name="" value="">Eco tours
+        </div>
+        <div class="findDetailSmallDiv">
+            <span>Tour starts : </span>
             <select>
-               <option>00:00</option>
-               <option>02:00</option>
-               <option>06:00</option>
-               <option>08:00</option>
-               <option>10:00</option>
-               <option>12:00</option>
-               <option>14:00</option>
-               <option>16:00</option>
-               <option>18:00</option>
-               <option>20:00</option>
-               <option>22:00</option>
+                <option>00:00</option>
+                <option>02:00</option>
+                <option>06:00</option>
+                <option>08:00</option>
+                <option>10:00</option>
+                <option>12:00</option>
+                <option>14:00</option>
+                <option>16:00</option>
+                <option>18:00</option>
+                <option>20:00</option>
+                <option>22:00</option>
             </select>
-          <span>Tour ends : </span>
+            <span>Tour ends : </span>
             <select>
-               <option>00:00</option>
-               <option>02:00</option>
-               <option>06:00</option>
-               <option>08:00</option>
-               <option>10:00</option>
-               <option>12:00</option>
-               <option>14:00</option>
-               <option>16:00</option>
-               <option>18:00</option>
-               <option>20:00</option>
-               <option>22:00</option>
+                <option>00:00</option>
+                <option>02:00</option>
+                <option>06:00</option>
+                <option>08:00</option>
+                <option>10:00</option>
+                <option>12:00</option>
+                <option>14:00</option>
+                <option>16:00</option>
+                <option>18:00</option>
+                <option>20:00</option>
+                <option>22:00</option>
             </select>
-       </div>
-
-       <div class="findDetailSmallDiv">
-           </br>
-           <span>Guide's language : </span>
-           <input type="checkbox" name="" value="">English
-           <input type="checkbox" name="" value="">Chinese
-       </div>
-
-       <div class="findDetailSmallDiv">
-           <span>Available : </span>
-           <input type="checkbox" name="" value="">Instant confirmation</br>
-           <input type="checkbox" name="" value="">On request
-       </div>
-  </div>
-
-  <!--隱藏 細部查詢 按鈕-->
-  <div class="hideButtonDiv">
-     <button id="hideButton" type="button" onclick="swithDetail()">Expand</button>
-  </div>
-
-  </br>
-
-  <!--search-->
-  <div class="searchDiv">
-     <span>Paint your life in</span>
-     <div id="locationField">
-     <input id="autocomplete" placeholder="Destination" onFocus="geolocate()" type="text"></input>
-     </div>
-     <button id="btnFindTrip" type="button">Find</button>
-  </div>
-  
-  <!-- 搜尋結果 -->
-  <div class="findResultDiv">
-    <ul class="lstTripData">
-    </ul>
-  </div>
-  
-  
-  
-  
-  <div class="bottomDiv">
-     <span>Copyright © 2016 FindFineTour All rights reserved.</span>
-     <div class="LogDiv">
+        </div>
+        <div class="findDetailSmallDiv">
+            </br>
+            <span>Guide's language : </span>
+            <input type="checkbox" name="" value="">English
+            <input type="checkbox" name="" value="">Chinese
+        </div>
+        <div class="findDetailSmallDiv">
+            <span>Available : </span>
+            <input type="checkbox" name="" value="">Instant confirmation</br>
+            <input type="checkbox" name="" value="">On request
+        </div>
     </div>
-  </div>
-
-  </body>
+    <!--隱藏 細部查詢 按鈕-->
+    <div class="hideButtonDiv">
+        <button id="hideButton" type="button" onclick="swithDetail()">Expand</button>
+    </div>
+    </br>
+    <!--search-->
+    <div class="searchDiv">
+        <span>Paint your life in</span>
+        <div id="locationField">
+            <input id="autocomplete" placeholder="Destination" onFocus="geolocate()" type="text"></input>
+        </div>
+        <button id="btnFindTrip" type="button">Find</button>
+    </div>
+    <!-- 搜尋結果 -->
+    <div class="findResultDiv">
+        <ul class="lstTripData">
+        </ul>
+    </div>
+    <div class="bottomDiv">
+        <span>Copyright © 2016 FindFineTour All rights reserved.</span>
+        <div class="LogDiv">
+        </div>
+    </div>
+    </body>
 <html/>
 
 <script language="javascript">
 
 $(function() {
+<<<<<<< HEAD
+    var place = getUrlParam('place');
+    $('#placeID').val(strKeywordFromHome);
+    $('#pac-input').val(strKeywordFromHome);
+    search();
+    $('#autocomplete').change(function() {
+    $('#placeID').val($('#autocomplete').val());
+    $('#pac-input').val($('#autocomplete').val());
+    });
+=======
       var place = getUrlParam('place');
       alert("strKeywordFromHome :"+strKeywordFromHome);
       $('#placeID').val(strKeywordFromHome);   //TODO
@@ -212,28 +219,27 @@ $(function() {
            $('#placeID').val($('#autocomplete').val());
            $('#pac-input').val($('#autocomplete').val());
       });
+>>>>>>> 5eb63623ec128559b46205ea3720bf85b4e317f2
 });
 
- function search(){
-      //$(".findDetailDiv").hide();
-      //$(".googleMapDiv").hide();
-      var strFilterText = $('#placeID').val();
-      var strFilterQueryUrl = "/trip/filter";
-      if (strFilterText != ""){
-          strFilterQueryUrl = strFilterQueryUrl + "?keyword=" + strFilterText;
-      };
-      $.getJSON(strFilterQueryUrl, function(jsonResp){
-          console.log(jsonResp);
-          $("div.findResultDiv ul.lstTripData").html("")
-          for (i = 0; i < jsonResp.length; i++) {
-              var dicTripData = jsonResp[i];
-              var strTripDataHtml = getTripDataHtml(dicTripData["strTitle"], dicTripData["intUsdCost"], dicTripData["strIntroduction"], dicTripData["strLocation"], dicTripData["intDurationHour"], dicTripData["strOriginUrl"]);
-              $("div.findResultDiv ul.lstTripData").append(strTripDataHtml);
-          };
-          $("div.findResultDiv").fadeIn();
-          $("#btnHideTrip").show();
-      });
- } 
+function search(){
+    var strFilterText = $('#placeID').val();
+    var strFilterQueryUrl = "/trip/filter";
+    if (strFilterText != ""){
+    strFilterQueryUrl = strFilterQueryUrl + "?keyword=" + strFilterText;
+    };
+    $.getJSON(strFilterQueryUrl, function(jsonResp){
+    console.log(jsonResp);
+    $("div.findResultDiv ul.lstTripData").html("")
+    for (i = 0; i < jsonResp.length; i++){
+    var dicTripData = jsonResp[i];
+    var strTripDataHtml =getTripDataHtml(dicTripData["strTitle"],dicTripData["intUsdCost"], dicTripData["strIntroduction"],dicTripData["strLocation"],dicTripData["intDurationHour"],dicTripData["strOriginUrl"]);
+    $("div.findResultDiv ul.lstTripData").append(strTripDataHtml);
+    };
+    $("div.findResultDiv").fadeIn();
+    $("#btnHideTrip").show();
+    });
+}
 
   $("#btnFindTrip").click(function(){
       $(".findDetailDiv").hide();
@@ -283,12 +289,11 @@ $(function() {
         return strTripDataHtml;
     };
 
-            function getUrlParam(name) {
-            var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)");
-            var r = window.location.search.substr(1).match(reg);
-            if (r != null) return unescape(r[2]); return null;
-        }
+    function getUrlParam(name) {
+    var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)");
+    var r = window.location.search.substr(1).match(reg);
+    if (r != null) return unescape(r[2]); return null;
+    }
 
-
-populateCountries("country", "state");
+    populateCountries("country", "state");
 </script>
