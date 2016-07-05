@@ -161,6 +161,11 @@ class CrawlerForKKDAY:
         dicProductJson = {}
         #strOriginUrl
         dicProductJson["strOriginUrl"] = strProductUrl
+        #strImageUrl
+        strImageDivStyle = self.driver.find_element_by_css_selector("div#header-imageview div.productPage-photos div.img-bg-full").get_attribute("style")
+        strImageDivStyle = re.sub("[:;\"\s\(\)]", "", strImageDivStyle).strip()
+        strImageUrl = re.match("^background-imageurl//(img\.kkday\.com/image/.*)$", strImageDivStyle).group(1)
+        dicProductJson["strImageUrl"] = strImageUrl.strip()
         #strTitle
         strTitle = self.driver.find_element_by_css_selector("div.productview div.container div.productPage-detail h1").text
         dicProductJson["strTitle"] = strTitle.strip()
