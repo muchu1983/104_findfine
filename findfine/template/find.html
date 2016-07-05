@@ -1,4 +1,5 @@
 <html>
+<<<<<<< HEAD
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
         <title>find</title>
@@ -46,6 +47,36 @@
                 <option value="TWD">TWD</option>
             </select>
         </div>
+=======
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <title>find</title>
+    <link rel="stylesheet" type="text/css" href="/static/css/find.css">
+    <script type="text/javascript" src="/static/js/countryState.js"></script>
+    <script type="text/javascript" src="/static/js/jquery.min.js"></script>
+    <script type="text/javascript" src="/static/js/find.js"></script>
+    <script type="text/javascript" src="/static/js/placesSearch.js"></script>
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBNW1g69sGY8q_45F0Ob1lMbZn3fWyiL1o&signed_in=true&libraries=places&callback=initAutocomplete" async defer></script>
+    <script type="text/javascript"> 
+            var strKeywordFromHome = "{{keyword}}";    //TODO
+    </script>
+  </head>
+  <body>
+  <!-- 語言 幣別 登入 -->
+  <div class="topDiv">
+    <div class="LogDiv"></div>
+  
+    <div class="LoginDiv">
+      <button type="button">Login</button>
+    </div>
+
+    <div class="LanguageDiv">
+      <span>Language</span>
+      <select name="">
+        <option value="EN">English</option>
+        <option value="ZH">Chinese</option>
+      </select>
+>>>>>>> 5eb63623ec128559b46205ea3720bf85b4e317f2
     </div>
 
     <!--查詢 時間 地點 錢 主要-->
@@ -169,6 +200,7 @@
 <script language="javascript">
 
 $(function() {
+<<<<<<< HEAD
     var place = getUrlParam('place');
     $('#placeID').val(strKeywordFromHome);
     $('#pac-input').val(strKeywordFromHome);
@@ -177,6 +209,17 @@ $(function() {
     $('#placeID').val($('#autocomplete').val());
     $('#pac-input').val($('#autocomplete').val());
     });
+=======
+      var place = getUrlParam('place');
+      alert("strKeywordFromHome :"+strKeywordFromHome);
+      $('#placeID').val(strKeywordFromHome);   //TODO
+      $('#pac-input').val(strKeywordFromHome);  //TOD
+      search();
+      $('#autocomplete').change(function() {
+           $('#placeID').val($('#autocomplete').val());
+           $('#pac-input').val($('#autocomplete').val());
+      });
+>>>>>>> 5eb63623ec128559b46205ea3720bf85b4e317f2
 });
 
 function search(){
