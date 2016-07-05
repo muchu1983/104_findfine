@@ -1,12 +1,22 @@
 <html>
     <head>
-        <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
         <title>find</title>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+        <!-- jquery and jquery-ui -->
+        <script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
+        <link rel="stylesheet" type="text/css" href="https://code.jquery.com/ui/1.11.4/themes/blitzer/jquery-ui.css">
+        <script src="https://code.jquery.com/ui/1.11.4/jquery-ui.min.js"></script>
+        <!-- find -->
         <link rel="stylesheet" type="text/css" href="/static/css/find2.css">
-        <script type="text/javascript" src="/static/js/countryState.js"></script>
-        <script type="text/javascript" src="/static/js/jquery.min.js"></script>
         <script type="text/javascript" src="/static/js/find2.js"></script>
+        <!-- google map -->
+        <script type="text/javascript" src="/static/js/countryState.js"></script>
         <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBNW1g69sGY8q_45F0Ob1lMbZn3fWyiL1o&signed_in=true&libraries=places&callback=initAutocomplete" async defer></script>
+        <!-- variable from server -->
+        <script type="text/javascript"> 
+            var strKeywordFromHome = "{{keyword}}";
+        </script>
+        
     </head>
     <body>
     <!-- 語言 幣別 登入 -->
@@ -41,10 +51,7 @@
             </select>
         </div>
     </div>
-    <!-- variable from server -->
-    <script type="text/javascript"> 
-        var strKeywordFromHome = "{{keyword}}";
-    </script>
+    
     <!--查詢 時間 地點 錢 主要-->
     <div class="findMainDiv">
     

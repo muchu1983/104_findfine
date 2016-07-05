@@ -1,0 +1,209 @@
+body{
+   font-size:28px;
+   font-family:cursive;
+   margin: 0 0 0 0;
+   //background: silver;
+}
+
+.topDiv{
+   height: 600px;
+   //background: pink;
+   background-image:url("/static/img/lynmo.jpg");
+   background-repeat: no-repeat;
+   background-position: center;
+   background-size: cover;
+}
+
+.LogDiv{
+   height: 100px;
+   width: 150px;
+   float:left;
+   //background: blue;
+   background-image:url("/static/img/log.jpg");
+   background-repeat: no-repeat;
+   background-position: center;
+   background-size: contain;
+}
+
+.LoginDiv{
+   height: 50px;
+   width: 150px;
+   float:right;
+}
+
+.LoginDiv button{
+   width:120px;
+   height:40px;
+   font-size:30px;
+   margin: 10 10 10 10;
+}
+
+.LanguageDiv{
+   height: 50px;
+   width: 180px;
+   //background: yellow;
+   float:right;
+}
+
+.CurrencyDiv{
+   height: 50px;
+   width: 180px;
+   //background: red;
+   float:right;
+}
+
+.findDiv{
+      font-size:48px;
+      color:white;
+      position: absolute;
+      width:450px;
+      height:50px;
+      top:0;
+      right:0;
+      bottom:0;
+      left:0;
+      margin:auto;
+      //background:#f60;
+}
+
+.findDiv button{
+   width:120px;
+   height:40px;
+   font-size:30px;
+   margin: 10 10 10 10;
+}
+
+.cityDiv{
+   margin: 0 auto;
+   width: 1200px;
+   height: 900px;
+   //background: yellow;
+}
+
+.cityBigDiv{
+   margin-left:10px;
+   margin-top:10px;
+   width: 550px;
+   height:250px;
+   //background: white;
+   float:left;
+}
+
+.citySmallDiv{
+   margin-left:10px;
+   margin-top:10px;
+   width: 300px;
+   height:250px;
+   //background: purple;
+   float:left;
+}
+
+.cityBigDiv img{
+   width:100%;
+   height:100%;
+   //background-size: cover;
+}
+
+.citySmallDiv img{
+   width:100%;
+   height:100%;
+   //background-size: cover;
+}
+
+
+.stortMothDiv{
+   margin: 0 auto;
+   width: 1000px;
+   height: 400px;
+   //background: green;
+}
+
+.stortMothLeftDiv{
+   margin: 0 0 0 0;
+   background-image:url("/static/img/TajMahal.jpg");
+   background-repeat: no-repeat;
+   background-position: center;
+   background-size: cover;
+   width: 440px;
+   height: 300px;
+   //background: brown;
+   float:left;
+}
+
+.stortMothRightDiv{
+   font-size:20px;
+   margin: 10px 0 0 10px;
+   width: 550px;
+   height: 300px;
+   //background: blue;
+   float:left;
+}
+
+.treatyDiv{
+   margin: 0 auto;
+   width: 1200px;
+   height:300px;
+   //background: blue;
+   
+}
+
+.treatyDetailDiv {
+   margin-left:20px;
+   height: 250px;
+   width: 350px;
+   //background: orange;
+   float:left;
+}
+
+.bottomDiv{
+   margin: 0 auto;
+   width: 1200px;
+   height: 50px;
+   //background: green;
+}
+
+
+ #map {
+        height: 100%;
+      }
+
+
+#locationField, #controls {
+        position: relative;
+        width: 350px;
+      }
+      #autocomplete {
+        position: absolute;
+        top: 0px;
+        left: 0px;
+        width: 99%;
+      }
+      .label {
+        text-align: right;
+        font-weight: bold;
+        width: 100px;
+        color: #303030;
+      }
+      #address {
+        border: 1px solid #000090;
+        background-color: #f0f0ff;
+        width: 480px;
+        padding-right: 2px;
+      }
+      #address td {
+        font-size: 10pt;
+      }
+      .field {
+        width: 99%;
+      }
+      .slimField {
+        width: 80px;
+      }
+      .wideField {
+        width: 200px;
+      }
+      #locationField {
+        height: 20px;
+        margin-bottom: 2px;
+      }
+
