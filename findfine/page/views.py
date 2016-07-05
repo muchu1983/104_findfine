@@ -5,7 +5,8 @@ def showHomePage(request):
     return render(request, "home.html", {})
     
 def showFindPage(request):
-    return render(request, "find.html", {})
+    strKeyword = request.GET.get("keyword", None)
+    return render(request, "find.html", {"keyword":strKeyword})
     
 def showHome2Page(request):
     return render(request, "home2.html", {})
