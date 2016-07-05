@@ -1,4 +1,9 @@
-(function($){
+
+$(function() {
+    $('#btnFindTrip').click(function(){
+        location.href='find?keyword='+$('#autocomplete').val();
+    });
+});
     var placeSearch, autocomplete;
     var componentForm = {
         street_number: 'short_name',
@@ -61,4 +66,3 @@
         }
     }
     // [END region_geolocation]
-})(jQuery);
