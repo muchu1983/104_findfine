@@ -7,7 +7,7 @@
      <script type="text/javascript" src="/static/js/home.js"></script>
      <script type="text/javascript" src="/static/js/find.js"></script>
      <link type="text/css" rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500">
-     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBNW1g69sGY8q_45F0Ob1lMbZn3fWyiL1o&signed_in=true&libraries=places&callback=initAutocomplete" async defer></script> 
+     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBNW1g69sGY8q_45F0Ob1lMbZn3fWyiL1o&signed_in=true&libraries=places&callback=initAutocomplete" async defer></script>
  </head>
   <body>
 
@@ -47,20 +47,13 @@
     
       <!-- 搜尋 -->  
   <div class="findDiv">
+        
      <span>Paint your life in</span>
      <div id="locationField">
       <input id="autocomplete" placeholder="Destination" onFocus="geolocate()" type="text"></input>
      </div>
-     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<button id="btnFindTrip" type="button">Find</button>
-      <!--
-      <span>Paint your life in</span>
-      <input id="strFilterText" type="text" name="" placeholder="Destination"/>
-      <button id="btnFindTrip" type="button">Find</button>
-      <button id="btnHideTrip" style="display: none;" type="button">Hide</button>
-      -->
+     <button id="btnFindTrip" type="button">Find</button>
   </div>
-    
-    
   </div>
 
 
@@ -73,15 +66,15 @@
   <!-- 城市推薦 -->
   <div class="cityDiv">
      <p>Classic Cities</p>
-     <div class="cityBigDiv">  <a href="find"><img src="/static/img/Bangkok.jpg"    title="see more about Bangkok"/>   </a></div>
-     <div class="citySmallDiv"><a href="find"><img src="/static/img/Barcelona.jpg"  title="see more about Barcelona"/> </a></div>
-     <div class="citySmallDiv"><a href="find"><img src="/static/img/CapeTown.jpg"   title="see more about Cape Town"/> </a></div>
-     <div class="citySmallDiv"><a href="find"><img src="/static/img/Charleston.jpg" title="see more about Charleston"/></a></div>
-     <div class="citySmallDiv"><a href="find"><img src="/static/img/Florence.jpg"   title="see more about Florence"/>  </a></div>
-     <div class="cityBigDiv">  <a href="find"><img src="/static/img/Jerusalem.jpg"  title="see more about Jerusalem"/> </a></div>
-     <div class="citySmallDiv"><a href="find"><img src="/static/img/Krakow.jpg"     title="see more about Krakow"/>    </a></div>
-     <div class="cityBigDiv">  <a href="find"><img src="/static/img/Kyoto.jpg"      title="see more about Kyoto"/>     </a></div>
-     <div class="citySmallDiv"><a href="find"><img src="/static/img/SiemReap.jpg"   title="see more about Siem Reap"/> </a></div>
+     <div class="cityBigDiv">  <a href="find?place=Bangkok"><img src="/static/img/Bangkok.jpg"    title="see more about Bangkok"/>   </a></div>
+     <div class="citySmallDiv"><a href="find?place=Barcelona"><img src="/static/img/Barcelona.jpg"  title="see more about Barcelona"/> </a></div>
+     <div class="citySmallDiv"><a href="find?place=CapeTown"><img src="/static/img/CapeTown.jpg"   title="see more about Cape Town"/> </a></div>
+     <div class="citySmallDiv"><a href="find?place=Charleston"><img src="/static/img/Charleston.jpg" title="see more about Charleston"/></a></div>
+     <div class="citySmallDiv"><a href="find?place=Florence"><img src="/static/img/Florence.jpg"   title="see more about Florence"/>  </a></div>
+     <div class="cityBigDiv">  <a href="find?place=Jerusalem"><img src="/static/img/Jerusalem.jpg"  title="see more about Jerusalem"/> </a></div>
+     <div class="citySmallDiv"><a href="find?place=Krakow"><img src="/static/img/Krakow.jpg"     title="see more about Krakow"/>    </a></div>
+     <div class="cityBigDiv">  <a href="find?place=Kyoto"><img src="/static/img/Kyoto.jpg"      title="see more about Kyoto"/>     </a></div>
+     <div class="citySmallDiv"><a href="find?place=SiemReap"><img src="/static/img/SiemReap.jpg"   title="see more about Siem Reap"/> </a></div>
   </div>
   
   <!-- 廣告推薦  先忽略 待討論外觀型態-->
@@ -132,3 +125,10 @@
   </div>
   </body>
 <html/>
+<script language="javascript">
+$(function() {
+  $('#btnFindTrip').click(function(){
+         location.href='find?place='+$('#autocomplete').val();
+  });
+});
+</script>

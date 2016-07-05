@@ -5,6 +5,8 @@ This file is part of BSD license
 
 <https://opensource.org/licenses/BSD-3-Clause>
 */
+
+
 (function($){
     
     $(document).ready(initHome);
@@ -54,6 +56,7 @@ This file is part of BSD license
     };
     
 })(jQuery);
+
 
 
 
