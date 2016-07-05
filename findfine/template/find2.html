@@ -1,205 +1,216 @@
 <html>
-  <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-    <title>find</title>
-    <link rel="stylesheet" type="text/css" href="/static/css/find.css">
-    <script type="text/javascript" src="/static/js/countryState.js"></script>
-    <script type="text/javascript" src="/static/js/jquery.min.js"></script>
-    <script type="text/javascript" src="/static/js/find.js"></script>
-    <script type="text/javascript" src="/static/js/home.js"></script>
-    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBNW1g69sGY8q_45F0Ob1lMbZn3fWyiL1o&signed_in=true&libraries=places&callback=initAutocomplete" async defer></script>
-  </head>
-  <body>
-  <!-- 語言 幣別 登入 -->
-  <div class="topDiv">
-    <div class="LogDiv"></div>
+    <head>
+        <title>find</title>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+        <!-- jquery and jquery-ui -->
+        <script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
+        <link rel="stylesheet" type="text/css" href="https://code.jquery.com/ui/1.11.4/themes/blitzer/jquery-ui.css">
+        <script src="https://code.jquery.com/ui/1.11.4/jquery-ui.min.js"></script>
+        <!-- find -->
+        <link rel="stylesheet" type="text/css" href="/static/css/find2.css">
+        <script type="text/javascript" src="/static/js/find2.js"></script>
+        <!-- google map -->
+        <script type="text/javascript" src="/static/js/countryState.js"></script>
+        <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBNW1g69sGY8q_45F0Ob1lMbZn3fWyiL1o&signed_in=true&libraries=places&callback=initAutocomplete" async defer></script>
+        <!-- variable from server -->
+        <script type="text/javascript"> 
+            var strKeywordFromHome = "{{keyword}}";
+        </script>
+        
+    </head>
+    <body>
+    <!-- 語言 幣別 登入 -->
+    <div class="topDiv">
+        <div class="LogDiv"></div>
   
-    <div class="LoginDiv">
-      <button type="button">Login</button>
+        <div class="LoginDiv">
+            <button type="button">Login</button>
+        </div>
+
+        <div class="LanguageDiv">
+            <span>Language</span>
+            <select name="">
+                <option value="EN">English</option>
+                <option value="ZH">Chinese</option>
+            </select>
+        </div>
+
+        <div class="CurrencyDiv">
+            <span>Currency</span>
+            <select name="">
+                <option value="USD">USD</option>
+                <option value="EUR">EUR</option>
+                <option value="RMB">RMB</option>
+                <option value="GBP">GBP</option>
+                <option value="JPY">JPY</option>
+                <option value="AUD">AUD</option>
+                <option value="NZD">NZD</option>
+                <option value="SGD">SGD</option>
+                <option value="HKD">HKD</option>
+                <option value="TWD">TWD</option>
+            </select>
+        </div>
     </div>
+    
+    <!--查詢 時間 地點 錢 主要-->
+    <div class="findMainDiv">
+    
+        <div class="findMainLeftDiv">
+            <div>
+                <!-- 有些國家不屬於洲 或又不屬於洋
+                    <span>Continent</span>
+                    <select name="">
+                        <option value=""></option>
+                        <option value=""></option>
+                        <option value=""></option>
+                    </select>
+                    -->
 
-    <div class="LanguageDiv">
-      <span>Language</span>
-      <select name="">
-        <option value="EN">English</option>
-        <option value="ZH">Chinese</option>
-      </select>
-    </div>
+                <span>Country</span>
+                <select id="country" name="country"></select>
+                <span>State</span>
+                <select name="state" id="state"></select>
+            </div>
 
-    <div class="CurrencyDiv">
-      <span>Currency</span>
-      <select name="">
-        <option value="USD">USD</option>
-        <option value="EUR">EUR</option>
-        <option value="RMB">RMB</option>
-        <option value="GBP">GBP</option>
-        <option value="JPY">JPY</option>
-        <option value="AUD">AUD</option>
-        <option value="NZD">NZD</option>
-        <option value="SGD">SGD</option>
-        <option value="HKD">HKD</option>
-        <option value="TWD">TWD</option>
-      </select>
-    </div>
-  </div>
+            <div>
+                <span>Budget : </span>
+                <input type="text" name="" placeholder="Enter Something"/>
+                <span>~</span>
+                <input type="text" name="" placeholder="Enter Something"/>
+            </div>
 
-  <!--查詢 時間 地點 錢 主要-->
-  <div class="findMainDiv">
-  
-    <div class="findMainLeftDiv">
-      <div>
-       <!-- 有些國家不屬於洲 或又不屬於洋
-       <span>Continent</span>
-        <select name="">
-          <option value=""></option>
-          <option value=""></option>
-         <option value=""></option>
-        </select>
-        -->
-
-       <span>Country</span>
-        <select id="country" name="country"></select>
-       <span>State</span>
-        <select name="state" id="state"></select>
-      </div>
-
-      <div>
-         <span>Budget : </span>
-         <input type="text" name="" placeholder="Enter Something"/>
-         <span>~</span>
-         <input type="text" name="" placeholder="Enter Something"/>
-
-      </div>
-
-      <div>
-         <span>Start from : </span>
-         <input type="date">
-         <span>~To:</span>
-         <input type="date">
-      </div>
+            <div>
+                <span>Start from : </span>
+                <input type="date">
+                <span>~To:</span>
+                <input type="date">
+            </div>
       
-      <div>
-        <span>order by</span>
-        <select name="">
-          <option value="Place">Place</option>
-          <option value="Budget">Budget</option>
-          <option value="Favorability">Favorability</option>
-          <option value="StartDate">Start date</option>
-        </select>
-      </div>
+            <div>
+                <span>order by</span>
+                <select name="">
+                    <option value="Place">Place</option>
+                    <option value="Budget">Budget</option>
+                    <option value="Favorability">Favorability</option>
+                    <option value="StartDate">Start date</option>
+                </select>
+            </div>
 
+        </div>
+        <div class="findMainRightDiv">
+            <input id="pac-input" class="controls" type="text" placeholder="Search Box">
+            <div id="map"></div>
+        </div>
+    
     </div>
-    <div class="findMainRightDiv">
-    <input id="pac-input" class="controls" type="text" placeholder="Search Box">
-    <div id="map"></div>
-    </div>
-  
-  </div>
 
-  <!--查詢 細部-->
-  <div class="findDetailDiv">
+    <!--查詢 細部-->
+    <div class="findDetailDiv">
 
-       <div class="findDetailSmallDiv">
-         <span>Duration : </span>
-         <input  type="checkbox" name="size" value="10"> 1Hr
-         <input  type="checkbox" name="size" value="12"> 3Hr
-         <input  type="checkbox" name="size" value="12"> 4~6HR
-         <input  type="checkbox" name="size" value="12"> 1 Day</br>
-         &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input  type="checkbox" name="size" value="12"> More than 1 Day
+        <div class="findDetailSmallDiv">
+            <span>Duration : </span>
+            <input  type="checkbox" name="size" value="10"> 1Hr
+            <input  type="checkbox" name="size" value="12"> 3Hr
+            <input  type="checkbox" name="size" value="12"> 4~6HR
+            <input  type="checkbox" name="size" value="12"> 1 Day</br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input  type="checkbox" name="size" value="12"> More than 1 Day
        </div>
 
-       <div class="findDetailSmallDiv">
-          <span>Passenger : </span>
-          <input type="text" name="" placeholder="Enter Something"/>
-          <span>~</span>
-          <input type="text" name="" placeholder="Enter Something"/>
-          <span></span>
-       </div>
+        <div class="findDetailSmallDiv">
+        <span>Passenger : </span>
+            <input type="text" name="" placeholder="Enter Something"/>
+            <span>~</span>
+            <input type="text" name="" placeholder="Enter Something"/>
+            <span></span>
+        </div>
        
-       <div class="findDetailSmallDiv">
-          <span>Style : </span>
-          <input type="checkbox" name="" value="">Cultural tours
-          <input type="checkbox" name="" value="">Food tours</br>
-          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type="checkbox" name="" value="">Fashion tours
-          <input type="checkbox" name="" value="">Wild life tours</br>
-          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type="checkbox" name="" value="">Sports tours
-          <input type="checkbox" name="" value="">Eco tours
-       </div>
+        <div class="findDetailSmallDiv">
+            <span>Style : </span>
+            <input type="checkbox" name="" value="">Cultural tours
+            <input type="checkbox" name="" value="">Food tours</br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type="checkbox" name="" value="">Fashion tours
+            <input type="checkbox" name="" value="">Wild life tours</br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type="checkbox" name="" value="">Sports tours
+            <input type="checkbox" name="" value="">Eco tours
+        </div>
 
-       <div class="findDetailSmallDiv">
-          <span>Tour starts : </span>
+        <div class="findDetailSmallDiv">
+            <span>Tour starts : </span>
             <select>
-               <option>00:00</option>
-               <option>02:00</option>
-               <option>06:00</option>
-               <option>08:00</option>
-               <option>10:00</option>
-               <option>12:00</option>
-               <option>14:00</option>
-               <option>16:00</option>
-               <option>18:00</option>
-               <option>20:00</option>
-               <option>22:00</option>
+                <option>00:00</option>
+                <option>02:00</option>
+                <option>06:00</option>
+                <option>08:00</option>
+                <option>10:00</option>
+                <option>12:00</option>
+                <option>14:00</option>
+                <option>16:00</option>
+                <option>18:00</option>
+                <option>20:00</option>
+                <option>22:00</option>
             </select>
-          <span>Tour ends : </span>
+            <span>Tour ends : </span>
             <select>
-               <option>00:00</option>
-               <option>02:00</option>
-               <option>06:00</option>
-               <option>08:00</option>
-               <option>10:00</option>
-               <option>12:00</option>
-               <option>14:00</option>
-               <option>16:00</option>
-               <option>18:00</option>
-               <option>20:00</option>
-               <option>22:00</option>
+                <option>00:00</option>
+                <option>02:00</option>
+                <option>06:00</option>
+                <option>08:00</option>
+                <option>10:00</option>
+                <option>12:00</option>
+                <option>14:00</option>
+                <option>16:00</option>
+                <option>18:00</option>
+                <option>20:00</option>
+                <option>22:00</option>
             </select>
-       </div>
+        </div>
 
-       <div class="findDetailSmallDiv">
-           </br>
-           <span>Guide's language : </span>
-           <input type="checkbox" name="" value="">English
-           <input type="checkbox" name="" value="">Chinese
-       </div>
+        <div class="findDetailSmallDiv">
+            </br>
+            <span>Guide's language : </span>
+            <input type="checkbox" name="" value="">English
+            <input type="checkbox" name="" value="">Chinese
+        </div>
 
-       <div class="findDetailSmallDiv">
-           <span>Available : </span>
-           <input type="checkbox" name="" value="">Instant confirmation</br>
-           &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type="checkbox" name="" value="">On request
-       </div>
-  </div>
-
-  <!--隱藏 細部查詢 按鈕-->
-  <div class="hideButtonDiv">
-     <button id="hideButton" type="button" onclick="swithDetail()">Expand</button>
-  </div>
-
-  </br>
-
-  <!--search-->
-  <div class="searchDiv">
-     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span>Paint your life in</span>
-     <div id="locationField">
-     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input id="autocomplete" placeholder="Destination" onFocus="geolocate()" type="text"></input>
-     </div>
-     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<button id="btnFindTrip" type="button">Find</button>
-  </div>
-  
-  
-  
-  
-  <div class="bottomDiv">
-     <span>Copyright © 2016 FindFineTour All rights reserved.</span>
-     <div class="LogDiv">
+        <div class="findDetailSmallDiv">
+            <span>Available : </span>
+            <input type="checkbox" name="" value="">Instant confirmation</br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type="checkbox" name="" value="">On request
+        </div>
     </div>
-  </div>
 
-  </body>
-<html/>
+    <!--隱藏 細部查詢 按鈕-->
+    <div class="hideButtonDiv">
+        <button id="hideButton" type="button" onclick="swithDetail()">Expand</button>
+    </div>
+
+    </br>
+
+    <!--search-->
+    <div class="searchDiv">
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span>Paint your life in</span>
+        <div id="locationField">
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input id="autocomplete" placeholder="Destination" onFocus="geolocate()" type="text"></input>
+        </div>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<button id="btnFindTrip" type="button">Find</button>
+    </div>
+    
+    <!-- 搜尋結果 -->
+    <div class="findResultDiv" style="display: none;">
+        <ul class="lstTripData">
+        </ul>
+    </div>
+    
+    <div class="bottomDiv">
+        <span>Copyright © 2016 FindFineTour All rights reserved.</span>
+        <div class="LogDiv">
+        </div>
+    </div>
+
+    </body>
+</html>
 
 
 <script language="javascript">
-            populateCountries("country", "state");
+    populateCountries("country", "state");
 </script>

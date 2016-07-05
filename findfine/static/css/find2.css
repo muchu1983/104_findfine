@@ -1,0 +1,241 @@
+body{
+   font-size:28px;
+   font-family:cursive;
+   margin: 0 0 0 0;
+   //background: silver;
+}
+
+.topDiv{
+   height: 100px;
+   //background: pink;
+}
+
+.LogDiv{
+   height: 100px;
+   width: 150px;
+   float:left;
+   //background: blue;
+   background-image:url("/static/img/log.jpg");
+   background-repeat: no-repeat;
+   background-position: center;
+   background-size: contain;
+}
+.LoginDiv{
+   height: 50px;
+   width: 150px;
+   float:right;
+}
+
+.LoginDiv button{
+   width:120px;
+   height:40px;
+   font-size:30px;
+   margin: 10 10 10 10;
+}
+
+.LanguageDiv{
+   height: 50px;
+   width: 180px;
+   //background: yellow;
+   float:right;
+}
+
+.CurrencyDiv{
+   margin: 0 30 0 0;
+   height: 50px;
+   width: 150px;
+   //background: red;
+   float:right;
+}
+
+
+
+
+
+
+
+
+.findMainDiv{
+   margin: 0 auto;
+   height: 400px;
+   width: 1400px;
+   //background: yellow;
+   background-image:url("/static/img/find.png");
+   background-repeat: no-repeat;
+   background-position: center;
+   background-size: cover;
+}
+
+.findMainLeftDiv{
+   height: 400px;
+   width: 750px;
+   //background: green;
+   float:left;
+}
+
+.findMainLeftDiv div{
+   margin: 20 20 20 20;
+   //background: brown;
+   float:left;
+}
+
+.findMainRightDiv{
+   margin: 0 0 0 0;
+   height: 400px;
+   width: 650px;
+   //background: blue;
+   float:left;
+}
+
+
+.findDetailDiv{
+   display:none;
+   margin: 0 auto;
+   height: 360px;
+   width: 1400px;
+   //background: red;
+}
+
+.findDetailSmallDiv{
+   margin: 10px 30px 5px 0;
+   //border-style:solid;
+   height: 90px;
+   width: 600px;
+   float:left;
+}
+
+
+
+.hideButtonDiv{
+   margin: 0 auto;
+   height: 50px;
+   width: 150px;
+   //background: white;
+}
+
+.hideButtonDiv button{
+
+   height: 50px;
+   width: 150px;
+   font-size:30px;
+   margin: 10 10 10 10;
+}
+
+.searchDiv{
+   margin: 0 auto;
+   height: 50px;
+   width: 450px;
+   //background: brown;
+}
+
+.searchDiv button{
+   width:120px;
+   height:40px;
+   font-size:30px;
+   margin: 10 10 10 10;
+   //background: yellow;
+}
+
+
+.bottomDiv{
+   margin: 130 auto;
+   width: 1200px;
+   height: 50px;
+   //background: green;
+}
+
+
+
+
+
+.googlemapDiv{
+   margin:0 auto;
+   width:1200px;
+   height:300px;
+   //background:red;
+}
+
+#map {
+   height:100%;
+   width:100%;
+      }
+
+.rsDiv{
+   margin:0 auto;
+   width:1200px;
+   height:300px;
+}
+
+.c-label{
+    display:inline-block;
+    width:100px;
+    font-weight:bold;
+}
+
+.controls {
+  margin-top: 10px;
+  border: 1px solid transparent;
+  border-radius: 2px 0 0 2px;
+  box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  height: 32px;
+  outline: none;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+}
+
+#pac-input {
+  background-color: #fff;
+  font-family: Roboto;
+  font-size: 15px;
+  font-weight: 300;
+  margin-top: 0px 0px 0px 0px;
+  text-overflow: ellipsis;
+  width: 300px;
+}
+
+#pac-input:focus {
+  border-color: #4d90fe;
+}
+
+.pac-container {
+  font-family: Roboto;
+}
+
+#type-selector {
+  color: #fff;
+  background-color: #4d90fe;
+  padding: 5px 11px 0px 11px;
+}
+
+#type-selector label {
+  font-family: Roboto;
+  font-size: 13px;
+  font-weight: 300;
+}
+
+/* trip card */
+div.findResultDiv{
+    border-color: #4d90fe;
+    background-color: #4d90fe;
+    padding: 10px 10px 10px 10px;
+}
+
+ul li{
+    list-style-type:none;
+}
+
+div.tripData{
+    
+}
+
+div.tripImgDiv{
+    float:left;
+}
+
+div.tripTitleDiv{
+    float:right;
+}
+div.tripIntroDiv{
+    float:right;
+}
+/* trip card */

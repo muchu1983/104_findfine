@@ -6,3 +6,10 @@ def showHomePage(request):
     
 def showFindPage(request):
     return render(request, "find.html", {})
+    
+def showHome2Page(request):
+    return render(request, "home2.html", {})
+    
+def showFind2Page(request):
+    strKeyword = request.GET.get("keyword", None)
+    return render(request, "find2.html", {"keyword":strKeyword})
