@@ -8,6 +8,9 @@
     <script type="text/javascript" src="/static/js/find.js"></script>
     <script type="text/javascript" src="/static/js/placesSearch.js"></script>
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBNW1g69sGY8q_45F0Ob1lMbZn3fWyiL1o&signed_in=true&libraries=places&callback=initAutocomplete" async defer></script>
+    <script type="text/javascript"> 
+            var strKeywordFromHome = "{{keyword}}";    //TODO
+    </script>
   </head>
   <body>
   <!-- 語言 幣別 登入 -->
@@ -201,8 +204,9 @@
 
 $(function() {
       var place = getUrlParam('place');
-      $('#placeID').val(place);
-      $('#pac-input').val(place);
+      alert("strKeywordFromHome :"+strKeywordFromHome);
+      $('#placeID').val(strKeywordFromHome);   //TODO
+      $('#pac-input').val(strKeywordFromHome);  //TOD
       search();
       $('#autocomplete').change(function() {
            $('#placeID').val($('#autocomplete').val());
