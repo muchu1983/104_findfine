@@ -136,6 +136,60 @@ body{
    //background: yellow;
 }
 
+.findResultDiv{
+   display: none;
+   margin: 100 auto;
+   height: 1200px;
+   width: 1500px;
+   //background: green;
+}
+
+
+.tripData{
+   margin: 10px 10px 10px 10px;
+   font-size:14px;
+   width:660px;
+   height:200px;
+   border-width:3px;
+   border-style:dashed;
+   border-color:black;
+   float:left;
+}
+
+.tripImgDiv{
+   width:200px;
+   height:200px;
+   border-width:3px;
+   border-style:dashed;
+   border-color:#FFAC55;
+   float:left;
+}
+
+.tripImgDiv img{
+   background-size: contain;
+}
+
+.tripContentDiv{
+   width:300px;
+   height:200px;
+   border-width:3px;
+   border-style:dashed;
+   border-color:red;
+   float:left;
+}
+
+.tripPriceAndWishDiv{
+   width:100px;
+   height:200px;
+   border-width:3px;
+   border-style:dashed;
+   border-color:blue;
+   float:left;
+}
+
+.lstTripData{
+   list-style-type:none;
+}
 
 .bottomDiv{
    margin: 130 auto;
@@ -212,3 +266,4 @@ body{
   font-size: 13px;
   font-weight: 300;
 }
+
