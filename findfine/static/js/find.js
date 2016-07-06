@@ -1,9 +1,12 @@
 (function($){
     $(document).ready(initFind);
     function initFind(){
-        $("#btnFindTrip").click(function(){
+        $(".btnFindTrip").click(function(){
             $(".findDetailDiv").hide();
             $(".googleMapDiv").hide();
+            $(".searchDiv").hide();
+            $("#hideButton").text("Expand");
+            
             var strFilterText = $("#autocomplete").val();
             var strFilterQueryUrl = "/trip/filter";
             if (strFilterText != ""){
@@ -95,11 +98,14 @@
         var status = ($(".hideButtonDiv").text()).toString().trim();
         if(status=='Expand'){
             $(".findDetailDiv").show();
+            $(".searchDiv").show();
             $(".googleMapDiv").show();
+            $(".findResultDiv").hide();
             $("#hideButton").text("Hide");
         }
         if(status=='Hide'){
             $(".findDetailDiv").hide();
+            $(".searchDiv").hide();
             $(".googleMapDiv").hide();
             $("#hideButton").text("Expand");
         }

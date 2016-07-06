@@ -20,19 +20,19 @@
     <body>
     <!-- 語言 幣別 登入 -->
     <div class="topDiv">
-    <div class="LogDiv"></div>
+        <div class="LogDiv"></div>
   
-    <div class="LoginDiv">
-      <button type="button">Login</button>
-    </div>
+        <div class="LoginDiv">
+            <button type="button">Login</button>
+        </div>
 
-    <div class="LanguageDiv">
-      <span>Language</span>
-      <select name="">
-        <option value="EN">English</option>
-        <option value="ZH">Chinese</option>
-      </select>
-    </div>
+        <div class="LanguageDiv">
+            <span>Language</span>
+            <select class="LanguageSelect" name="">
+                <option value="EN">English</option>
+                <option value="ZH">Chinese</option>
+            </select>
+    </div> <!-- end topDiv-->
 
     <!--查詢 時間 地點 錢 主要-->
     <div class="findMainDiv">
@@ -52,12 +52,23 @@
             <span>~To:</span>
             <input type="date">
         </div>
+        <div>
+            <span>Paint your life in</span>
+            <button class="btnFindTrip" type="button">Find</button>
+        </div>
     </div>
     <div class="googleMapDiv">
+        <!--
         <input id="pac-input" class="controls" type="text" placeholder="Search Box" onchange="placesChange()">
         <div id="map">
         </div>
+        -->
     </div>
+    <!--隱藏 細部查詢 按鈕-->
+    <div class="hideButtonDiv">
+        <button id="hideButton" type="button">Expand</button>
+    </div>
+    </br>
     <!--查詢 細部-->
     <div class="findDetailDiv">
         <div class="findDetailSmallDiv">
@@ -65,7 +76,7 @@
             <input  type="checkbox" name="size" value="10"> 1Hr
             <input  type="checkbox" name="size" value="12"> 3Hr
             <input  type="checkbox" name="size" value="12"> 4~6HR
-            <input  type="checkbox" name="size" value="12"> 1 Day</br>
+            <input  type="checkbox" name="size" value="12"> 1 Day
             <input  type="checkbox" name="size" value="12"> More than 1 Day
         </div>
         <div class="findDetailSmallDiv">
@@ -78,9 +89,9 @@
        <div class="findDetailSmallDiv">
             <span>Style : </span>
             <input type="checkbox" name="" value="">Cultural tours
-            <input type="checkbox" name="" value="">Food tours</br>
+            <input type="checkbox" name="" value="">Food tours
             <input type="checkbox" name="" value="">Fashion tours
-            <input type="checkbox" name="" value="">Wild life tours</br>
+            <input type="checkbox" name="" value="">Wild life tours
             <input type="checkbox" name="" value="">Sports tours
             <input type="checkbox" name="" value="">Eco tours
         </div>
@@ -122,22 +133,18 @@
         </div>
         <div class="findDetailSmallDiv">
             <span>Available : </span>
-            <input type="checkbox" name="" value="">Instant confirmation</br>
+            <input type="checkbox" name="" value="">Instant confirmation
             <input type="checkbox" name="" value="">On request
         </div>
     </div>
-    <!--隱藏 細部查詢 按鈕-->
-    <div class="hideButtonDiv">
-        <button id="hideButton" type="button">Expand</button>
-    </div>
-    </br>
+    
     <!--search-->
     <div class="searchDiv">
         <span>Paint your life in</span>
         <div id="locationField">
             <input id="autocomplete" placeholder="Destination" onFocus="geolocate()" type="text">
+            <button class="btnFindTrip" type="button">Find</button>
         </div>
-        <button id="btnFindTrip" type="button">Find</button>
     </div>
     <!-- 搜尋結果 -->
     <div class="findResultDiv">
