@@ -54,6 +54,10 @@ def convertTripDataToJsonDic(matchedTrip=None, dicTripData=None):
     dicTripData["strLocation"] = matchedTrip.strLocation
     dicTripData["intUsdCost"] = matchedTrip.intUsdCost
     dicTripData["strOriginUrl"] = matchedTrip.strOriginUrl
+    dicTripData["strImageUrl"] = matchedTrip.strImageUrl
+    dicTripData["intReviewStar"] = matchedTrip.intReviewStar
+    dicTripData["intReviewVisitor"] = matchedTrip.intReviewVisitor
+    dicTripData["strAttrations"] = matchedTrip.strAttrations
     dicTripData["strIntroduction"] = matchedTrip.strIntroduction
     dicTripData["dtDatetimeFrom"] = matchedTrip.dtDatetimeFrom
     dicTripData["dtDatetimeTo"] = matchedTrip.dtDatetimeTo
@@ -61,4 +65,5 @@ def convertTripDataToJsonDic(matchedTrip=None, dicTripData=None):
     dicTripData["strStyle"] = matchedTrip.strStyle
     dicTripData["strGuideLanguage"] = matchedTrip.strGuideLanguage
     dicTripData["intOption"] = matchedTrip.intOption
+    
     
