@@ -7,11 +7,106 @@
             $(".searchDiv").hide();
             $("#hideButton").text("Expand");
             
+            
+            
+            
+            var place         =$("#autocomplete").val();
+            var budgetDown    =$("#budgetDown").val();
+            var budgetUp      =$("#budgetUp").val();
+            var startFrom     =$("#startFrom").val();
+            var to            =$("#to").val();
+            var duration      =$('input:checkbox:checked[name="duration"]').map(function() { return $(this).val(); }).get();
+            var passengerDown =$("#passengerDown").val();
+            var passengerUp   =$("#passengerUp").val();
+            var style         =$('input:checkbox:checked[name="style"]').map(function() { return $(this).val(); }).get();
+            var tourStarts    =$('#tourStarts :selected').text();
+            var tourEnds      =$('#tourEnds :selected').text();
+            var guideLanguage =$('input:checkbox:checked[name="guideLanguage"]').map(function() { return $(this).val(); }).get();
+            var availability  =$('input:checkbox:checked[name="availability"]').map(function() { return $(this).val(); }).get();
+            var attrations    =$("#attrations").val();  
+            
+            //alert("place:"+place);  //空
+            //alert("budgetDown:"+budgetDown);
+            //alert("budgetUp:"+budgetUp);
+            //alert("startFrom:"+startFrom);
+            //alert("to:"+to);
+            //alert("duration:"+duration);
+            //for(var i=0;duration.length>i;i++){
+            //   alert(duration[i]);
+            //}
+            //alert("passengerDown:"+passengerDown);
+            //alert("passengerUp:"+passengerUp);
+            //alert("style:"+style);
+            //alert("tourStarts:"+tourStarts);
+            //alert("tourEnds:"+tourEnds);
+            //alert("guideLanguage:"+guideLanguage);
+            //alert("availability:"+availability);
+            //alert("attrations:"+attrations);
+            
             var strFilterText = $("#autocomplete").val();
-            var strFilterQueryUrl = "/trip/filter";
+            var strFilterQueryUrl = "/trip/filter?1=1";
+            
             if (strFilterText != ""){
-                strFilterQueryUrl = strFilterQueryUrl + "?keyword=" + strFilterText;
+                strFilterQueryUrl = strFilterQueryUrl + "&keyword=" + strFilterText;
             };
+            //place
+            if (strFilterText != ""){
+                strFilterQueryUrl = strFilterQueryUrl + "&keyword=" + strFilterText;
+            };
+            //budgetDown
+            if (budgetDown != ""){
+                strFilterQueryUrl = strFilterQueryUrl + "&keyword=" + budgetDown;
+            };
+            //budgetUp
+            if (budgetUp != ""){
+                strFilterQueryUrl = strFilterQueryUrl + "&keyword=" + budgetUp;
+            };
+            //startFrom 
+            if (startFrom != ""){
+                strFilterQueryUrl = strFilterQueryUrl + "&keyword=" + startFrom;
+            };
+            //to
+            if (to != ""){
+                strFilterQueryUrl = strFilterQueryUrl + "&keyword=" + to;
+            };
+            //duration 
+            if (duration != ""){
+                strFilterQueryUrl = strFilterQueryUrl + "&keyword=" + duration;
+            };
+
+            //passengerDown :
+            if (passengerDown != ""){
+                strFilterQueryUrl = strFilterQueryUrl + "&keyword=" + passengerDown;
+            };
+            //passengerUp
+            if (passengerUp != ""){
+                strFilterQueryUrl = strFilterQueryUrl + "&keyword=" + passengerUp;
+            };
+            //style
+            if (style != ""){
+                strFilterQueryUrl = strFilterQueryUrl + "&keyword=" + style;
+            };
+            //tourStarts
+            if (tourStarts != ""){
+                strFilterQueryUrl = strFilterQueryUrl + "&keyword=" + tourStarts;
+            };
+            //tourEnds
+            if (tourEnds != ""){
+                strFilterQueryUrl = strFilterQueryUrl + "&keyword=" + tourEnds;
+            };
+            //guideLanguage 
+            if (guideLanguage != ""){
+                strFilterQueryUrl = strFilterQueryUrl + "&keyword=" + guideLanguage;
+            };
+            //availability
+            if (availability != ""){
+                strFilterQueryUrl = strFilterQueryUrl + "&keyword=" + availability;
+            };
+            //attrations
+            if (attrations != ""){
+                strFilterQueryUrl = strFilterQueryUrl + "&keyword=" + attrations;
+            };
+            
             $.getJSON(strFilterQueryUrl, function(jsonResp){
                 console.log(jsonResp);
                 $("div.findResultDiv ul.lstTripData").html("")
@@ -53,6 +148,7 @@
         "<li>",
             "<div class=\"tripData\">",
                 "<div class=\"tripImgDiv\">",
+                //新增圖片路徑
                     "<img src=\"/static/img/TripCard.png\"/>",
                 "</div>",
                 "<div class=\"tripContentDiv\"></br>",
