@@ -9,8 +9,8 @@
             
             
             
-            
-            var place         =$("#autocomplete").val();
+            var place         =$("#placeID").val();
+            var strFilterText = $("#autocomplete").val();
             var budgetDown    =$("#budgetDown").val();
             var budgetUp      =$("#budgetUp").val();
             var startFrom     =$("#startFrom").val();
@@ -25,7 +25,7 @@
             var availability  =$('input:checkbox:checked[name="availability"]').map(function() { return $(this).val(); }).get();
             var attrations    =$("#attrations").val();  
             
-            //alert("place:"+place);  //空
+            alert("place:"+place);  //空
             //alert("budgetDown:"+budgetDown);
             //alert("budgetUp:"+budgetUp);
             //alert("startFrom:"+startFrom);
@@ -43,16 +43,16 @@
             //alert("availability:"+availability);
             //alert("attrations:"+attrations);
             
-            var strFilterText = $("#autocomplete").val();
-            var strFilterQueryUrl = "/trip/filter?1=1";
             
-            //if (strFilterText != ""){
-            //    strFilterQueryUrl = strFilterQueryUrl + "&keyword=" + strFilterText;
-            //};
+            var strFilterQueryUrl = "/trip/filter?1=1";
             //place
-            //if (strFilterText != ""){
-            //    strFilterQueryUrl = strFilterQueryUrl + "&keyword=" + strFilterText;
-            //};
+            if (place != ""){
+                strFilterQueryUrl = strFilterQueryUrl + "&keyword=" + place;
+            };
+            //萬用
+            if (strFilterText != ""){
+                strFilterQueryUrl = strFilterQueryUrl + "&keyword=" + strFilterText;
+            };
             //budgetDown
             if (budgetDown != ""){
                 strFilterQueryUrl = strFilterQueryUrl + "&min_budget=" + budgetDown;
@@ -190,7 +190,7 @@
             $("div.findResultDiv ul.lstTripData").html("")
             for (i = 0; i < jsonResp.length; i++){
                 var dicTripData = jsonResp[i];
-                var strTripDataHtml =getTripDataHtml(dicTripData["strTitle"],dicTripData["intUsdCost"], dicTripData["strIntroduction"],dicTripData["strLocation"],dicTripData["intDurationHour"],dicTripData["strOriginUrl"]);
+                var strTripDataHtml =getTripDataHtml(dicTripData["strTitle"],dicTripData["intUsdCost"], dicTripData["strIntroduction"],dicTripData["strLocation"],dicTripData["intDurationHour"],dicTripData["strImageUrl"],dicTripData["strOriginUrl"]);
                 $("div.findResultDiv ul.lstTripData").append(strTripDataHtml);
             };
             $("div.findResultDiv").fadeIn();
@@ -198,13 +198,14 @@
         });
     }
 
-    function getTripDataHtml(strTitle, intUsdCost, strIntroduction,strLocation,intDurationHour,strOriginUrl){
+    function getTripDataHtml(strTitle, intUsdCost, strIntroduction,strLocation,intDurationHour,strOriginUrl,strImageUrl){
+        
         var strTripDataHtml = [
         "<li>",
             "<div class=\"tripData\">",
                 "<div class=\"tripImgDiv\">",
                 //新增圖片路徑
-                    "<img src=\"/static/img/TripCard.png\"/>",
+                    "<img src="+strImageUrl+">",      //   strOriginUrl    "<img src=\"/static/img/TripCard.png\"/>",
                 "</div>",
                 "<div class=\"tripContentDiv\"></br>",
                     "<span>Title:"+strTitle+"</span></br>",
