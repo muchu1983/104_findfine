@@ -158,15 +158,14 @@
             //if (attrations != ""){
             //    strFilterQueryUrl = strFilterQueryUrl + "&keyword=" + attrations;
             //};
-            
-            alert(" 162 strFilterQueryUrl:"+strFilterQueryUrl);
+            //alert(" 162 strFilterQueryUrl:"+strFilterQueryUrl);
             
             $.getJSON(strFilterQueryUrl, function(jsonResp){
                 console.log(jsonResp);
                 $("div.findResultDiv ul.lstTripData").html("")
                 for (i = 0; i < jsonResp.length; i++) {
                     var dicTripData = jsonResp[i];
-                    var strTripDataHtml = getTripDataHtml(dicTripData["strTitle"], dicTripData["intUsdCost"], dicTripData["strIntroduction"], dicTripData["strLocation"], dicTripData["intDurationHour"], dicTripData["strOriginUrl"]);
+                    var strTripDataHtml = getTripDataHtml(dicTripData["strTitle"], dicTripData["intUsdCost"], dicTripData["strIntroduction"], dicTripData["strLocation"], dicTripData["intDurationHour"], dicTripData["strOriginUrl"], dicTripData["strImageUrl"]);
                     $("div.findResultDiv ul.lstTripData").append(strTripDataHtml);
                 };
                 $("div.findResultDiv").fadeIn();
@@ -190,7 +189,7 @@
             $("div.findResultDiv ul.lstTripData").html("")
             for (i = 0; i < jsonResp.length; i++){
                 var dicTripData = jsonResp[i];
-                var strTripDataHtml =getTripDataHtml(dicTripData["strTitle"],dicTripData["intUsdCost"], dicTripData["strIntroduction"],dicTripData["strLocation"],dicTripData["intDurationHour"],dicTripData["strImageUrl"],dicTripData["strOriginUrl"]);
+                var strTripDataHtml =getTripDataHtml(dicTripData["strTitle"],dicTripData["intUsdCost"], dicTripData["strIntroduction"],dicTripData["strLocation"],dicTripData["intDurationHour"],dicTripData["strOriginUrl"],dicTripData["strImageUrl"]);
                 $("div.findResultDiv ul.lstTripData").append(strTripDataHtml);
             };
             $("div.findResultDiv").fadeIn();
@@ -200,12 +199,15 @@
 
     function getTripDataHtml(strTitle, intUsdCost, strIntroduction,strLocation,intDurationHour,strOriginUrl,strImageUrl){
         
+        alert("strOriginUrl"+strOriginUrl);
+        alert("strImageUrl:"+strImageUrl);
+
         var strTripDataHtml = [
         "<li>",
             "<div class=\"tripData\">",
                 "<div class=\"tripImgDiv\">",
                 //新增圖片路徑
-                    "<img src="+strImageUrl+">",      //   strOriginUrl    "<img src=\"/static/img/TripCard.png\"/>",
+                    "<img src=\"/static/img/TripCard.png\"/>",      //   strOriginUrl      http://img.kkday.com/image/get/w_1024%2Cc_fit/s1.kkday.com/product_7832/20160504141903_8OO9r/jpeg
                 "</div>",
                 "<div class=\"tripContentDiv\"></br>",
                     "<span>Title:"+strTitle+"</span></br>",
