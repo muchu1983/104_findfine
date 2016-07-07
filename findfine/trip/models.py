@@ -15,9 +15,9 @@ class Trip(models.Model):
     #導覽語言
     strGuideLanguage = models.CharField(max_length=255, null=True)
     #評價星數 (1-5)
-    intOpinionStar = models.IntegerField(null=True)
+    intReviewStar = models.IntegerField(null=True)
     #評價訪客數
-    intOpinionViewer = models.IntegerField(null=True)
+    intReviewVisitor = models.IntegerField(null=True)
     #主要景點
     strAttrations = models.CharField(max_length=255, null=True)
     #摘要
