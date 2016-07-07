@@ -46,66 +46,120 @@
             var strFilterText = $("#autocomplete").val();
             var strFilterQueryUrl = "/trip/filter?1=1";
             
-            if (strFilterText != ""){
-                strFilterQueryUrl = strFilterQueryUrl + "&keyword=" + strFilterText;
-            };
+            //if (strFilterText != ""){
+            //    strFilterQueryUrl = strFilterQueryUrl + "&keyword=" + strFilterText;
+            //};
             //place
-            if (strFilterText != ""){
-                strFilterQueryUrl = strFilterQueryUrl + "&keyword=" + strFilterText;
-            };
+            //if (strFilterText != ""){
+            //    strFilterQueryUrl = strFilterQueryUrl + "&keyword=" + strFilterText;
+            //};
             //budgetDown
             if (budgetDown != ""){
-                strFilterQueryUrl = strFilterQueryUrl + "&keyword=" + budgetDown;
+                strFilterQueryUrl = strFilterQueryUrl + "&min_budget=" + budgetDown;
             };
             //budgetUp
             if (budgetUp != ""){
-                strFilterQueryUrl = strFilterQueryUrl + "&keyword=" + budgetUp;
+                strFilterQueryUrl = strFilterQueryUrl + "&max_budget=" + budgetUp;
             };
-            //startFrom 
-            if (startFrom != ""){
-                strFilterQueryUrl = strFilterQueryUrl + "&keyword=" + startFrom;
-            };
-            //to
-            if (to != ""){
-                strFilterQueryUrl = strFilterQueryUrl + "&keyword=" + to;
-            };
+            //startFrom db無資料
+            //if (startFrom != ""){
+            //    strFilterQueryUrl = strFilterQueryUrl + "&date_from=" + startFrom;
+            //};
+            //to db無資料
+            //if (to != ""){
+            //    strFilterQueryUrl = strFilterQueryUrl + "&date_to=" + to;
+            //};
             //duration 
             if (duration != ""){
-                strFilterQueryUrl = strFilterQueryUrl + "&keyword=" + duration;
+                for(var i=0;duration.length>i;i++){
+                    if(duration[i]=="1"){
+                        strFilterQueryUrl = strFilterQueryUrl + "&min_duration=0&max_duration=1";
+                    }
+                    if(duration[i]=="2"){
+                        strFilterQueryUrl = strFilterQueryUrl + "&min_duration=1&max_duration=2";
+                    }
+                    if(duration[i]=="3"){
+                        strFilterQueryUrl = strFilterQueryUrl + "&min_duration=2&max_duration=3";
+                    }
+                    if(duration[i]=="4"){
+                        strFilterQueryUrl = strFilterQueryUrl + "&min_duration=3&max_duration=6";
+                    }
+                    if(duration[i]=="5"){
+                        strFilterQueryUrl = strFilterQueryUrl + "&min_duration=12&max_duration=24";
+                    }
+                    if(duration[i]=="5"){
+                        strFilterQueryUrl = strFilterQueryUrl + "&min_duration=24&max_duration=1000";
+                    }
+                }
             };
 
-            //passengerDown :
-            if (passengerDown != ""){
-                strFilterQueryUrl = strFilterQueryUrl + "&keyword=" + passengerDown;
-            };
-            //passengerUp
-            if (passengerUp != ""){
-                strFilterQueryUrl = strFilterQueryUrl + "&keyword=" + passengerUp;
-            };
-            //style
-            if (style != ""){
-                strFilterQueryUrl = strFilterQueryUrl + "&keyword=" + style;
-            };
-            //tourStarts
-            if (tourStarts != ""){
-                strFilterQueryUrl = strFilterQueryUrl + "&keyword=" + tourStarts;
-            };
-            //tourEnds
-            if (tourEnds != ""){
-                strFilterQueryUrl = strFilterQueryUrl + "&keyword=" + tourEnds;
-            };
+            //passengerDown 目前沒有
+            //if (passengerDown != ""){
+            //    strFilterQueryUrl = strFilterQueryUrl + "&keyword=" + passengerDown;
+            //};
+            //passengerUp 目前沒有
+            //if (passengerUp != ""){
+            //    strFilterQueryUrl = strFilterQueryUrl + "&keyword=" + passengerUp;
+            //};
+            //style 目前db無資料 js需修改
+            //if (style != ""){
+            //    for(var i=0;duration.length>i;i++){
+            //        if(style[i]=="Cultural"){
+            //            strFilterQueryUrl = strFilterQueryUrl + "&style=" + style;
+            //        }
+            //        if(style[i]=="Food"){
+            //            strFilterQueryUrl = strFilterQueryUrl + "&style=" + style;
+            //        }
+            //        if(style[i]=="Fashion"){
+            //            strFilterQueryUrl = strFilterQueryUrl + "&style=" + style;
+            //        }
+            //        if(style[i]=="Wild"){
+            //            strFilterQueryUrl = strFilterQueryUrl + "&style=" + style;
+            //        }
+            //        if(style[i]=="Sports"){
+            //            strFilterQueryUrl = strFilterQueryUrl + "&style=" + style;
+            //        }
+            //        if(style[i]=="Eco"){
+            //            strFilterQueryUrl = strFilterQueryUrl + "&style=" + style;
+            //        }
+            //    }
+            //};
+            //tourStarts 程式尚未實作
+            //if (tourStarts != ""){
+            //    strFilterQueryUrl = strFilterQueryUrl + "&date_from=" + tourStarts;
+            //};
+            //tourEnds  程式尚未實作
+            //if (tourEnds != ""){
+            //    strFilterQueryUrl = strFilterQueryUrl + "&date_to=" + tourEnds;
+            //};
             //guideLanguage 
             if (guideLanguage != ""){
-                strFilterQueryUrl = strFilterQueryUrl + "&keyword=" + guideLanguage;
+                for(var i=0;guideLanguage.length>i;i++){
+                    if(guideLanguage[i]=="English"){
+                        strFilterQueryUrl = strFilterQueryUrl + "&guide_language=English";
+                    }
+                    if(guideLanguage[i]=="Chinese"){
+                        strFilterQueryUrl = strFilterQueryUrl + "&guide_language=中文";
+                    }
+                }
             };
-            //availability
-            if (availability != ""){
-                strFilterQueryUrl = strFilterQueryUrl + "&keyword=" + availability;
-            };
+            //availability db 無資料
+            //if (availability != ""){
+            //    for(var i=0;availability.length>i;i++){
+            //        if(availability[i]=="instantConfirmation"){
+            //            strFilterQueryUrl = strFilterQueryUrl + "&option=" + option[i];
+            //        }
+            //        if(availability[i]=="onRequest"){
+            //            strFilterQueryUrl = strFilterQueryUrl + "&option=" + option[i];
+            //        }
+            //    }
+            //};
             //attrations
-            if (attrations != ""){
-                strFilterQueryUrl = strFilterQueryUrl + "&keyword=" + attrations;
-            };
+            //if (attrations != ""){
+            //    strFilterQueryUrl = strFilterQueryUrl + "&keyword=" + attrations;
+            //};
+            
+            alert(" 162 strFilterQueryUrl:"+strFilterQueryUrl);
             
             $.getJSON(strFilterQueryUrl, function(jsonResp){
                 console.log(jsonResp);
@@ -118,6 +172,7 @@
                 $("div.findResultDiv").fadeIn();
                 $("#btnHideTrip").show();
             });
+            
         });
         $("#hideButton").click(function(){
             swithDetail();
