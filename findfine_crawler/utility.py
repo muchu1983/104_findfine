@@ -42,7 +42,7 @@ class Utility:
         for base, dirs, files in os.walk(strBasedir):
             if base == strBasedir:
                 for dir in dirs:
-                    strFolderPath = base + "\\" + dir
+                    strFolderPath = base + os.sep + dir
                     lstStrSubFolderPath.append(strFolderPath)
         return lstStrSubFolderPath
     
@@ -53,7 +53,7 @@ class Utility:
             if base == strBasedir:#just check base dir
                 for strFilename in files:
                     if strFilename.endswith(strSuffixes):#find target files
-                        strFilePath = base + "\\" + strFilename
+                        strFilePath = base + os.sep + strFilename
                         lstStrFilePathWithSuffixes.append(strFilePath)
         return lstStrFilePathWithSuffixes
         
@@ -63,7 +63,7 @@ class Utility:
         for base, dirs, files in os.walk(strBasedir): 
             for strFilename in files:
                 if strFilename.endswith(strSuffixes):#find target files
-                    strFilePath = base + "\\" + strFilename
+                    strFilePath = base + os.sep + strFilename
                     lstStrFilePathWithSuffixes.append(strFilePath)
         return lstStrFilePathWithSuffixes
         
