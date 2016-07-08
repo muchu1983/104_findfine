@@ -199,15 +199,15 @@
 
     function getTripDataHtml(strTitle, intUsdCost, strIntroduction,strLocation,intDurationHour,strOriginUrl,strImageUrl){
         
-        alert("strOriginUrl"+strOriginUrl);
-        alert("strImageUrl:"+strImageUrl);
+        //alert("strOriginUrl"+strOriginUrl);
+        //alert("strImageUrl:"+strImageUrl);
 
         var strTripDataHtml = [
         "<li>",
             "<div class=\"tripData\">",
                 "<div class=\"tripImgDiv\">",
                 //新增圖片路徑
-                    "<img src=\"/static/img/TripCard.png\"/>",      //   strOriginUrl      http://img.kkday.com/image/get/w_1024%2Cc_fit/s1.kkday.com/product_7832/20160504141903_8OO9r/jpeg
+                    "<img src=\""+strImageUrl+"\"/>",      //   strOriginUrl      http://img.kkday.com/image/get/w_1024%2Cc_fit/s1.kkday.com/product_7832/20160504141903_8OO9r/jpeg
                 "</div>",
                 "<div class=\"tripContentDiv\"></br>",
                     "<span>Title:"+strTitle+"</span></br>",
