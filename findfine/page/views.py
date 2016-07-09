@@ -34,6 +34,19 @@ def showFindPage(request):
 def showAboutUsPage(request):
     return render(request, "aboutUs.html", {})
     
+def showAdvertisementPage(request):
+    return render(request, "advertisement.html", {})
+    
+def showContactUsPage(request):
+    return render(request, "contactUs.html", {})
+    
+def showPartnershipPage(request):
+    return render(request, "partnership.html", {})
+    
+def showTermsOfUsePage(request):
+    return render(request, "termsOfUse.html", {})
+    
+#test pages
 def showHome2Page(request):
     return render(request, "home2.html", {})
     
