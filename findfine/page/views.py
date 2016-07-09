@@ -31,6 +31,9 @@ def showFindPage(request):
     }
     return render(request, "find.html", dicDataFromServer)
     
+def showAboutUsPage(request):
+    return render(request, "aboutUs.html", {})
+    
 def showHome2Page(request):
     return render(request, "home2.html", {})
     
