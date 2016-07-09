@@ -4,15 +4,23 @@
 使用 pip 安裝的第三方庫
 pip install "Django<1.9"
 
-資料庫版本
+開發使用的資料庫版本
 MySQL 5.6.28.0
 mysql-connector-python 2.1.3
+
+佈署版本資訊
+AWS EC2 : Ubuntu 14.04 amd64
+apache2 : 2.4.7
+apache2-mod :  libapache2-mod-wsgi-py3 + libapache2-mod-auth-mysql
+mysql-server : Ver 14.14 Distrib 5.5.49
+mysql-connector-python : mysql-connector-python-py3_2.1.3-1ubuntu14.04_all.deb
 
 資料庫設定
 root 密碼 asdfASDF1234
 資料庫名稱 findfine
 findfine 帳號 findfine_db_root
 findfine 密碼 asdfASDF1234
+編碼設定 utf8_unicode_ci
 
 GitHub
 https://github.com/muchu1983/findfine
