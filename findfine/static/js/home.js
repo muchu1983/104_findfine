@@ -1,69 +1,60 @@
-(function($){
-    $(document).ready(initHome);
-    function initHome(){
-        $('#btnFindTrip').click(function(){
-            location.href='find?keyword='+$('#autocomplete').val();
-        });
-    };
-})(jQuery);
-
-var placeSearch, autocomplete;
-var componentForm = {
-        street_number: 'short_name',
-        route: 'long_name',
-        locality: 'long_name',
-        administrative_area_level_1: 'short_name',
-        country: 'long_name',
-        postal_code: 'short_name'
-};
-    
-function initAutocomplete() {
-    // Create the autocomplete object, restricting the search to geographical
-    // location types.
-    autocomplete = new google.maps.places.Autocomplete(
-    /** @type {!HTMLInputElement} */(document.getElementById('autocomplete')),
-    {types: ['geocode']});
-    // When the user selects an address from the dropdown, populate the address
-    // fields in the form.
-    autocomplete.addListener('place_changed', fillInAddress);
-}
-    
-    // [START region_fillform]
-function fillInAddress() {
-    // Get the place details from the autocomplete object.
-    var place = autocomplete.getPlace();
-    for (var component in componentForm) {
-        document.getElementById(component).value = '';
-        document.getElementById(component).disabled = false;
-    }
-    // Get each component of the address from the place details
-    // and fill the corresponding field on the form.
-    for (var i = 0; i < place.address_components.length; i++) {
-        var addressType = place.address_components[i].types[0];
-        if (componentForm[addressType]) {
-            var val = place.address_components[i][componentForm[addressType]];
-            document.getElementById(addressType).value = val;
+//初始化autocomplate place_chenged event
+tour.sendData = {};
+function initMap() {
+    var input =(document.getElementById('autocomplete'));
+    var autocomplete = new google.maps.places.Autocomplete(input);
+    autocomplete.addListener('place_changed', function() {
+        var place = autocomplete.getPlace();
+        if (!place.geometry) {
+            //未獲得地點資訊
+            return;
         }
-    }
+        tour.sendData = {
+            keyword: document.getElementById('autocomplete').value,
+            lat:place.geometry.location.lat(),
+            lng:place.geometry.location.lng()
+        };
+    });
 }
-    // [END region_fillform]
+
+function keywordToFindPage(place){
+
+    if(place=='Beijing'){
+        location.href = 'find?keyword=Beijing&lat=39.904211&lng=116.40739499999995';
+    }
+    if(place=='Caribbean'){
+        location.href = 'find?keyword=Caribbean&lat=14.5401107&lng=-74.96763650000003';
+    }
+    if(place=='Greece'){
+        location.href = 'find?keyword=Greece&lat=39.074208&lng=21.824311999999964';
+    }
+    if(place=='Kyoto'){
+        location.href = 'find?keyword=Kyoto&lat=35.0116363&lng=135.76802939999993';
+    }
+    if(place=='London'){
+        location.href = 'find?keyword=London&lat=51.5073509&lng=-0.12775829999998223';
+    }
+    if(place=='NewYork'){
+        location.href = 'find?keyword=New York&lat=40.7127837&lng=-74.00594130000002';
+    }
+    if(place=='Paris'){
+        location.href = 'find?keyword=Paris&lat=48.856614&lng=2.3522219000000177';
+    }
+    if(place=='Rome'){
+        location.href = 'find?keyword=Rome&lat=41.9027835&lng=12.496365500000024';
+    }
+    if(place=='Taipei'){
+        location.href = 'find?keyword=Taipei&lat=25.0329636&lng=121.56542680000007';
+    }
     
-    // [START region_geolocation]
-    // Bias the autocomplete object to the user's geographical location,
-    // as supplied by the browser's 'navigator.geolocation' object.
-function geolocate() {
-    if (navigator.geolocation) {
-        navigator.geolocation.getCurrentPosition(function(position) {
-            var geolocation = {
-                lat: position.coords.latitude,
-                lng: position.coords.longitude
-            };
-            var circle = new google.maps.Circle({
-                center: geolocation,
-                radius: position.coords.accuracy
-            });
-            autocomplete.setBounds(circle.getBounds());
-        });
-    }
+
 }
-    // [END region_geolocation]
+
+$(function() {
+    $('#btnFindTrip').on('click', function() {
+        //暫時改丟靜態頁,之後改後端接
+        location.href = 'find?keyword='+tour.sendData.keyword+'&lat='+tour.sendData.lat+'&lng='+tour.sendData.lng;
+    });
+});
+
+
