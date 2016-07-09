@@ -177,6 +177,16 @@ class CrawlerForKKDAY:
         strUsdCostText = self.driver.find_element_by_css_selector("div.lowestPrice div.text-right h2.h1").text
         strUsdCostText = re.sub("[^\d]", "", strUsdCostText.strip())
         dicProductJson["intUsdCost"] = int(strUsdCostText)
+        #intReviewStar
+        elesStarI = self.driver.find_elements_by_css_selector("div.div-star span.h5 i.fa-star.text-primary")
+        dicProductJson["intReviewStar"] = len(elesStarI)
+        #intReviewVisitor
+        intReviewVisitor = 0
+        elesReviewVisitorSpan = self.driver.find_elements_by_css_selector("div.div-star span.h5 span.text-primary")
+        if len(elesReviewVisitorSpan) > 0:
+            strReviewVisitorText = elesReviewVisitorSpan[0].text
+            intReviewVisitor = int(strReviewVisitorText.strip())
+        dicProductJson["intReviewVisitor"] = intReviewVisitor
         #strIntroduction
         strIntroduction = self.driver.find_element_by_css_selector("div.prod-intro span").text
         dicProductJson["strIntroduction"] = strIntroduction.strip()

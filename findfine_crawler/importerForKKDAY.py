@@ -44,6 +44,9 @@ class ImporterForKKDAY:
     
     #import product.json to MySQL DB
     def importProductJsonToDb(self, uselessArg1=None):
+        #清除 trip 資料
+        self.db.clearTripData()
+        #讀取 json 檔
         strBasedir = self.filesysUtil.getPackageResourcePath(strPackageName="findfine_crawler.resource", strResourceName="parsed_json")
         lstStrProductJsonFilePath = self.ffUtil.getFilePathListWithSuffixes(strBasedir=strBasedir, strSuffixes="_product.json")
         for strProductJsonFilePath in lstStrProductJsonFilePath:
@@ -51,6 +54,7 @@ class ImporterForKKDAY:
             lstDicProductData = self.ffUtil.readObjectFromJsonFile(strJsonFilePath=strProductJsonFilePath)
             for dicProductData in lstDicProductData:
                 try:
+                    #INSERT INTO
                     self.db.insertTripIfNotExists(dicTripData=dicProductData)
                 except Exception as e:
                     logging.warning("insert trip failed: %s"%(str(e)))
