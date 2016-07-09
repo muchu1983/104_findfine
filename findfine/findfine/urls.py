@@ -25,6 +25,12 @@ urlpatterns = [
     url(r'^trip/filter$', trip_views.filter),
     url(r'^page/home$', page_views.showHomePage),
     url(r'^page/find$', page_views.showFindPage),
+    url(r'^page/aboutUs$', page_views.showAboutUsPage),
+    url(r'^page/advertisement$', page_views.showAdvertisementPage),
+    url(r'^page/contactUs$', page_views.showContactUsPage),
+    url(r'^page/partnership$', page_views.showPartnershipPage),
+    url(r'^page/termsOfUse$', page_views.showTermsOfUsePage),
+    #test pages
     url(r'^page/home2$', page_views.showHome2Page),
     url(r'^page/find2$', page_views.showFind2Page),
     ]

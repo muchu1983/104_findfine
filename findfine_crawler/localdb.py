@@ -30,10 +30,17 @@ class LocalDbForJsonImporter:
         queryCursor.execute(strQuerySql, dicTripData)
         if queryCursor.rowcount == 0:
             strInsertSql = (
-                "INSERT INTO trip_trip (strOriginUrl, strTitle, strImageUrl, intDurationHour, intUsdCost, strGuideLanguage, strIntroduction, strLocation)"
-                "VALUES (%(strOriginUrl)s, %(strTitle)s, %(strImageUrl)s, %(intDurationHour)s, %(intUsdCost)s / 32.18, %(strGuideLanguage)s, %(strIntroduction)s, %(strLocation)s)"
+                "INSERT INTO trip_trip (strOriginUrl, strTitle, strImageUrl, intDurationHour, intUsdCost, strGuideLanguage, intReviewStar, intReviewVisitor, strIntroduction, strLocation)"
+                "VALUES (%(strOriginUrl)s, %(strTitle)s, %(strImageUrl)s, %(intDurationHour)s, %(intUsdCost)s / 32.25, %(strGuideLanguage)s, %(intReviewStar)s, %(intReviewVisitor)s, %(strIntroduction)s, %(strLocation)s)"
             )
             queryCursor.execute(strInsertSql, dicTripData)
+        self.mysqlConnection.commit()
+    
+    #清除 行程 資料
+    def clearTripData(self):
+        deleteCursor = self.mysqlConnection.cursor(buffered=True)
+        strDeleteSql = ("DELETE FROM trip_trip")
+        deleteCursor.execute(strDeleteSql)
         self.mysqlConnection.commit()
     
     #清除測試資料 (clear table)
