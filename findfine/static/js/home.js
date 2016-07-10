@@ -53,7 +53,13 @@ function keywordToFindPage(place){
 $(function() {
     $('#btnFindTrip').on('click', function() {
         //暫時改丟靜態頁,之後改後端接
-        location.href = 'find?keyword='+tour.sendData.keyword+'&lat='+tour.sendData.lat+'&lng='+tour.sendData.lng;
+        //若無googlemap資訊 將值帶到下一頁
+        if(typeof tour.sendData.keyword =='undefined'){
+            var input =($('#autocomplete')).val();
+            location.href = 'find?keyword='+input+'&lat='+tour.sendData.lat+'&lng='+tour.sendData.lng;
+        }else{
+            location.href = 'find?keyword='+tour.sendData.keyword+'&lat='+tour.sendData.lat+'&lng='+tour.sendData.lng;
+        }
     });
 });
 
