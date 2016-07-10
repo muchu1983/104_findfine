@@ -1,173 +1,337 @@
-<html>
-    <head>
-        <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-        <title>find</title>
-        <!-- jquery and jquery-ui -->
-        <script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
-        <script src="https://code.jquery.com/ui/1.11.4/jquery-ui.min.js"></script>
-        <link rel="stylesheet" type="text/css" href="https://code.jquery.com/ui/1.11.4/themes/blitzer/jquery-ui.css">
-        <!-- find -->
-        <script type="text/javascript" src="/static/js/find.js"></script>
-        <link rel="stylesheet" type="text/css" href="/static/css/find.css">
-        <!-- google map -->
-        <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBNW1g69sGY8q_45F0Ob1lMbZn3fWyiL1o&signed_in=true&libraries=places&callback=initAutocomplete" async defer></script>
-        <script type="text/javascript" src="/static/js/placesSearch.js"></script>
-        <!-- variable from server -->
-        <script type="text/javascript"> 
-            var strKeywordFromHome = "{{keyword}}";
-        </script>
-    </head>
-    <body>
-    <!-- 語言 幣別 登入 -->
-    <div class="topDiv">
-        <div class="LogDiv"></div>
-  
-        <div class="LoginDiv">
-            <button type="button">Login</button>
-        </div>
+<!DOCTYPE html>
+<html lang="en">
 
-        <div class="LanguageDiv">
-            <span>Language</span>
-            <select class="LanguageSelect" name="">
-                <option value="EN">English</option>
-                <option value="ZH">Chinese</option>
-            </select>
-    </div> <!-- end topDiv-->
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <title>tour</title>
+    <!-- Bootstrap Core CSS -->
+    <link href="/static/vendor/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/static/vendor/bootstrap-select/dist/css/bootstrap-select.min.css" rel="stylesheet">
+    <!-- Bootstrap daterangepicker -->
+    <link href="/staticvendor/bootstrap-daterangepicker/daterangepicker.css" rel="stylesheet">
+    <!-- Custom Fonts -->
+    <link href="/static/vendor/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+    <link href='https://fonts.googleapis.com/css?family=Raleway:400,600' rel='stylesheet' type='text/css'>
+    <link href='https://fonts.googleapis.com/css?family=Tangerine' rel='stylesheet' type='text/css'>
+    <!-- custom CSS -->
+    <link href="/static/css/custom.css" rel="stylesheet">
+    <script type="text/javascript">
+        var strKeywordFromHome = "{{keyword}}";
+    </script>
+    <!-- 低瀏覽器版本相容條件註解 -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+</head>
 
-    <!--查詢 時間 地點 錢 主要-->
-    <div class="findMainDiv">
-        <div>
-            <span>Place:</span>
-            <input type="text" id="placeID" placeholder="Enter Something"/>
+<body id="page-top">
+    <!-- Navigation -->
+    <nav id="mainNav" class="navbar navbar-default navbar-custom navbar-fixed-top">
+        <div class="container">
+            <!-- Brand and toggle get grouped for better mobile display -->
+            <div class="navbar-header page-scroll">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                    <span class="sr-only">Toggle navigation</span> Menu <i class="fa fa-bars"></i>
+                </button>
+                <a class="navbar-brand page-scroll" href="#page-top"></a>
+            </div>
+            <!-- Collect the nav links, forms, and other content for toggling -->
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                <div id="loginBtn" class="btn btn-info pull-right">Log In</div>
+                <ul class="nav navbar-nav navbar-right">
+                    <li class="hidden">
+                        <a href="#page-top"></a>
+                    </li>
+                    <li>
+                        <div class="LanguageDiv navSelect">
+                            <select name="" class="bsSelect">
+                                <option value="EN">English</option>
+                                <option value="ZH">Chinese</option>
+                            </select>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="CurrencyDiv navSelect">
+                            <select name="" class="bsSelect">
+                                <option value="USD">USD</option>
+                                <option value="EUR">EUR</option>
+                                <option value="RMB">RMB</option>
+                                <option value="GBP">GBP</option>
+                                <option value="JPY">JPY</option>
+                                <option value="AUD">AUD</option>
+                                <option value="NZD">NZD</option>
+                                <option value="SGD">SGD</option>
+                                <option value="HKD">HKD</option>
+                                <option value="TWD">TWD</option>
+                            </select>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+            <!-- /.navbar-collapse -->
         </div>
-        <div>
-            <span>Budget : </span>
-            <input type="text" id="budgetDown" placeholder="Enter Something"/>
-            <span>~</span>
-            <input type="text" id="budgetUp" placeholder="Enter Something"/>
+        <!-- /.container-fluid -->
+    </nav>
+    <header class="find">
+        <div class="container">
+            <div class="intro-text">
+                <div class="searchContent col-xs-12 col-md-5">
+                    <div class="row">
+                        <div class="col-xs-12">
+                            <div class="form-group">
+                                <label for="">Place</label>
+                                <input id="placeID" class="form-control" placeholder="Enter Something" type="text"></input>
+                            </div>
+                        </div>
+                        <div class="col-xs-12">
+                            <div class="form-group">
+                                <label for="">Budget</label>
+                                <div class="row">
+                                    <div class="col-xs-6">
+                                        <input id="budgetDownID" class="form-control" placeholder="lower" type="text"></input>
+                                    </div>
+                                    <div class="col-xs-6">
+                                        <input id="budgetUpID" class="form-control" placeholder="upper" type="text"></input>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-xs-12">
+                            <div class="form-group">
+                                <label for="">Start</label>
+                                <input id="asd" class="form-control bs_range" placeholder="Select Range" type="text">
+                            </div>
+                        </div>
+                        <div class="clearfix"></div>
+                    </div>
+                </div>
+            </div>
         </div>
-        <div>
-            <span>Start from : </span>
-            <input type="date" id="startFrom">
-            <span>~To:</span>
-            <input type="date" id="to">
-        </div>
-        <div>
-            <span>Paint your life in</span>
-            <button class="btnFindTrip" type="button">Find</button>
+    </header>
+    <input type="button" onclick="search('')" value="testSearch">
+    <div id="findContent" class="container">
+        <div class="row">
+            <div class="col-xs-12 col-md-7">
+                <div class="findResultDiv">
+                    <ul class="lstTripData">
+                    
+                    <!--
+                        <li>
+                            <div class="tripData row">
+                                <div class="tripImgDiv col-xs-4"><img src="static/img/TripCard.jpg"></div>
+                                <div class="col-xs-8">
+                                    <div class="tripContentDiv">
+                                        <p><span>【九份秘密基地】九份茶坊-體驗茶文化</span></p>
+                                        <br><i class="fa fa-clock-o"></i> <span>Duration:2</span>
+                                        <br><span><a href="https://www.kkday.com/en/product/8189" target="_blank"><i class="fa fa-info-circle"></i> read more</a></span>
+                                        <br>
+                                    </div>
+                                </div>
+                                <div class="tripPriceAndWishDiv"><span class="pull-right"><i class="fa fa-usd"></i> 15</span> </div>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="tripData row">
+                                <div class="tripImgDiv col-xs-4"><img src="static/img/TripCard.jpg"></div>
+                                <div class="col-xs-8">
+                                    <div class="tripContentDiv">
+                                        <p><span>【尋找客家記憶】苗栗龍騰斷橋Taxi tour 8 HR</span></p>
+                                        <br><i class="fa fa-clock-o"></i> <span>Duration:8</span>
+                                        <br><span><a href="https://www.kkday.com/en/product/7794" target="_blank"><i class="fa fa-info-circle"></i> read more</a></span>
+                                        <br>
+                                    </div>
+                                </div>
+                                <div class="tripPriceAndWishDiv"><span class="pull-right"><i class="fa fa-usd"></i> 134</span> </div>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="tripData row">
+                                <div class="tripImgDiv col-xs-4"><img src="static/img/TripCard.jpg"></div>
+                                <div class="col-xs-8">
+                                    <div class="tripContentDiv">
+                                        <p><span>【秋天溯溪首選】沿溪流賞楓紅。新北石門老梅溪溯溪</span></p>
+                                        <br><i class="fa fa-clock-o"></i> <span>Duration:7</span>
+                                        <br><span><a href="https://www.kkday.com/en/product/5215" target="_blank"><i class="fa fa-info-circle"></i> read more</a></span>
+                                        <br>
+                                    </div>
+                                </div>
+                                <div class="tripPriceAndWishDiv"><span class="pull-right"><i class="fa fa-usd"></i> 61</span> </div>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="tripData row">
+                                <div class="tripImgDiv col-xs-4"><img src="static/img/TripCard.jpg"></div>
+                                <div class="col-xs-8">
+                                    <div class="tripContentDiv">
+                                        <p><span>HSR 高鐵電子憑證 Channel Reatail 訂購付款</span></p>
+                                        <br><i class="fa fa-clock-o"></i> <span>Duration:0</span>
+                                        <br><span><a href="https://www.kkday.com/en/product/4692" target="_blank"><i class="fa fa-info-circle"></i> read more</a></span>
+                                        <br>
+                                    </div>
+                                </div>
+                                <div class="tripPriceAndWishDiv"><span class="pull-right"><i class="fa fa-usd"></i> 51</span> </div>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="tripData row">
+                                <div class="tripImgDiv col-xs-4"><img src="static/img/TripCard.jpg"></div>
+                                <div class="col-xs-8">
+                                    <div class="tripContentDiv">
+                                        <p><span>台北極限運動-SUP立槳教學體驗</span></p>
+                                        <br><i class="fa fa-clock-o"></i> <span>Duration:8</span>
+                                        <br><span><a href="https://www.kkday.com/en/product/5153" target="_blank"><i class="fa fa-info-circle"></i> read more</a></span>
+                                        <br>
+                                    </div>
+                                </div>
+                                <div class="tripPriceAndWishDiv"><span class="pull-right"><i class="fa fa-usd"></i> 47</span> </div>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="tripData row">
+                                <div class="tripImgDiv col-xs-4"><img src="static/img/TripCard.jpg"></div>
+                                <div class="col-xs-8">
+                                    <div class="tripContentDiv">
+                                        <p><span>玩go台灣新亮點。台灣腳踏車環島團(含腳踏車、導遊、住宿)</span></p>
+                                        <br><i class="fa fa-clock-o"></i> <span>Duration:23</span>
+                                        <br><span><a href="https://www.kkday.com/en/product/5701" target="_blank"><i class="fa fa-info-circle"></i> read more</a></span>
+                                        <br>
+                                    </div>
+                                </div>
+                                <div class="tripPriceAndWishDiv"><span class="pull-right"><i class="fa fa-usd"></i> 968</span> </div>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="tripData row">
+                                <div class="tripImgDiv col-xs-4"><img src="static/img/TripCard.jpg"></div>
+                                <div class="col-xs-8">
+                                    <div class="tripContentDiv">
+                                        <p><span>【極限挑戰】台北龍洞攀岩體驗</span></p>
+                                        <br><i class="fa fa-clock-o"></i> <span>Duration:8</span>
+                                        <br><span><a href="https://www.kkday.com/en/product/7288" target="_blank"><i class="fa fa-info-circle"></i> read more</a></span>
+                                        <br>
+                                    </div>
+                                </div>
+                                <div class="tripPriceAndWishDiv"><span class="pull-right"><i class="fa fa-usd"></i> 82</span> </div>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="tripData row">
+                                <div class="tripImgDiv col-xs-4"><img src="static/img/TripCard.jpg"></div>
+                                <div class="col-xs-8">
+                                    <div class="tripContentDiv">
+                                        <p><span>北投熱海大飯店．兩人白磺湯屋溫泉卷（1HR）</span></p>
+                                        <br><i class="fa fa-clock-o"></i> <span>Duration:1</span>
+                                        <br><span><a href="https://www.kkday.com/en/product/4004" target="_blank"><i class="fa fa-info-circle"></i> read more</a></span>
+                                        <br>
+                                    </div>
+                                </div>
+                                <div class="tripPriceAndWishDiv"><span class="pull-right"><i class="fa fa-usd"></i> 28</span> </div>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="tripData row">
+                                <div class="tripImgDiv col-xs-4"><img src="static/img/TripCard.jpg"></div>
+                                <div class="col-xs-8">
+                                    <div class="tripContentDiv">
+                                        <p><span>攝影體驗．我是主角</span></p>
+                                        <br><i class="fa fa-clock-o"></i> <span>Duration:5</span>
+                                        <br><span><a href="https://www.kkday.com/en/product/6608" target="_blank"><i class="fa fa-info-circle"></i> read more</a></span>
+                                        <br>
+                                    </div>
+                                </div>
+                                <div class="tripPriceAndWishDiv"><span class="pull-right"><i class="fa fa-usd"></i> 170</span> </div>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="tripData row">
+                                <div class="tripImgDiv col-xs-4"><img src="static/img/TripCard.jpg"></div>
+                                <div class="col-xs-8">
+                                    <div class="tripContentDiv">
+                                        <p><span>Taxi tour 8 HR - 【尋訪陶藝】鶯歌老街一日遊</span></p>
+                                        <br><i class="fa fa-clock-o"></i> <span>Duration:8</span>
+                                        <br><span><a href="https://www.kkday.com/en/product/7623" target="_blank"><i class="fa fa-info-circle"></i> read more</a></span>
+                                        <br>
+                                    </div>
+                                </div>
+                                <div class="tripPriceAndWishDiv"><span class="pull-right"><i class="fa fa-usd"></i> 134</span> </div>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="tripData row">
+                                <div class="tripImgDiv col-xs-4"><img src="static/img/TripCard.jpg"></div>
+                                <div class="col-xs-8">
+                                    <div class="tripContentDiv">
+                                        <p><span>《那些年，我們一起追的女孩》Taxi tour 6 HR 電影場景．十分幸福車站</span></p>
+                                        <br><i class="fa fa-clock-o"></i> <span>Duration:6</span>
+                                        <br><span><a href="https://www.kkday.com/en/product/7588" target="_blank"><i class="fa fa-info-circle"></i> read more</a></span>
+                                        <br>
+                                    </div>
+                                </div>
+                                <div class="tripPriceAndWishDiv"><span class="pull-right"><i class="fa fa-usd"></i> 102</span> </div>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="tripData row">
+                                <div class="tripImgDiv col-xs-4"><img src="static/img/TripCard.jpg"></div>
+                                <div class="col-xs-8">
+                                    <div class="tripContentDiv">
+                                        <p><span>台北出發。大溪嘎色鬧部落-開心農場</span></p>
+                                        <br><i class="fa fa-clock-o"></i> <span>Duration:10</span>
+                                        <br><span><a href="https://www.kkday.com/en/product/5442" target="_blank"><i class="fa fa-info-circle"></i> read more</a></span>
+                                        <br>
+                                    </div>
+                                </div>
+                                <div class="tripPriceAndWishDiv"><span class="pull-right"><i class="fa fa-usd"></i> 168</span> </div>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="tripData row">
+                                <div class="tripImgDiv col-xs-4"><img src="static/img/TripCard.jpg"></div>
+                                <div class="col-xs-8">
+                                    <div class="tripContentDiv">
+                                        <p><span>【重機旅行】萬華、淡水老街一日遊</span></p>
+                                        <br><i class="fa fa-clock-o"></i> <span>Duration:8</span>
+                                        <br><span><a href="https://www.kkday.com/en/product/8629" target="_blank"><i class="fa fa-info-circle"></i> read more</a></span>
+                                        <br>
+                                    </div>
+                                </div>
+                                <div class="tripPriceAndWishDiv"><span class="pull-right"><i class="fa fa-usd"></i> 117</span> </div>
+                            </div>
+                        </li>
+                        -->
+
+                    </ul>
+                </div>
+            </div>
+            <div id="mapDiv" class="col-xs-12 col-md-5">
+                <input id="pac-input" class="controls" type="text" placeholder="Enter a location">
+                <div id="map"></div>
+            </div>
         </div>
     </div>
-    <div class="googleMapDiv">
-        <!--
-        <input id="pac-input" class="controls" type="text" placeholder="Search Box" onchange="placesChange()">
-        <div id="map">
-        </div>
-        -->
-    </div>
-    <!--隱藏 細部查詢 按鈕-->
-    <div class="hideButtonDiv">
-        <button id="hideButton" type="button">Expand</button>
-    </div>
-    </br>
-    <!--查詢 細部-->
-    <div class="findDetailDiv">
-        <div class="findDetailSmallDiv">
-            <span>Duration : </span>
-            <input  type="checkbox" name="duration" value="1"> 1Hr
-            <input  type="checkbox" name="duration" value="2"> 2Hr
-            <input  type="checkbox" name="duration" value="3"> 3Hr
-            <input  type="checkbox" name="duration" value="4"> 4~6HR
-            <input  type="checkbox" name="duration" value="5"> 1 Day
-            <input  type="checkbox" name="duration" value="6"> More than 1 Day
-        </div>
-        <div class="findDetailSmallDiv">
-            <span>Passenger : </span>
-            <input type="text" id="passengerDown" placeholder="Enter Something"/>
-            <span>~</span>
-            <input type="text" id="passengerUp" placeholder="Enter Something"/>
-            <span></span>
-       </div>
-       <div class="findDetailSmallDiv">
-            <span>Style : </span>
-            <input type="checkbox" name="style" value="Cultural">Cultural tours
-            <input type="checkbox" name="style" value="Food">Food tours
-            <input type="checkbox" name="style" value="Fashion">Fashion tours
-            <input type="checkbox" name="style" value="Wild">Wild life tours
-            <input type="checkbox" name="style" value="Sports">Sports tours
-            <input type="checkbox" name="style" value="Eco">Eco tours
-        </div>
-        <div class="findDetailSmallDiv">
-            <span>Tour starts : </span>
-            <select id="tourStarts">
-                <option>00:00</option>
-                <option>02:00</option>
-                <option>06:00</option>
-                <option>08:00</option>
-                <option>10:00</option>
-                <option>12:00</option>
-                <option>14:00</option>
-                <option>16:00</option>
-                <option>18:00</option>
-                <option>20:00</option>
-                <option>22:00</option>
-            </select>
-            <span>Tour ends : </span>
-            <select id="tourEnds">
-                <option>00:00</option>
-                <option>02:00</option>
-                <option>06:00</option>
-                <option>08:00</option>
-                <option>10:00</option>
-                <option>12:00</option>
-                <option>14:00</option>
-                <option>16:00</option>
-                <option>18:00</option>
-                <option>20:00</option>
-                <option>22:00</option>
-            </select>
-        </div>
-        <div class="findDetailSmallDiv">
-            <span>Guide's language : </span>
-            <input type="checkbox" name="guideLanguage" value="English">English
-            <input type="checkbox" name="guideLanguage" value="Chinese">中文
-            <input type="checkbox" name="guideLanguage" value="German">Deutsch
-            <input type="checkbox" name="guideLanguage" value="French">français
-            <input type="checkbox" name="guideLanguage" value="Spanish">español
-            <input type="checkbox" name="guideLanguage" value="Arabic">العربية
-            <input type="checkbox" name="guideLanguage" value="Japanese">日本の
-            <input type="checkbox" name="guideLanguage" value="Russian">русский
-            <input type="checkbox" name="guideLanguage" value="Italian">Italia
-            <input type="checkbox" name="guideLanguage" value="Dutch">Nederland
-            
-        </div>
-        <div class="findDetailSmallDiv">
-            <span>Available : </span>
-            <input type="checkbox" name="availability" value="instantConfirmation">Instant Confirmation
-            <input type="checkbox" name="availability" value="onRequest">on Request
-        </div>
-    </div>
-    
-    <!--search-->
-    <div class="searchDiv">
-        <span>Paint your life in</span>
-        <div id="locationField">
-            <input id="autocomplete" placeholder="Destination" onFocus="geolocate()" type="text">
-            <button class="btnFindTrip" type="button">Find</button>
-        </div>
-    </div>
-    <!-- 搜尋結果 -->
-    <div class="findResultDiv">
-        <ul class="lstTripData">
-        </ul>
-    </div>
-    <div class="bottomDiv">
-        <span>Copyright © 2016 FindFineTour All rights reserved.</span>
-        <div class="LogDiv">
-        </div>
-    </div>
-    </body>
+    <!-- jQuery core-->
+    <script src="/static/vendor/jquery/dist/jquery.min.js"></script>
+    <!-- Bootstrap Js -->
+    <script src="/static/vendor/bootstrap/dist/js/bootstrap.min.js"></script>
+    <!-- Bootstrap SelectPicker Js -->
+    <script src="/static/vendor/bootstrap-select/dist/js/bootstrap-select.min.js"></script>
+    <!-- moment -->
+    <script src="/static/vendor/moment/min/moment.min.js"></script>
+    <!-- Bootstrap DateRange Js -->
+    <script src="/static/vendor/bootstrap-daterangepicker/daterangepicker.js"></script>
+    <!-- velocity animation -->
+    <!-- <script src="vendor/velocity/velocity.min.js"></script> -->
+    <!-- custom JavaScript -->
+    <script src="/static/js/custom.js"></script>
+    <script src="/static/js/find.js"></script>
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBNW1g69sGY8q_45F0Ob1lMbZn3fWyiL1o&signed_in=true&libraries=places&callback=initMap" async defer></script>
+    </script>
+
+</body>
+
 </html>
-
-
-
-
