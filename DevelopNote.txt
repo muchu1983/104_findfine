@@ -14,6 +14,7 @@ apache2 : 2.4.7
 apache2-mod :  libapache2-mod-wsgi-py3 + libapache2-mod-auth-mysql
 mysql-server : Ver 14.14 Distrib 5.5.49
 mysql-connector-python : mysql-connector-python-py3_2.1.3-1ubuntu14.04_all.deb
+佈署過程記錄 : http://bennu-blog.blogspot.tw/2016/07/deploy-django-mysql-ubuntu-apache.html
 
 資料庫設定
 root 密碼 asdfASDF1234
