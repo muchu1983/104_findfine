@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
-
+<!-- 有@記號 需改成連結 -->
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -23,6 +23,8 @@
         <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
     <![endif]-->
 </head>
+
+<!-- TODO 每個log都可以回首頁 -->
 
 <body id="page-top" class="index">
     <!-- Navigation -->
@@ -97,13 +99,16 @@
         <div class="container">
             <div class="row">
                 <div class="col-lg-12 text-center">
-                    <h2 class="section-heading">Classic Cityies</h2>
+                    <h2 class="section-heading">Classic Cities</h2>
+                    <h3 class="section-subheading text-muted"></h3>
+                    <!--
                     <h3 class="section-subheading text-muted">Lorem ipsum dolor sit amet consectetur.</h3>
+                    -->
                 </div>
             </div>
             <div class="row">
                 <div class="col-md-3 col-sm-6 portfolio-item">
-                    <a href="javascript:keywordToFindPage('Beijing')" class="portfolio-link">
+                    <a href="" class="portfolio-link" data-lat="39.904211" data-lng="116.40739499999995" data-place="Beijing">
                         <div class="portfolio-hover">
                             <div class="portfolio-hover-content">
                                 <i class="fa fa-plus fa-3x"></i>
@@ -113,7 +118,7 @@
                     </a>
                 </div>
                 <div class="col-md-4 col-sm-6 portfolio-item">
-                    <a href="javascript:keywordToFindPage('Caribbean')" class="portfolio-link">
+                    <a href="" class="portfolio-link" data-lat="14.5401107" data-lng="-74.96763650000003" data-place="Caribbean">
                         <div class="portfolio-hover">
                             <div class="portfolio-hover-content">
                                 <i class="fa fa-plus fa-3x"></i>
@@ -123,7 +128,7 @@
                     </a>
                 </div>
                 <div class="col-md-5 col-sm-6 portfolio-item">
-                    <a href="javascript:keywordToFindPage('Greece')" class="portfolio-link">
+                    <a href="" class="portfolio-link" data-lat="39.074208" data-lng="21.824311999999964" data-place="Greece">
                         <div class="portfolio-hover">
                             <div class="portfolio-hover-content">
                                 <i class="fa fa-plus fa-3x"></i>
@@ -133,7 +138,7 @@
                     </a>
                 </div>
                 <div class="col-md-4 col-sm-6 portfolio-item">
-                    <a href="javascript:keywordToFindPage('Kyoto')" class="portfolio-link">
+                    <a href="" class="portfolio-link" data-lat="35.0116363" data-lng="135.76802939999993" data-place="Kyoto">
                         <div class="portfolio-hover">
                             <div class="portfolio-hover-content">
                                 <i class="fa fa-plus fa-3x"></i>
@@ -143,7 +148,7 @@
                     </a>
                 </div>
                 <div class="col-md-4 col-sm-6 portfolio-item">
-                    <a href="javascript:keywordToFindPage('London')" class="portfolio-link">
+                    <a href="" class="portfolio-link" data-lat="51.5073509" data-lng="-0.12775829999998223" data-place="London">
                         <div class="portfolio-hover">
                             <div class="portfolio-hover-content">
                                 <i class="fa fa-plus fa-3x"></i>
@@ -153,7 +158,7 @@
                     </a>
                 </div>
                 <div class="col-md-4 col-sm-6 portfolio-item">
-                    <a href="javascript:keywordToFindPage('NewYork')" class="portfolio-link">
+                    <a href="" class="portfolio-link" data-lat="40.7127837" data-lng="-74.00594130000002" data-place="NewYork">
                         <div class="portfolio-hover">
                             <div class="portfolio-hover-content">
                                 <i class="fa fa-plus fa-3x"></i>
@@ -163,7 +168,7 @@
                     </a>
                 </div>
                 <div class="col-md-4 col-sm-6 portfolio-item">
-                    <a href="javascript:keywordToFindPage('Paris')" class="portfolio-link">
+                    <a href="" class="portfolio-link" data-lat="48.856614" data-lng="2.3522219000000177" data-place="Paris">
                         <div class="portfolio-hover">
                             <div class="portfolio-hover-content">
                                 <i class="fa fa-plus fa-3x"></i>
@@ -173,7 +178,7 @@
                     </a>
                 </div>
                 <div class="col-md-5 col-sm-6 portfolio-item">
-                    <a href="javascript:keywordToFindPage('Rome')" class="portfolio-link">
+                    <a href="" class="portfolio-link" data-lat="41.9027835" data-lng="12.496365500000024" data-place="Rome">
                         <div class="portfolio-hover">
                             <div class="portfolio-hover-content">
                                 <i class="fa fa-plus fa-3x"></i>
@@ -183,7 +188,7 @@
                     </a>
                 </div>
                 <div class="col-md-3 col-sm-6 portfolio-item">
-                    <a href="javascript:keywordToFindPage('Taipei')" class="portfolio-link">
+                    <a href="" class="portfolio-link" data-lat="25.0329636" data-lng="121.56542680000007" data-place="Taipei">
                         <div class="portfolio-hover">
                             <div class="portfolio-hover-content">
                                 <i class="fa fa-plus fa-3x"></i>
@@ -239,12 +244,15 @@
             <div class="row">
                 <div class="col-lg-12 text-center">
                     <h2 class="section-heading">Story of the Months</h2>
-                    <h3 class="section-subheading text-muted">Lorem ipsum dolor sit amet consectetur.</h3>
+                    <h3 class="section-subheading text-muted"></h3>
+                    <!--<h3 class="section-subheading text-muted">Lorem ipsum dolor sit amet consectetur.</h3>-->
+                    
                 </div>
             </div>
             <div class="row">
                 <div class="col-lg-12">
                     <ul class="timeline">
+                    <!-- TODO 圖文  皆放大 -->
                         <!-- timeline-inverted 向右 -->
                         <li class="timeline-inverted">
                             <div class="timeline-image">
@@ -272,51 +280,48 @@
             <div class="row">
                 <div class="col-md-3 col-sm-6">
                     <a href="#">
-                        <img src="img/logos/envato.jpg" class="img-responsive img-centered" alt="">
+                        <!-- <img src="img/logos/envato.jpg" class="img-responsive img-centered" alt=""> -->
                     </a>
                 </div>
                 <div class="col-md-3 col-sm-6">
                     <a href="#">
-                        <img src="img/logos/designmodo.jpg" class="img-responsive img-centered" alt="">
+                        <!-- <img src="img/logos/designmodo.jpg" class="img-responsive img-centered" alt=""> -->
                     </a>
                 </div>
                 <div class="col-md-3 col-sm-6">
                     <a href="#">
-                        <img src="img/logos/themeforest.jpg" class="img-responsive img-centered" alt="">
+                        <!-- <img src="img/logos/themeforest.jpg" class="img-responsive img-centered" alt=""> -->
                     </a>
                 </div>
                 <div class="col-md-3 col-sm-6">
                     <a href="#">
-                        <img src="img/logos/creative-market.jpg" class="img-responsive img-centered" alt="">
+                        <!-- <img src="img/logos/creative-market.jpg" class="img-responsive img-centered" alt=""> -->
                     </a>
                 </div>
             </div>
         </div>
     </aside>
     <!-- Team Section -->
-    <section id="team">
+    <section id="team" >
         <div class="container">
             <div class="row">
                 <div class="col-lg-12 text-center">
-                    <h2 class="section-heading">Our Amazing Team</h2>
-                    <h3 class="section-subheading text-muted">Lorem ipsum dolor sit amet consectetur.</h3>
+                    <h2 class="section-heading">Quick Link</h2>
+                    <h3 class="section-subheading text-muted"></h3>
+                    <!--<h3 class="section-subheading text-muted">Lorem ipsum dolor sit amet consectetur.</h3>-->
                 </div>
             </div>
             <div class="row">
-
-                        <ul>
-                            <li style="list-style-type:none;"> <a href="/page/aboutUs" target="_blank">      About Us</a><li>
-                            <li style="list-style-type:none;"> <a href="/page/termsOfUse" target="_blank">   Terms of Use</a><li>
-                            <li style="list-style-type:none;>"><a href="/page/advertisement" target="_blank">Advertisement</a><li>
-                            <li style="list-style-type:none;>"><a href="/page/partnership" target="_blank">  Partnership</a><li>
-                            <li style="list-style-type:none;>"><a href="/page/contactUs" target="_blank">    Contact Us</a><li>
-                        </ul>
-
+                <div class="col-xs-12 col-md-2 col-md-offset-2"><a href="/page/aboutUs" target="_blank">      About Us</a></div>
+                <div class="col-xs-12 col-md-2"><a href="/page/termsOfUse" target="_blank">   Terms of Use</a> </div>
+                <div class="col-xs-12 col-md-2"><a href="/page/advertisement" target="_blank">Advertisement</a> </div>
+                <div class="col-xs-12 col-md-2"><a href="/page/partnership" target="_blank">  Partnership</a> </div>
+                <div class="col-xs-12 col-md-2"><a href="/page/contactUs" target="_blank">    Contact Us</a> </div>
             </div>
         </div>
     </section>
     <!-- Contact Section -->
-    <!--<section id="contact">
+    <!-- <section id="contact">
         <div class="container">
             <div class="row">
                 <div class="col-lg-12 text-center">
@@ -358,17 +363,15 @@
                 </div>
             </div>
         </div>
-    </section>-->
+    </section> -->
     <footer>
         <div class="container">
             <div class="row">
-                <div class="col-xs-1 col-md-4">
-                </div>
+                <div class="col-xs-1 col-md-4"></div>
                 <div class="col-xs-10 col-md-4">
                     <span class="copyright">Copyright © 2016 FindFineTour All rights reserved.</span>
                 </div>
-                <div class="col-xs-1 col-md-4">
-                </div>
+                <div class="col-xs-1 col-md-4"></div>
             </div>
         </div>
     </footer>

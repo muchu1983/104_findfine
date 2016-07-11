@@ -2,9 +2,9 @@
 $(function(){
     var keyword = tour.QueryString().keyword;
     //js取值
-    alert("keyword:"+keyword);
+    // alert("keyword:"+keyword);
     //server取值
-    alert("strKeywordFromHome:"+strKeywordFromHome);
+    // alert("strKeywordFromHome:"+strKeywordFromHome);
 
     //將值填入googlemap
     $('#pac-input').val(keyword);
@@ -17,7 +17,6 @@ $(function(){
 //hmoe頁面傳值至find頁面 googleMap呈現
 function initMap() {
     var map = new google.maps.Map(document.getElementById('map'), {
-        
         center: {
             lat: Number(tour.QueryString().lat),
             lng: Number(tour.QueryString().lng)
@@ -32,7 +31,7 @@ function initMap() {
     map.controls[google.maps.ControlPosition.TOP_LEFT].push(types);
 
     var autocomplete = new google.maps.places.Autocomplete(input);
-    autocomplete.bindTo('bounds', map);
+    // autocomplete.bindTo('bounds', map);
 
     var infowindow = new google.maps.InfoWindow();
     var marker = new google.maps.Marker({
@@ -166,18 +165,30 @@ function search( condition){
 //組出單組查詢結果出來的html字串
 function getTripDataHtml(strTitle, intUsdCost, strIntroduction, strLocation, intDurationHour, strOriginUrl, strImageUrl){
     var strTripDataHtml = [
-    "<li>",
-        "<div class=\"tripData\">",
-            "<div class=\"tripImgDiv\">",
+    "<li class=\"col-xs-12 col-md-6\">",
+        "<div class=\"tripData row\">",
+            "<div class=\"tripImgDiv col-xs-4\">",
                 "<img src=\""+strImageUrl+"\"/>",
             "</div>",
-            "<div class=\"tripContentDiv\"></br>",
-                "<span>Title:"+strTitle+"</span></br>",
-                "<span>Duration:"+intDurationHour+"</span></br>",
+            "<div class=\"tripContentDiv\">",
+                "<span>Title:"+strTitle+"</span><br>",
+                "<span>Duration:"+intDurationHour+"</span><br>",
+                "<i class=\"fa fa-user\"></i>",
+                "<span>review:10</span><br>",
+                "<i class=\"text-primary fa fa-star\"></i>",
+                "<i class=\"text-primary fa fa-star\"></i>",
+                "<i class=\"text-primary fa fa-star\"></i>",
+                "<i class=\"text-primary fa fa-star\"></i>",
+                "<i class=\"text-primary fa fa-star\"></i>",
                 "<span><a href="+strOriginUrl+" target=\"_blank\">read more</a></span></br>",
             "</div>",
             "<div class=\"tripPriceAndWishDiv\">",
+                "<span class=\"pull-right\">",
+                "<i class=\"fa fa-usd\"></i>",
                 "<span>Price:"+intUsdCost+"</span></br>",
+            "</div>",
+            "<div class=\"favorite\">",
+                "<i class=\"fa fa-heart\"></i>",
             "</div>",
         "</div>",
     "</li>"

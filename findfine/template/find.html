@@ -12,7 +12,7 @@
     <link href="/static/vendor/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="/static/vendor/bootstrap-select/dist/css/bootstrap-select.min.css" rel="stylesheet">
     <!-- Bootstrap daterangepicker -->
-    <link href="/staticvendor/bootstrap-daterangepicker/daterangepicker.css" rel="stylesheet">
+    <link href="/static/vendor/bootstrap-daterangepicker/daterangepicker.css" rel="stylesheet">
     <!-- Custom Fonts -->
     <link href="/static/vendor/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
     <link href='https://fonts.googleapis.com/css?family=Raleway:400,600' rel='stylesheet' type='text/css'>
@@ -20,7 +20,7 @@
     <!-- custom CSS -->
     <link href="/static/css/custom.css" rel="stylesheet">
     <script type="text/javascript">
-        var strKeywordFromHome = "{{keyword}}";
+    var strKeywordFromHome = "{{keyword}}";
     </script>
     <!-- 低瀏覽器版本相容條件註解 -->
     <!--[if lt IE 9]>
@@ -56,9 +56,10 @@
                         </div>
                     </li>
                     <li>
+                    <!-- 國旗  語言幣別 login 太中間 log 不要白底 要靠左-->
                         <div class="CurrencyDiv navSelect">
-                            <select name="" class="bsSelect">
-                                <option value="USD">USD</option>
+                            <select id="moneySelecty" name="" class="bsSelect">
+                                <option value="USD">USD <i class="icon country"></i></option>
                                 <option value="EUR">EUR</option>
                                 <option value="RMB">RMB</option>
                                 <option value="GBP">GBP</option>
@@ -80,15 +81,16 @@
     <header class="find">
         <div class="container">
             <div class="intro-text">
-                <div class="searchContent col-xs-12 col-md-5">
+                <div class="searchContent col-xs-12 col-md-6">
                     <div class="row">
                         <div class="col-xs-12">
                             <div class="form-group">
-                                <label for="">Place</label>
+                                <label for="">Location</label>
                                 <input id="placeID" class="form-control" placeholder="Enter Something" type="text"></input>
                             </div>
                         </div>
                         <div class="col-xs-12">
+                        <!-- 後要加幣別 -->
                             <div class="form-group">
                                 <label for="">Budget</label>
                                 <div class="row">
@@ -103,215 +105,557 @@
                         </div>
                         <div class="col-xs-12">
                             <div class="form-group">
+                            <!-- TODO 要有下拉的到三角形-->
                                 <label for="">Start</label>
-                                <input id="asd" class="form-control bs_range" placeholder="Select Range" type="text">
+                                <div class="row">
+                                    <div class="col-xs-6">
+                                        <input id="" class="bs_date form-control" placeholder="From" type="text"></input>
+                                    </div>
+                                    <div class="col-xs-6">
+                                        <input id="" class="bs_date form-control" placeholder="To" type="text"></input>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-xs-12">
+                            <a class="pull-right" href="javascript:void(0)"><i class="fa fa-caret-down" data-toggle="collapse" data-target="#moreInfo" aria-expanded="false" aria-controls="moreInfo"> more</i></a>
+                            <div class="collapse pull-right" id="moreInfo">
+                                <div class="card card-block">
+                                    <div class="row">
+                                        <div class="col-xs-12">
+                                            <div class="form-group">
+                                                <label for="">Duration</label>
+                                                <div class="row">
+                                                    <div class="col-xs-2">
+                                                        <div class="checkbox">
+                                                            <label>
+                                                                <input type="checkbox" value=""> 1 hr
+                                                            </label>
+                                                        </div>
+                                                    </div>
+                                                    <!--TODO-->
+                                                    <div class="col-xs-2">
+                                                        <div class="checkbox">
+                                                            <label>
+                                                                <input type="checkbox" value=""> 2 hr
+                                                            </label>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-xs-2">
+                                                        <div class="checkbox">
+                                                            <label>
+                                                                <input type="checkbox" value=""> 3 hrs
+                                                            </label>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-xs-2">
+                                                        <div class="checkbox">
+                                                            <label>
+                                                                <input type="checkbox" value=""> 4 ~ 6 hr
+                                                            </label>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-xs-2">
+                                                        <div class="checkbox">
+                                                            <label>
+                                                                <input type="checkbox" value=""> 1 Day
+                                                            </label>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-xs-4">
+                                                        <div class="checkbox">
+                                                            <label>
+                                                                <input type="checkbox" value=""> More than 1 day
+                                                            </label>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-xs-12">
+                                            <div class="form-group">
+                                                <!--TODO 摺疊-->
+                                                <label for="">Style</label>
+                                                <div class="row">
+                                                    <div class="col-xs-2">
+                                                        <div class="checkbox">
+                                                            <label>
+                                                                <input type="checkbox" value=""> Cultural
+                                                            </label>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-xs-2">
+                                                        <div class="checkbox">
+                                                            <label>
+                                                                <input type="checkbox" value=""> Food
+                                                            </label>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-xs-2">
+                                                        <div class="checkbox">
+                                                            <label>
+                                                                <input type="checkbox" value=""> Fashion
+                                                            </label>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-xs-2">
+                                                        <div class="checkbox">
+                                                            <label>
+                                                                <input type="checkbox" value=""> Wild
+                                                            </label>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-xs-2">
+                                                        <div class="checkbox">
+                                                            <label>
+                                                                <input type="checkbox" value=""> Sports
+                                                            </label>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-xs-2">
+                                                        <div class="checkbox">
+                                                            <label>
+                                                                <input type="checkbox" value=""> Eco
+                                                            </label>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-xs-12">
+                                            <div class="form-group">
+                                                <label for="">Passenger</label>
+                                                <div class="row">
+                                                    <div class="col-xs-6">
+                                                        <input id="" class="form-control" placeholder="how many people" type="text"></input>
+                                                        <!--TODO<span>person(s)</span>-->
+                                                    </div>
+                                                    <!--
+                                                    <div class="col-xs-6">
+                                                        <input id="" class="form-control" placeholder="how many people" type="text"></input>
+                                                    </div>
+                                                    -->
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-xs-6">
+                                            <div class="form-group">
+                                                <label for="">Tour Starts</label>
+                                                <select name="" id="" class="form-control">
+                                                    <option>00:00</option>
+                                                    <option>02:00</option>
+                                                    <option>06:00</option>
+                                                    <option>08:00</option>
+                                                    <option>10:00</option>
+                                                    <option>12:00</option>
+                                                    <option>14:00</option>
+                                                    <option>16:00</option>
+                                                    <option>18:00</option>
+                                                    <option>20:00</option>
+                                                    <option>22:00</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="col-xs-6">
+                                            <div class="form-group">
+                                                <label for="">Tour end</label>
+                                                <select name="" id="" class="form-control">
+                                                    <option>00:00</option>
+                                                    <option>02:00</option>
+                                                    <option>06:00</option>
+                                                    <option>08:00</option>
+                                                    <option>10:00</option>
+                                                    <option>12:00</option>
+                                                    <option>14:00</option>
+                                                    <option>16:00</option>
+                                                    <option>18:00</option>
+                                                    <option>20:00</option>
+                                                    <option>22:00</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <!--TODO 摺疊-->
+                                        <div class="col-xs-12">
+                                            <div class="form-group">
+                                                <label for="">Guide's language</label>
+                                                <div class="row">
+                                                    <div class="col-xs-3">
+                                                        <label>
+                                                            <input type="checkbox" value=""> English
+                                                        </label>
+                                                    </div>
+                                                    <div class="col-xs-3">
+                                                        <label>
+                                                            <input type="checkbox" value=""> 中文
+                                                        </label>
+                                                    </div>
+                                                    <div class="col-xs-3">
+                                                        <label>
+                                                            <input type="checkbox" value=""> Deutsch
+                                                        </label>
+                                                    </div>
+                                                    <div class="col-xs-3">
+                                                        <label>
+                                                            <input type="checkbox" value=""> Français
+                                                        </label>
+                                                    </div>
+                                                    <div class="col-xs-3">
+                                                        <label>
+                                                            <input type="checkbox" value=""> Español
+                                                        </label>
+                                                    </div>
+                                                    <div class="col-xs-3">
+                                                        <label>
+                                                            <input type="checkbox" value=""> العربية
+                                                        </label>
+                                                    </div>
+                                                    <div class="col-xs-3">
+                                                        <label>
+                                                            <input type="checkbox" value=""> 日本語
+                                                        </label>
+                                                    </div>
+                                                    <div class="col-xs-3">
+                                                        <label>
+                                                            <input type="checkbox" value=""> Pусский
+                                                        </label>
+                                                    </div>
+                                                    <div class="col-xs-3">
+                                                        <label>
+                                                            <input type="checkbox" value=""> Italia
+                                                        </label>
+                                                    </div>
+                                                    <div class="col-xs-3">
+                                                        <label>
+                                                            <input type="checkbox" value=""> Nederland
+                                                        </label>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-xs-12">
+                                            <div class="form-group">
+                                                <label for="">Availability</label>
+                                                <div class="row">
+                                                    <div class="col-xs-6">
+                                                        <div class="checkbox">
+                                                            <label>
+                                                                <input type="checkbox" value=""> Instant confirmation
+                                                            </label>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-xs-6">
+                                                        <div class="checkbox">
+                                                            <label>
+                                                                <input type="checkbox" value=""> On request
+                                                            </label>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-xs-12">
+                            <div class="form-group">
+                                <label for=""></label>
+                                <div class="btn btn-info full" onclick="search('')">Test Search</div>
                             </div>
                         </div>
                         <div class="clearfix"></div>
                     </div>
                 </div>
+                <!-- 範圍要大 知道附近靠哪裡 -->
+                <div id="mapDiv" class="col-xs-12 col-md-6">
+                <div id="map"></div>
+                </div>
             </div>
         </div>
     </header>
-    <input type="button" onclick="search('')" value="testSearch">
     <div id="findContent" class="container">
         <div class="row">
-            <div class="col-xs-12 col-md-7">
+            <div class="col-xs-12">
                 <div class="findResultDiv">
-                    <ul class="lstTripData">
-                    
-                    <!--
-                        <li>
+                <!--TODO 排版有跑掉 js 有需要改寫 加介紹-->
+                    <ul class="lstTripData row">
+                        <li class="col-xs-12 col-md-6">
                             <div class="tripData row">
-                                <div class="tripImgDiv col-xs-4"><img src="static/img/TripCard.jpg"></div>
+                                <div class="tripImgDiv col-xs-4"><img src="/static/img/Kyoto.jpg"></div>
                                 <div class="col-xs-8">
                                     <div class="tripContentDiv">
                                         <p><span>【九份秘密基地】九份茶坊-體驗茶文化</span></p>
                                         <br><i class="fa fa-clock-o"></i> <span>Duration:2</span>
+                                        <br><i class="fa fa-user"></i> <span>review:10</span>
+                                        <br><i class="text-primary fa fa-star"></i>
+                                        <i class="text-primary fa fa-star"></i>
+                                        <i class="text-primary fa fa-star"></i>
+                                        <i class="text-primary fa fa-star"></i>
+                                        <i class="text-primary fa fa-star"></i>
                                         <br><span><a href="https://www.kkday.com/en/product/8189" target="_blank"><i class="fa fa-info-circle"></i> read more</a></span>
                                         <br>
                                     </div>
                                 </div>
                                 <div class="tripPriceAndWishDiv"><span class="pull-right"><i class="fa fa-usd"></i> 15</span> </div>
+                                <div class="favorite"><i class="fa fa-heart"></i></div>
                             </div>
                         </li>
-                        <li>
+                        <li class="col-xs-12 col-md-6">
                             <div class="tripData row">
-                                <div class="tripImgDiv col-xs-4"><img src="static/img/TripCard.jpg"></div>
+                                <div class="tripImgDiv col-xs-4"><img src="/static/img/Kyoto.jpg"></div>
                                 <div class="col-xs-8">
                                     <div class="tripContentDiv">
                                         <p><span>【尋找客家記憶】苗栗龍騰斷橋Taxi tour 8 HR</span></p>
                                         <br><i class="fa fa-clock-o"></i> <span>Duration:8</span>
+                                        <br><i class="fa fa-user"></i> <span>review:10</span>
+                                        <br><i class="text-primary fa fa-star"></i>
+                                        <i class="text-primary fa fa-star"></i>
+                                        <i class="text-primary fa fa-star"></i>
+                                        <i class="text-primary fa fa-star"></i>
+                                        <i class="text-primary fa fa-star"></i>
                                         <br><span><a href="https://www.kkday.com/en/product/7794" target="_blank"><i class="fa fa-info-circle"></i> read more</a></span>
                                         <br>
                                     </div>
                                 </div>
                                 <div class="tripPriceAndWishDiv"><span class="pull-right"><i class="fa fa-usd"></i> 134</span> </div>
+                                <div class="favorite"><i class="fa fa-heart"></i></div>
                             </div>
                         </li>
-                        <li>
+                        <li class="col-xs-12 col-md-6">
                             <div class="tripData row">
-                                <div class="tripImgDiv col-xs-4"><img src="static/img/TripCard.jpg"></div>
+                                <div class="tripImgDiv col-xs-4"><img src="/static/img/Kyoto.jpg"></div>
                                 <div class="col-xs-8">
                                     <div class="tripContentDiv">
                                         <p><span>【秋天溯溪首選】沿溪流賞楓紅。新北石門老梅溪溯溪</span></p>
                                         <br><i class="fa fa-clock-o"></i> <span>Duration:7</span>
+                                        <br><i class="fa fa-user"></i> <span>review:10</span>
+                                        <br><i class="text-primary fa fa-star"></i>
+                                        <i class="text-primary fa fa-star"></i>
+                                        <i class="text-primary fa fa-star"></i>
+                                        <i class="text-primary fa fa-star"></i>
+                                        <i class="text-primary fa fa-star"></i>
                                         <br><span><a href="https://www.kkday.com/en/product/5215" target="_blank"><i class="fa fa-info-circle"></i> read more</a></span>
                                         <br>
                                     </div>
                                 </div>
                                 <div class="tripPriceAndWishDiv"><span class="pull-right"><i class="fa fa-usd"></i> 61</span> </div>
+                                <div class="favorite"><i class="fa fa-heart"></i></div>
                             </div>
                         </li>
-                        <li>
+                        <li class="col-xs-12 col-md-6">
                             <div class="tripData row">
-                                <div class="tripImgDiv col-xs-4"><img src="static/img/TripCard.jpg"></div>
+                                <div class="tripImgDiv col-xs-4"><img src="/static/img/Kyoto.jpg"></div>
                                 <div class="col-xs-8">
                                     <div class="tripContentDiv">
                                         <p><span>HSR 高鐵電子憑證 Channel Reatail 訂購付款</span></p>
                                         <br><i class="fa fa-clock-o"></i> <span>Duration:0</span>
+                                        <br><i class="fa fa-user"></i> <span>review:10</span>
+                                        <br><i class="text-primary fa fa-star"></i>
+                                        <i class="text-primary fa fa-star"></i>
+                                        <i class="text-primary fa fa-star"></i>
+                                        <i class="text-primary fa fa-star"></i>
+                                        <i class="text-primary fa fa-star"></i>
                                         <br><span><a href="https://www.kkday.com/en/product/4692" target="_blank"><i class="fa fa-info-circle"></i> read more</a></span>
                                         <br>
                                     </div>
                                 </div>
                                 <div class="tripPriceAndWishDiv"><span class="pull-right"><i class="fa fa-usd"></i> 51</span> </div>
+                                <div class="favorite"><i class="fa fa-heart"></i></div>
                             </div>
                         </li>
-                        <li>
+                        <li class="col-xs-12 col-md-6">
                             <div class="tripData row">
-                                <div class="tripImgDiv col-xs-4"><img src="static/img/TripCard.jpg"></div>
+                                <div class="tripImgDiv col-xs-4"><img src="/static/img/Kyoto.jpg"></div>
                                 <div class="col-xs-8">
                                     <div class="tripContentDiv">
                                         <p><span>台北極限運動-SUP立槳教學體驗</span></p>
                                         <br><i class="fa fa-clock-o"></i> <span>Duration:8</span>
+                                        <br><i class="fa fa-user"></i> <span>review:10</span>
+                                        <br><i class="text-primary fa fa-star"></i>
+                                        <i class="text-primary fa fa-star"></i>
+                                        <i class="text-primary fa fa-star"></i>
+                                        <i class="text-primary fa fa-star"></i>
+                                        <i class="text-primary fa fa-star"></i>
                                         <br><span><a href="https://www.kkday.com/en/product/5153" target="_blank"><i class="fa fa-info-circle"></i> read more</a></span>
                                         <br>
                                     </div>
                                 </div>
                                 <div class="tripPriceAndWishDiv"><span class="pull-right"><i class="fa fa-usd"></i> 47</span> </div>
+                                <div class="favorite"><i class="fa fa-heart"></i></div>
                             </div>
                         </li>
-                        <li>
+                        <li class="col-xs-12 col-md-6">
                             <div class="tripData row">
-                                <div class="tripImgDiv col-xs-4"><img src="static/img/TripCard.jpg"></div>
+                                <div class="tripImgDiv col-xs-4"><img src="/static/img/Kyoto.jpg"></div>
                                 <div class="col-xs-8">
                                     <div class="tripContentDiv">
                                         <p><span>玩go台灣新亮點。台灣腳踏車環島團(含腳踏車、導遊、住宿)</span></p>
                                         <br><i class="fa fa-clock-o"></i> <span>Duration:23</span>
+                                        <br><i class="fa fa-user"></i> <span>review:10</span>
+                                        <br><i class="text-primary fa fa-star"></i>
+                                        <i class="text-primary fa fa-star"></i>
+                                        <i class="text-primary fa fa-star"></i>
+                                        <i class="text-primary fa fa-star"></i>
+                                        <i class="text-primary fa fa-star"></i>
                                         <br><span><a href="https://www.kkday.com/en/product/5701" target="_blank"><i class="fa fa-info-circle"></i> read more</a></span>
                                         <br>
                                     </div>
                                 </div>
                                 <div class="tripPriceAndWishDiv"><span class="pull-right"><i class="fa fa-usd"></i> 968</span> </div>
+                                <div class="favorite"><i class="fa fa-heart"></i></div>
                             </div>
                         </li>
-                        <li>
+                        <li class="col-xs-12 col-md-6">
                             <div class="tripData row">
-                                <div class="tripImgDiv col-xs-4"><img src="static/img/TripCard.jpg"></div>
+                                <div class="tripImgDiv col-xs-4"><img src="/static/img/Kyoto.jpg"></div>
                                 <div class="col-xs-8">
                                     <div class="tripContentDiv">
                                         <p><span>【極限挑戰】台北龍洞攀岩體驗</span></p>
                                         <br><i class="fa fa-clock-o"></i> <span>Duration:8</span>
+                                        <br><i class="fa fa-user"></i> <span>review:10</span>
+                                        <br><i class="text-primary fa fa-star"></i>
+                                        <i class="text-primary fa fa-star"></i>
+                                        <i class="text-primary fa fa-star"></i>
+                                        <i class="text-primary fa fa-star"></i>
+                                        <i class="text-primary fa fa-star"></i>
                                         <br><span><a href="https://www.kkday.com/en/product/7288" target="_blank"><i class="fa fa-info-circle"></i> read more</a></span>
                                         <br>
                                     </div>
                                 </div>
                                 <div class="tripPriceAndWishDiv"><span class="pull-right"><i class="fa fa-usd"></i> 82</span> </div>
+                                <div class="favorite"><i class="fa fa-heart"></i></div>
                             </div>
                         </li>
-                        <li>
+                        <li class="col-xs-12 col-md-6">
                             <div class="tripData row">
-                                <div class="tripImgDiv col-xs-4"><img src="static/img/TripCard.jpg"></div>
+                                <div class="tripImgDiv col-xs-4"><img src="/static/img/Kyoto.jpg"></div>
                                 <div class="col-xs-8">
                                     <div class="tripContentDiv">
                                         <p><span>北投熱海大飯店．兩人白磺湯屋溫泉卷（1HR）</span></p>
                                         <br><i class="fa fa-clock-o"></i> <span>Duration:1</span>
+                                        <br><i class="fa fa-user"></i> <span>review:10</span>
+                                        <br><i class="text-primary fa fa-star"></i>
+                                        <i class="text-primary fa fa-star"></i>
+                                        <i class="text-primary fa fa-star"></i>
+                                        <i class="text-primary fa fa-star"></i>
+                                        <i class="text-primary fa fa-star"></i>
                                         <br><span><a href="https://www.kkday.com/en/product/4004" target="_blank"><i class="fa fa-info-circle"></i> read more</a></span>
                                         <br>
                                     </div>
                                 </div>
                                 <div class="tripPriceAndWishDiv"><span class="pull-right"><i class="fa fa-usd"></i> 28</span> </div>
+                                <div class="favorite"><i class="fa fa-heart"></i></div>
                             </div>
                         </li>
-                        <li>
+                        <li class="col-xs-12 col-md-6">
                             <div class="tripData row">
-                                <div class="tripImgDiv col-xs-4"><img src="static/img/TripCard.jpg"></div>
+                                <div class="tripImgDiv col-xs-4"><img src="/static/img/Kyoto.jpg"></div>
                                 <div class="col-xs-8">
                                     <div class="tripContentDiv">
                                         <p><span>攝影體驗．我是主角</span></p>
                                         <br><i class="fa fa-clock-o"></i> <span>Duration:5</span>
+                                        <br><i class="fa fa-user"></i> <span>review:10</span>
+                                        <br><i class="text-primary fa fa-star"></i>
+                                        <i class="text-primary fa fa-star"></i>
+                                        <i class="text-primary fa fa-star"></i>
+                                        <i class="text-primary fa fa-star"></i>
+                                        <i class="text-primary fa fa-star"></i>
                                         <br><span><a href="https://www.kkday.com/en/product/6608" target="_blank"><i class="fa fa-info-circle"></i> read more</a></span>
                                         <br>
                                     </div>
                                 </div>
                                 <div class="tripPriceAndWishDiv"><span class="pull-right"><i class="fa fa-usd"></i> 170</span> </div>
+                                <div class="favorite"><i class="fa fa-heart"></i></div>
                             </div>
                         </li>
-                        <li>
+                        <li class="col-xs-12 col-md-6">
                             <div class="tripData row">
-                                <div class="tripImgDiv col-xs-4"><img src="static/img/TripCard.jpg"></div>
+                                <div class="tripImgDiv col-xs-4"><img src="/static/img/Kyoto.jpg"></div>
                                 <div class="col-xs-8">
                                     <div class="tripContentDiv">
                                         <p><span>Taxi tour 8 HR - 【尋訪陶藝】鶯歌老街一日遊</span></p>
                                         <br><i class="fa fa-clock-o"></i> <span>Duration:8</span>
+                                        <br><i class="fa fa-user"></i> <span>review:10</span>
+                                        <br><i class="text-primary fa fa-star"></i>
+                                        <i class="text-primary fa fa-star"></i>
+                                        <i class="text-primary fa fa-star"></i>
+                                        <i class="text-primary fa fa-star"></i>
+                                        <i class="text-primary fa fa-star"></i>
                                         <br><span><a href="https://www.kkday.com/en/product/7623" target="_blank"><i class="fa fa-info-circle"></i> read more</a></span>
                                         <br>
                                     </div>
                                 </div>
                                 <div class="tripPriceAndWishDiv"><span class="pull-right"><i class="fa fa-usd"></i> 134</span> </div>
+                                <div class="favorite"><i class="fa fa-heart"></i></div>
                             </div>
                         </li>
-                        <li>
+                        <li class="col-xs-12 col-md-6">
                             <div class="tripData row">
-                                <div class="tripImgDiv col-xs-4"><img src="static/img/TripCard.jpg"></div>
+                                <div class="tripImgDiv col-xs-4"><img src="/static/img/Kyoto.jpg"></div>
                                 <div class="col-xs-8">
                                     <div class="tripContentDiv">
                                         <p><span>《那些年，我們一起追的女孩》Taxi tour 6 HR 電影場景．十分幸福車站</span></p>
                                         <br><i class="fa fa-clock-o"></i> <span>Duration:6</span>
+                                        <br><i class="fa fa-user"></i> <span>review:10</span>
+                                        <br><i class="text-primary fa fa-star"></i>
+                                        <i class="text-primary fa fa-star"></i>
+                                        <i class="text-primary fa fa-star"></i>
+                                        <i class="text-primary fa fa-star"></i>
+                                        <i class="text-primary fa fa-star"></i>
                                         <br><span><a href="https://www.kkday.com/en/product/7588" target="_blank"><i class="fa fa-info-circle"></i> read more</a></span>
                                         <br>
                                     </div>
                                 </div>
                                 <div class="tripPriceAndWishDiv"><span class="pull-right"><i class="fa fa-usd"></i> 102</span> </div>
+                                <div class="favorite"><i class="fa fa-heart"></i></div>
                             </div>
                         </li>
-                        <li>
+                        <li class="col-xs-12 col-md-6">
                             <div class="tripData row">
-                                <div class="tripImgDiv col-xs-4"><img src="static/img/TripCard.jpg"></div>
+                                <div class="tripImgDiv col-xs-4"><img src="/static/img/Kyoto.jpg"></div>
                                 <div class="col-xs-8">
                                     <div class="tripContentDiv">
                                         <p><span>台北出發。大溪嘎色鬧部落-開心農場</span></p>
                                         <br><i class="fa fa-clock-o"></i> <span>Duration:10</span>
+                                        <br><i class="fa fa-user"></i> <span>review:10</span>
+                                        <br><i class="text-primary fa fa-star"></i>
+                                        <i class="text-primary fa fa-star"></i>
+                                        <i class="text-primary fa fa-star"></i>
+                                        <i class="text-primary fa fa-star"></i>
+                                        <i class="text-primary fa fa-star"></i>
                                         <br><span><a href="https://www.kkday.com/en/product/5442" target="_blank"><i class="fa fa-info-circle"></i> read more</a></span>
                                         <br>
                                     </div>
                                 </div>
                                 <div class="tripPriceAndWishDiv"><span class="pull-right"><i class="fa fa-usd"></i> 168</span> </div>
+                                <div class="favorite"><i class="fa fa-heart"></i></div>
                             </div>
                         </li>
-                        <li>
+                        <li class="col-xs-12 col-md-6">
                             <div class="tripData row">
-                                <div class="tripImgDiv col-xs-4"><img src="static/img/TripCard.jpg"></div>
+                                <div class="tripImgDiv col-xs-4"><img src="/static/img/Kyoto.jpg"></div>
                                 <div class="col-xs-8">
                                     <div class="tripContentDiv">
                                         <p><span>【重機旅行】萬華、淡水老街一日遊</span></p>
                                         <br><i class="fa fa-clock-o"></i> <span>Duration:8</span>
+                                        <br><i class="fa fa-user"></i> <span>review:10</span>
+                                        <br><i class="text-primary fa fa-star"></i>
+                                        <i class="text-primary fa fa-star"></i>
+                                        <i class="text-primary fa fa-star"></i>
+                                        <i class="text-primary fa fa-star"></i>
+                                        <i class="text-primary fa fa-star"></i>
                                         <br><span><a href="https://www.kkday.com/en/product/8629" target="_blank"><i class="fa fa-info-circle"></i> read more</a></span>
                                         <br>
                                     </div>
                                 </div>
                                 <div class="tripPriceAndWishDiv"><span class="pull-right"><i class="fa fa-usd"></i> 117</span> </div>
+                                <div class="favorite"><i class="fa fa-heart"></i></div>
                             </div>
                         </li>
-                        -->
-
                     </ul>
                 </div>
             </div>
-            <div id="mapDiv" class="col-xs-12 col-md-5">
-                <input id="pac-input" class="controls" type="text" placeholder="Enter a location">
-                <div id="map"></div>
-            </div>
+            
         </div>
     </div>
     <!-- jQuery core-->
@@ -325,13 +669,12 @@
     <!-- Bootstrap DateRange Js -->
     <script src="/static/vendor/bootstrap-daterangepicker/daterangepicker.js"></script>
     <!-- velocity animation -->
-    <!-- <script src="vendor/velocity/velocity.min.js"></script> -->
+    <!-- <script sr/static/vendor/velocity/velocity.min.js"></script> -->
     <!-- custom JavaScript -->
     <script src="/static/js/custom.js"></script>
     <script src="/static/js/find.js"></script>
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBNW1g69sGY8q_45F0Ob1lMbZn3fWyiL1o&signed_in=true&libraries=places&callback=initMap" async defer></script>
     </script>
-
 </body>
 
 </html>
