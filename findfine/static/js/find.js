@@ -15,7 +15,7 @@ $(function(){
 });
 
 //hmoe頁面傳值至find頁面 googleMap呈現
-function initMap() {
+function initMap(sendLat,sendLng) {
     var map = new google.maps.Map(document.getElementById('map'), {
         center: {
             lat: Number(tour.QueryString().lat),
@@ -24,14 +24,14 @@ function initMap() {
         zoom: 13
     });
     var input = /** @type {!HTMLInputElement} */ (
-        document.getElementById('pac-input'));
+        document.getElementById('placeID'));
 
     var types = document.getElementById('type-selector');
-    map.controls[google.maps.ControlPosition.TOP_LEFT].push(input);
-    map.controls[google.maps.ControlPosition.TOP_LEFT].push(types);
+    //map.controls[google.maps.ControlPosition.TOP_LEFT].push(input);
+    //map.controls[google.maps.ControlPosition.TOP_LEFT].push(types);
 
     var autocomplete = new google.maps.places.Autocomplete(input);
-    // autocomplete.bindTo('bounds', map);
+    autocomplete.bindTo('bounds', map);
 
     var infowindow = new google.maps.InfoWindow();
     var marker = new google.maps.Marker({
@@ -76,13 +76,13 @@ function initMap() {
         }
 
         infowindow.setContent('<div><strong>' + place.name + '</strong><br>' + address);
-        infowindow.open(map, marker);
+        //infowindow.open(map, marker);
     });
 }
 
 //home頁面到find頁面 or 按下search鍵 會執行的動作 可傳入排序條件
 function search( condition){
-    //initMap();
+    
 //主搜尋
     //地點
     var place         = $("#placeID").val();
