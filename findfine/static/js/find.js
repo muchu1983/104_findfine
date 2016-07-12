@@ -82,6 +82,7 @@ function initMap() {
 
 //home頁面到find頁面 or 按下search鍵 會執行的動作 可傳入排序條件
 function search( condition){
+    //initMap();
 //主搜尋
     //地點
     var place         = $("#placeID").val();
@@ -251,7 +252,7 @@ function search( condition){
         }
     }
     
-    alert(" 254:strFilterQueryUrl:"+strFilterQueryUrl);
+    //alert(" 254:strFilterQueryUrl:"+strFilterQueryUrl);
 
     $.getJSON(strFilterQueryUrl, function(jsonResp){
         //console.log(jsonResp);
@@ -271,14 +272,14 @@ function search( condition){
         }
         for (i = 0; i < jsonResp.length; i++) {
             var dicTripData = jsonResp[i];
-            var strTripDataHtml = getTripDataHtml(dicTripData["strTitle"], dicTripData["intUsdCost"], dicTripData["strIntroduction"], dicTripData["strLocation"], dicTripData["intDurationHour"], dicTripData["strOriginUrl"], dicTripData["strImageUrl"]);
+            var strTripDataHtml = getTripDataHtml(dicTripData["strTitle"], dicTripData["intUsdCost"], dicTripData["strIntroduction"], dicTripData["strLocation"], dicTripData["intDurationHour"], dicTripData["strOriginUrl"], dicTripData["strImageUrl"], dicTripData["intReviewStar"], dicTripData["intReviewVisitor"] );
             $("div.findResultDiv ul.lstTripData").append(strTripDataHtml);
         };
     });
 };
 
 //組出單組查詢結果出來的html字串
-function getTripDataHtml(strTitle, intUsdCost, strIntroduction, strLocation, intDurationHour, strOriginUrl, strImageUrl){
+function getTripDataHtml(strTitle, intUsdCost, strIntroduction, strLocation, intDurationHour, strOriginUrl, strImageUrl, intReviewStar, intReviewVisitor ){
     var strTripDataHtml = [
     "<li class=\"col-xs-12 col-md-6\">",
         "<div class=\"tripData row\">",
@@ -287,15 +288,11 @@ function getTripDataHtml(strTitle, intUsdCost, strIntroduction, strLocation, int
             "</div>",
             "<div class=\"tripContentDiv\">",
                 "<span>Title:"+strTitle+"</span><br>",
+                "<span>Introduction:"+strIntroduction+"</span><br>",
                 "<span>Duration:"+intDurationHour+"</span><br>",
-                "<i class=\"fa fa-user\"></i>",
-                "<span>review:10</span><br>",
-                "<i class=\"text-primary fa fa-star\"></i>",
-                "<i class=\"text-primary fa fa-star\"></i>",
-                "<i class=\"text-primary fa fa-star\"></i>",
-                "<i class=\"text-primary fa fa-star\"></i>",
-                "<i class=\"text-primary fa fa-star\"></i>",
-                "<span><a href="+strOriginUrl+" target=\"_blank\">read more</a></span></br>",
+                "<span>Star:"+intReviewStar+"</span><br>",
+                "<span>review:"+intReviewVisitor+"</span><br>",
+                "<span><a href="+strOriginUrl+" target=\"_blank\">read more</a></span><br>",
             "</div>",
             "<div class=\"tripPriceAndWishDiv\">",
                 "<span class=\"pull-right\">",
