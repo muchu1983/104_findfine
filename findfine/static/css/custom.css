@@ -281,22 +281,22 @@ fieldset[disabled] #page-top .btn-xl.active {
   }
 }
 #page-top header.home {
-  background: url('/static/img/lynmo-blur.jpg') no-repeat center center;
+  background: url('/static/img/homeBg.jpg') no-repeat center center;
   background-attachment: scroll;
-  -webkit-background-size: cover;
-  -moz-background-size: cover;
-  background-size: cover;
-  -o-background-size: cover;
+  -webkit-background-size: contain;
+  -moz-background-size: contain;
+  background-size: contain;
+  -o-background-size: contain;
   text-align: center;
   color: white;
 }
 #page-top header.find {
-  background: url('/static/img/Kyoto-blur.jpg') no-repeat center center;
+  background: url('/static/img/findBg.jpg') no-repeat center center;
   background-attachment: scroll;
-  -webkit-background-size: cover;
-  -moz-background-size: cover;
-  background-size: cover;
-  -o-background-size: cover;
+  -webkit-background-size: contain;
+  -moz-background-size: contain;
+  background-size: contain;
+  -o-background-size: contain;
   text-align: center;
   color: white;
 }
