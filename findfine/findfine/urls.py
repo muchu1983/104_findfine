@@ -23,6 +23,7 @@ urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^account/index.html$', account_views.showIndexPage),
     url(r'^trip/filter$', trip_views.filter),
+    url(r'^$', page_views.showHomePage),
     url(r'^page/home$', page_views.showHomePage),
     url(r'^page/find$', page_views.showFindPage),
     url(r'^page/aboutUs$', page_views.showAboutUsPage),
