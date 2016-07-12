@@ -82,13 +82,33 @@ function initMap() {
 
 //home頁面到find頁面 or 按下search鍵 會執行的動作 可傳入排序條件
 function search( condition){
-
+//主搜尋
+    //地點
     var place         = $("#placeID").val();
     //預算下限
     var budgetDown    = $("#budgetDownID").val();
     //預算上限
     var budgetUp      = $("#budgetUpID").val();
-    
+    //時間起迄
+    var startFrom     =$("#startFrom").val();
+    var to            =$("#to").val();
+//摺疊搜尋
+    //旅遊時間長短
+    var duration      =$('input:checkbox:checked[name="duration"]').map(function() { return $(this).val(); }).get();
+    //人數
+    var passenger =$("#passenger").val();
+    //類型
+    var style         =$('input:checkbox:checked[name="style"]').map(function() { return $(this).val(); }).get();
+    //旅遊時間點開始
+    var tourStarts    =$('#tourStarts :selected').text();
+    //旅遊時間點結束
+    var tourEnds      =$('#tourEnds :selected').text();
+    //導覽語言
+    var guideLanguage =$('input:checkbox:checked[name="guideLanguage"]').map(function() { return $(this).val(); }).get();
+    //可立即參與
+    var availability  =$('input:checkbox:checked[name="availability"]').map(function() { return $(this).val(); }).get();
+    //萬用搜尋
+    var attrations    =$("#attrations").val();  
     
     var strFilterQueryUrl = "/trip/filter?1=1";
     //place
@@ -103,6 +123,100 @@ function search( condition){
     if (budgetUp != ""){
         strFilterQueryUrl = strFilterQueryUrl + "&max_budget=" + budgetUp;
     };
+    //startFrom db無資料
+    if (startFrom != ""){
+        strFilterQueryUrl = strFilterQueryUrl + "&date_from=" + startFrom;
+    };
+    //to db無資料
+    if (to != ""){
+        strFilterQueryUrl = strFilterQueryUrl + "&date_to=" + to;
+    };
+    
+    //duration
+    if (duration != ""){
+        for(var i=0;duration.length>i;i++){
+            if(duration[i]=="1"){
+                strFilterQueryUrl = strFilterQueryUrl + "&min_duration=0&max_duration=1";
+            }
+            if(duration[i]=="2"){
+                strFilterQueryUrl = strFilterQueryUrl + "&min_duration=1&max_duration=2";
+            }
+            if(duration[i]=="3"){
+                strFilterQueryUrl = strFilterQueryUrl + "&min_duration=2&max_duration=3";
+            }
+            if(duration[i]=="4"){
+                strFilterQueryUrl = strFilterQueryUrl + "&min_duration=3&max_duration=6";
+            }
+            if(duration[i]=="5"){
+                strFilterQueryUrl = strFilterQueryUrl + "&min_duration=12&max_duration=24";
+            }
+            if(duration[i]=="5"){
+                strFilterQueryUrl = strFilterQueryUrl + "&min_duration=24&max_duration=1000";
+            }
+        }
+    };
+    //passenger 目前沒有
+    if (passenger != ""){
+        strFilterQueryUrl = strFilterQueryUrl + "&keyword=" + passengerDown;
+    };
+    //style 目前db無資料 js需修改
+    if (style != ""){
+        for(var i=0;duration.length>i;i++){
+            if(style[i]=="Cultural"){
+                strFilterQueryUrl = strFilterQueryUrl + "&style=" + style;
+            }
+            if(style[i]=="Food"){
+                strFilterQueryUrl = strFilterQueryUrl + "&style=" + style;
+            }
+            if(style[i]=="Fashion"){
+                strFilterQueryUrl = strFilterQueryUrl + "&style=" + style;
+            }
+            if(style[i]=="Wild"){
+                strFilterQueryUrl = strFilterQueryUrl + "&style=" + style;
+            }
+            if(style[i]=="Sports"){
+                strFilterQueryUrl = strFilterQueryUrl + "&style=" + style;
+            }
+            if(style[i]=="Eco"){
+                strFilterQueryUrl = strFilterQueryUrl + "&style=" + style;
+            }
+        }
+    };
+    //tourStarts 程式尚未實作
+    if (tourStarts != ""){
+        strFilterQueryUrl = strFilterQueryUrl + "&date_from=" + tourStarts;
+    };
+    //tourEnds  程式尚未實作
+    if (tourEnds != ""){
+        strFilterQueryUrl = strFilterQueryUrl + "&date_to=" + tourEnds;
+    };
+    //guideLanguage 
+    if (guideLanguage != ""){
+        for(var i=0;guideLanguage.length>i;i++){
+            if(guideLanguage[i]=="English"){
+                strFilterQueryUrl = strFilterQueryUrl + "&guide_language=English";
+            }
+            if(guideLanguage[i]=="Chinese"){
+                strFilterQueryUrl = strFilterQueryUrl + "&guide_language=中文";
+            }
+        }
+    };
+    //availability db 無資料
+    if (availability != ""){
+        for(var i=0;availability.length>i;i++){
+            if(availability[i]=="instantConfirmation"){
+                strFilterQueryUrl = strFilterQueryUrl + "&option=" + option[i];
+            }
+            if(availability[i]=="onRequest"){
+                strFilterQueryUrl = strFilterQueryUrl + "&option=" + option[i];
+            }
+        }
+    };
+    //attrations
+    if (attrations != ""){
+        strFilterQueryUrl = strFilterQueryUrl + "&keyword=" + attrations;
+    };
+
     //排序條件
     if(condition !=""){
         if(condition=='intUsdCost'){
@@ -136,6 +250,8 @@ function search( condition){
             }
         }
     }
+    
+    alert(" 254:strFilterQueryUrl:"+strFilterQueryUrl);
 
     $.getJSON(strFilterQueryUrl, function(jsonResp){
         //console.log(jsonResp);
@@ -144,14 +260,13 @@ function search( condition){
             
             if($("body").find(".sortedBy").length!=1){
                 var sortedByHtml=[
-                 "<div class=\"sortedBy\">",
-                    "<span>sorted by</span>",
-                    "<span><input id=\"sortByBudgetID\"       type=\"button\" onclick='search(\"intUsdCost\")'      value=\"Budget ASC\">    </span>",
-                    "<span><input id=\"sortByDurationHourID\" type=\"button\" onclick='search(\"intDurationHour\")' value=\"Duration ASC\">  </span>",
-                    "<span><input id=\"sortByReviewStarID\"   type=\"button\" onclick='search(\"intReviewStar\")'   value=\"ReviewStar ASC\"></span>",
+                 "<div class=\"sortedBy pull-right\">",
+                    "<span><input class=\"btn btn-info\" id=\"sortByBudgetID\"       type=\"button\" onclick='search(\"intUsdCost\")'      value=\"Budget ASC\">    </span>",
+                    "<span><input class=\"btn btn-info\" id=\"sortByDurationHourID\" type=\"button\" onclick='search(\"intDurationHour\")' value=\"Duration ASC\">  </span>",
+                    "<span><input class=\"btn btn-info\" id=\"sortByReviewStarID\"   type=\"button\" onclick='search(\"intReviewStar\")'   value=\"ReviewStar ASC\"></span>",
                  "</div>",
                 ]
-                $(".find").append(sortedByHtml);
+                $(".findResultDiv").prepend(sortedByHtml);
             }
         }
         for (i = 0; i < jsonResp.length; i++) {
