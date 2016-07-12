@@ -222,32 +222,32 @@ function search( condition){
     if(condition !=""){
         if(condition=='intUsdCost'){
             //預算
-            if($("#sortByBudgetID").val() =="Budget ASC"){
+            if($("#sortByBudgetID").val() =="Budget ↓"){
                 strFilterQueryUrl = strFilterQueryUrl + "&order_by=" +condition;
-                $("#sortByBudgetID").val("Budget DESC");
+                $("#sortByBudgetID").val("Budget ↑");
             }else{
                 strFilterQueryUrl = strFilterQueryUrl + "&order_by=-" +condition;
-                $("#sortByBudgetID").val("Budget ASC");
+                $("#sortByBudgetID").val("Budget ↓");
             }
         }
         if(condition=='intDurationHour'){
             //tour長短
-            if($("#sortByDurationHourID").val() =="Duration ASC"){
+            if($("#sortByDurationHourID").val() =="Duration ↓"){
                 strFilterQueryUrl = strFilterQueryUrl + "&order_by=" +condition;
-                $("#sortByDurationHourID").val("Duration DESC");
+                $("#sortByDurationHourID").val("Duration ↑");
             }else{
                 strFilterQueryUrl = strFilterQueryUrl + "&order_by=-" +condition;
-                $("#sortByDurationHourID").val("Duration ASC");
+                $("#sortByDurationHourID").val("Duration ↓");
             }
         }
         if(condition=='intReviewStar'){
             //評分高低
-            if($("#sortByReviewStarID").val() =="ReviewStar ASC"){
+            if($("#sortByReviewStarID").val() =="ReviewStar ↓"){
                 strFilterQueryUrl = strFilterQueryUrl + "&order_by=" +condition;
-                $("#sortByReviewStarID").val("ReviewStar DESC");
+                $("#sortByReviewStarID").val("ReviewStar ↑");
             }else{
                 strFilterQueryUrl = strFilterQueryUrl + "&order_by=-" +condition;
-                $("#sortByReviewStarID").val("ReviewStar ASC");
+                $("#sortByReviewStarID").val("Star ↓");
             }
         }
     }
@@ -262,9 +262,9 @@ function search( condition){
             if($("body").find(".sortedBy").length!=1){
                 var sortedByHtml=[
                  "<div class=\"sortedBy pull-right\">",
-                    "<span><input class=\"btn btn-info\" id=\"sortByBudgetID\"       type=\"button\" onclick='search(\"intUsdCost\")'      value=\"Budget ASC\">    </span>",
-                    "<span><input class=\"btn btn-info\" id=\"sortByDurationHourID\" type=\"button\" onclick='search(\"intDurationHour\")' value=\"Duration ASC\">  </span>",
-                    "<span><input class=\"btn btn-info\" id=\"sortByReviewStarID\"   type=\"button\" onclick='search(\"intReviewStar\")'   value=\"ReviewStar ASC\"></span>",
+                    "<span><input class=\"btn btn-info\" id=\"sortByBudgetID\"       type=\"button\" onclick='search(\"intUsdCost\")'      value=\"Budget ↓\">    </span>",
+                    "<span><input class=\"btn btn-info\" id=\"sortByDurationHourID\" type=\"button\" onclick='search(\"intDurationHour\")' value=\"Duration ↓\">  </span>",
+                    "<span><input class=\"btn btn-info\" id=\"sortByReviewStarID\"   type=\"button\" onclick='search(\"intReviewStar\")'   value=\"Star ↓\"></span>",
                  "</div>",
                 ]
                 $(".findResultDiv").prepend(sortedByHtml);
