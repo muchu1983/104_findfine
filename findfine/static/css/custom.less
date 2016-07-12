@@ -14,7 +14,7 @@ body {
         color: @theme-primary;
     }
     p {
-        font-size: 14px;
+        font-size: 17px;
         line-height: 1.75;
     }
     p.large {
@@ -53,6 +53,9 @@ body {
     }
     .bg-light-gray {
         background-color: @gray-lighter;
+    }
+    .bg-light-white {
+        background-color: white;
     }
     .bg-darkest-gray {
         background-color: @gray-darker;
@@ -99,6 +102,10 @@ body {
             color: #000;
         }
         .navbar-collapse {
+            &.customFixed{
+                position:absolute;
+                right:15px;
+            }
             border-color: fade(white, 2%);
             #loginBtn {
                 margin: 8px 0 0 20px;
@@ -211,11 +218,12 @@ body {
         .intro-text {
             padding-top: 100px;
             padding-bottom: 80px;
+            //抬頭文字手機板
             .intro-lead-in {
                 .script-font;
                 // text-shadow: @gray-lighter 1px 1px 1px;
                 font-style: italic;
-                font-size: 80px;
+                font-size: 70px;
                 line-height: 22px;
                 margin-bottom: 25px;
             }
@@ -234,7 +242,7 @@ body {
                 padding-top: 300px;
                 padding-bottom: 200px;
                 .intro-lead-in {
-                    font-size: 120px;
+                    font-size: 70px;
                     line-height: 40px;
                     margin-bottom: 25px;
                 }
@@ -411,6 +419,9 @@ body {
                     font-size: 10px;
                     margin-top: 12px;
                     line-height: 14px;
+                }
+                .img-responsive{
+                width:100%;
                 }
             }
             &.timeline-inverted > .timeline-panel {
@@ -767,26 +778,37 @@ body {
         }
         .tripData{
         	position: relative;
-
+            background-color:#fff;
+            height:210px;
         }
         .tripImgDiv {
+            padding:0;
             overflow: hidden;
-            width: 150px;
-            height: 150px;
+            height: 210px;
             display: inline-block;
+            img{
+            width: 100%;
+            height: 210px;
+            background-size:cover;
+            }
         }
         .tripContentDiv {
-            display: inline-block;
             p{
-            	margin: 10px 0 0 0 ;
+            	margin: 10px 0;
                 text-overflow:ellipsis;
                 overflow: hidden;
                 white-space : nowrap;
             	font-size: 16px;
                 width:200px;
+                font-weight:600;
                 @media(min-width:768px) {
-                    width:400px;
+                    width:300px;
                 }
+            }
+            .trimText{
+                max-height:60px;
+                display:inline-block;
+                overflow:hidden;
             }
         }
         .tripPriceAndWishDiv{
@@ -836,6 +858,17 @@ body {
         	top:50px;
         	right:0px;
         }
+    }
+    //logo 區塊
+    .logoImg{
+        width:70px;
+        height:60px;
+        background: url('/static/img/log.jpg') no-repeat;
+        background-size: cover;
+        display:inline-block;
+        position:relative;
+        top:22px;
+        margin-right:10px;
     }
 }
 

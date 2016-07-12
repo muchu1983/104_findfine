@@ -10,8 +10,16 @@ $(function(){
     $('#pac-input').val(keyword);
     //將值填入place欄位
     $('#placeID').val(keyword);
+    var $toggleCollapse = $('.toggleCollapse');
+    $('#moreInfo').on('show.bs.collapse',function(){
+       $toggleCollapse.html(' less');
+    }).on('hide.bs.collapse',function(){
+       $toggleCollapse.html(' more');
+    });
     //不傳入sort條件
     search('');
+    
+    
 });
 
 //hmoe頁面傳值至find頁面 googleMap呈現
@@ -280,29 +288,52 @@ function search( condition){
 
 //組出單組查詢結果出來的html字串
 function getTripDataHtml(strTitle, intUsdCost, strIntroduction, strLocation, intDurationHour, strOriginUrl, strImageUrl, intReviewStar, intReviewVisitor ){
+    var reviewStar;
+    if(intReviewStar==0){
+        reviewStar=' ';
+    }
+    if(intReviewStar==1){
+        reviewStar='★';
+    }
+    if(intReviewStar==2){
+        reviewStar='★★';
+    }
+    if(intReviewStar==3){
+        reviewStar='★★★';
+    }
+    if(intReviewStar==4){
+        reviewStar='★★★★';
+    }
+    if(intReviewStar==5){
+        reviewStar='★★★★★';
+    }
+
+    
     var strTripDataHtml = [
     "<li class=\"col-xs-12 col-md-6\">",
-        "<div class=\"tripData row\">",
+        "<div class=\"tripData\">",
             "<div class=\"tripImgDiv col-xs-4\">",
                 "<img src=\""+strImageUrl+"\"/>",
             "</div>",
+            "<div class=\"col-xs-8\">",
             "<div class=\"tripContentDiv\">",
-                "<span>Title:"+strTitle+"</span><br>",
-                "<span>Introduction:"+strIntroduction+"</span><br>",
-                "<span>Duration:"+intDurationHour+"</span><br>",
-                "<span>Star:"+intReviewStar+"</span><br>",
-                "<span>review:"+intReviewVisitor+"</span><br>",
-                "<span><a href="+strOriginUrl+" target=\"_blank\">read more</a></span><br>",
+                "<p><span style=\"color:orange\">"+strTitle+"</span></p>",
+                "<span class=\"trimText\">"+strIntroduction+"</span><br>",
+                "<span><i class=\"fa fa-clock-o\"></i> Duration:"+intDurationHour+"</span><br>",
+                "<span style=\"color:red\">Star:"+reviewStar+"</span><br>",
+                "<span><i class=\"fa fa-user\"></i> review:"+intReviewVisitor+"</span><br>",
+                "<span><a href="+strOriginUrl+" target=\"_blank\"><i class=\"fa fa-info-circle\"></i> read more</a></span><br>",
+            "</div>",
             "</div>",
             "<div class=\"tripPriceAndWishDiv\">",
                 "<span class=\"pull-right\">",
                 "<i class=\"fa fa-usd\"></i>",
-                "<span>Price:"+intUsdCost+"</span></br>",
+                "<span style=\"color:red\">"+intUsdCost+" USD</span></br>",
             "</div>",
             "<div class=\"favorite\">",
                 "<i class=\"fa fa-heart\"></i>",
             "</div>",
-        "</div>",
+            "</div>",
     "</li>"
     ].join("");
     return strTripDataHtml;
