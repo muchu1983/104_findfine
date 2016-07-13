@@ -32,7 +32,7 @@ $(function() {
     //圖片展示區塊
     $('.portfolio-link').on('click',function(e){
         e.preventDefault();
-        var url = 'find?keyword='+$(this).data('place')+'&lat='+$(this).data('lat')+'&lng='+$(this).data('lng');
+        var url = 'page/find?keyword='+$(this).data('place')+'&lat='+$(this).data('lat')+'&lng='+$(this).data('lng');
         location.href = url;
     });
 });
