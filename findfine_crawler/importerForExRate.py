@@ -12,6 +12,7 @@ import json
 import logging
 import re
 from findfine_crawler.localdb import LocalDbForJsonImporter
+#from findfine_crawler.externaldb import ExternalDbForJsonImporter
 from bennu.filesystemutility import FileSystemUtility as FilesysUtility
 from findfine_crawler.utility import Utility as FfUtility
 """
@@ -23,6 +24,7 @@ class ImporterForExRate:
         self.ffUtil = FfUtility()
         self.filesysUtil = FilesysUtility()
         self.db = LocalDbForJsonImporter()
+        #self.db = ExternalDbForJsonImporter()
         self.dicSubCommandHandler = {"import":[self.importYahooCurrencyJsonToDb]}
         
     #取得 importer 使用資訊
