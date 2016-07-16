@@ -17,7 +17,7 @@ class ExternalDbForJsonImporter:
     
     #建構子
     def __init__(self):
-        self.mysqlConnection = mysqlConnector.connect(host="bennu-aws.ddns.net", database="findfine", user="findfine_db_root", password="asdfASDF1234")
+        self.mysqlConnection = mysqlConnector.connect(host="54.165.130.206", database="findfine", user="findfine_db_root", password="asdfASDF1234")
     
     #解構子
     def __del__(self):
