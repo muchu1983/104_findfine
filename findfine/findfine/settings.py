@@ -83,7 +83,7 @@ DATABASES = {
         'NAME': 'findfine',
         'USER': 'findfine_db_root',
         'PASSWORD': 'asdfASDF1234',
-        'HOST': '127.0.0.1',
+        'HOST': 'bennu-aws.ddns.net',
         'PORT': '3306',
         'OPTIONS': {
           'autocommit': True,
