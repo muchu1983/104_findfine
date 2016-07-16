@@ -93,9 +93,9 @@ class CrawlerForExRate:
                 #fUSDollar
                 strUSDollar = eleExRateTr.find_element_by_css_selector("td.Ta-end:nth-of-type(3)").text
                 dicExRateData["fUSDollar"] = float(strUSDollar)
-                #dtUpdateTime
-                strTimeNow = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
-                dicExRateData["strTimeNow"] = strTimeNow
+                #dtUpdateTime (strUpdateTime in json)
+                strUpdateTime = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+                dicExRateData["strUpdateTime"] = strUpdateTime
                 logging.info("find %s ex-rate: %f USD"%(dicExRateData["strCurrencyName"], dicExRateData["fUSDollar"]))
                 self.lstDicParsedCurrencyJson.append(dicExRateData)
         #將資料寫入 json

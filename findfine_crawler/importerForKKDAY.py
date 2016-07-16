@@ -47,7 +47,7 @@ class ImporterForKKDAY:
         #清除 trip 資料
         self.db.clearTripData()
         #讀取 json 檔
-        strBasedir = self.filesysUtil.getPackageResourcePath(strPackageName="findfine_crawler.resource", strResourceName="parsed_json")
+        strBasedir = self.filesysUtil.getPackageResourcePath(strPackageName="findfine_crawler.resource.parsed_json", strResourceName="kkday")
         lstStrProductJsonFilePath = self.ffUtil.getFilePathListWithSuffixes(strBasedir=strBasedir, strSuffixes="_product.json")
         for strProductJsonFilePath in lstStrProductJsonFilePath:
             logging.info("read %s"%strProductJsonFilePath)

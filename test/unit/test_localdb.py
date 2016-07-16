@@ -48,17 +48,28 @@ class LocalDbTest(unittest.TestCase):
         db = LocalDbForJsonImporter()
         db.clearTestData() #清除前次測試資料
         dicTripData = {
+            "strSource":"test",
             "strOriginUrl":"https://test",
             "strTitle":"test",
+            "strImageUrl":"https://image.test",
             "intDurationHour":24,
             "intUsdCost":100,
             "strGuideLanguage":"中文,日本語",
+            "intReviewStar":5,
+            "intReviewVisitor":5,
             "strIntroduction":"介紹",
             "strLocation":"高雄市"
         }
         db.insertTripIfNotExists(dicTripData=dicTripData)
+        dicExRateData = {
+            "fUSDollar": 31.89,
+            "strCurrencyName": "TWD",
+            "strUpdateTime": "2016-07-16 13:21:32"
+        }
+        db.upsertExRate(dicExRateData=dicExRateData)
         db.clearTestData() #清除本次測試資料
-        
+    
+    
 #測試開始
 if __name__ == "__main__":
     unittest.main(exit=False)

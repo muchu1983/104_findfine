@@ -6,6 +6,7 @@ This file is part of BSD license
 
 <https://opensource.org/licenses/BSD-3-Clause>
 """
+import datetime
 from bennu.localdb import SQLite3Db
 import mysql.connector as mysqlConnector
 """
@@ -22,7 +23,7 @@ class LocalDbForJsonImporter:
     def __del__(self):
         self.mysqlConnection.close()
     
-    #若無重覆，儲存 trip
+    #若無重覆，儲存 trip 資料
     def insertTripIfNotExists(self, dicTripData=None):
         queryCursor = self.mysqlConnection.cursor(buffered=True)
         upsertCursor = self.mysqlConnection.cursor(buffered=True)
@@ -36,10 +37,32 @@ class LocalDbForJsonImporter:
             queryCursor.execute(strInsertSql, dicTripData)
         self.mysqlConnection.commit()
     
+    #新增或更新 匯率 資料
+    def upsertExRate(self, dicExRateData=None):
+        dicExRateData["dtUpdateTime"] = datetime.datetime.strptime(dicExRateData["strUpdateTime"], "%Y-%m-%d %H:%M:%S")
+        queryCursor = self.mysqlConnection.cursor(buffered=True)
+        upsertCursor = self.mysqlConnection.cursor(buffered=True)
+        strQuerySql = ("SELECT * FROM trip_exrate WHERE strCurrencyName=%(strCurrencyName)s")
+        queryCursor.execute(strQuerySql, dicExRateData)
+        if queryCursor.rowcount == 0:
+            strInsertSql = (
+                "INSERT INTO trip_exrate (strCurrencyName, fUSDollar, dtUpdateTime)"
+                "VALUES (%(strCurrencyName)s, %(fUSDollar)s, %(dtUpdateTime)s)"
+            )
+            queryCursor.execute(strInsertSql, dicExRateData)
+        self.mysqlConnection.commit()
+    
     #清除 行程 資料
     def clearTripData(self):
         deleteCursor = self.mysqlConnection.cursor(buffered=True)
         strDeleteSql = ("DELETE FROM trip_trip")
+        deleteCursor.execute(strDeleteSql)
+        self.mysqlConnection.commit()
+    
+    #清除 匯率 資料
+    def clearExRateData(self):
+        deleteCursor = self.mysqlConnection.cursor(buffered=True)
+        strDeleteSql = ("DELETE FROM trip_exrate")
         deleteCursor.execute(strDeleteSql)
         self.mysqlConnection.commit()
     
@@ -48,9 +71,11 @@ class LocalDbForJsonImporter:
         deleteCursor = self.mysqlConnection.cursor(buffered=True)
         strDeleteSql = ("DELETE FROM trip_trip")
         deleteCursor.execute(strDeleteSql)
+        strDeleteSql = ("DELETE FROM trip_exrate")
+        deleteCursor.execute(strDeleteSql)
         self.mysqlConnection.commit()
         
-#KKDAY crawler localdb
+#KKDAY crawler localdb (SQLite3)
 class LocalDbForKKDAY:
     
     #建構子

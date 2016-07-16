@@ -23,14 +23,14 @@ class ImporterForExRate:
         self.ffUtil = FfUtility()
         self.filesysUtil = FilesysUtility()
         self.db = LocalDbForJsonImporter()
-        self.dicSubCommandHandler = {"import":[self.importProductJsonToDb]}
+        self.dicSubCommandHandler = {"import":[self.importYahooCurrencyJsonToDb]}
         
     #取得 importer 使用資訊
     def getUseageMessage(self):
         return (
-            "- KKDAY -\n"
+            "- ExRate -\n"
             "useage:\n"
-            "import - import product.json to database \n"
+            "import - import exrate/*.json to database \n"
         )
                 
     #執行 importer
@@ -42,19 +42,19 @@ class ImporterForExRate:
         for handler in self.dicSubCommandHandler[strSubcommand]:
             handler(strArg1)
     
-    #import product.json to MySQL DB
-    def importProductJsonToDb(self, uselessArg1=None):
-        #清除 trip 資料
-        self.db.clearTripData()
+    #import exrate/*.json to MySQL DB
+    def importYahooCurrencyJsonToDb(self, uselessArg1=None):
+        #清除 trip_exrate 資料
+        self.db.clearExRateData()
         #讀取 json 檔
-        strBasedir = self.filesysUtil.getPackageResourcePath(strPackageName="findfine_crawler.resource", strResourceName="parsed_json")
-        lstStrProductJsonFilePath = self.ffUtil.getFilePathListWithSuffixes(strBasedir=strBasedir, strSuffixes="_product.json")
-        for strProductJsonFilePath in lstStrProductJsonFilePath:
-            logging.info("read %s"%strProductJsonFilePath)
-            lstDicProductData = self.ffUtil.readObjectFromJsonFile(strJsonFilePath=strProductJsonFilePath)
-            for dicProductData in lstDicProductData:
+        strBasedir = self.filesysUtil.getPackageResourcePath(strPackageName="findfine_crawler.resource.parsed_json", strResourceName="exrate")
+        lstStrExRateJsonFilePath = self.ffUtil.getFilePathListWithSuffixes(strBasedir=strBasedir, strSuffixes=".json")
+        for strExRateJsonFilePath in lstStrExRateJsonFilePath:
+            logging.info("read %s"%strExRateJsonFilePath)
+            lstDicExRateData = self.ffUtil.readObjectFromJsonFile(strJsonFilePath=strExRateJsonFilePath)
+            for dicExRateData in lstDicExRateData:
                 try:
-                    #INSERT INTO
-                    self.db.insertTripIfNotExists(dicTripData=dicProductData)
+                    #UPDATE or INSERT
+                    self.db.upsertExRate(dicExRateData=dicExRateData)
                 except Exception as e:
-                    logging.warning("insert trip failed: %s"%(str(e)))
+                    logging.warning("upsert exrate failed: %s"%(str(e)))
