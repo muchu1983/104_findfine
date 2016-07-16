@@ -50,6 +50,7 @@ def filter(request):
     return JsonResponse(lstDicTripData, safe=False)
     
 def convertTripDataToJsonDic(matchedTrip=None, dicTripData=None):
+    dicTripData["strSource"] = matchedTrip.strSource
     dicTripData["strTitle"] = matchedTrip.strTitle
     dicTripData["strLocation"] = matchedTrip.strLocation
     dicTripData["intUsdCost"] = matchedTrip.intUsdCost

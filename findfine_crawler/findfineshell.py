@@ -8,6 +8,8 @@ This file is part of BSD license
 """
 from findfine_crawler.crawlerForKKDAY import CrawlerForKKDAY
 from findfine_crawler.importerForKKDAY import ImporterForKKDAY
+from findfine_crawler.crawlerForExRate import CrawlerForExRate
+from findfine_crawler.importerForExRate import ImporterForExRate
 """
 shell 操作介面
 """
@@ -18,11 +20,13 @@ class FindfineShell:
         self.intShellStateCode = 0 #0-已關閉，1-已開啟，
         self.strTargetSite = None
         self.dicCrawlers = {
-            "kkday":CrawlerForKKDAY()
+            "kkday":CrawlerForKKDAY(),
+            "exrate":CrawlerForExRate()
         }
         
         self.dicImporters = {
-            "kkday":ImporterForKKDAY()
+            "kkday":ImporterForKKDAY(),
+            "exrate":ImporterForExRate()
         }
         
     #顯示目前的目標網站

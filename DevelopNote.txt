@@ -68,6 +68,12 @@ cmd /k cd "C:\Users\josh\Desktop\test01\findfine_code" & c:\python34\python "$(F
 api 範例
 https://www.withlocals.com/api/v1/affiliates/feeds/base.xml
 
-City Discovery's Affiliates Program
+API
+City Discovery
+https://partner.city-discovery.com/affiliate/login.php
 Username: liangtian@hotmail.com
+Password: a768768a
+Viator
+https://www.partner.viator.com/partner/home.jspa
+Username: 19993
 Password: a768768a

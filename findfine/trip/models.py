@@ -1,7 +1,17 @@
+# -*- coding: utf-8 -*-
+"""
+Copyright (C) 2016, MuChu Hsu
+Contributed by Muchu Hsu (muchu1983@gmail.com)
+This file is part of BSD license
+
+<https://opensource.org/licenses/BSD-3-Clause>
+"""
 from django.db import models
 
-# Create your models here.
+# 行程資料
 class Trip(models.Model):
+    #來源網站
+    strSource = models.CharField(max_length=255, null=False)
     #原始 URL
     strOriginUrl = models.TextField(null=False)
     #主要圖片 url
@@ -33,3 +43,11 @@ class Trip(models.Model):
     #特殊選項編號
     intOption = models.IntegerField(null=True)
     
+#匯率資料
+class ExRate(models.Model):
+    #貨幣名稱
+    strCurrencyName = models.CharField(max_length=255, null=False)
+    #美金匯率
+    fUSDollar = models.FloatField(null=False)
+    #更新日期
+    dtUpdateTime = models.DateTimeField(null=False)

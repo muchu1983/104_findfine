@@ -159,6 +159,8 @@ class CrawlerForKKDAY:
     #解析 product 頁面
     def parseProductPage(self, strProductUrl=None):
         dicProductJson = {}
+        #strSource
+        dicProductJson["strSource"] = "KKDAY"
         #strOriginUrl
         dicProductJson["strOriginUrl"] = strProductUrl
         #strImageUrl
@@ -229,7 +231,7 @@ class CrawlerForKKDAY:
         #將最後資料寫入 json
         if len(self.lstDicParsedProductJson) > 0:
             strJsonFileName = "%d_product.json"%(self.intProductJsonIndex*100)
-            strProductJsonFilePath = self.fileUtil.getPackageResourcePath(strPackageName="findfine_crawler.resource.parsed_json", strResourceName=strJsonFileName)
+            strProductJsonFilePath = self.fileUtil.getPackageResourcePath(strPackageName="findfine_crawler.resource.parsed_json.kkday", strResourceName=strJsonFileName)
             self.ffUtil.writeObjectToJsonFile(dicData=self.lstDicParsedProductJson, strJsonFilePath=strProductJsonFilePath)
             self.lstDicParsedProductJson = []
             
@@ -257,7 +259,7 @@ class CrawlerForKKDAY:
             #寫入 json
             if len(self.lstDicParsedProductJson) == 100:
                 strJsonFileName = "%d_product.json"%(self.intProductJsonIndex*100)
-                strProductJsonFilePath = self.fileUtil.getPackageResourcePath(strPackageName="findfine_crawler.resource.parsed_json", strResourceName=strJsonFileName)
+                strProductJsonFilePath = self.fileUtil.getPackageResourcePath(strPackageName="findfine_crawler.resource.parsed_json.kkday", strResourceName=strJsonFileName)
                 self.ffUtil.writeObjectToJsonFile(dicData=self.lstDicParsedProductJson, strJsonFilePath=strProductJsonFilePath)
                 self.intProductJsonIndex = self.intProductJsonIndex+1
                 self.lstDicParsedProductJson = []
