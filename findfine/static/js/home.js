@@ -23,9 +23,9 @@ $(function() {
         //若無googlemap資訊 將值帶到下一頁
         if(typeof tour.sendData.keyword =='undefined'){
             var input =($('#autocomplete')).val();
-            location.href = 'find?keyword='+input+'&lat='+tour.sendData.lat+'&lng='+tour.sendData.lng;
+            location.href = '/page/find?keyword='+input+'&lat='+tour.sendData.lat+'&lng='+tour.sendData.lng;
         }else{
-            location.href = 'find?keyword='+tour.sendData.keyword+'&lat='+tour.sendData.lat+'&lng='+tour.sendData.lng;
+            location.href = '/page/find?keyword='+tour.sendData.keyword+'&lat='+tour.sendData.lat+'&lng='+tour.sendData.lng;
         }
     });
 
