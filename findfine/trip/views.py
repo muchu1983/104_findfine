@@ -35,8 +35,8 @@ def tripFilter(request=None):
     if strGuideLanguage:
         qsetMatchedTrip = qsetMatchedTrip.filter(strGuideLanguage__iregex="^.*%s.*$"%strGuideLanguage)
     if strMinBudget and strMaxBudget:
-        intMinBudget = int(strMinBudget)
-        intMaxBudget = int(strMaxBudget)
+        intMinBudget = int(float(strMinBudget)/fUsdToUserCurrencyExRate)
+        intMaxBudget = int(float(strMaxBudget)/fUsdToUserCurrencyExRate)
         qsetMatchedTrip = qsetMatchedTrip.filter(intUsdCost__lte=intMaxBudget, intUsdCost__gte=intMinBudget)
     if strDateFrom and strDateTo:
         dtDateFrom = datetime.datetime.strptime(strDateFrom, "%Y-%m-%d")

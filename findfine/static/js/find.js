@@ -312,6 +312,7 @@ function getTripDataHtml(strTitle, intUserCurrencyCost, strIntroduction, strLoca
     }
     
     var strUserCurrency = $("#moneySelect").val();
+    $("div.userCurrencySpan").html(strUserCurrency)
     
     var strTripDataHtml = [
     "<li class=\"col-xs-12 col-md-6\">",
