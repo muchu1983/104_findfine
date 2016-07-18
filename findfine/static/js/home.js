@@ -37,4 +37,34 @@ $(function() {
     });
 });
 
-
+(function($){
+    
+    $(document).ready(initHome);
+    
+    function initHome(){
+        initCurrencySelect()
+    };
+    
+    //幣別
+    function initCurrencySelect(){
+        //設定目前幣別
+        var strUserCurrencyUrl = "/trip/userCurrency";
+        $.getJSON(strUserCurrencyUrl, function(jsonResp){
+            strUserCurrency = jsonResp["strUserCurrency"];
+            $("#moneySelect").val(strUserCurrency);
+            $("#moneySelect").selectpicker("refresh")
+            console.log("init user currency selection: " + strUserCurrency);
+        });
+        //切換目前幣別
+        $("#moneySelect").change(function(){
+            var strSelectedCurrencyVal = $("#moneySelect").find(":selected").val();
+            var strChangeUserCurrencyUrl = strUserCurrencyUrl + "?user_currency=" + strSelectedCurrencyVal;
+            $.getJSON(strChangeUserCurrencyUrl, function(jsonResp){
+                strUserCurrency = jsonResp["strUserCurrency"];
+                console.log("switch user currency to: " + strUserCurrency);
+            });
+        });
+        
+    };
+    
+})(jQuery);

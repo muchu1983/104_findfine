@@ -78,7 +78,7 @@ def convertTripDataToJsonDic(matchedTrip=None, dicTripData=None, fUsdToUserCurre
 def userCurrency(request=None):
     setUserCurrencyToSession(request=request)
     strUserCurrency = getUserCurrencyFromSession(request=request)
-    return JsonResponse({"user_currency":strUserCurrency}, safe=False)
+    return JsonResponse({"strUserCurrency":strUserCurrency}, safe=False)
     
 #取得 session 中的 使用者幣別
 def getUserCurrencyFromSession(request=None):

@@ -260,8 +260,14 @@ function search( condition){
         }
     }
     
+    //幣別
+    var strUserCurrencyUrl = "/trip/userCurrency"
+    var strUserCurrency = null
+    $.getJSON(strUserCurrencyUrl, function(jsonResp){
+        strUserCurrency = jsonResp["strUserCurrency"]
+    });
+    
     //alert(" 254:strFilterQueryUrl:"+strFilterQueryUrl);
-
     $.getJSON(strFilterQueryUrl, function(jsonResp){
         //console.log(jsonResp);
         $("div.findResultDiv ul.lstTripData").html("");
@@ -280,14 +286,14 @@ function search( condition){
         }
         for (i = 0; i < jsonResp.length; i++) {
             var dicTripData = jsonResp[i];
-            var strTripDataHtml = getTripDataHtml(dicTripData["strTitle"], dicTripData["intUsdCost"], dicTripData["strIntroduction"], dicTripData["strLocation"], dicTripData["intDurationHour"], dicTripData["strOriginUrl"], dicTripData["strImageUrl"], dicTripData["intReviewStar"], dicTripData["intReviewVisitor"] );
+            var strTripDataHtml = getTripDataHtml(strUserCurrency, dicTripData["strTitle"], dicTripData["intUserCurrencyCost"], dicTripData["strIntroduction"], dicTripData["strLocation"], dicTripData["intDurationHour"], dicTripData["strOriginUrl"], dicTripData["strImageUrl"], dicTripData["intReviewStar"], dicTripData["intReviewVisitor"] );
             $("div.findResultDiv ul.lstTripData").append(strTripDataHtml);
         };
     });
 };
 
 //組出單組查詢結果出來的html字串
-function getTripDataHtml(strTitle, intUsdCost, strIntroduction, strLocation, intDurationHour, strOriginUrl, strImageUrl, intReviewStar, intReviewVisitor ){
+function getTripDataHtml(strUserCurrency, strTitle, intUserCurrencyCost, strIntroduction, strLocation, intDurationHour, strOriginUrl, strImageUrl, intReviewStar, intReviewVisitor ){
     var reviewStar;
     if(intReviewStar==0){
         reviewStar=' ';
@@ -328,7 +334,7 @@ function getTripDataHtml(strTitle, intUsdCost, strIntroduction, strLocation, int
             "<div class=\"tripPriceAndWishDiv\">",
                 "<span class=\"pull-right\">",
                 "<i class=\"fa fa-usd\"></i>",
-                "<span style=\"color:red\">"+intUsdCost+" USD</span></br>",
+                "<span style=\"color:red\">"+intUserCurrencyCost+" "+strUserCurrency+"</span></br>",
             "</div>",
             "<div class=\"favorite\">",
                 "<i class=\"fa fa-heart\"></i>",
@@ -339,3 +345,34 @@ function getTripDataHtml(strTitle, intUsdCost, strIntroduction, strLocation, int
     return strTripDataHtml;
 };
 
+(function($){
+    
+    $(document).ready(initFind);
+    
+    function initFind(){
+        initCurrencySelect()
+    };
+    
+    //幣別
+    function initCurrencySelect(){
+        //設定目前幣別
+        var strUserCurrencyUrl = "/trip/userCurrency";
+        $.getJSON(strUserCurrencyUrl, function(jsonResp){
+            strUserCurrency = jsonResp["strUserCurrency"];
+            $("#moneySelect").val(strUserCurrency);
+            $("#moneySelect").selectpicker("refresh")
+            console.log("init user currency selection: " + strUserCurrency);
+        });
+        //切換目前幣別
+        $("#moneySelect").change(function(){
+            var strSelectedCurrencyVal = $("#moneySelect").find(":selected").val();
+            var strChangeUserCurrencyUrl = strUserCurrencyUrl + "?user_currency=" + strSelectedCurrencyVal;
+            $.getJSON(strChangeUserCurrencyUrl, function(jsonResp){
+                strUserCurrency = jsonResp["strUserCurrency"];
+                console.log("switch user currency to: " + strUserCurrency);
+            });
+        });
+        
+    };
+    
+})(jQuery);
