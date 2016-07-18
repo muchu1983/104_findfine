@@ -281,16 +281,18 @@ function search( condition){
             }
         }
         
+        var strUserCurrency = $("#moneySelect").val();
+        $("div.userCurrencySpan").html(strUserCurrency)
         for (i = 0; i < jsonResp.length; i++) {
             var dicTripData = jsonResp[i];
-            var strTripDataHtml = getTripDataHtml(dicTripData["strTitle"], dicTripData["intUserCurrencyCost"], dicTripData["strIntroduction"], dicTripData["strLocation"], dicTripData["intDurationHour"], dicTripData["strOriginUrl"], dicTripData["strImageUrl"], dicTripData["intReviewStar"], dicTripData["intReviewVisitor"] );
+            var strTripDataHtml = getTripDataHtml(strUserCurrency, dicTripData["strTitle"], dicTripData["intUserCurrencyCost"], dicTripData["strIntroduction"], dicTripData["strLocation"], dicTripData["intDurationHour"], dicTripData["strOriginUrl"], dicTripData["strImageUrl"], dicTripData["intReviewStar"], dicTripData["intReviewVisitor"] );
             $("div.findResultDiv ul.lstTripData").append(strTripDataHtml);
         };
     });
 };
 
 //組出單組查詢結果出來的html字串
-function getTripDataHtml(strTitle, intUserCurrencyCost, strIntroduction, strLocation, intDurationHour, strOriginUrl, strImageUrl, intReviewStar, intReviewVisitor ){
+function getTripDataHtml(strUserCurrency, strTitle, intUserCurrencyCost, strIntroduction, strLocation, intDurationHour, strOriginUrl, strImageUrl, intReviewStar, intReviewVisitor ){
     var reviewStar;
     if(intReviewStar==0){
         reviewStar=' ';
@@ -310,9 +312,6 @@ function getTripDataHtml(strTitle, intUserCurrencyCost, strIntroduction, strLoca
     if(intReviewStar==5){
         reviewStar='★★★★★';
     }
-    
-    var strUserCurrency = $("#moneySelect").val();
-    $("div.userCurrencySpan").html(strUserCurrency)
     
     var strTripDataHtml = [
     "<li class=\"col-xs-12 col-md-6\">",
