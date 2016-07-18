@@ -371,6 +371,8 @@ function getTripDataHtml(strUserCurrency, strTitle, intUserCurrencyCost, strIntr
                 strUserCurrency = jsonResp["strUserCurrency"];
                 console.log("switch user currency to: " + strUserCurrency);
             });
+            //頁面重新整理
+            location.reload();
         });
         
     };
