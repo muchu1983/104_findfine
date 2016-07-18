@@ -69,11 +69,13 @@ api 範例
 https://www.withlocals.com/api/v1/affiliates/feeds/base.xml
 
 API
-City Discovery
+City Discovery:
 https://partner.city-discovery.com/affiliate/login.php
 Username: liangtian@hotmail.com
 Password: a768768a
-Viator
+Viator:
 https://www.partner.viator.com/partner/home.jspa
 Username: 19993
 Password: a768768a
+Withlocals:
+https://www.withlocals.com/api/v1/affiliates/feeds/base.xml

@@ -1,142 +1,157 @@
 [
     {
-        "fUSDollar": 31.89,
+        "fUSDollar": 1.0,
+        "strCurrencyName": "USD",
+        "strUpdateTime": "2016-07-18 13:15:27"
+    },
+    {
+        "fUSDollar": 31.961,
         "strCurrencyName": "TWD",
-        "strUpdateTime": "2016-07-16 14:13:41"
+        "strUpdateTime": "2016-07-18 13:15:27"
     },
     {
-        "fUSDollar": 6.681,
+        "fUSDollar": 6.697,
         "strCurrencyName": "CNY",
-        "strUpdateTime": "2016-07-16 14:13:42"
+        "strUpdateTime": "2016-07-18 13:15:28"
     },
     {
-        "fUSDollar": 104.651,
+        "fUSDollar": 105.344,
         "strCurrencyName": "JPY",
-        "strUpdateTime": "2016-07-16 14:13:42"
+        "strUpdateTime": "2016-07-18 13:15:28"
     },
     {
-        "fUSDollar": 1132.35,
+        "fUSDollar": 1135.9,
         "strCurrencyName": "KRW",
-        "strUpdateTime": "2016-07-16 14:13:43"
+        "strUpdateTime": "2016-07-18 13:15:28"
     },
     {
         "fUSDollar": 7.754,
         "strCurrencyName": "HKD",
-        "strUpdateTime": "2016-07-16 14:13:43"
+        "strUpdateTime": "2016-07-18 13:15:29"
     },
     {
-        "fUSDollar": 34.93,
+        "fUSDollar": 34.95,
         "strCurrencyName": "THB",
-        "strUpdateTime": "2016-07-16 14:13:43"
+        "strUpdateTime": "2016-07-18 13:15:29"
     },
     {
-        "fUSDollar": 1.347,
+        "fUSDollar": 1.348,
         "strCurrencyName": "SGD",
-        "strUpdateTime": "2016-07-16 14:13:44"
+        "strUpdateTime": "2016-07-18 13:15:30"
     },
     {
-        "fUSDollar": 13090.0,
+        "fUSDollar": 13100.0,
         "strCurrencyName": "IDR",
-        "strUpdateTime": "2016-07-16 14:13:44"
+        "strUpdateTime": "2016-07-18 13:15:30"
     },
     {
         "fUSDollar": 22300.0,
         "strCurrencyName": "VND",
-        "strUpdateTime": "2016-07-16 14:13:45"
+        "strUpdateTime": "2016-07-18 13:15:31"
     },
     {
-        "fUSDollar": 3.945,
+        "fUSDollar": 3.973,
         "strCurrencyName": "MYR",
-        "strUpdateTime": "2016-07-16 14:13:45"
+        "strUpdateTime": "2016-07-18 13:15:31"
     },
     {
-        "fUSDollar": 46.71,
+        "fUSDollar": 46.81,
         "strCurrencyName": "PHP",
-        "strUpdateTime": "2016-07-16 14:13:45"
+        "strUpdateTime": "2016-07-18 13:15:32"
     },
     {
-        "fUSDollar": 67.067,
+        "fUSDollar": 67.12,
         "strCurrencyName": "INR",
-        "strUpdateTime": "2016-07-16 14:13:46"
+        "strUpdateTime": "2016-07-18 13:15:32"
     },
     {
         "fUSDollar": 3.673,
         "strCurrencyName": "AED",
-        "strUpdateTime": "2016-07-16 14:13:46"
+        "strUpdateTime": "2016-07-18 13:15:33"
     },
     {
         "fUSDollar": 0.302,
         "strCurrencyName": "KWD",
-        "strUpdateTime": "2016-07-16 14:13:47"
+        "strUpdateTime": "2016-07-18 13:15:33"
     },
     {
-        "fUSDollar": 1.319,
+        "fUSDollar": 1.316,
         "strCurrencyName": "AUD",
-        "strUpdateTime": "2016-07-16 14:13:47"
+        "strUpdateTime": "2016-07-18 13:15:33"
     },
     {
-        "fUSDollar": 1.405,
+        "fUSDollar": 1.409,
         "strCurrencyName": "NZD",
-        "strUpdateTime": "2016-07-16 14:13:47"
+        "strUpdateTime": "2016-07-18 13:15:34"
     },
     {
-        "fUSDollar": 1.297,
+        "fUSDollar": 1.0,
+        "strCurrencyName": "USD",
+        "strUpdateTime": "2016-07-18 13:15:48"
+    },
+    {
+        "fUSDollar": 1.295,
         "strCurrencyName": "CAD",
-        "strUpdateTime": "2016-07-16 14:14:04"
+        "strUpdateTime": "2016-07-18 13:16:09"
     },
     {
         "fUSDollar": 3.281,
         "strCurrencyName": "BRL",
-        "strUpdateTime": "2016-07-16 14:14:05"
+        "strUpdateTime": "2016-07-18 13:16:09"
     },
     {
-        "fUSDollar": 18.595,
+        "fUSDollar": 18.511,
         "strCurrencyName": "MXN",
-        "strUpdateTime": "2016-07-16 14:14:05"
+        "strUpdateTime": "2016-07-18 13:16:10"
     },
     {
         "fUSDollar": 14.71,
         "strCurrencyName": "ARS",
-        "strUpdateTime": "2016-07-16 14:14:06"
+        "strUpdateTime": "2016-07-18 13:16:10"
     },
     {
         "fUSDollar": 654.6,
         "strCurrencyName": "CLP",
-        "strUpdateTime": "2016-07-16 14:14:06"
+        "strUpdateTime": "2016-07-18 13:16:10"
     },
     {
         "fUSDollar": 9.975,
         "strCurrencyName": "VEF",
-        "strUpdateTime": "2016-07-16 14:14:07"
+        "strUpdateTime": "2016-07-18 13:16:11"
     },
     {
-        "fUSDollar": 0.906,
+        "fUSDollar": 1.0,
+        "strCurrencyName": "USD",
+        "strUpdateTime": "2016-07-18 13:16:23"
+    },
+    {
+        "fUSDollar": 0.904,
         "strCurrencyName": "EUR",
-        "strUpdateTime": "2016-07-16 14:14:22"
+        "strUpdateTime": "2016-07-18 13:17:19"
     },
     {
-        "fUSDollar": 0.759,
+        "fUSDollar": 0.756,
         "strCurrencyName": "GBP",
-        "strUpdateTime": "2016-07-16 14:14:22"
+        "strUpdateTime": "2016-07-18 13:17:19"
     },
     {
-        "fUSDollar": 63.989,
+        "fUSDollar": 63.342,
         "strCurrencyName": "RUB",
-        "strUpdateTime": "2016-07-16 14:14:23"
+        "strUpdateTime": "2016-07-18 13:17:20"
     },
     {
-        "fUSDollar": 0.982,
+        "fUSDollar": 0.983,
         "strCurrencyName": "CHF",
-        "strUpdateTime": "2016-07-16 14:14:23"
+        "strUpdateTime": "2016-07-18 13:17:20"
     },
     {
-        "fUSDollar": 8.573,
+        "fUSDollar": 8.548,
         "strCurrencyName": "SEK",
-        "strUpdateTime": "2016-07-16 14:14:24"
+        "strUpdateTime": "2016-07-18 13:17:21"
     },
     {
-        "fUSDollar": 14.566,
+        "fUSDollar": 14.359,
         "strCurrencyName": "ZAR",
-        "strUpdateTime": "2016-07-16 14:14:24"
+        "strUpdateTime": "2016-07-18 13:17:21"
     }
 ]

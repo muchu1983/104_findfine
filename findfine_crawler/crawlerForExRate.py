@@ -83,7 +83,14 @@ class CrawlerForExRate:
             time.sleep(random.randint(5,10))
             self.driver.find_element_by_css_selector("ul.sub-tabs.D-ib li:nth-of-type(%s)"%str(intAreaTabIndex+1)).click()
             time.sleep(random.randint(5,10))
-            #解析 匯率資料
+            #加入美金兌美金匯率 1.0
+            dicExRateData = {}
+            dicExRateData["strCurrencyName"] = "USD"
+            dicExRateData["fUSDollar"] = 1.0
+            strUpdateTime = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+            dicExRateData["strUpdateTime"] = strUpdateTime
+            self.lstDicParsedCurrencyJson.append(dicExRateData)
+            #解析 1美金兌非美金匯率資料
             elesExRateTr = self.driver.find_elements_by_css_selector("tbody tr.Bd-b")
             for eleExRateTr in elesExRateTr:
                 dicExRateData = {}

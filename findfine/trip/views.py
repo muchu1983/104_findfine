@@ -3,10 +3,15 @@ from django.shortcuts import render
 from django.http import JsonResponse
 from django.db.models import Q
 from trip.models import Trip
+from trip.models import ExRate
 from itertools import chain
 
-# Create your views here.
-def filter(request):
+#搜尋過瀘與排序 trip 
+def tripFilter(request=None):
+    #從 session 取得使用者的幣別匯率資訊
+    strUserCurrency = getUserCurrencyFromSession(request=request)
+    matchedExRate = ExRate.objects.get(strCurrencyName=strUserCurrency)
+    fUsdToUserCurrencyExRate = matchedExRate.fUSDollar
     # query 資訊
     strKeyword = request.GET.get("keyword", None)
     strMinBudget = request.GET.get("min_budget", None)
@@ -45,15 +50,17 @@ def filter(request):
         qsetMatchedTrip = qsetMatchedTrip.order_by(strOrderBy)
     for matchedTrip in qsetMatchedTrip:
         dicTripData = {}
-        convertTripDataToJsonDic(matchedTrip=matchedTrip, dicTripData=dicTripData)
+        convertTripDataToJsonDic(matchedTrip=matchedTrip, dicTripData=dicTripData, fUsdToUserCurrencyExRate=fUsdToUserCurrencyExRate)
         lstDicTripData.append(dicTripData)
     return JsonResponse(lstDicTripData, safe=False)
     
-def convertTripDataToJsonDic(matchedTrip=None, dicTripData=None):
+#轉換 DB trip data 至 http response Json 物件
+def convertTripDataToJsonDic(matchedTrip=None, dicTripData=None, fUsdToUserCurrencyExRate=0.0):
     dicTripData["strSource"] = matchedTrip.strSource
     dicTripData["strTitle"] = matchedTrip.strTitle
     dicTripData["strLocation"] = matchedTrip.strLocation
     dicTripData["intUsdCost"] = matchedTrip.intUsdCost
+    dicTripData["intUserCurrencyCost"] = int(matchedTrip.intUsdCost * fUsdToUserCurrencyExRate)
     dicTripData["strOriginUrl"] = matchedTrip.strOriginUrl
     dicTripData["strImageUrl"] = matchedTrip.strImageUrl
     dicTripData["intReviewStar"] = matchedTrip.intReviewStar
@@ -67,4 +74,25 @@ def convertTripDataToJsonDic(matchedTrip=None, dicTripData=None):
     dicTripData["strGuideLanguage"] = matchedTrip.strGuideLanguage
     dicTripData["intOption"] = matchedTrip.intOption
     
+#設定與讀取 使用者 幣別
+def userCurrency(request=None):
+    setUserCurrencyToSession(request=request)
+    strUserCurrency = getUserCurrencyFromSession(request=request)
+    return JsonResponse({"user_currency":strUserCurrency}, safe=False)
     
+#取得 session 中的 使用者幣別
+def getUserCurrencyFromSession(request=None):
+    strDefaultUserCurrency = "USD"
+    strUserCurrency = request.session.get("user_currency", None)
+    if not strUserCurrency: #session 中尚無 user_currency
+        #設定 user_currency 預設為 USD
+        request.session["user_currency"] = strDefaultUserCurrency
+        strUserCurrency = strDefaultUserCurrency
+    return strUserCurrency
+    
+#設定 使用者幣別 至 session
+def setUserCurrencyToSession(request=None):
+    strUserCurrency = request.GET.get("user_currency", None)
+    if strUserCurrency:
+        strUserCurrency = strUserCurrency.upper() #幣別全大寫
+        request.session["user_currency"] = strUserCurrency

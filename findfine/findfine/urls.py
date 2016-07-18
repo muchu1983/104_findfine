@@ -21,8 +21,12 @@ from page import views as page_views
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
+    #account app
     url(r'^account/index.html$', account_views.showIndexPage),
-    url(r'^trip/filter$', trip_views.filter),
+    #trip app
+    url(r'^trip/filter$', trip_views.tripFilter),
+    url(r'^trip/userCurrency$', trip_views.userCurrency),
+    #page app
     url(r'^$', page_views.showHomePage),
     url(r'^page/home$', page_views.showHomePage),
     url(r'^page/find$', page_views.showFindPage),
@@ -30,8 +34,5 @@ urlpatterns = [
     url(r'^page/advertisement$', page_views.showAdvertisementPage),
     url(r'^page/contactUs$', page_views.showContactUsPage),
     url(r'^page/partnership$', page_views.showPartnershipPage),
-    url(r'^page/termsOfUse$', page_views.showTermsOfUsePage),
-    #test pages
-    url(r'^page/home2$', page_views.showHome2Page),
-    url(r'^page/find2$', page_views.showFind2Page),
+    url(r'^page/termsOfUse$', page_views.showTermsOfUsePage)
     ]
