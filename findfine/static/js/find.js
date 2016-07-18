@@ -1,5 +1,8 @@
 //本網頁讀取完成後 執行
-$(function(){
+$(document).ready(initFind);
+
+function initFind(){
+    initCurrencySelect()
     var keyword = tour.QueryString().keyword;
     //js取值
     // alert("keyword:"+keyword);
@@ -20,7 +23,7 @@ $(function(){
     search('');
     
     
-});
+};
 
 //hmoe頁面傳值至find頁面 googleMap呈現
 function initMap(sendLat,sendLng) {
@@ -260,13 +263,6 @@ function search( condition){
         }
     }
     
-    //幣別
-    var strUserCurrencyUrl = "/trip/userCurrency"
-    var strUserCurrency = null
-    $.getJSON(strUserCurrencyUrl, function(jsonResp){
-        strUserCurrency = jsonResp["strUserCurrency"]
-    });
-    
     //alert(" 254:strFilterQueryUrl:"+strFilterQueryUrl);
     $.getJSON(strFilterQueryUrl, function(jsonResp){
         //console.log(jsonResp);
@@ -284,16 +280,17 @@ function search( condition){
                 $(".findResultDiv").prepend(sortedByHtml);
             }
         }
+        
         for (i = 0; i < jsonResp.length; i++) {
             var dicTripData = jsonResp[i];
-            var strTripDataHtml = getTripDataHtml(strUserCurrency, dicTripData["strTitle"], dicTripData["intUserCurrencyCost"], dicTripData["strIntroduction"], dicTripData["strLocation"], dicTripData["intDurationHour"], dicTripData["strOriginUrl"], dicTripData["strImageUrl"], dicTripData["intReviewStar"], dicTripData["intReviewVisitor"] );
+            var strTripDataHtml = getTripDataHtml(dicTripData["strTitle"], dicTripData["intUserCurrencyCost"], dicTripData["strIntroduction"], dicTripData["strLocation"], dicTripData["intDurationHour"], dicTripData["strOriginUrl"], dicTripData["strImageUrl"], dicTripData["intReviewStar"], dicTripData["intReviewVisitor"] );
             $("div.findResultDiv ul.lstTripData").append(strTripDataHtml);
         };
     });
 };
 
 //組出單組查詢結果出來的html字串
-function getTripDataHtml(strUserCurrency, strTitle, intUserCurrencyCost, strIntroduction, strLocation, intDurationHour, strOriginUrl, strImageUrl, intReviewStar, intReviewVisitor ){
+function getTripDataHtml(strTitle, intUserCurrencyCost, strIntroduction, strLocation, intDurationHour, strOriginUrl, strImageUrl, intReviewStar, intReviewVisitor ){
     var reviewStar;
     if(intReviewStar==0){
         reviewStar=' ';
@@ -313,7 +310,8 @@ function getTripDataHtml(strUserCurrency, strTitle, intUserCurrencyCost, strIntr
     if(intReviewStar==5){
         reviewStar='★★★★★';
     }
-
+    
+    var strUserCurrency = $("#moneySelect").val();
     
     var strTripDataHtml = [
     "<li class=\"col-xs-12 col-md-6\">",
@@ -345,36 +343,25 @@ function getTripDataHtml(strUserCurrency, strTitle, intUserCurrencyCost, strIntr
     return strTripDataHtml;
 };
 
-(function($){
-    
-    $(document).ready(initFind);
-    
-    function initFind(){
-        initCurrencySelect()
-    };
-    
-    //幣別
-    function initCurrencySelect(){
-        //設定目前幣別
-        var strUserCurrencyUrl = "/trip/userCurrency";
-        $.getJSON(strUserCurrencyUrl, function(jsonResp){
+//幣別功能
+function initCurrencySelect(){
+    //設定目前幣別
+    var strUserCurrencyUrl = "/trip/userCurrency";
+    $.getJSON(strUserCurrencyUrl, function(jsonResp){
+        strUserCurrency = jsonResp["strUserCurrency"];
+        $("#moneySelect").val(strUserCurrency);
+        $("#moneySelect").selectpicker("refresh");
+        console.log("init user currency selection: " + strUserCurrency);
+    });
+    //切換目前幣別
+    $("#moneySelect").change(function(){
+        var strSelectedCurrencyVal = $("#moneySelect").find(":selected").val();
+        var strChangeUserCurrencyUrl = strUserCurrencyUrl + "?user_currency=" + strSelectedCurrencyVal;
+        $.getJSON(strChangeUserCurrencyUrl, function(jsonResp){
             strUserCurrency = jsonResp["strUserCurrency"];
-            $("#moneySelect").val(strUserCurrency);
-            $("#moneySelect").selectpicker("refresh")
-            console.log("init user currency selection: " + strUserCurrency);
+            console.log("switch user currency to: " + strUserCurrency);
         });
-        //切換目前幣別
-        $("#moneySelect").change(function(){
-            var strSelectedCurrencyVal = $("#moneySelect").find(":selected").val();
-            var strChangeUserCurrencyUrl = strUserCurrencyUrl + "?user_currency=" + strSelectedCurrencyVal;
-            $.getJSON(strChangeUserCurrencyUrl, function(jsonResp){
-                strUserCurrency = jsonResp["strUserCurrency"];
-                console.log("switch user currency to: " + strUserCurrency);
-            });
-            //頁面重新整理
-            location.reload();
-        });
-        
-    };
-    
-})(jQuery);
+        //重新搜尋
+        search("");
+    });
+};
