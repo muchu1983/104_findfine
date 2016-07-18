@@ -360,8 +360,9 @@ function initCurrencySelect(){
         $.getJSON(strChangeUserCurrencyUrl, function(jsonResp){
             strUserCurrency = jsonResp["strUserCurrency"];
             console.log("switch user currency to: " + strUserCurrency);
+            //重新搜尋
+            console.log("research");
+            search("");
         });
-        //重新搜尋
-        search("");
     });
 };
