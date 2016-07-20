@@ -79,3 +79,7 @@ Username: 19993
 Password: a768768a
 Withlocals:
 https://www.withlocals.com/api/v1/affiliates/feeds/base.xml
+Getyourguide:
+http://docs.bemyguest.apiary.io/#reference
+Username: liangtian@hotmail.com
+Password: a768768a
