@@ -236,9 +236,12 @@ function search( condition){
             if($("#sortByBudgetID").val() =="Budget ↓"){
                 strFilterQueryUrl = strFilterQueryUrl + "&order_by=" +condition;
                 $("#sortByBudgetID").val("Budget ↑");
+                $("#hiddenID").val("Budget ↓");
+                
             }else{
                 strFilterQueryUrl = strFilterQueryUrl + "&order_by=-" +condition;
                 $("#sortByBudgetID").val("Budget ↓");
+                $("#hiddenID").val("Budget ↑");
             }
         }
         if(condition=='intDurationHour'){
@@ -246,9 +249,11 @@ function search( condition){
             if($("#sortByDurationHourID").val() =="Duration ↓"){
                 strFilterQueryUrl = strFilterQueryUrl + "&order_by=" +condition;
                 $("#sortByDurationHourID").val("Duration ↑");
+                $("#hiddenID").val("Duration ↓");
             }else{
                 strFilterQueryUrl = strFilterQueryUrl + "&order_by=-" +condition;
                 $("#sortByDurationHourID").val("Duration ↓");
+                $("#hiddenID").val("Duration ↑");
             }
         }
         if(condition=='intReviewStar'){
@@ -256,9 +261,11 @@ function search( condition){
             if($("#sortByReviewStarID").val() =="ReviewStar ↓"){
                 strFilterQueryUrl = strFilterQueryUrl + "&order_by=" +condition;
                 $("#sortByReviewStarID").val("ReviewStar ↑");
+                $("#hiddenID").val("ReviewStar ↓");
             }else{
                 strFilterQueryUrl = strFilterQueryUrl + "&order_by=-" +condition;
                 $("#sortByReviewStarID").val("Star ↓");
+                $("#hiddenID").val("ReviewStar ↑");
             }
         }
     }
@@ -267,6 +274,8 @@ function search( condition){
     $.getJSON(strFilterQueryUrl, function(jsonResp){
         //console.log(jsonResp);
         $("div.findResultDiv ul.lstTripData").html("");
+        
+        /*
         if(jsonResp.length>0){
             
             if($("body").find(".sortedBy").length!=1){
@@ -280,6 +289,8 @@ function search( condition){
                 $(".findResultDiv").prepend(sortedByHtml);
             }
         }
+        */
+        
         
         var strUserCurrency = $("#moneySelect").val();
         $("div.userCurrencySpan").html(strUserCurrency)
@@ -289,29 +300,32 @@ function search( condition){
             $("div.findResultDiv ul.lstTripData").append(strTripDataHtml);
         };
     });
+
 };
 
 //組出單組查詢結果出來的html字串
 function getTripDataHtml(strUserCurrency, strTitle, intUserCurrencyCost, strIntroduction, strLocation, intDurationHour, strOriginUrl, strImageUrl, intReviewStar, intReviewVisitor ){
     var reviewStar;
     if(intReviewStar==0){
-        reviewStar=' ';
+        reviewStar='☆☆☆☆☆';
     }
     if(intReviewStar==1){
-        reviewStar='★';
+        reviewStar='★☆☆☆☆';
     }
     if(intReviewStar==2){
-        reviewStar='★★';
+        reviewStar='★★☆☆☆';
     }
     if(intReviewStar==3){
-        reviewStar='★★★';
+        reviewStar='★★★☆☆';
     }
     if(intReviewStar==4){
-        reviewStar='★★★★';
+        reviewStar='★★★★☆';
     }
     if(intReviewStar==5){
         reviewStar='★★★★★';
     }
+    
+    var strIntroduction=strIntroduction.substr( 0 , 135 );
     
     var strTripDataHtml = [
     "<li class=\"col-xs-12 col-md-6\">",
@@ -322,11 +336,10 @@ function getTripDataHtml(strUserCurrency, strTitle, intUserCurrencyCost, strIntr
             "<div class=\"col-xs-8\">",
             "<div class=\"tripContentDiv\">",
                 "<p><span style=\"color:orange\">"+strTitle+"</span></p>",
-                "<span class=\"trimText\">"+strIntroduction+"</span><br>",
+                "<span class=\"trimText\">"+strIntroduction+"...<a href="+strOriginUrl+" target=\"_blank\"> read more</a></span><br>",
                 "<span><i class=\"fa fa-clock-o\"></i> Duration:"+intDurationHour+"</span><br>",
-                "<span style=\"color:red\">Star:"+reviewStar+"</span><br>",
+                "<span style=\"color:red\">Stars:"+reviewStar+"</span><br>",
                 "<span><i class=\"fa fa-user\"></i> review:"+intReviewVisitor+"</span><br>",
-                "<span><a href="+strOriginUrl+" target=\"_blank\"><i class=\"fa fa-info-circle\"></i> read more</a></span><br>",
             "</div>",
             "</div>",
             "<div class=\"tripPriceAndWishDiv\">",
@@ -335,7 +348,7 @@ function getTripDataHtml(strUserCurrency, strTitle, intUserCurrencyCost, strIntr
                 "<span style=\"color:red\">"+intUserCurrencyCost+" "+strUserCurrency+"</span></br>",
             "</div>",
             "<div class=\"favorite\">",
-                "<i class=\"fa fa-heart\"></i>",
+                "<font size='6'>♥</font>",
             "</div>",
             "</div>",
     "</li>"
@@ -362,7 +375,29 @@ function initCurrencySelect(){
             console.log("switch user currency to: " + strUserCurrency);
             //重新搜尋
             console.log("research");
-            search("");
+            //這裡要帶排序條件
+
+            if($("#hiddenID").val()=="Budget ↓"){
+                search("intUsdCost");
+            }
+            if($("#hiddenID").val()=="Budget ↑"){
+                search("intUsdCost");
+            }
+            if($("#hiddenID").val()=="Duration ↓"){
+                search("intDurationHour");
+            }
+            if($("#hiddenID").val()=="Duration ↑"){
+                search("intDurationHour");
+            }
+            if($("#hiddenID").val()=="ReviewStar ↓"){
+                search("intReviewStar");
+            }
+            if($("#hiddenID").val()=="ReviewStar ↑"){
+                search("intReviewStar");
+            }
+            if($("#hiddenID").val()==""){
+                search("");
+            }
         });
     });
 };
