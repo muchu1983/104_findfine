@@ -1,11 +1,19 @@
+# -*- coding: utf-8 -*-
+"""
+Copyright (C) 2016, MuChu Hsu
+Contributed by Muchu Hsu (muchu1983@gmail.com)
+This file is part of BSD license
+
+<https://opensource.org/licenses/BSD-3-Clause>
+"""
 import urllib
 import json
 from django.shortcuts import render
 from django.shortcuts import redirect
 from django.http import HttpResponse
 
-# Create your views here.
 
+# 顯示登入頁面
 def showLoginPage(request):
     dicGoogleOAuth2Setting = {
         "strScope":"https://www.googleapis.com/auth/userinfo.email https://www.googleapis.com/auth/userinfo.profile https://www.googleapis.com/auth/calendar",
@@ -15,6 +23,7 @@ def showLoginPage(request):
     }
     return render(request, "login.html", dicGoogleOAuth2Setting)
     
+# 透過 google OAuth2 取得用戶資料
 def googleOAuth2(request):
     #資料
     strGoogleClientId = "985086432043-i429lmduehq54ltguuckc1780rabheot.apps.googleusercontent.com"
