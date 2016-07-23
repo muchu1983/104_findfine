@@ -8,6 +8,7 @@ This file is part of BSD license
 """
 import urllib
 import json
+from account.models import UserAccount
 from django.shortcuts import render
 from django.shortcuts import redirect
 from django.http import HttpResponse
@@ -49,5 +50,31 @@ def googleOAuth2(request):
     strUserInfoJson =  responseUserInfo.read().decode(responseUserInfo.headers.get_content_charset())
     dicUserInfo = json.loads(strUserInfoJson, encoding="utf-8")
     strUserEmail = dicUserInfo.get("email", None)
-    print(dicUserInfo)
+    strUserFamilyName = dicUserInfo.get("family_name", None)
+    strUserGivenName = dicUserInfo.get("given_name", None)
+    strUserGender = dicUserInfo.get("gender", None)
+    strUserNationality = dicUserInfo.get("locale", None)
+    strUserThumbnailUrl = dicUserInfo.get("picture", None)
+    #更新/新增 使用者資料
+    qsetMatchedUser = UserAccount.objects.all().filter(strEmail=strUserEmail)
+    isUserExist = len(qsetMatchedUser) != 0
+    if isUserExist: #用戶存在 執行 update
+        qsetMatchedUser.update(
+            strAuthType="google_oauth2",
+            strFamilyName=strUserFamilyName,
+            strGivenName=strUserGivenName,
+            strGender=strUserGender,
+            strNationality=strUserNationality,
+            strThumbnailUrl=strUserThumbnailUrl
+        )
+    else: #用戶不存在 執行 insert
+        UserAccount.objects.create(
+            strAuthType="google_oauth2",
+            strEmail=strUserEmail,
+            strFamilyName=strUserFamilyName,
+            strGivenName=strUserGivenName,
+            strGender=strUserGender,
+            strNationality=strUserNationality,
+            strThumbnailUrl=strUserThumbnailUrl
+        )
     return redirect("/account/login")

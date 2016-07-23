@@ -7,9 +7,9 @@ This file is part of BSD license
 <https://opensource.org/licenses/BSD-3-Clause>
 """
 from django.contrib import admin
-from account.models import Account
-from account.models import AccountThumbnail
+from account.models import UserAccount
+from account.models import UserAccountThumbnail
 
 # Register your models here.
-admin.site.register(Account)
-admin.site.register(AccountThumbnail)
+admin.site.register(UserAccount)
+admin.site.register(UserAccountThumbnail)
