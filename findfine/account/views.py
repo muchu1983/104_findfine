@@ -8,11 +8,11 @@ This file is part of BSD license
 """
 import urllib
 import json
+import logging
 from account.models import UserAccount
 from django.shortcuts import render
 from django.shortcuts import redirect
 from django.http import HttpResponse
-
 
 # 顯示登入頁面
 def showLoginPage(request):
@@ -68,6 +68,5 @@ def googleOAuth2(request):
         strEmail=strUserEmail,
         defaults=dicUpdateData
     )
-    print(userAccountObj)
-    print(isCreateNewData)
+    logging.info("google OAuth account %s: %s"%(strUserEmail, "created" if isCreateNewData else "updated"))
     return redirect("/account/login")
