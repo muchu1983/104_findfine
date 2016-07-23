@@ -84,3 +84,17 @@ http://docs.bemyguest.apiary.io/#reference
 Username: liangtian@hotmail.com
 Password: a768768a
 X-Authorization: daz5m3vimo2u8ucz90yimfwpj8lfdszkb2utjvyk
+
+Registration 
+1. Title: Mr./Miss/Mz./Mrs. 
+2. First Name
+3. Surname
+4. Sex: Male/ Female
+5. Birthday
+6. Nationality
+7. Contact number (landline or mobile)
+8. Email Address
+9. Password
+10. Confirm password
+11. Term of condition 使用者條款
+12. 驗證碼
