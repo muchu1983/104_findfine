@@ -69,4 +69,5 @@ def googleOAuth2(request):
         defaults=dicUpdateData
     )
     logging.info("google OAuth account %s: %s"%(strUserEmail, "created" if isCreateNewData else "updated"))
-    return redirect("/account/login")
+    #導回首頁
+    return redirect("/page/home")
