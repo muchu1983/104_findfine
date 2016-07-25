@@ -121,10 +121,14 @@ def showUserInfoPage(request):
     
 # 透過 google OAuth2 取得用戶資料
 def googleOAuth2(request):
+    strOAuthError = request.GET.get("error", None)
+    strOAuthCode = request.GET.get("code", None)
+    if strOAuthError or not strOAuthCode:
+        #OAuth 授權失敗，導回登入頁
+        return redirect("/account/login")
     #資料
     strGoogleClientId = "985086432043-i429lmduehq54ltguuckc1780rabheot.apps.googleusercontent.com"
     strGoogleClientSecret = "L1PYFFVi4g8vF4sg3EbCGM5u"
-    strOAuthCode = request.GET.get("code", None)
     strRedirectUri = "http://bennu.ddns.net:8000/account/googleOAuth2"
     #交付 授權碼 給 Google 取得 access token
     dicAccessTokenData = {
