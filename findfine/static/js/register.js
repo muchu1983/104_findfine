@@ -32,7 +32,10 @@
             //送出註冊資料
             $.post("/account/register", dicRegisterData, function(jsonResp){
                 console.log(jsonResp)
-                window.location = "/account/userinfo"
+                $("div.registerStatusDiv").html(jsonResp["register_status"])
+                if (jsonResp["register_status"] == "register success."){
+                    window.location = "/account/userinfo"
+                }
             }, "json");
         });
     };

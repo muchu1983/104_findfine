@@ -32,7 +32,8 @@ def showLoginPage(request):
         strStatus = ""
         strUserEmail = request.POST.get("user_email", None)
         strUserPassword = request.POST.get("user_password", None)
-        qsetMatchedUserAccount = UserAccount.objects.filter(strEmail=strUserEmail)
+        #檢查帳號是否存在，認証類型為 findfine_register 才有效
+        qsetMatchedUserAccount = UserAccount.objects.filter(strEmail=strUserEmail, strAuthType="findfine_register")
         if len(qsetMatchedUserAccount) == 0:
             strStatus = "no such user account"
         else:
@@ -67,21 +68,25 @@ def showRegisterPage(request):
         strUserContactNumber = request.POST.get("user_contact_number", None)
         #儲存註冊資料至 DB
         strStatus = ""
-        dicUpdateData = {
-            "strAuthType":"findfine_register",
-            "strEncryptedSecret":strUserPassword,
-            "strTitle":strUserTitle,
-            "strFamilyName":strUserFamilyName,
-            "strGivenName":strUserGivenName,
-            "strGender":strUserGender,
-            "dtBirthday":datetime.datetime.strptime(strUserBirthday, "%Y-%m-%d"),
-            "strNationality":strUserNationality,
-            "strContactNumber":strUserContactNumber
-        }
-        (userAccountObj, isCreateNewData) = UserAccount.objects.update_or_create(
-            strEmail=strUserEmail,
-            defaults=dicUpdateData
-        )
+        try:
+            if len(UserAccount.objects.filter(strEmail=strUserEmail)) == 0:
+                userAccountObj = UserAccount.objects.create(
+                    strAuthType="findfine_register",
+                    strEmail=strUserEmail,
+                    strEncryptedSecret=strUserPassword,
+                    strTitle=strUserTitle,
+                    strFamilyName=strUserFamilyName,
+                    strGivenName=strUserGivenName,
+                    strGender=strUserGender,
+                    dtBirthday=datetime.datetime.strptime(strUserBirthday, "%Y-%m-%d"),
+                    strNationality=strUserNationality,
+                    strContactNumber=strUserContactNumber
+                )
+                strStatus = "register success."
+            else:
+                strStatus = "register failed.(email already exists)"
+        except:
+            strStatus = "register failed."
         #註冊成功設定 session
         request.session["logined_user_email"] = strUserEmail
         return JsonResponse({"register_status":strStatus}, safe=False)
