@@ -18,13 +18,13 @@ from django.http import JsonResponse
 
 # 顯示登入頁面
 def showLoginPage(request):
-    dicGoogleOAuth2Setting = {
-        "strScope":"https://www.googleapis.com/auth/userinfo.email https://www.googleapis.com/auth/userinfo.profile https://www.googleapis.com/auth/calendar",
-        "strState":"",
-        "strRedirectUri":"http://bennu.ddns.net:8000/account/googleOAuth2",
-        "strClientId":"985086432043-i429lmduehq54ltguuckc1780rabheot.apps.googleusercontent.com"
+    dicOAuthSetting = {
+        "strGoogleOauthScope":"https://www.googleapis.com/auth/userinfo.email https://www.googleapis.com/auth/userinfo.profile https://www.googleapis.com/auth/calendar",
+        "strGoogleOauthState":"",
+        "strGoogleOauthRedirectUri":"http://bennu.ddns.net:8000/account/googleOAuth2",
+        "strGoogleOauthClientId":"985086432043-i429lmduehq54ltguuckc1780rabheot.apps.googleusercontent.com"
     }
-    return render(request, "login.html", dicGoogleOAuth2Setting)
+    return render(request, "login.html", dicOAuthSetting)
     
 # 顯示註冊頁面
 def showRegisterPage(request):
@@ -58,13 +58,36 @@ def showRegisterPage(request):
             strEmail=strUserEmail,
             defaults=dicUpdateData
         )
+        #註冊成功設定 session
+        request.session["logined_user_email"] = strUserEmail
         return JsonResponse({"register_status":strStatus}, safe=False)
     else:
         return render(request, "register.html", {"error_msg":"%s method not supported."%request.method})
         
 # 顯示使用者資訊頁面
 def showUserInfoPage(request):
-    return render(request, "userinfo.html", {})
+    #從 session 取得已登入的 使用者 email
+    strUserEmail = request.session.get("logined_user_email", None)
+    if strUserEmail:
+        #已登入 顯示使用者資訊
+        matchedUserAccount = UserAccount.objects.get(strEmail=strUserEmail)
+        dicUserData = {
+            "dtLatestUpdateTime":matchedUserAccount.dtLatestUpdateTime,
+            "strEmail":matchedUserAccount.strEmail,
+            "strAuthType":matchedUserAccount.strAuthType,
+            "strTitle":matchedUserAccount.strTitle,
+            "strFamilyName":matchedUserAccount.strFamilyName,
+            "strGivenName":matchedUserAccount.strGivenName,
+            "strGender":matchedUserAccount.strGender,
+            "dtBirthday":matchedUserAccount.dtBirthday,
+            "strNationality":matchedUserAccount.strNationality,
+            "strContactNumber":matchedUserAccount.strContactNumber
+        }
+        return render(request, "userinfo.html", dicUserData)
+    else:
+        #尚未登入 導回登入頁
+        return redirect("/account/login")
+    
     
 # 透過 google OAuth2 取得用戶資料
 def googleOAuth2(request):
@@ -111,5 +134,7 @@ def googleOAuth2(request):
         defaults=dicUpdateData
     )
     logging.info("google OAuth account %s: %s"%(strUserEmail, "created" if isCreateNewData else "updated"))
+    #登入成功設定 session
+    request.session["logined_user_email"] = strUserEmail
     #導回用戶資訊頁
     return redirect("/account/userinfo")
