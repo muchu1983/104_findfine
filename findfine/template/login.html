@@ -9,9 +9,15 @@
         <!-- login -->
         <link rel="stylesheet" type="text/css" href="/static/css/login.css">
         <script type="text/javascript" src="/static/js/login.js"></script>
+        <!-- django csrf token -->
+        <script type="text/javascript">
+            var strCsrfToken = "{{csrf_token}}";
+        </script>
     </head>
     <body>
         <h2>Login Page</h2>
+        <div class="loginStatusDiv">
+        </div>
         <div>
             <a class="ui-button ui-widget ui-corner-all" href="https://accounts.google.com/o/oauth2/v2/auth?scope={{strGoogleOauthScope}}&state={{strGoogleOauthState}}&redirect_uri={{strGoogleOauthRedirectUri}}&response_type=code&client_id={{strGoogleOauthClientId}}&approval_prompt=force ">google OAuth Login</a>
         </div>

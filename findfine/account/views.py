@@ -18,20 +18,44 @@ from django.http import JsonResponse
 
 # 顯示登入頁面
 def showLoginPage(request):
-    dicOAuthSetting = {
-        "strGoogleOauthScope":"https://www.googleapis.com/auth/userinfo.email https://www.googleapis.com/auth/userinfo.profile https://www.googleapis.com/auth/calendar",
-        "strGoogleOauthState":"",
-        "strGoogleOauthRedirectUri":"http://bennu.ddns.net:8000/account/googleOAuth2",
-        "strGoogleOauthClientId":"985086432043-i429lmduehq54ltguuckc1780rabheot.apps.googleusercontent.com"
-    }
-    return render(request, "login.html", dicOAuthSetting)
-    
+    if request.method == "GET":
+        #顯示登入界面
+        dicOAuthSetting = {
+            "strGoogleOauthScope":"https://www.googleapis.com/auth/userinfo.email https://www.googleapis.com/auth/userinfo.profile https://www.googleapis.com/auth/calendar",
+            "strGoogleOauthState":"",
+            "strGoogleOauthRedirectUri":"http://bennu.ddns.net:8000/account/googleOAuth2",
+            "strGoogleOauthClientId":"985086432043-i429lmduehq54ltguuckc1780rabheot.apps.googleusercontent.com"
+        }
+        return render(request, "login.html", dicOAuthSetting)
+    elif request.method == "POST":
+        #執行登入動作
+        strStatus = ""
+        strUserEmail = request.POST.get("user_email", None)
+        strUserPassword = request.POST.get("user_password", None)
+        qsetMatchedUserAccount = UserAccount.objects.filter(strEmail=strUserEmail)
+        if len(qsetMatchedUserAccount) == 0:
+            strStatus = "no such user account"
+        else:
+            matchedUserAccount = qsetMatchedUserAccount[0]
+            if strUserPassword == matchedUserAccount.strEncryptedSecret:
+                strStatus = "login success."
+                #登入成功設定 session
+                request.session["logined_user_email"] = strUserEmail
+            else:
+                strStatus = "login failed."
+        return JsonResponse({"login_status":strStatus}, safe=False)
+    else:
+        #不支援的 request method
+        strStatus = "%s method not supported."%request.method
+        return JsonResponse({"login_status":strStatus}, safe=False)
+        
 # 顯示註冊頁面
 def showRegisterPage(request):
     if request.method == "GET":
+        #顯示註冊界面
         return render(request, "register.html", {})
     elif request.method == "POST":
-        #執行註冊
+        #執行註冊動作
         strUserEmail = request.POST.get("user_email", None)
         strUserPassword = request.POST.get("user_password", None)
         strUserTitle = request.POST.get("user_title", None)
@@ -62,7 +86,9 @@ def showRegisterPage(request):
         request.session["logined_user_email"] = strUserEmail
         return JsonResponse({"register_status":strStatus}, safe=False)
     else:
-        return render(request, "register.html", {"error_msg":"%s method not supported."%request.method})
+        #不支援的 request method
+        strStatus = "%s method not supported."%request.method
+        return JsonResponse({"register_status":strStatus}, safe=False)
         
 # 顯示使用者資訊頁面
 def showUserInfoPage(request):
@@ -87,7 +113,6 @@ def showUserInfoPage(request):
     else:
         #尚未登入 導回登入頁
         return redirect("/account/login")
-    
     
 # 透過 google OAuth2 取得用戶資料
 def googleOAuth2(request):
