@@ -9,10 +9,12 @@ This file is part of BSD license
 import urllib
 import json
 import logging
+import datetime
 from account.models import UserAccount
 from django.shortcuts import render
 from django.shortcuts import redirect
 from django.http import HttpResponse
+from django.http import JsonResponse
 
 # 顯示登入頁面
 def showLoginPage(request):
@@ -26,8 +28,40 @@ def showLoginPage(request):
     
 # 顯示註冊頁面
 def showRegisterPage(request):
-    return render(request, "register.html", {})
-    
+    if request.method == "GET":
+        return render(request, "register.html", {})
+    elif request.method == "POST":
+        #執行註冊
+        strUserEmail = request.POST.get("user_email", None)
+        strUserPassword = request.POST.get("user_password", None)
+        strUserTitle = request.POST.get("user_title", None)
+        strUserFamilyName = request.POST.get("user_family_name", None)
+        strUserGivenName = request.POST.get("user_given_name", None)
+        strUserGender = request.POST.get("user_gender", None)
+        strUserBirthday = request.POST.get("user_birthday", None)
+        strUserNationality = request.POST.get("user_nationality", None)
+        strUserContactNumber = request.POST.get("user_contact_number", None)
+        #儲存註冊資料至 DB
+        strStatus = ""
+        dicUpdateData = {
+            "strAuthType":"findfine_register",
+            "strEncryptedSecret":strUserPassword,
+            "strTitle":strUserTitle,
+            "strFamilyName":strUserFamilyName,
+            "strGivenName":strUserGivenName,
+            "strGender":strUserGender,
+            "dtBirthday":datetime.datetime.strptime(strUserBirthday, "%Y-%m-%d"),
+            "strNationality":strUserNationality,
+            "strContactNumber":strUserContactNumber
+        }
+        (userAccountObj, isCreateNewData) = UserAccount.objects.update_or_create(
+            strEmail=strUserEmail,
+            defaults=dicUpdateData
+        )
+        return JsonResponse({"register_status":strStatus}, safe=False)
+    else:
+        return render(request, "register.html", {"error_msg":"%s method not supported."%request.method})
+        
 # 顯示使用者資訊頁面
 def showUserInfoPage(request):
     return render(request, "userinfo.html", {})
@@ -77,5 +111,5 @@ def googleOAuth2(request):
         defaults=dicUpdateData
     )
     logging.info("google OAuth account %s: %s"%(strUserEmail, "created" if isCreateNewData else "updated"))
-    #導回首頁
+    #導回用戶資訊頁
     return redirect("/account/userinfo")

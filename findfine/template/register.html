@@ -9,8 +9,67 @@
         <!-- register -->
         <link rel="stylesheet" type="text/css" href="/static/css/register.css">
         <script type="text/javascript" src="/static/js/register.js"></script>
+        <script type="text/javascript">
+            var strCsrfToken = "{{csrf_token}}";
+        </script>
     </head>
     <body>
-        <h1>Register Page</h1>
+        <h2>Register Page</h2>
+        <div>
+            <div>
+                <span>Email:</span>
+                <input id="user_email"></input>
+            </div>
+            <div>
+                <span>Password:</span>
+                <input id="user_password"></input>
+            </div>
+            <div>
+                <span>Confirm:</span>
+                <input id="user_confirm"></input>
+            </div>
+            <div>
+                <span>Title:</span>
+                <input type="radio" name="user_title" id="user_title_mr" value="Mr.">
+                <label for="user_title_mr">Mr.</label>
+                <input type="radio" name="user_title" id="user_title_miss" value="Miss">
+                <label for="user_title_miss">Miss</label>
+                <input type="radio" name="user_title" id="user_title_mz" value="Mz.">
+                <label for="user_title_mz">Mz.</label>
+                <input type="radio" name="user_title" id="user_title_mrs" value="Mrs.">
+                <label for="user_title_mrs">Mrs.</label>
+            </div>
+            <div>
+                <span>Family Name:</span>
+                <input id="user_family_name"></input>
+            </div>
+            <div>
+                <span>Given Name:</span>
+                <input id="user_given_name"></input>
+            </div>
+            <div>
+                <span>Gender:</span>
+                <input type="radio" name="user_gender" id="user_gender_male" value="male">
+                <label for="user_gender_male">male</label>
+                <input type="radio" name="user_gender" id="user_gender_female" value="female">
+                <label for="user_gender_female">female</label>
+            </div>
+            <div>
+                <span>Birthday:</span>
+                <input id="user_birthday"></input>
+            </div>
+            <div>
+                <span>Nationality:</span>
+                <input id="user_nationality"></input>
+            </div>
+            <div>
+                <span>ContactNumber:</span>
+                <input id="user_contact_number"></input>
+            </div>
+            <div>
+                <a id="registreBtn" class="ui-button ui-widget ui-corner-all" href="javascript: void(0)">Send Register Data</a>
+            </div>
+        </div>
+        
     </body>
 </html>
