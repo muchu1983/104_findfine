@@ -87,8 +87,6 @@ def showRegisterPage(request):
                 strStatus = "register failed.(email already exists)"
         except:
             strStatus = "register failed."
-        #註冊成功設定 session
-        request.session["logined_user_email"] = strUserEmail
         return JsonResponse({"register_status":strStatus}, safe=False)
     else:
         #不支援的 request method

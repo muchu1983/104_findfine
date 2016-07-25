@@ -34,7 +34,7 @@
                 console.log(jsonResp)
                 $("div.registerStatusDiv").html(jsonResp["register_status"])
                 if (jsonResp["register_status"] == "register success."){
-                    window.location = "/account/userinfo"
+                    window.location = "/account/login"
                 }
             }, "json");
         });
