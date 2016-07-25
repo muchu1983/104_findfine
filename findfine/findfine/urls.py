@@ -31,6 +31,8 @@ urlpatterns = [
     url(r'^admin/', admin.site.urls),
     #account app
     url(r'^account/login$', account_views.showLoginPage),
+    url(r'^account/register$', account_views.showRegisterPage),
+    url(r'^account/userinfo$', account_views.showUserInfoPage),
     url(r'^account/googleOAuth2$', account_views.googleOAuth2),
     #trip app
     url(r'^trip/filter$', trip_views.tripFilter),

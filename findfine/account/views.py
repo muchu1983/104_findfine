@@ -24,6 +24,14 @@ def showLoginPage(request):
     }
     return render(request, "login.html", dicGoogleOAuth2Setting)
     
+# 顯示註冊頁面
+def showRegisterPage(request):
+    return render(request, "register.html", {})
+    
+# 顯示使用者資訊頁面
+def showUserInfoPage(request):
+    return render(request, "userinfo.html", {})
+    
 # 透過 google OAuth2 取得用戶資料
 def googleOAuth2(request):
     #資料
@@ -70,4 +78,4 @@ def googleOAuth2(request):
     )
     logging.info("google OAuth account %s: %s"%(strUserEmail, "created" if isCreateNewData else "updated"))
     #導回首頁
-    return redirect("/page/home")
+    return redirect("/account/userinfo")
