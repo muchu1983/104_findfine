@@ -47,5 +47,6 @@ urlpatterns = [
     url(r'^page/advertisement$', page_views.showAdvertisementPage),
     url(r'^page/contactUs$', page_views.showContactUsPage),
     url(r'^page/partnership$', page_views.showPartnershipPage),
-    url(r'^page/termsOfUse$', page_views.showTermsOfUsePage)
-    ]
+    url(r'^page/termsOfUse$', page_views.showTermsOfUsePage),
+    url(r'^page/notice$', page_views.showNoticePage)
+]

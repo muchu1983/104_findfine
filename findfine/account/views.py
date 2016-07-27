@@ -227,5 +227,5 @@ def verifyEmail(request):
         #更新帳號等級
         qsetMatchedUserAccount = UserAccount.objects.filter(strEmail=strEmail)
         qsetMatchedUserAccount.update(strLevel="Email verified.")
-    #將用戶導向登入頁
-    return redirect("/account/login")
+    #將用戶導向通知頁
+    return render(request, "notice.html", {"strMessage":"Email (%s) verification SUCCESS. your account level updated."%strEmail})

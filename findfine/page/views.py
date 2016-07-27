@@ -54,3 +54,5 @@ def showPartnershipPage(request):
 def showTermsOfUsePage(request):
     return render(request, "termsOfUse.html", {})
     
+def showNoticePage(request):
+    return render(request, "notice.html", {})
