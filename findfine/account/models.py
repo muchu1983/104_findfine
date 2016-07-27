@@ -17,6 +17,8 @@ class UserAccount(models.Model):
     strEmail = models.EmailField(unique=True, null=False)
     #認證方式
     strAuthType = models.CharField(max_length=255, null=False)
+    #帳號等級
+    strLevel = models.CharField(max_length=255, null=False)
     #使用者密碼 (已加密)
     strEncryptedSecret = models.CharField(max_length=255, null=True)
     #稱謂
