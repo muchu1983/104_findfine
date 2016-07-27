@@ -73,6 +73,7 @@ def showRegisterPage(request):
                 userAccountObj = UserAccount.objects.create(
                     strAuthType="findfine_register",
                     strEmail=strUserEmail,
+                    strLevel="Email not verified.",
                     strEncryptedSecret=strUserPassword,
                     strTitle=strUserTitle,
                     strFamilyName=strUserFamilyName,
@@ -103,6 +104,7 @@ def showUserInfoPage(request):
         dicUserData = {
             "dtLatestUpdateTime":matchedUserAccount.dtLatestUpdateTime,
             "strEmail":matchedUserAccount.strEmail,
+            "strLevel":matchedUserAccount.strLevel,
             "strAuthType":matchedUserAccount.strAuthType,
             "strTitle":matchedUserAccount.strTitle,
             "strFamilyName":matchedUserAccount.strFamilyName,
@@ -154,6 +156,7 @@ def googleOAuth2(request):
     strUserThumbnailUrl = dicUserInfo.get("picture", None)
     #更新/新增 使用者資料
     dicUpdateData = {
+        "strLevel":"Email verified.",
         "strAuthType":"google_oauth2",
         "strFamilyName":strUserFamilyName,
         "strGivenName":strUserGivenName,
