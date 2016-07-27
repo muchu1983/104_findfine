@@ -8,8 +8,8 @@ This file is part of BSD license
 """
 from django.contrib import admin
 from account.models import UserAccount
-from account.models import UserAccountThumbnail
+from account.models import Thumbnail
 
 # Register your models here.
 admin.site.register(UserAccount)
-admin.site.register(UserAccountThumbnail)
+admin.site.register(Thumbnail)

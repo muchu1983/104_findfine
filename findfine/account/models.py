@@ -9,8 +9,7 @@ This file is part of BSD license
 from django.db import models
 import account.utility as utility
 
-# Create your models here.
-
+# 使用者帳號
 class UserAccount(models.Model):
     #最後更新時間
     dtLatestUpdateTime = models.DateTimeField(auto_now=True, null=False)
@@ -37,9 +36,15 @@ class UserAccount(models.Model):
     #圖片 URL
     strThumbnailUrl = models.CharField(max_length=255, null=True)
     
-class UserAccountThumbnail(models.Model):
+#使用者圖像
+class Thumbnail(models.Model):
     #使用者帳號 ForeignKey
     fkUserAccount = models.ForeignKey(UserAccount, null=False, on_delete=models.CASCADE)
     #使用者圖像
     imgThumbnail = models.ImageField(upload_to=utility.getUserThumbnailPath, null=False)
     
+#驗証 (Email or phone)
+class Verification(models.Model):
+    dtValidTime = models.DateTimeField(null=False)
+    strEmail = models.EmailField(null=False)
+    strUUID = models.CharField(max_length=255, null=False)
