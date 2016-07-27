@@ -10,9 +10,13 @@ from django.shortcuts import render
 
 # Create your views here.
 def showHomePage(request):
-    return render(request, "home.html", {})
+    #從 session 取得已登入的 使用者 email
+    strUserEmail = request.session.get("logined_user_email", None)
+    return render(request, "home.html", {"strEmail":strUserEmail})
     
 def showFindPage(request):
+    #從 session 取得已登入的 使用者 email
+    strUserEmail = request.session.get("logined_user_email", None)
     strKeyword = request.GET.get("keyword", None)
     strMinBudget = request.GET.get("min_budget", None)
     strMaxBudget = request.GET.get("max_budget", None)
@@ -25,6 +29,7 @@ def showFindPage(request):
     strOption = request.GET.get("option", None)
     strOrderBy = request.GET.get("order_by", None)
     dicDataFromServer = {
+        "strEmail":strUserEmail,
         "keyword":strKeyword,
         "min_budget":strMinBudget,
         "max_budget":strMaxBudget,
