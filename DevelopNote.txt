@@ -23,6 +23,10 @@ findfine 帳號 findfine_db_root
 findfine 密碼 asdfASDF1234
 編碼設定 utf8_unicode_ci
 
+findfine 專用 google 帳號
+findfine.service@gmail.com
+a768768a
+
 GitHub
 https://github.com/muchu1983/findfine
 
