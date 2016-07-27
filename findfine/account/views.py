@@ -211,7 +211,7 @@ def sendEmailVerification(request):
         )
     return redirect("/account/userinfo")
     
-#傳送 Email 認證信
+#檢查 Email 驗證碼正確性
 def verifyEmail(request):
     strEmail = request.GET.get("strEmail", None)
     strUUID = request.GET.get("strUUID", None)
@@ -221,11 +221,11 @@ def verifyEmail(request):
         strUUID=strUUID,
         dtValidTime__gte=dtNow
     )
-    if len(qsetMatchedVerification) > 0:
+    if len(qsetMatchedVerification) > 0: #成功
         #刪除認證資訊
         qsetMatchedVerification.delete()
         #更新帳號等級
         qsetMatchedUserAccount = UserAccount.objects.filter(strEmail=strEmail)
         qsetMatchedUserAccount.update(strLevel="Email verified.")
-    
+    #將用戶導向登入頁
     return redirect("/account/login")
