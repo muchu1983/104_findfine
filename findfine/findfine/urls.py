@@ -34,6 +34,8 @@ urlpatterns = [
     url(r'^account/register$', account_views.showRegisterPage),
     url(r'^account/userinfo$', account_views.showUserInfoPage),
     url(r'^account/googleOAuth2$', account_views.googleOAuth2),
+    url(r'^account/sendEmailVerification$', account_views.sendEmailVerification),
+    url(r'^account/verifyEmail$', account_views.verifyEmail),
     #trip app
     url(r'^trip/filter$', trip_views.tripFilter),
     url(r'^trip/userCurrency$', trip_views.userCurrency),

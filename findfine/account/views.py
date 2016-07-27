@@ -9,12 +9,16 @@ This file is part of BSD license
 import urllib
 import json
 import logging
+import uuid
 import datetime
+from django.utils import timezone
 from account.models import UserAccount
+from account.models import Verification
 from django.shortcuts import render
 from django.shortcuts import redirect
 from django.http import HttpResponse
 from django.http import JsonResponse
+from bennu.emailutility import EmailUtility
 
 # 顯示登入頁面
 def showLoginPage(request):
@@ -86,7 +90,7 @@ def showRegisterPage(request):
                 strStatus = "register success."
             else:
                 strStatus = "register failed.(email already exists)"
-        except:
+        except Exception as e:
             strStatus = "register failed."
         return JsonResponse({"register_status":strStatus}, safe=False)
     else:
@@ -173,3 +177,55 @@ def googleOAuth2(request):
     request.session["logined_user_email"] = strUserEmail
     #導回用戶資訊頁
     return redirect("/account/userinfo")
+    
+#傳送 Email 認證信
+def sendEmailVerification(request):
+    strUserEmail = request.session.get("logined_user_email", None)
+    if strUserEmail:
+        #確定已登入 生成 Email 認證信
+        #產生 UUID
+        strUUID = str(uuid.uuid1())
+        #儲存認證資訊
+        Verification.objects.update_or_create(
+            strEmail = strUserEmail,
+            defaults = {
+                "dtValidTime": timezone.now() + timezone.timedelta(days=1),#click email in 1 day
+                "strUUID": strUUID
+            }
+        )
+        strMsg = (
+            "<a href=\"http://bennu.ddns.net:8000/account/verifyEmail?"
+                "strEmail=%s&"
+                "strUUID=%s\">"
+                    "click me"
+            "</a>"%(strUserEmail, strUUID)
+        )
+        #寄出 email
+        emailUtil = EmailUtility()
+        emailUtil.sendEmail(
+            strSubject="user email verification.",
+            strFrom="FindFineTour",
+            strTo="me",
+            strMsg=strMsg,
+            lstStrTarget=[strUserEmail]
+        )
+    return redirect("/account/userinfo")
+    
+#傳送 Email 認證信
+def verifyEmail(request):
+    strEmail = request.GET.get("strEmail", None)
+    strUUID = request.GET.get("strUUID", None)
+    dtNow = timezone.now()
+    qsetMatchedVerification = Verification.objects.filter(
+        strEmail=strEmail,
+        strUUID=strUUID,
+        dtValidTime__gte=dtNow
+    )
+    if len(qsetMatchedVerification) > 0:
+        #刪除認證資訊
+        qsetMatchedVerification.delete()
+        #更新帳號等級
+        qsetMatchedUserAccount = UserAccount.objects.filter(strEmail=strEmail)
+        qsetMatchedUserAccount.update(strLevel="Email verified.")
+    
+    return redirect("/account/login")
