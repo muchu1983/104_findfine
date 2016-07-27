@@ -84,6 +84,8 @@ http://docs.bemyguest.apiary.io/#reference
 Username: liangtian@hotmail.com
 Password: a768768a
 X-Authorization: daz5m3vimo2u8ucz90yimfwpj8lfdszkb2utjvyk
+gogobot:
+http://developers.gogobot.com/public/
 
 Registration 
 1. Title: Mr./Miss/Mz./Mrs. 
