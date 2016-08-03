@@ -2,7 +2,7 @@
 $(document).ready(initFind);
 
 function initFind(){
-    initCurrencySelect()
+    initCurrencySelect();
     var keyword = tour.QueryString().keyword;
     //js取值
     // alert("keyword:"+keyword);
@@ -19,6 +19,12 @@ function initFind(){
     }).on('hide.bs.collapse',function(){
        $toggleCollapse.html(' more');
     });
+    
+    //登入按鈕
+    $("#loginBtn").click(function(){
+        window.location = "/account/login";
+    });
+    
     //不傳入sort條件
     search('');
     
