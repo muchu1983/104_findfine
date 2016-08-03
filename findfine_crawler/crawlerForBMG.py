@@ -59,6 +59,8 @@ class CrawlerForBMG:
             #取得產品詳細資料
             strProductUUID = dicProductRoughData.get("uuid", None)
             dicProductDetailData = self.getProductDetailData(strProductUUID=strProductUUID)
+            #幣別資料(檢查)
+            logging.info("currency: %s"%dicProductDetailData.get("currency", {}).get("code", str(None)))
             #轉換為 findfine 資料格式
             dicProductJson = {}
             #strSource
@@ -129,7 +131,7 @@ class CrawlerForBMG:
     def getAllProductRoughData(self):
         lstDicProductRoughData = []
         # 第一頁
-        strPage1Url = "https://apidemo.bemyguest.com.sg/v1/products?currency=10" #currency:10=SGD=新加坡幣
+        strPage1Url = "https://apidemo.bemyguest.com.sg/v1/products?currency=USD"
         logging.info("get BMG product rough data: %s"%strPage1Url)
         strRespJson = self.sendHttpRequestByUrllib(
             strUrl=strPage1Url,
@@ -142,6 +144,7 @@ class CrawlerForBMG:
         # 下一頁
         strNextPageUrl = dicRespJson.get("meta", {}).get("pagination", {}).get("links", {}).get("next", None)
         while strNextPageUrl:
+            strNextPageUrl = re.sub("currency=[\d]+", "currency=USD", strNextPageUrl) #強制取得美金資料
             logging.info("get BMG product rough data: %s"%strNextPageUrl)
             strRespJson = self.sendHttpRequestByUrllib(
                 strUrl=strNextPageUrl,
@@ -159,7 +162,7 @@ class CrawlerForBMG:
     def getProductDetailData(self, strProductUUID=None):
         logging.info("get BMG product detail data: %s"%strProductUUID)
         strRespJson = self.sendHttpRequestByUrllib(
-            strUrl="https://apidemo.bemyguest.com.sg/v1/products/%s?currency=10"%strProductUUID, #currency:10=SGD=新加坡幣
+            strUrl="https://apidemo.bemyguest.com.sg/v1/products/%s?currency=USD"%strProductUUID, #currency:10=SGD=新加坡幣
             dicHeader={"X-Authorization":self.strAuthCode},
             dicData=None,
             strEncoding="utf-8"

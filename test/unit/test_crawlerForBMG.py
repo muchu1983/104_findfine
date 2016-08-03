@@ -29,7 +29,7 @@ class CrawlerForBMGTest(unittest.TestCase):
     def test_sendHttpRequestByUrllib(self):
         logging.info("CrawlerForBMGTest.test_sendHttpRequestByUrllib")
         strRespJson = self.crawler.sendHttpRequestByUrllib(
-            strUrl="https://apidemo.bemyguest.com.sg/v1/products?currency=10",
+            strUrl="https://apidemo.bemyguest.com.sg/v1/products?currency=USD",
             dicHeader={"X-Authorization":"daz5m3vimo2u8ucz90yimfwpj8lfdszkb2utjvyk"},
             dicData=None,
             strEncoding="utf-8"
