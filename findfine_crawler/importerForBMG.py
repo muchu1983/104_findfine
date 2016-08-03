@@ -11,28 +11,28 @@ import datetime
 import json
 import logging
 import re
-#from findfine_crawler.localdb import LocalDbForJsonImporter
-from findfine_crawler.externaldb import ExternalDbForJsonImporter
+from findfine_crawler.localdb import LocalDbForJsonImporter
+#from findfine_crawler.externaldb import ExternalDbForJsonImporter
 from bennu.filesystemutility import FileSystemUtility as FilesysUtility
 from findfine_crawler.utility import Utility as FfUtility
 """
-將 exrate/*.json 內容存入 MySQL DB
+將 product.json 內容存入 MySQL DB
 """
-class ImporterForExRate:
+class ImporterForBMG:
     #建構子
     def __init__(self):
         self.ffUtil = FfUtility()
         self.filesysUtil = FilesysUtility()
-        #self.db = LocalDbForJsonImporter()
-        self.db = ExternalDbForJsonImporter()
-        self.dicSubCommandHandler = {"import":[self.importYahooCurrencyJsonToDb]}
+        self.db = LocalDbForJsonImporter()
+        #self.db = ExternalDbForJsonImporter()
+        self.dicSubCommandHandler = {"import":[self.importProductJsonToDb]}
         
     #取得 importer 使用資訊
     def getUseageMessage(self):
         return (
-            "- ExRate -\n"
+            "- BeMyGuest -\n"
             "useage:\n"
-            "import - import exrate/*.json to database \n"
+            "import - import product.json to database \n"
         )
                 
     #執行 importer
@@ -44,19 +44,19 @@ class ImporterForExRate:
         for handler in self.dicSubCommandHandler[strSubcommand]:
             handler(strArg1)
     
-    #import exrate/*.json to MySQL DB
-    def importYahooCurrencyJsonToDb(self, uselessArg1=None):
-        #清除 trip_exrate 資料
-        self.db.clearExRateData()
+    #import product.json to MySQL DB
+    def importProductJsonToDb(self, uselessArg1=None):
+        #清除 trip 資料
+        self.db.clearTripData()
         #讀取 json 檔
-        strBasedir = self.filesysUtil.getPackageResourcePath(strPackageName="findfine_crawler.resource.parsed_json", strResourceName="exrate")
-        lstStrExRateJsonFilePath = self.ffUtil.getFilePathListWithSuffixes(strBasedir=strBasedir, strSuffixes=".json")
-        for strExRateJsonFilePath in lstStrExRateJsonFilePath:
-            logging.info("read %s"%strExRateJsonFilePath)
-            lstDicExRateData = self.ffUtil.readObjectFromJsonFile(strJsonFilePath=strExRateJsonFilePath)
-            for dicExRateData in lstDicExRateData:
+        strBasedir = self.filesysUtil.getPackageResourcePath(strPackageName="findfine_crawler.resource.parsed_json", strResourceName="bmg")
+        lstStrProductJsonFilePath = self.ffUtil.getFilePathListWithSuffixes(strBasedir=strBasedir, strSuffixes="_product.json")
+        for strProductJsonFilePath in lstStrProductJsonFilePath:
+            logging.info("read %s"%strProductJsonFilePath)
+            lstDicProductData = self.ffUtil.readObjectFromJsonFile(strJsonFilePath=strProductJsonFilePath)
+            for dicProductData in lstDicProductData:
                 try:
-                    #UPDATE or INSERT
-                    self.db.upsertExRate(dicExRateData=dicExRateData)
+                    #INSERT INTO
+                    self.db.insertTripIfNotExists(dicTripData=dicProductData)
                 except Exception as e:
-                    logging.warning("upsert exrate failed: %s"%(str(e)))
+                    logging.warning("insert trip failed: %s"%(str(e)))

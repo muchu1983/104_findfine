@@ -9,25 +9,25 @@ This file is part of BSD license
 import unittest
 import logging
 import json
-from findfine_crawler.importerForExRate import ImporterForExRate
+from findfine_crawler.importerForBMG import ImporterForBMG
 """
-測試 exrate/*.json 資料 import 至 DB
+測試 BMG product.json 資料 import 至 DB
 """
-class ImporterForExRateTest(unittest.TestCase):
+class ImporterForBMGTest(unittest.TestCase):
 
     #準備
     def setUp(self):
         logging.basicConfig(level=logging.INFO)
-        self.importer = ImporterForExRate()
+        self.importer = ImporterForBMG()
         
     #收尾
     def tearDown(self):
         pass
     
-    #測試 import exrate/*.json to db
+    #測試 import product.json to db
     def test_import(self):
-        logging.info("ImporterForExRateTest.test_import")
-        self.importer.importYahooCurrencyJsonToDb()
+        logging.info("ImporterForBMGTest.test_import")
+        self.importer.importProductJsonToDb()
     
 #測試開始
 if __name__ == "__main__":

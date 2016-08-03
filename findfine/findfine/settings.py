@@ -92,6 +92,7 @@ DATABASES = {
         'USER': 'findfine_db_root',
         'PASSWORD': 'asdfASDF1234',
         'HOST': '54.165.130.206',
+        #'HOST': '127.0.0.1',
         'PORT': '3306',
         'OPTIONS': {
           'autocommit': True,
