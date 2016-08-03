@@ -42,7 +42,11 @@ $(function() {
     $(document).ready(initHome);
     
     function initHome(){
-        initCurrencySelect()
+        initCurrencySelect();
+        //登入按鈕
+        $("#loginBtn").click(function(){
+            window.location = "/account/login";
+        });
     };
     
     //幣別
