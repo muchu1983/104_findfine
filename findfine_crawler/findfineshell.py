@@ -8,6 +8,8 @@ This file is part of BSD license
 """
 from findfine_crawler.crawlerForKKDAY import CrawlerForKKDAY
 from findfine_crawler.importerForKKDAY import ImporterForKKDAY
+from findfine_crawler.crawlerForBMG import CrawlerForBMG
+from findfine_crawler.importerForBMG import ImporterForBMG
 from findfine_crawler.crawlerForExRate import CrawlerForExRate
 from findfine_crawler.importerForExRate import ImporterForExRate
 """
@@ -21,11 +23,13 @@ class FindfineShell:
         self.strTargetSite = None
         self.dicCrawlers = {
             "kkday":CrawlerForKKDAY(),
+            "bmg":CrawlerForBMG(),
             "exrate":CrawlerForExRate()
         }
         
         self.dicImporters = {
             "kkday":ImporterForKKDAY(),
+            "bmg":ImporterForBMG(),
             "exrate":ImporterForExRate()
         }
         

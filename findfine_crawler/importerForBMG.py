@@ -11,8 +11,8 @@ import datetime
 import json
 import logging
 import re
-from findfine_crawler.localdb import LocalDbForJsonImporter
-#from findfine_crawler.externaldb import ExternalDbForJsonImporter
+#from findfine_crawler.localdb import LocalDbForJsonImporter
+from findfine_crawler.externaldb import ExternalDbForJsonImporter
 from bennu.filesystemutility import FileSystemUtility as FilesysUtility
 from findfine_crawler.utility import Utility as FfUtility
 """
@@ -23,8 +23,8 @@ class ImporterForBMG:
     def __init__(self):
         self.ffUtil = FfUtility()
         self.filesysUtil = FilesysUtility()
-        self.db = LocalDbForJsonImporter()
-        #self.db = ExternalDbForJsonImporter()
+        #self.db = LocalDbForJsonImporter()
+        self.db = ExternalDbForJsonImporter()
         self.dicSubCommandHandler = {"import":[self.importProductJsonToDb]}
         
     #取得 importer 使用資訊
@@ -47,7 +47,7 @@ class ImporterForBMG:
     #import product.json to MySQL DB
     def importProductJsonToDb(self, uselessArg1=None):
         #清除 trip 資料
-        self.db.clearTripData()
+        #self.db.clearTripData()
         #讀取 json 檔
         strBasedir = self.filesysUtil.getPackageResourcePath(strPackageName="findfine_crawler.resource.parsed_json", strResourceName="bmg")
         lstStrProductJsonFilePath = self.ffUtil.getFilePathListWithSuffixes(strBasedir=strBasedir, strSuffixes="_product.json")
@@ -60,3 +60,4 @@ class ImporterForBMG:
                     self.db.insertTripIfNotExists(dicTripData=dicProductData)
                 except Exception as e:
                     logging.warning("insert trip failed: %s"%(str(e)))
+                    

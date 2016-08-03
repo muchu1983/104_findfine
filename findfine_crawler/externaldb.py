@@ -30,10 +30,16 @@ class ExternalDbForJsonImporter:
         strQuerySql = ("SELECT * FROM trip_trip WHERE strOriginUrl=%(strOriginUrl)s")
         queryCursor.execute(strQuerySql, dicTripData)
         if queryCursor.rowcount == 0:
-            strInsertSql = (
-                "INSERT INTO trip_trip (strSource, strOriginUrl, strTitle, strImageUrl, intDurationHour, intUsdCost, strGuideLanguage, intReviewStar, intReviewVisitor, strIntroduction, strLocation)"
-                "VALUES (%(strSource)s, %(strOriginUrl)s, %(strTitle)s, %(strImageUrl)s, %(intDurationHour)s, %(intUsdCost)s / 31.89, %(strGuideLanguage)s, %(intReviewStar)s, %(intReviewVisitor)s, %(strIntroduction)s, %(strLocation)s)"
-            )
+            #trip 資料 key
+            lstStrTripDataKey = list(dicTripData.keys())
+            #INSERT 欄位字串
+            strTableField = ",".join(lstStrTripDataKey)
+            #INSERT 值字串
+            lstStrTableValue = []
+            for strTripDataKey in lstStrTripDataKey:
+                lstStrTableValue.append("%%(%s)s"%strTripDataKey)
+            strTableValue = ",".join(lstStrTableValue)
+            strInsertSql = "INSERT INTO trip_trip (%s) VALUES (%s)"%(strTableField, strTableValue)
             queryCursor.execute(strInsertSql, dicTripData)
         self.mysqlConnection.commit()
     
