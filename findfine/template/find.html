@@ -38,6 +38,8 @@
 
     <script type="text/javascript">
         var strKeywordFromHome = "{{keyword}}";
+        var strEmail = "{{strEmail}}";
+        //alert(strEmail);
     </script>
     <!-- 低瀏覽器版本相容條件註解 -->
     <!--[if lt IE 9]>
@@ -59,7 +61,13 @@
             </div>
             <!-- Collect the nav links, forms, and other content for toggling -->
             <div class="collapse navbar-collapse customFixed" id="bs-example-navbar-collapse-1">
+                <div id="logOut" class="btn btn-info pull-right">Log Out</div>
+                <div id="wishList" class="btn btn-info pull-right">wish list</div>
+                <div id="myFriends" class="btn btn-info pull-right">my friends</div>
+                <div id="myTrips" class="btn btn-info pull-right">my trips</div>
+                <div id="myMessages" class="btn btn-info pull-right">my messages</div>
                 <div id="loginBtn" class="btn btn-info pull-right">Log In</div>
+
                 <ul class="nav navbar-nav navbar-right">
                     <li class="hidden">
                         <a href="#page-top"></a>
