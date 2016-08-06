@@ -1,0 +1,36 @@
+body{
+    font-size:28px;
+    font-family:cursive;
+    margin: 0 0 0 0;
+    background: silver;
+}
+
+
+.loginbar{
+    height: 10%;
+    width: 100%;
+    background: pink;
+}
+
+
+.nav{
+    height: 10%;
+    width: 100%;
+    background: red;
+}
+
+
+.content{
+    margin: 5% auto;
+    height: 100%;
+    width: 80%;
+    background: blue;
+}
+
+.list{
+    margin: 1% 1%;
+    height: 18%;
+    width: 18%;
+    background: yellow;
+    float:left;
+}

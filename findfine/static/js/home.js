@@ -15,6 +15,30 @@ function initMap() {
             lng:place.geometry.location.lng()
         };
     });
+    
+        //登入按鈕
+    $("#loginBtn").click(function(){
+        if($("#loginBtn").html()=="Log In"){
+            window.location = "/account/login";
+        }
+    });
+    
+    $('#wishList').hide();
+    $('#myFriends').hide();
+    $('#myTrips').hide();
+    $('#myMessages').hide();
+    $('#logOut').hide();
+    
+    //strEmail 如已登入 不顯示login button 並顯示會員帳號
+    if(strEmail=="None"){
+    }else{
+        $('#loginBtn').html(strEmail);
+        $('#wishList').show();
+        $('#myFriends').show();
+        $('#myTrips').show();
+        $('#myMessages').show();
+        $('#logOut').show();
+    }
 }
 
 $(function() {
