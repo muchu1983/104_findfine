@@ -61,7 +61,7 @@ class CrawlerForBMG:
                 #取得產品詳細資料
                 dicProductDetailData = self.getProductDetailData(strProductUUID=strProductUUID)
                 #幣別資料(檢查)
-                logging.info("currency: %s"%dicProductDetailData.get("currency", {}).get("code", str(None)))
+                logging.info("product currency: %s"%dicProductDetailData.get("currency", {}).get("code", str(None)))
                 #轉換為 findfine 資料格式
                 dicProductJson = {}
                 #strSource

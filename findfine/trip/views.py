@@ -21,6 +21,7 @@ def tripFilter(request=None):
     matchedExRate = ExRate.objects.get(strCurrencyName=strUserCurrency)
     fUsdToUserCurrencyExRate = matchedExRate.fUSDollar
     # query 資訊
+    intPageIndex = int(request.GET.get("page", "1"))
     strKeyword = request.GET.get("keyword", None)
     strMinBudget = request.GET.get("min_budget", None)
     strMaxBudget = request.GET.get("max_budget", None)
@@ -60,7 +61,18 @@ def tripFilter(request=None):
         dicTripData = {}
         convertTripDataToJsonDic(matchedTrip=matchedTrip, dicTripData=dicTripData, fUsdToUserCurrencyExRate=fUsdToUserCurrencyExRate)
         lstDicTripData.append(dicTripData)
-    return JsonResponse(lstDicTripData, safe=False)
+    #分頁與輸出結果
+    intTripPerPage = 20
+    dicFilterResultJson = {
+        "trip":lstDicTripData[(intPageIndex-1)*intTripPerPage:intPageIndex*intTripPerPage if intPageIndex*intTripPerPage < len(lstDicTripData) else len(lstDicTripData)],# 0:10,10:20,20:30....
+        "page":{
+            "total_trip":len(lstDicTripData),
+            "total_page":int((len(lstDicTripData)/intTripPerPage)+1),
+            "trip_per_page":intTripPerPage,
+            "current_page":intPageIndex
+        }
+    }
+    return JsonResponse(dicFilterResultJson, safe=False)
     
 #轉換 DB trip data 至 http response Json 物件
 def convertTripDataToJsonDic(matchedTrip=None, dicTripData=None, fUsdToUserCurrencyExRate=0.0):

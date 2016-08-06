@@ -48,7 +48,15 @@ function initFind(){
             window.location = "/account/login";
     });
     
-    
+    //page
+    $("#prev_page_link").click(function(){
+        $("#current_page").html(parseInt($("#current_page").html())-1);
+        search('');
+    });
+    $("#next_page_link").click(function(){
+        $("#current_page").html(parseInt($("#current_page").html())+1);
+        search('');
+    });
     
     //不傳入sort條件
     search('');
@@ -122,7 +130,7 @@ function initMap(sendLat,sendLng) {
 }
 
 //home頁面到find頁面 or 按下search鍵 會執行的動作 可傳入排序條件
-function search( condition){
+function search(condition){
     
 //主搜尋
     //地點
@@ -300,6 +308,10 @@ function search( condition){
         }
     }
     
+    //page
+    console.log("page index: "+$("#current_page").html());
+    strFilterQueryUrl = strFilterQueryUrl + "&page=" + $("#current_page").html();
+    
     //alert(" 254:strFilterQueryUrl:"+strFilterQueryUrl);
     $.getJSON(strFilterQueryUrl, function(jsonResp){
         //console.log(jsonResp);
@@ -323,12 +335,30 @@ function search( condition){
         
         
         var strUserCurrency = $("#moneySelect").val();
-        $("div.userCurrencySpan").html(strUserCurrency)
-        for (i = 0; i < jsonResp.length; i++) {
-            var dicTripData = jsonResp[i];
+        $("div.userCurrencySpan").html(strUserCurrency);
+        //trip data
+        var lstDicTripData = jsonResp["trip"];
+        for (i = 0; i < lstDicTripData.length; i++) {
+            var dicTripData = lstDicTripData[i];
             var strTripDataHtml = getTripDataHtml(strUserCurrency, dicTripData["strTitle"], dicTripData["intUserCurrencyCost"], dicTripData["strIntroduction"], dicTripData["strLocation"], dicTripData["intDurationHour"], dicTripData["strOriginUrl"], dicTripData["strImageUrl"], dicTripData["intReviewStar"], dicTripData["intReviewVisitor"] );
             $("div.findResultDiv ul.lstTripData").append(strTripDataHtml);
         };
+        //page data
+        var dicPageData = jsonResp["page"];
+        console.log(dicPageData);
+        $("#current_page").html(dicPageData["current_page"]);
+        if (dicPageData["current_page"]-1 < 1){
+            $("#prev_page_link").hide();
+        }else{
+            $("#prev_page_link").show();
+            $("#prev_page_link").attr("page_value", dicPageData["current_page"]-1);
+        }
+        if (dicPageData["current_page"]+1 > dicPageData["total_page"]){
+            $("#next_page_link").hide();
+        }else{
+            $("#next_page_link").show();
+            $("#next_page_link").attr("page_value", dicPageData["current_page"]+1);
+        }
     });
 
 };
