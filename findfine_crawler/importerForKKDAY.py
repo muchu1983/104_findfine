@@ -47,7 +47,7 @@ class ImporterForKKDAY:
     #import product.json to MySQL DB
     def importProductJsonToDb(self, uselessArg1=None):
         #清除 trip 資料
-        self.db.clearTripData()
+        #self.db.clearTripData()
         #讀取 json 檔
         strBasedir = self.filesysUtil.getPackageResourcePath(strPackageName="findfine_crawler.resource.parsed_json", strResourceName="kkday")
         lstStrProductJsonFilePath = self.ffUtil.getFilePathListWithSuffixes(strBasedir=strBasedir, strSuffixes="_product.json")

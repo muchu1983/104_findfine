@@ -24,7 +24,7 @@ class CrawlerForBMGTest(unittest.TestCase):
     #收尾
     def tearDown(self):
         pass
-    
+    """
     #測試 使用 urllib 送出 HTTP request
     def test_sendHttpRequestByUrllib(self):
         logging.info("CrawlerForBMGTest.test_sendHttpRequestByUrllib")
@@ -47,8 +47,11 @@ class CrawlerForBMGTest(unittest.TestCase):
     #測試 取得產品 詳細資料
     def test_getProductDetailData(self, strProductUUID=None):
         logging.info("CrawlerForBMGTest.test_getProductDetailData")
-        self.crawler.getProductDetailData()
-    
+        lstDicProductRoughData = self.crawler.getAllProductRoughData()
+        strProductUUID = lstDicProductRoughData[0].get("uuid", None)
+        dicProductDetailData = self.crawler.getProductDetailData(strProductUUID=strProductUUID)
+        self.assertIsNotNone(dicProductDetailData.get("uuid", None))
+    """
     #測試 爬取 BMG API 
     def test_crawlBMGAPI(self):
         logging.info("CrawlerForBMGTest.test_crawlBMGAPI")

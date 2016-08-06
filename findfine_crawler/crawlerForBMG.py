@@ -25,6 +25,7 @@ class CrawlerForBMG:
     
     #建構子
     def __init__(self):
+        self.strAuthCode = "daz5m3vimo2u8ucz90yimfwpj8lfdszkb2utjvyk"
         self.dicSubCommandHandler = {
             "bmgapi":self.crawlBMGAPI
         }
@@ -52,6 +53,78 @@ class CrawlerForBMG:
     def crawlBMGAPI(self, uselessArg1=None):
         #清空計憶體殘留資料
         self.lstDicParsedProductJson = []
+        #取得所有產品 簡略資料
+        lstDicProductRoughData = self.getAllProductRoughData()
+        for dicProductRoughData in lstDicProductRoughData:
+            strProductUUID = dicProductRoughData.get("uuid", None)
+            try:
+                #取得產品詳細資料
+                dicProductDetailData = self.getProductDetailData(strProductUUID=strProductUUID)
+                #幣別資料(檢查)
+                logging.info("currency: %s"%dicProductDetailData.get("currency", {}).get("code", str(None)))
+                #轉換為 findfine 資料格式
+                dicProductJson = {}
+                #strSource
+                dicProductJson["strSource"] = "BeMyGuest"
+                #strOriginUrl
+                dicProductJson["strOriginUrl"] = dicProductDetailData.get("url", None)
+                #strImageUrl
+                strBasePhotosUrl = dicProductDetailData.get("photosUrl", None)
+                strOriginalImgPath = dicProductDetailData.get("photos", [{}])[0].get("paths", {}).get("original", None)
+                dicProductJson["strImageUrl"] = strBasePhotosUrl + strOriginalImgPath
+                #strTitle
+                dicProductJson["strTitle"] = dicProductDetailData.get("title", None)
+                #strLocation
+                lstDicLocation = dicProductDetailData.get("locations", [])
+                lstStrLocation = []
+                for dicLocation in lstDicLocation:
+                    strCity = dicLocation.get("city", None)
+                    strState = dicLocation.get("state", None)
+                    strCountry = dicLocation.get("country", None)
+                    lstStrLocation.append(strCity)
+                    lstStrLocation.append(strState)
+                    lstStrLocation.append(strCountry)
+                lstStrLocation = list(set(lstStrLocation))
+                dicProductJson["strLocation"] = ",".join(lstStrLocation)
+                #intUsdCost
+                dicProductJson["intUsdCost"] = dicProductDetailData.get("basePrice", 0)
+                #intReviewStar
+                dicProductJson["intReviewStar"] = int(dicProductDetailData.get("reviewAverageScore", 0))
+                #intReviewVisitor
+                dicProductJson["intReviewVisitor"] = int(dicProductDetailData.get("reviewCount", 0))
+                #strIntroduction
+                dicProductJson["strIntroduction"] = dicProductDetailData.get("description", None)
+                #intDurationHour
+                dicProductType = dicProductDetailData.get("productTypes", [{}])
+                intDays = dicProductType[0].get("durationDays", 0)
+                intHours = dicProductType[0].get("durationHours", 0)
+                if not intDays:
+                    intDays = 0
+                if not intHours:
+                    intHours = 0
+                dicProductJson["intDurationHour"] = (24*intDays) + intHours
+                #strGuideLanguage
+                lstDicGuideLanguage = dicProductDetailData.get("guideLanguages", [])
+                lstStrName = []
+                for dicGuideLanguage in lstDicGuideLanguage:
+                    strName = dicGuideLanguage.get("name", None)
+                    lstStrName.append(strName)
+                dicProductJson["strGuideLanguage"] = ",".join(lstStrName)
+                #strStyle
+                lstDicCategory = dicProductDetailData.get("categories", [])
+                lstStrName = []
+                for dicCategory in lstDicCategory:
+                    strName = dicCategory.get("name", None)
+                    lstStrName.append(strName)
+                dicProductJson["strStyle"] = ",".join(lstStrName)
+                #intOption
+                dicProductJson["intOption"] = None
+                #加入資料至 json
+                self.lstDicParsedProductJson.append(dicProductJson)
+            except Exception as e:
+                logging.warning(str(e))
+                logging.warning("crawl product failed, skip: %s"%strProductUUID)
+                continue
         #將資料寫入 json
         strJsonFileName = "bmg_product.json"
         strProductJsonFilePath = self.fileUtil.getPackageResourcePath(strPackageName="findfine_crawler.resource.parsed_json.bmg", strResourceName=strJsonFileName)
@@ -61,11 +134,12 @@ class CrawlerForBMG:
     #取得所有產品 簡略資料
     def getAllProductRoughData(self):
         lstDicProductRoughData = []
-        strAuthCode = "daz5m3vimo2u8ucz90yimfwpj8lfdszkb2utjvyk"
         # 第一頁
+        strPage1Url = "https://apidemo.bemyguest.com.sg/v1/products?currency=USD"
+        logging.info("get BMG product rough data: %s"%strPage1Url)
         strRespJson = self.sendHttpRequestByUrllib(
-            strUrl="http://apidemo.bemyguest.com.sg/v1/products?currency=USD",
-            dicHeader={"X-Authorization":strAuthCode},
+            strUrl=strPage1Url,
+            dicHeader={"X-Authorization":self.strAuthCode},
             dicData=None,
             strEncoding="utf-8"
         )
@@ -74,9 +148,11 @@ class CrawlerForBMG:
         # 下一頁
         strNextPageUrl = dicRespJson.get("meta", {}).get("pagination", {}).get("links", {}).get("next", None)
         while strNextPageUrl:
+            strNextPageUrl = re.sub("currency=[\d]+", "currency=USD", strNextPageUrl) #強制取得美金資料
+            logging.info("get BMG product rough data: %s"%strNextPageUrl)
             strRespJson = self.sendHttpRequestByUrllib(
                 strUrl=strNextPageUrl,
-                dicHeader={"X-Authorization":strAuthCode},
+                dicHeader={"X-Authorization":self.strAuthCode},
                 dicData=None,
                 strEncoding="utf-8"
             )
@@ -88,7 +164,16 @@ class CrawlerForBMG:
         
     #取得產品 詳細資料
     def getProductDetailData(self, strProductUUID=None):
-        pass
+        logging.info("get BMG product detail data: %s"%strProductUUID)
+        strRespJson = self.sendHttpRequestByUrllib(
+            strUrl="https://apidemo.bemyguest.com.sg/v1/products/%s?currency=USD"%strProductUUID, #currency:10=SGD=新加坡幣
+            dicHeader={"X-Authorization":self.strAuthCode},
+            dicData=None,
+            strEncoding="utf-8"
+        )
+        dicRespJson = json.loads(strRespJson)
+        dicProductDetailData = dicRespJson.get("data", None)
+        return dicProductDetailData
         
     #使用 urllib 傳送 HTTP request
     def sendHttpRequestByUrllib(self, strUrl=None, dicHeader={}, dicData=None, strEncoding="utf-8"):

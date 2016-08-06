@@ -178,7 +178,7 @@ class CrawlerForKKDAY:
         #intUsdCost
         strUsdCostText = self.driver.find_element_by_css_selector("div.lowestPrice div.text-right h2.h1").text
         strUsdCostText = re.sub("[^\d]", "", strUsdCostText.strip())
-        dicProductJson["intUsdCost"] = int(strUsdCostText)
+        dicProductJson["intUsdCost"] = int(int(strUsdCostText)/31.735)
         #intReviewStar
         elesStarI = self.driver.find_elements_by_css_selector("div.div-star span.h5 i.fa-star.text-primary")
         dicProductJson["intReviewStar"] = len(elesStarI)

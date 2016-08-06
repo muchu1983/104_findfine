@@ -39,7 +39,7 @@ class Trip(models.Model):
     #行程總時數 (Hour)
     intDurationHour = models.IntegerField(null=True)
     #行程類型
-    strStyle = models.CharField(max_length=30, null=True)
+    strStyle = models.CharField(max_length=255, null=True)
     #特殊選項編號
     intOption = models.IntegerField(null=True)
     
