@@ -27,6 +27,12 @@ function initFind(){
         }
     });
     
+    //搜尋按鈕
+    $("#btnSearch").click(function(){
+        $("#current_page").html("1");
+        search("");
+    });
+    
     $('#wishList').hide();
     $('#myFriends').hide();
     $('#myTrips').hide();
