@@ -87,7 +87,7 @@ class CrawlerForBMG:
                 lstStrLocation = list(set(lstStrLocation))
                 dicProductJson["strLocation"] = ",".join(lstStrLocation)
                 #intUsdCost
-                dicProductJson["intUsdCost"] = dicProductDetailData.get("basePrice", 0)
+                dicProductJson["intUsdCost"] = int(dicProductDetailData.get("basePrice", 0)/1.345)
                 #intReviewStar
                 dicProductJson["intReviewStar"] = int(dicProductDetailData.get("reviewAverageScore", 0))
                 #intReviewVisitor
@@ -135,7 +135,7 @@ class CrawlerForBMG:
     def getAllProductRoughData(self):
         lstDicProductRoughData = []
         # 第一頁
-        strPage1Url = "https://apidemo.bemyguest.com.sg/v1/products?currency=USD"
+        strPage1Url = "https://apidemo.bemyguest.com.sg/v1/products?currency=SGD"
         logging.info("get BMG product rough data: %s"%strPage1Url)
         strRespJson = self.sendHttpRequestByUrllib(
             strUrl=strPage1Url,
@@ -148,7 +148,7 @@ class CrawlerForBMG:
         # 下一頁
         strNextPageUrl = dicRespJson.get("meta", {}).get("pagination", {}).get("links", {}).get("next", None)
         while strNextPageUrl:
-            strNextPageUrl = re.sub("currency=[\d]+", "currency=USD", strNextPageUrl) #強制取得美金資料
+            strNextPageUrl = re.sub("currency=[\d]+", "currency=SGD", strNextPageUrl) #強制取得美金資料
             logging.info("get BMG product rough data: %s"%strNextPageUrl)
             strRespJson = self.sendHttpRequestByUrllib(
                 strUrl=strNextPageUrl,
@@ -166,7 +166,7 @@ class CrawlerForBMG:
     def getProductDetailData(self, strProductUUID=None):
         logging.info("get BMG product detail data: %s"%strProductUUID)
         strRespJson = self.sendHttpRequestByUrllib(
-            strUrl="https://apidemo.bemyguest.com.sg/v1/products/%s?currency=USD"%strProductUUID, #currency:10=SGD=新加坡幣
+            strUrl="https://apidemo.bemyguest.com.sg/v1/products/%s?currency=SGD"%strProductUUID, #currency:10=SGD=新加坡幣
             dicHeader={"X-Authorization":self.strAuthCode},
             dicData=None,
             strEncoding="utf-8"
