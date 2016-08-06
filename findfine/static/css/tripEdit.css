@@ -1,0 +1,75 @@
+body{
+    font-size:28px;
+    margin: 0 0 0 0;
+    //background: silver;
+    text-align: center;
+    font-size: 14px;
+    font-family: "Lucida Grande",Helvetica,Arial,Verdana,sans-serif;
+
+}
+
+
+.loginbar{
+    height: 10%;
+    width: 100%;
+    background: pink;
+}
+
+
+.nav{
+    height: 10%;
+    width: 100%;
+    background: red;
+}
+
+
+
+.left{
+    height: 100%;
+    width: 50%;
+    //background: blue;
+    float: left;
+}
+
+.right{
+    height: 100%;
+    width: 50%;
+    background: orange;
+    float: left;
+}
+
+.list{
+    margin: 1% 1%;
+    height: 18%;
+    width: 18%;
+    background: yellow;
+    float:left;
+}
+
+
+
+#external-events {
+    float: left;
+    width: 150px;
+    padding: 0 10px;
+    border: 1px solid #ccc;
+    background: #eee;
+    text-align: left;
+}
+
+
+#external-events p {
+    margin: 1.5em 0;
+    font-size: 11px;
+    color: #666;
+}
+
+#external-events p input {
+    margin: 0;
+    vertical-align: middle;
+}
+
+#calendar {
+    width: 100%;
+    //background: blue;
+}
