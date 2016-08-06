@@ -61,3 +61,25 @@ def showTermsOfUsePage(request):
     
 def showNoticePage(request):
     return render(request, "notice.html", {})
+    
+def showMyFriendsPage(request):
+    return render(request, "myFriends.html", {})
+    
+def showMyMessagePage(request):
+    return render(request, "myMessage.html", {})
+    
+def showWishListPage(request):
+    return render(request, "wishList.html", {})
+    
+def showMyTourPage(request):
+    #tour means collection of trips , tour 代表許多 trip 的集合
+    return render(request, "myTrip.html", {})
+    
+def showTourEditPage(request):
+    #tour means collection of trips , tour 代表許多 trip 的集合
+    return render(request, "tripEdit.html", {})
+    
+def showTourSharePage(request):
+    #tour means collection of trips , tour 代表許多 trip 的集合
+    return render(request, "tripShare.html", {})
+    

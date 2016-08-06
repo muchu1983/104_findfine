@@ -48,5 +48,11 @@ urlpatterns = [
     url(r'^page/contactUs$', page_views.showContactUsPage),
     url(r'^page/partnership$', page_views.showPartnershipPage),
     url(r'^page/termsOfUse$', page_views.showTermsOfUsePage),
-    url(r'^page/notice$', page_views.showNoticePage)
+    url(r'^page/notice$', page_views.showNoticePage),
+    url(r'^page/myFriends$', page_views.showMyFriendsPage),
+    url(r'^page/myMessage$', page_views.showMyMessagePage),
+    url(r'^page/wishList$', page_views.showWishListPage),
+    url(r'^page/myTrip$', page_views.showMyTourPage),
+    url(r'^page/tripEdit$', page_views.showTourEditPage),
+    url(r'^page/tripShare$', page_views.showTourSharePage)
 ]
