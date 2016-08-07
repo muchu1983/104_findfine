@@ -51,7 +51,7 @@ function initFind(){
     }
     
     $("#wishList").click(function(){
-            window.location = "/account/login";
+            window.location = "/page/wishList";
     });
     
     //page
