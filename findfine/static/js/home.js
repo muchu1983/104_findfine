@@ -39,6 +39,10 @@ function initMap() {
         $('#myMessages').show();
         $('#logOut').show();
     }
+    
+    $("#wishList").click(function(){
+            window.location = "/page/wishList";
+    });
 }
 
 $(function() {

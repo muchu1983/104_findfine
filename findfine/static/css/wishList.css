@@ -24,11 +24,20 @@ body{
     margin: 5% auto;
     height: 100%;
     width: 80%;
-    background: blue;
+    //background: blue;
 }
 
-.content ul li{
+.content ul li div{
     margin: 1% 1%;
-    height: 50%;
-    width: 50%;
+    font-size:10px;
+    height: 45%;
+    width: 18%;
+    //background: yellow;
+    float: left;
+}
+
+.content ul li div img{
+    height: 40%;
+    width: 100%;
+
 }
