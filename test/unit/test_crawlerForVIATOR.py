@@ -9,53 +9,41 @@ This file is part of BSD license
 import unittest
 import logging
 import json
-from findfine_crawler.crawlerForBMG import CrawlerForBMG
+from findfine_crawler.crawlerForVIATOR import CrawlerForVIATOR
 """
-測試 爬取 BeMyGuest 產品 API
+測試 爬取 VIATOR vapProducts.xml 產品
 """
 
-class CrawlerForBMGTest(unittest.TestCase):
+class CrawlerForVIATORTest(unittest.TestCase):
 
     #準備
     def setUp(self):
         logging.basicConfig(level=logging.INFO)
-        self.crawler = CrawlerForBMG()
+        self.crawler = CrawlerForVIATOR()
         
     #收尾
     def tearDown(self):
         pass
-    """
-    #測試 使用 urllib 送出 HTTP request
-    def test_sendHttpRequestByUrllib(self):
-        logging.info("CrawlerForBMGTest.test_sendHttpRequestByUrllib")
-        strRespJson = self.crawler.sendHttpRequestByUrllib(
-            strUrl="https://apidemo.bemyguest.com.sg/v1/products?currency=SGD",
-            dicHeader={"X-Authorization":"daz5m3vimo2u8ucz90yimfwpj8lfdszkb2utjvyk"},
-            dicData=None,
-            strEncoding="utf-8"
-        )
-        dicRespJson = json.loads(strRespJson)
-        self.assertIsNotNone(dicRespJson.get("data", None))
-        self.assertIsNotNone(dicRespJson.get("meta", None))
     
-    #測試 取得所有產品 簡略資料
-    def test_getAllProductRoughData(self):
-        logging.info("CrawlerForBMGTest.test_getAllProductRoughData")
-        lstDicProductRoughData = self.crawler.getAllProductRoughData()
-        self.assertTrue(len(lstDicProductRoughData) > 0)
-        
-    #測試 取得產品 詳細資料
-    def test_getProductDetailData(self, strProductUUID=None):
-        logging.info("CrawlerForBMGTest.test_getProductDetailData")
-        lstDicProductRoughData = self.crawler.getAllProductRoughData()
-        strProductUUID = lstDicProductRoughData[0].get("uuid", None)
-        dicProductDetailData = self.crawler.getProductDetailData(strProductUUID=strProductUUID)
-        self.assertIsNotNone(dicProductDetailData.get("uuid", None))
     """
-    #測試 爬取 BMG API 
-    def test_crawlBMGAPI(self):
-        logging.info("CrawlerForBMGTest.test_crawlBMGAPI")
-        self.crawler.crawlBMGAPI()
+    #測試 下載 vapProducts.xml.zip
+    def test_downloadVapProductsXmlZip(self):
+        pass
+    """
+    """
+    #測試 解壓縮 vapProducts.xml.zip
+    def test_unzipVapProductsXmlZip(self):
+        pass
+    """
+    #測試 從 xml 讀取 1000 筆產品資訊
+    def test_read1000ProductData(self):
+        logging.info("CrawlerForVIATORTest.test_read1000ProductData")
+        self.assertTrue(len(self.crawler.read1000ProductData(intPageIndex=1))>0)
+    
+    #測試 爬取 VIATOR vapProducts.xml
+    def test_crawlVapProductsXml(self):
+        logging.info("CrawlerForVIATORTest.test_crawlVapProductsXml")
+        self.crawler.crawlVapProductsXml()
     
 #測試開始
 if __name__ == "__main__":
