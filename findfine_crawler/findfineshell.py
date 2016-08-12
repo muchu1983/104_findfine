@@ -10,6 +10,8 @@ from findfine_crawler.crawlerForKKDAY import CrawlerForKKDAY
 from findfine_crawler.importerForKKDAY import ImporterForKKDAY
 from findfine_crawler.crawlerForBMG import CrawlerForBMG
 from findfine_crawler.importerForBMG import ImporterForBMG
+from findfine_crawler.crawlerForVIATOR import CrawlerForVIATOR
+from findfine_crawler.importerForVIATOR import ImporterForVIATOR
 from findfine_crawler.crawlerForExRate import CrawlerForExRate
 from findfine_crawler.importerForExRate import ImporterForExRate
 """
@@ -24,12 +26,14 @@ class FindfineShell:
         self.dicCrawlers = {
             "kkday":CrawlerForKKDAY(),
             "bmg":CrawlerForBMG(),
+            "viator":CrawlerForVIATOR(),
             "exrate":CrawlerForExRate()
         }
         
         self.dicImporters = {
             "kkday":ImporterForKKDAY(),
             "bmg":ImporterForBMG(),
+            "viator":ImporterForVIATOR(),
             "exrate":ImporterForExRate()
         }
         
@@ -75,18 +79,18 @@ class FindfineShell:
         self.listSiteMessage()
         if self.strTargetSite:
             print(self.dicCrawlers[self.strTargetSite].getUseageMessage())
-            lstStrInputCommand = input("spider[%s]>>>"%self.strTargetSite).split(" ")
-            print("spider start... [%s]"%self.strTargetSite)
+            lstStrInputCommand = input("crawler[%s]>>>"%self.strTargetSite).split(" ")
+            print("crawler start... [%s]"%self.strTargetSite)
             self.dicCrawlers[self.strTargetSite].runCrawler(lstStrInputCommand)
-            print("[%s] spider completed\n"%self.strTargetSite)
+            print("[%s] crawler completed\n"%self.strTargetSite)
     
     #顯示 importer 訊息
     def printImporterMessage(self):
         self.listSiteMessage()
         if self.strTargetSite:
             print(self.dicImporters[self.strTargetSite].getUseageMessage())
-            lstStrInputCommand = input("import[%s]>>>"%self.strTargetSite).split(" ")
-            print("import start... [%s]"%self.strTargetSite)
+            lstStrInputCommand = input("importer[%s]>>>"%self.strTargetSite).split(" ")
+            print("importer start... [%s]"%self.strTargetSite)
             self.dicImporters[self.strTargetSite].runImporter(lstStrInputCommand)
             print("[%s] imported\n"%self.strTargetSite)
         
