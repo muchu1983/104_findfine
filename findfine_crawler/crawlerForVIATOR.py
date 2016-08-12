@@ -31,11 +31,12 @@ class CrawlerForVIATOR:
         self.ffUtil = FfUtility()
         self.fileUtil = FilesysUtility()
         self.lstDicParsedProductJson = []  #product.json 資料
+        self.intProductJsonIndex = 1
         
     #取得 spider 使用資訊
     def getUseageMessage(self):
         return (
-            "- Viator -\n"
+            "- VIATOR -\n"
             "useage:\n"
             "download(coming soon) - download vapProducts.xml.zip \n"
             "unzip(coming soon) - unzip vapProducts.xml.zip \n"
@@ -54,6 +55,7 @@ class CrawlerForVIATOR:
     def crawlVapProductsXml(self, uselessArg1=None):
         #清空計憶體殘留資料
         self.lstDicParsedProductJson = []
+        self.intProductJsonIndex = 1
         #分次讀取所有產品
         soupProduct = self.findNextProductData()
         while soupProduct: #is not None
@@ -88,19 +90,30 @@ class CrawlerForVIATOR:
             #strIntroduction
             dicProductJson["strIntroduction"] = soupProduct.Introduction.string
             #intDurationHour
-            dicProductJson["intDurationHour"] = soupProduct.Duration.string #需要轉為整數
+            dicProductJson["intDurationHour"] = self.convertDurationStringToHourInt(strDurtation=soupProduct.Duration.string)
             #strGuideLanguage
-            #dicProductJson["strGuideLanguage"] = ""
+            dicProductJson["strGuideLanguage"] = "english"
             #strStyle
-            #dicProductJson["strStyle"] = ""
+            if soupProduct.ProductCategory and soupProduct.ProductCategory.Category:
+                dicProductJson["strStyle"] = soupProduct.ProductCategory.Category.string
+            else:
+                dicProductJson["strStyle"] = ""
             #intOption
-            #dicProductJson["intOption"] = 9999
+            #dicProductJson["intOption"] = -1
             #加入資料至 json
             self.lstDicParsedProductJson.append(dicProductJson)
+            #每5000筆寫入一次 json
+            if len(self.lstDicParsedProductJson) == 5000:
+                strJsonFileName = "%d_viator_product.json"%(self.intProductJsonIndex*5000)
+                strJsonPackageName = "findfine_crawler.resource.parsed_json.viator"
+                strProductJsonFilePath = self.fileUtil.getPackageResourcePath(strPackageName=strJsonPackageName, strResourceName=strJsonFileName)
+                self.ffUtil.writeObjectToJsonFile(dicData=self.lstDicParsedProductJson, strJsonFilePath=strProductJsonFilePath)
+                self.intProductJsonIndex = self.intProductJsonIndex+1
+                self.lstDicParsedProductJson = []
             #讀取下一個 product
             soupProduct = self.findNextProductData(soupCurrentProduct=soupProduct)
-        #將資料寫入 json
-        strJsonFileName = "viator_product.json"
+        #將剩餘資料寫入 json
+        strJsonFileName = "%d_viator_product.json"%(self.intProductJsonIndex*5000)
         strJsonPackageName = "findfine_crawler.resource.parsed_json.viator"
         strProductJsonFilePath = self.fileUtil.getPackageResourcePath(strPackageName=strJsonPackageName, strResourceName=strJsonFileName)
         self.ffUtil.writeObjectToJsonFile(dicData=self.lstDicParsedProductJson, strJsonFilePath=strProductJsonFilePath)
@@ -118,3 +131,24 @@ class CrawlerForVIATOR:
                 soup = BeautifulSoup(xmlFile.read(), "xml")
             soupProduct = soup.Products.find("Product")
             return soupProduct
+            
+    #轉換 duration 資訊
+    def convertDurationStringToHourInt(self, strDurtation=None):
+        intDefaultDuration = 1
+        if not strDurtation or ("hour" not in strDurtation and "day" not in strDurtation):
+            return intDefaultDuration
+        else:
+            intTotalDurationHour = 0
+            mDurationHour = re.match("([\d]+) hour", strDurtation)
+            mDurationDay = re.match("([\d]+) day", strDurtation)
+            if mDurationHour:
+                intDurationHour = int(float(mDurationHour.group(1)))
+                intTotalDurationHour = intTotalDurationHour + intDurationHour
+            if mDurationDay:
+                intDurationDay = int(float(mDurationDay.group(1)))
+                intTotalDurationHour = intTotalDurationHour + (intDurationDay*24)
+            return intTotalDurationHour
+            
+            
+            
+            

@@ -9,16 +9,16 @@ This file is part of BSD license
 import unittest
 import logging
 import json
-from findfine_crawler.importerForBMG import ImporterForBMG
+from findfine_crawler.importerForVIATOR import ImporterForVIATOR
 """
-測試 BMG product.json 資料 import 至 DB
+測試 VIATOR product.json 資料 import 至 DB
 """
-class ImporterForBMGTest(unittest.TestCase):
+class ImporterForVIATORTest(unittest.TestCase):
 
     #準備
     def setUp(self):
         logging.basicConfig(level=logging.INFO)
-        self.importer = ImporterForBMG()
+        self.importer = ImporterForVIATOR()
         
     #收尾
     def tearDown(self):
@@ -26,7 +26,7 @@ class ImporterForBMGTest(unittest.TestCase):
     
     #測試 import product.json to db
     def test_import(self):
-        logging.info("ImporterForBMGTest.test_import")
+        logging.info("ImporterForVIATORTest.test_import")
         self.importer.importProductJsonToDb()
     
 #測試開始
