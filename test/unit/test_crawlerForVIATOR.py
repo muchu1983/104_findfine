@@ -25,11 +25,11 @@ class CrawlerForVIATORTest(unittest.TestCase):
     def tearDown(self):
         pass
     
-    """
     #測試 下載 vapProducts.xml.zip
     def test_downloadVapProductsXmlZip(self):
-        pass
-        
+        logging.info("CrawlerForVIATORTest.test_downloadVapProductsXmlZip")
+        self.crawler.downloadVapProductsXmlZip()
+    """
     #測試 解壓縮 vapProducts.xml.zip
     def test_unzipVapProductsXmlZip(self):
         pass
@@ -57,7 +57,7 @@ class CrawlerForVIATORTest(unittest.TestCase):
         self.assertTrue(self.crawler.convertDurationStringToHourInt(strDurtation="3 hours 30 minutes")>0)
         self.assertTrue(self.crawler.convertDurationStringToHourInt(strDurtation="1 day")>0)
         self.assertTrue(self.crawler.convertDurationStringToHourInt(strDurtation="2 days")>0)
-        
+    
 #測試開始
 if __name__ == "__main__":
     unittest.main(exit=False)

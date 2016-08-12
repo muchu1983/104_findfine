@@ -10,6 +10,8 @@ import os
 import time
 import datetime
 import logging
+import urllib.request
+import http.cookiejar
 import re
 import json
 from bs4 import BeautifulSoup
@@ -24,7 +26,7 @@ class CrawlerForVIATOR:
     #建構子
     def __init__(self):
         self.dicSubCommandHandler = {
-            #"download":self.downloadVapProductsXmlZip, #wget https://www.partner.viator.com/partner/admin/tools/links_feeds/xmlFeeds.jspa
+            "download":self.downloadVapProductsXmlZip,
             #"unzip":self.unzipVapProductsXmlZip, #use zipfile module
             "json":self.crawlVapProductsXml
         }
@@ -149,6 +151,30 @@ class CrawlerForVIATOR:
                 intTotalDurationHour = intTotalDurationHour + (intDurationDay*24)
             return intTotalDurationHour
             
+    #下載 vapProducts.xml.zip
+    def downloadVapProductsXmlZip(self, uselessArg1=None):
+        #login
+        strPartnerAccount = "19993"
+        strPartnerPwd = "a768768a"
+        cj = http.cookiejar.MozillaCookieJar()
+        opener = urllib.request.build_opener(urllib.request.HTTPCookieProcessor(cj))
+        dicLoginData = urllib.parse.urlencode({
+            "adminPUID":strPartnerAccount,
+            "login_password":strPartnerPwd
+        }).encode("utf-8")
+        req = urllib.request.Request("https://www.partner.viator.com/partner/login.jspa", dicLoginData, method="POST")
+        response = opener.open(req)
+        #wget https://www.partner.viator.com/partner/admin/tools/links_feeds/downloadFeed.jspa?feed=Products&format=xml
+        strUrl = "https://www.partner.viator.com/partner/admin/tools/links_feeds/downloadFeed.jspa?feed=Products&format=xml"
+        req = urllib.request.Request(url=strUrl, method="GET")
+        response = opener.open(req)
+        byteVapProductsXmlZip = response.read()
+        #儲存 vapProducts.xml.zip
+        strZipPackageName = "findfine_crawler.resource.source_data.viator"
+        strZipFileName = "test_vapProducts.xml.zip"
+        strZipFilePath = self.fileUtil.getPackageResourcePath(strPackageName=strZipPackageName, strResourceName=strZipFileName)
+        with open(strZipFilePath, "bw+") as zipFile:
+            zipFile.write(byteVapProductsXmlZip)
             
             
             
