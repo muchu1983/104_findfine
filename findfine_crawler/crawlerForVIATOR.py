@@ -14,7 +14,7 @@ import urllib.request
 import http.cookiejar
 import re
 import json
-import zipfile
+from zipfile import ZipFile
 from bs4 import BeautifulSoup
 from bennu.filesystemutility import FileSystemUtility as FilesysUtility
 from findfine_crawler.utility import Utility as FfUtility
@@ -41,8 +41,8 @@ class CrawlerForVIATOR:
         return (
             "- VIATOR -\n"
             "useage:\n"
-            "download(coming soon) - download vapProducts.xml.zip \n"
-            "unzip(coming soon) - unzip vapProducts.xml.zip \n"
+            "download - download vapProducts.xml.zip \n"
+            "unzip - unzip vapProducts.xml.zip \n"
             "json - crawl vapProducts.xml then create json \n"
         )
         
@@ -171,16 +171,19 @@ class CrawlerForVIATOR:
         response = opener.open(req)
         byteVapProductsXmlZip = response.read()
         #儲存 vapProducts.xml.zip
-        strZipPackageName = "findfine_crawler.resource.source_data.viator"
+        strPackageName = "findfine_crawler.resource.source_data.viator"
         strZipFileName = "vapProducts.xml.zip"
-        strZipFilePath = self.fileUtil.getPackageResourcePath(strPackageName=strZipPackageName, strResourceName=strZipFileName)
+        strZipFilePath = self.fileUtil.getPackageResourcePath(strPackageName=strPackageName, strResourceName=strZipFileName)
         with open(strZipFilePath, "bw+") as zipFile:
             zipFile.write(byteVapProductsXmlZip)
             
     #解壓縮 vapProducts.xml.zip
     def unzipVapProductsXmlZip(self, uselessArg1=None):
-        strZipPackageName = "findfine_crawler.resource.source_data.viator"
+        strPackageName = "findfine_crawler.resource.source_data.viator"
         strZipFileName = "vapProducts.xml.zip"
-        strZipFilePath = self.fileUtil.getPackageResourcePath(strPackageName=strZipPackageName, strResourceName=strZipFileName)
-        
+        strZipFilePath = self.fileUtil.getPackageResourcePath(strPackageName=strPackageName, strResourceName=strZipFileName)
+        with ZipFile(strZipFilePath, "r") as zipFile:
+            strPackageName = "findfine_crawler.resource.source_data"
+            strXmlBaseFolderPath = self.fileUtil.getPackageResourcePath(strPackageName=strPackageName, strResourceName="viator")
+            zipFile.extract("vapProducts.xml", strXmlBaseFolderPath)
         

@@ -34,7 +34,7 @@ class CrawlerForVIATORTest(unittest.TestCase):
     def test_unzipVapProductsXmlZip(self):
         logging.info("CrawlerForVIATORTest.test_unzipVapProductsXmlZip")
         self.crawler.unzipVapProductsXmlZip()
-    """
+    
     #測試 從 xml 讀取 下一筆產品資訊
     def test_findNextProductData(self):
         logging.info("CrawlerForVIATORTest.test_findNextProductData")
@@ -44,7 +44,7 @@ class CrawlerForVIATORTest(unittest.TestCase):
         self.assertIsNotNone(first.Rank.string)
         self.assertIsNotNone(second.Rank.string)
         self.assertIsNotNone(third.Rank.string)
-    """
+    
     #測試 爬取 VIATOR vapProducts.xml
     def test_crawlVapProductsXml(self):
         logging.info("CrawlerForVIATORTest.test_crawlVapProductsXml")
