@@ -24,8 +24,8 @@ class CrawlerForVIATOR:
     #建構子
     def __init__(self):
         self.dicSubCommandHandler = {
-            #"download":self.downloadVapProductsXmlZip,
-            #"unzip":self.unzipVapProductsXmlZip,
+            #"download":self.downloadVapProductsXmlZip, #wget https://www.partner.viator.com/partner/admin/tools/links_feeds/xmlFeeds.jspa
+            #"unzip":self.unzipVapProductsXmlZip, #use zipfile module
             "json":self.crawlVapProductsXml
         }
         self.ffUtil = FfUtility()
@@ -64,17 +64,26 @@ class CrawlerForVIATOR:
                 #strSource
                 dicProductJson["strSource"] = "Viator"
                 #strOriginUrl
-                dicProductJson["strOriginUrl"] = soupProduct.ProductURL.string
+                dicProductJson["strOriginUrl"] = soupProduct.ProductURLs.ProductURL.string
                 #strImageUrl
+                dicProductJson["strImageUrl"] = soupProduct.ProductImage.ImageURL.string
                 #strTitle
+                dicProductJson["strTitle"] = soupProduct.ProductName.string
                 #strLocation
+                dicProductJson["strLocation"] = ",".join([soupProduct.Destination.Country.string, soupProduct.Destination.City.string])
                 #intUsdCost
+                dicProductJson["intUsdCost"] = int(float(soupProduct.Pricing.PriceUSD.string))
                 #intReviewStar
+                dicProductJson["intReviewStar"] = int(float(soupProduct.ProductStarRating.AvgRating.string))
                 #intReviewVisitor
+                dicProductJson["intReviewVisitor"] = 0
                 #strIntroduction
+                dicProductJson["strIntroduction"] = soupProduct.Introduction.string
                 #intDurationHour
+                dicProductJson["intDurationHour"] = soupProduct.Duration.string #需要轉為整數
                 #strGuideLanguage
                 #strStyle
+                dicProductJson["strStyle"] = soupProduct.ProductCategory.Group.string
                 #intOption
                 #加入資料至 json
                 self.lstDicParsedProductJson.append(dicProductJson)
