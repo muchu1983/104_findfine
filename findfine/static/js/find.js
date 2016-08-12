@@ -323,23 +323,6 @@ function search(condition){
         //console.log(jsonResp);
         $("div.findResultDiv ul.lstTripData").html("");
         
-        /*
-        if(jsonResp.length>0){
-            
-            if($("body").find(".sortedBy").length!=1){
-                var sortedByHtml=[
-                 "<div class=\"sortedBy pull-right\">",
-                    "<span><input class=\"btn btn-info\" id=\"sortByBudgetID\"       type=\"button\" onclick='search(\"intUsdCost\")'      value=\"Budget ↓\">    </span>",
-                    "<span><input class=\"btn btn-info\" id=\"sortByDurationHourID\" type=\"button\" onclick='search(\"intDurationHour\")' value=\"Duration ↓\">  </span>",
-                    "<span><input class=\"btn btn-info\" id=\"sortByReviewStarID\"   type=\"button\" onclick='search(\"intReviewStar\")'   value=\"Star ↓\"></span>",
-                 "</div>",
-                ]
-                $(".findResultDiv").prepend(sortedByHtml);
-            }
-        }
-        */
-        
-        
         var strUserCurrency = $("#moneySelect").val();
         $("div.userCurrencySpan").html(strUserCurrency);
         //trip data
@@ -414,6 +397,7 @@ function getTripDataHtml(strUserCurrency, strTitle, intUserCurrencyCost, strIntr
                 "<span style=\"color:red\">"+intUserCurrencyCost+" "+strUserCurrency+"</span></br>",
             "</div>",
             "<div class=\"favorite\">",
+                //TODO 要加TOUR KEY 觸發事件後加入 wish list
                 "<font size='6'>♥</font>",
             "</div>",
             "</div>",
