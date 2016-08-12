@@ -57,42 +57,46 @@ class CrawlerForVIATOR:
         #分次讀取所有產品
         soupProduct = self.findNextProductData()
         while soupProduct: #is not None
-            try:
-                logging.info("find product: %s"%soupProduct.ProductURL.string)
-                #轉換為 findfine 資料格式
-                dicProductJson = {}
-                #strSource
-                dicProductJson["strSource"] = "Viator"
-                #strOriginUrl
-                dicProductJson["strOriginUrl"] = soupProduct.ProductURLs.ProductURL.string
-                #strImageUrl
+            logging.info("find product: %s"%soupProduct.ProductURL.string)
+            #轉換為 findfine 資料格式
+            dicProductJson = {}
+            #strSource
+            dicProductJson["strSource"] = "Viator"
+            #strOriginUrl
+            dicProductJson["strOriginUrl"] = soupProduct.ProductURLs.ProductURL.string
+            #strImageUrl
+            if soupProduct.ProductImage and soupProduct.ProductImage.ImageURL:
                 dicProductJson["strImageUrl"] = soupProduct.ProductImage.ImageURL.string
-                #strTitle
-                dicProductJson["strTitle"] = soupProduct.ProductName.string
-                #strLocation
-                dicProductJson["strLocation"] = ",".join([soupProduct.Destination.Country.string, soupProduct.Destination.City.string])
-                #intUsdCost
-                dicProductJson["intUsdCost"] = int(float(soupProduct.Pricing.PriceUSD.string))
-                #intReviewStar
+            else:
+                dicProductJson["strImageUrl"] = "#"
+            #strTitle
+            dicProductJson["strTitle"] = soupProduct.ProductName.string
+            #strLocation
+            setStrLocation = {soupProduct.Destination.Country.string, soupProduct.Destination.City.string}
+            if None in setStrLocation:
+                setStrLocation.remove(None)
+            dicProductJson["strLocation"] = ",".join(setStrLocation)
+            #intUsdCost
+            dicProductJson["intUsdCost"] = int(float(soupProduct.Pricing.PriceUSD.string))
+            #intReviewStar
+            if soupProduct.ProductStarRating and soupProduct.ProductStarRating.AvgRating:
+                dicProductJson["intReviewStar"] = int(float(soupProduct.ProductStarRating.AvgRating.string))
+            else:
                 dicProductJson["intReviewStar"] = 0
-                #intReviewVisitor
-                dicProductJson["intReviewVisitor"] = 0
-                #strIntroduction
-                dicProductJson["strIntroduction"] = soupProduct.Introduction.string
-                #intDurationHour
-                dicProductJson["intDurationHour"] = soupProduct.Duration.string #需要轉為整數
-                #strGuideLanguage
-                dicProductJson["strGuideLanguage"] = ""
-                #strStyle
-                dicProductJson["strStyle"] = soupProduct.ProductCategory.Group.string
-                #intOption
-                dicProductJson["intOption"] = 9999
-                #加入資料至 json
-                self.lstDicParsedProductJson.append(dicProductJson)
-            except Exception as e:
-                logging.warning(str(e))
-                logging.warning("crawl product failed, skip: %s"%"????")
-                continue
+            #intReviewVisitor
+            dicProductJson["intReviewVisitor"] = 1
+            #strIntroduction
+            dicProductJson["strIntroduction"] = soupProduct.Introduction.string
+            #intDurationHour
+            dicProductJson["intDurationHour"] = soupProduct.Duration.string #需要轉為整數
+            #strGuideLanguage
+            #dicProductJson["strGuideLanguage"] = ""
+            #strStyle
+            #dicProductJson["strStyle"] = ""
+            #intOption
+            #dicProductJson["intOption"] = 9999
+            #加入資料至 json
+            self.lstDicParsedProductJson.append(dicProductJson)
             #讀取下一個 product
             soupProduct = self.findNextProductData(soupCurrentProduct=soupProduct)
         #將資料寫入 json
