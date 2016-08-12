@@ -74,7 +74,7 @@ class CrawlerForVIATOR:
                 #intUsdCost
                 dicProductJson["intUsdCost"] = int(float(soupProduct.Pricing.PriceUSD.string))
                 #intReviewStar
-                dicProductJson["intReviewStar"] = int(float(soupProduct.ProductStarRating.AvgRating.string))
+                dicProductJson["intReviewStar"] = 0
                 #intReviewVisitor
                 dicProductJson["intReviewVisitor"] = 0
                 #strIntroduction
@@ -82,9 +82,11 @@ class CrawlerForVIATOR:
                 #intDurationHour
                 dicProductJson["intDurationHour"] = soupProduct.Duration.string #需要轉為整數
                 #strGuideLanguage
+                dicProductJson["strGuideLanguage"] = ""
                 #strStyle
                 dicProductJson["strStyle"] = soupProduct.ProductCategory.Group.string
                 #intOption
+                dicProductJson["intOption"] = 9999
                 #加入資料至 json
                 self.lstDicParsedProductJson.append(dicProductJson)
             except Exception as e:
