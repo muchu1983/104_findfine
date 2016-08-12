@@ -35,10 +35,15 @@ class CrawlerForVIATORTest(unittest.TestCase):
     def test_unzipVapProductsXmlZip(self):
         pass
     """
-    #測試 從 xml 讀取 1000 筆產品資訊
-    def test_read1000ProductData(self):
-        logging.info("CrawlerForVIATORTest.test_read1000ProductData")
-        self.assertTrue(len(self.crawler.read1000ProductData(intPageIndex=1))>0)
+    #測試 從 xml 讀取 下一筆產品資訊
+    def test_findNextProductData(self):
+        logging.info("CrawlerForVIATORTest.test_findNextProductData")
+        first = self.crawler.findNextProductData()
+        second = self.crawler.findNextProductData(soupCurrentProduct=first)
+        third = self.crawler.findNextProductData(soupCurrentProduct=second)
+        self.assertIsNotNone(first.Rank.string)
+        self.assertIsNotNone(second.Rank.string)
+        self.assertIsNotNone(third.Rank.string)
     
     #測試 爬取 VIATOR vapProducts.xml
     def test_crawlVapProductsXml(self):

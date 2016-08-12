@@ -55,37 +55,35 @@ class CrawlerForVIATOR:
         #清空計憶體殘留資料
         self.lstDicParsedProductJson = []
         #分次讀取所有產品
-        intPageIndex = 1
-        lstSoupProduct = self.read1000ProductData(intPageIndex=intPageIndex)
-        while len(lstSoupProduct) > 0:
-            for soupProduct in lstSoupProduct:
-                try:
-                    #轉換為 findfine 資料格式
-                    dicProductJson = {}
-                    #strSource
-                    dicProductJson["strSource"] = "Viator"
-                    #strOriginUrl
-                    dicProductJson["strOriginUrl"] = soupProduct.ProductURL.string
-                    #strImageUrl
-                    #strTitle
-                    #strLocation
-                    #intUsdCost
-                    #intReviewStar
-                    #intReviewVisitor
-                    #strIntroduction
-                    #intDurationHour
-                    #strGuideLanguage
-                    #strStyle
-                    #intOption
-                    #加入資料至 json
-                    self.lstDicParsedProductJson.append(dicProductJson)
-                except Exception as e:
-                    logging.warning(str(e))
-                    logging.warning("crawl product failed, skip: %s"%"????")
-                    continue
-            #讀取下一頁
-            intPageIndex = intPageIndex+1
-            lstSoupProduct = self.read1000ProductData(intPageIndex=intPageIndex)
+        soupProduct = self.findNextProductData()
+        while soupProduct: #is not None
+            try:
+                logging.info("find product: %s"%soupProduct.ProductURL.string)
+                #轉換為 findfine 資料格式
+                dicProductJson = {}
+                #strSource
+                dicProductJson["strSource"] = "Viator"
+                #strOriginUrl
+                dicProductJson["strOriginUrl"] = soupProduct.ProductURL.string
+                #strImageUrl
+                #strTitle
+                #strLocation
+                #intUsdCost
+                #intReviewStar
+                #intReviewVisitor
+                #strIntroduction
+                #intDurationHour
+                #strGuideLanguage
+                #strStyle
+                #intOption
+                #加入資料至 json
+                self.lstDicParsedProductJson.append(dicProductJson)
+            except Exception as e:
+                logging.warning(str(e))
+                logging.warning("crawl product failed, skip: %s"%"????")
+                continue
+            #讀取下一個 product
+            soupProduct = self.findNextProductData(soupCurrentProduct=soupProduct)
         #將資料寫入 json
         strJsonFileName = "viator_product.json"
         strJsonPackageName = "findfine_crawler.resource.parsed_json.viator"
@@ -93,13 +91,15 @@ class CrawlerForVIATOR:
         self.ffUtil.writeObjectToJsonFile(dicData=self.lstDicParsedProductJson, strJsonFilePath=strProductJsonFilePath)
         self.lstDicParsedProductJson = []
         
-    #讀取 1000 筆 產品資訊
-    def read1000ProductData(self, intPageIndex=0):
-        intProductPerPage = 1000
-        strXmlPackageName = "findfine_crawler.resource.source_data.viator"
-        strXmlFileName = "vapProducts.xml"
-        strXmlFilePath = self.fileUtil.getPackageResourcePath(strPackageName=strXmlPackageName, strResourceName=strXmlFileName)
-        with open(strXmlFilePath, "r", encoding="utf-8") as xmlFile:
-            soup = BeautifulSoup(xmlFile.read(), "xml")
-        lstSoupProduct = soup.Products.find_all("Product")
-        return lstSoupProduct[(intPageIndex-1)*intProductPerPage:intPageIndex*intProductPerPage if intPageIndex*intProductPerPage < len(lstSoupProduct) else len(lstSoupProduct)]
+    #從 xml 讀取 下一筆產品資訊
+    def findNextProductData(self, soupCurrentProduct=None):
+        if soupCurrentProduct: # is not None 返回下一個 Product
+            return soupCurrentProduct.find_next_sibling("Product")
+        else: #尋找第一個 Product
+            strXmlPackageName = "findfine_crawler.resource.source_data.viator"
+            strXmlFileName = "vapProducts.xml"
+            strXmlFilePath = self.fileUtil.getPackageResourcePath(strPackageName=strXmlPackageName, strResourceName=strXmlFileName)
+            with open(strXmlFilePath, "r", encoding="utf-8") as xmlFile:
+                soup = BeautifulSoup(xmlFile.read(), "xml")
+            soupProduct = soup.Products.find("Product")
+            return soupProduct
