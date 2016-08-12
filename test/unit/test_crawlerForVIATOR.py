@@ -29,11 +29,12 @@ class CrawlerForVIATORTest(unittest.TestCase):
     def test_downloadVapProductsXmlZip(self):
         logging.info("CrawlerForVIATORTest.test_downloadVapProductsXmlZip")
         self.crawler.downloadVapProductsXmlZip()
-    """
+    
     #測試 解壓縮 vapProducts.xml.zip
     def test_unzipVapProductsXmlZip(self):
-        pass
-        
+        logging.info("CrawlerForVIATORTest.test_unzipVapProductsXmlZip")
+        self.crawler.unzipVapProductsXmlZip()
+    """
     #測試 從 xml 讀取 下一筆產品資訊
     def test_findNextProductData(self):
         logging.info("CrawlerForVIATORTest.test_findNextProductData")

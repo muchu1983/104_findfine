@@ -14,6 +14,7 @@ import urllib.request
 import http.cookiejar
 import re
 import json
+import zipfile
 from bs4 import BeautifulSoup
 from bennu.filesystemutility import FileSystemUtility as FilesysUtility
 from findfine_crawler.utility import Utility as FfUtility
@@ -27,7 +28,7 @@ class CrawlerForVIATOR:
     def __init__(self):
         self.dicSubCommandHandler = {
             "download":self.downloadVapProductsXmlZip,
-            #"unzip":self.unzipVapProductsXmlZip, #use zipfile module
+            "unzip":self.unzipVapProductsXmlZip,
             "json":self.crawlVapProductsXml
         }
         self.ffUtil = FfUtility()
@@ -171,10 +172,15 @@ class CrawlerForVIATOR:
         byteVapProductsXmlZip = response.read()
         #儲存 vapProducts.xml.zip
         strZipPackageName = "findfine_crawler.resource.source_data.viator"
-        strZipFileName = "test_vapProducts.xml.zip"
+        strZipFileName = "vapProducts.xml.zip"
         strZipFilePath = self.fileUtil.getPackageResourcePath(strPackageName=strZipPackageName, strResourceName=strZipFileName)
         with open(strZipFilePath, "bw+") as zipFile:
             zipFile.write(byteVapProductsXmlZip)
             
-            
-            
+    #解壓縮 vapProducts.xml.zip
+    def unzipVapProductsXmlZip(self, uselessArg1=None):
+        strZipPackageName = "findfine_crawler.resource.source_data.viator"
+        strZipFileName = "vapProducts.xml.zip"
+        strZipFilePath = self.fileUtil.getPackageResourcePath(strPackageName=strZipPackageName, strResourceName=strZipFileName)
+        
+        
