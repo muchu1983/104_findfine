@@ -7,6 +7,7 @@ This file is part of BSD license
 <https://opensource.org/licenses/BSD-3-Clause>
 """
 from django.db import models
+from account.models import UserAccount
 
 # 行程資料
 class Trip(models.Model):
@@ -42,6 +43,20 @@ class Trip(models.Model):
     strStyle = models.CharField(max_length=255, null=True)
     #特殊選項編號
     intOption = models.IntegerField(null=True)
+    
+#使用者偏好的行程
+class FavoriteTrip(models.Model):
+    #使用者帳號 ForeignKey
+    fkUserAccount = models.ForeignKey(UserAccount, null=False, on_delete=models.CASCADE)
+    #行程 ForeignKey
+    fkTrip = models.ForeignKey(Trip, null=False, on_delete=models.CASCADE)
+    
+#使用者自訂行程規劃
+class CustomizedTripPlan(models.Model):
+    #使用者帳號 ForeignKey
+    fkUserAccount = models.ForeignKey(UserAccount, null=False, on_delete=models.CASCADE)
+    #行程 ForeignKey
+    fkTrip = models.ForeignKey(Trip, null=False, on_delete=models.CASCADE)
     
 #匯率資料
 class ExRate(models.Model):

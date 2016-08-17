@@ -8,10 +8,14 @@ This file is part of BSD license
 """
 import datetime
 from django.shortcuts import render
+from django.shortcuts import redirect
 from django.http import JsonResponse
 from django.db.models import Q
 from trip.models import Trip
 from trip.models import ExRate
+from trip.models import FavoriteTrip
+from trip.models import CustomizedTripPlan
+from account.models import UserAccount
 from itertools import chain
 
 #搜尋過瀘與排序 trip 
@@ -76,6 +80,7 @@ def tripFilter(request=None):
     
 #轉換 DB trip data 至 http response Json 物件
 def convertTripDataToJsonDic(matchedTrip=None, dicTripData=None, fUsdToUserCurrencyExRate=0.0):
+    dicTripData["intId"] = matchedTrip.id
     dicTripData["strSource"] = matchedTrip.strSource
     dicTripData["strTitle"] = matchedTrip.strTitle
     dicTripData["strLocation"] = matchedTrip.strLocation
@@ -116,3 +121,64 @@ def setUserCurrencyToSession(request=None):
     if strUserCurrency:
         strUserCurrency = strUserCurrency.upper() #幣別全大寫
         request.session["user_currency"] = strUserCurrency
+        
+#加入偏好的行程
+def addFavoriteTrip(request=None):
+    #從 session 取得已登入的 使用者 email
+    strUserEmail = request.session.get("logined_user_email", None)
+    if strUserEmail:
+        objUserAccount = UserAccount.objects.get(strEmail=strUserEmail)
+        intTripId = int(request.GET.get("intTripId", None))
+        objTrip = Trip.objects.get(id=intTripId)
+        FavoriteTrip.objects.update_or_create(
+            fkTrip = objTrip,
+            fkUserAccount = objUserAccount
+        )
+        return JsonResponse({"add_favorite_trip_status":"ok"}, safe=False)
+    else:
+        #尚未登入 導回登入頁
+        return redirect("/account/login")
+    
+#取得偏好的行程
+def getFavoriteTrip(request=None):
+    #從 session 取得使用者的幣別匯率資訊
+    strUserCurrency = getUserCurrencyFromSession(request=request)
+    matchedExRate = ExRate.objects.get(strCurrencyName=strUserCurrency)
+    fUsdToUserCurrencyExRate = matchedExRate.fUSDollar
+    #從 session 取得已登入的 使用者 email
+    strUserEmail = request.session.get("logined_user_email", None)
+    if strUserEmail:
+        objUserAccount = UserAccount.objects.get(strEmail=strUserEmail)
+        qsetMatchedFavoriteTrip = FavoriteTrip.objects.filter(fkUserAccount = objUserAccount)
+        lstDicTripData = []
+        for matchedFavoriteTrip in qsetMatchedFavoriteTrip:
+            matchedTrip = matchedFavoriteTrip.fkTrip
+            dicTripData = {}
+            convertTripDataToJsonDic(matchedTrip=matchedTrip, dicTripData=dicTripData, fUsdToUserCurrencyExRate=fUsdToUserCurrencyExRate)
+            lstDicTripData.append(dicTripData)
+        dicResultJson = {
+            "trip":lstDicTripData,
+            "meta":{}
+        }
+        return JsonResponse(dicResultJson, safe=False)
+    else:
+        #尚未登入 導回登入頁
+        return redirect("/account/login")
+    
+#移除偏好的行程
+def removeFavoriteTrip(request=None):
+    #從 session 取得已登入的 使用者 email
+    strUserEmail = request.session.get("logined_user_email", None)
+    if strUserEmail:
+        objUserAccount = UserAccount.objects.get(strEmail=strUserEmail)
+        intTripId = int(request.GET.get("intTripId", None))
+        objTrip = Trip.objects.get(id=intTripId)
+        FavoriteTrip.objects.filter(
+            fkTrip = objTrip,
+            fkUserAccount = objUserAccount
+        ).delete()
+        return JsonResponse({"delete_favorite_trip_status":"ok"}, safe=False)
+    else:
+        #尚未登入 導回登入頁
+        return redirect("/account/login")
+    
