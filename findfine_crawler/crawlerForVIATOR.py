@@ -10,8 +10,11 @@ import os
 import time
 import datetime
 import logging
+import urllib.request
+import http.cookiejar
 import re
 import json
+from zipfile import ZipFile
 from bs4 import BeautifulSoup
 from bennu.filesystemutility import FileSystemUtility as FilesysUtility
 from findfine_crawler.utility import Utility as FfUtility
@@ -24,21 +27,22 @@ class CrawlerForVIATOR:
     #建構子
     def __init__(self):
         self.dicSubCommandHandler = {
-            #"download":self.downloadVapProductsXmlZip,
-            #"unzip":self.unzipVapProductsXmlZip,
+            "download":self.downloadVapProductsXmlZip,
+            "unzip":self.unzipVapProductsXmlZip,
             "json":self.crawlVapProductsXml
         }
         self.ffUtil = FfUtility()
         self.fileUtil = FilesysUtility()
         self.lstDicParsedProductJson = []  #product.json 資料
+        self.intProductJsonIndex = 1
         
     #取得 spider 使用資訊
     def getUseageMessage(self):
         return (
-            "- Viator -\n"
+            "- VIATOR -\n"
             "useage:\n"
-            "download(coming soon) - download vapProducts.xml.zip \n"
-            "unzip(coming soon) - unzip vapProducts.xml.zip \n"
+            "download - download vapProducts.xml.zip \n"
+            "unzip - unzip vapProducts.xml.zip \n"
             "json - crawl vapProducts.xml then create json \n"
         )
         
@@ -54,38 +58,65 @@ class CrawlerForVIATOR:
     def crawlVapProductsXml(self, uselessArg1=None):
         #清空計憶體殘留資料
         self.lstDicParsedProductJson = []
+        self.intProductJsonIndex = 1
         #分次讀取所有產品
         soupProduct = self.findNextProductData()
         while soupProduct: #is not None
-            try:
-                logging.info("find product: %s"%soupProduct.ProductURL.string)
-                #轉換為 findfine 資料格式
-                dicProductJson = {}
-                #strSource
-                dicProductJson["strSource"] = "Viator"
-                #strOriginUrl
-                dicProductJson["strOriginUrl"] = soupProduct.ProductURL.string
-                #strImageUrl
-                #strTitle
-                #strLocation
-                #intUsdCost
-                #intReviewStar
-                #intReviewVisitor
-                #strIntroduction
-                #intDurationHour
-                #strGuideLanguage
-                #strStyle
-                #intOption
-                #加入資料至 json
-                self.lstDicParsedProductJson.append(dicProductJson)
-            except Exception as e:
-                logging.warning(str(e))
-                logging.warning("crawl product failed, skip: %s"%"????")
-                continue
+            logging.info("find product: %s"%soupProduct.ProductURL.string)
+            #轉換為 findfine 資料格式
+            dicProductJson = {}
+            #strSource
+            dicProductJson["strSource"] = "Viator"
+            #strOriginUrl
+            dicProductJson["strOriginUrl"] = soupProduct.ProductURLs.ProductURL.string
+            #strImageUrl
+            if soupProduct.ProductImage and soupProduct.ProductImage.ImageURL:
+                dicProductJson["strImageUrl"] = soupProduct.ProductImage.ImageURL.string
+            else:
+                dicProductJson["strImageUrl"] = "#"
+            #strTitle
+            dicProductJson["strTitle"] = soupProduct.ProductName.string
+            #strLocation
+            setStrLocation = {soupProduct.Destination.Country.string, soupProduct.Destination.City.string}
+            if None in setStrLocation:
+                setStrLocation.remove(None)
+            dicProductJson["strLocation"] = ",".join(setStrLocation)
+            #intUsdCost
+            dicProductJson["intUsdCost"] = int(float(soupProduct.Pricing.PriceUSD.string))
+            #intReviewStar
+            if soupProduct.ProductStarRating and soupProduct.ProductStarRating.AvgRating:
+                dicProductJson["intReviewStar"] = int(float(soupProduct.ProductStarRating.AvgRating.string))
+            else:
+                dicProductJson["intReviewStar"] = 0
+            #intReviewVisitor
+            dicProductJson["intReviewVisitor"] = 1
+            #strIntroduction
+            dicProductJson["strIntroduction"] = soupProduct.Introduction.string
+            #intDurationHour
+            dicProductJson["intDurationHour"] = self.convertDurationStringToHourInt(strDurtation=soupProduct.Duration.string)
+            #strGuideLanguage
+            dicProductJson["strGuideLanguage"] = "english"
+            #strStyle
+            if soupProduct.ProductCategory and soupProduct.ProductCategory.Category:
+                dicProductJson["strStyle"] = soupProduct.ProductCategory.Category.string
+            else:
+                dicProductJson["strStyle"] = ""
+            #intOption
+            #dicProductJson["intOption"] = -1
+            #加入資料至 json
+            self.lstDicParsedProductJson.append(dicProductJson)
+            #每5000筆寫入一次 json
+            if len(self.lstDicParsedProductJson) == 5000:
+                strJsonFileName = "%d_viator_product.json"%(self.intProductJsonIndex*5000)
+                strJsonPackageName = "findfine_crawler.resource.parsed_json.viator"
+                strProductJsonFilePath = self.fileUtil.getPackageResourcePath(strPackageName=strJsonPackageName, strResourceName=strJsonFileName)
+                self.ffUtil.writeObjectToJsonFile(dicData=self.lstDicParsedProductJson, strJsonFilePath=strProductJsonFilePath)
+                self.intProductJsonIndex = self.intProductJsonIndex+1
+                self.lstDicParsedProductJson = []
             #讀取下一個 product
             soupProduct = self.findNextProductData(soupCurrentProduct=soupProduct)
-        #將資料寫入 json
-        strJsonFileName = "viator_product.json"
+        #將剩餘資料寫入 json
+        strJsonFileName = "%d_viator_product.json"%(self.intProductJsonIndex*5000)
         strJsonPackageName = "findfine_crawler.resource.parsed_json.viator"
         strProductJsonFilePath = self.fileUtil.getPackageResourcePath(strPackageName=strJsonPackageName, strResourceName=strJsonFileName)
         self.ffUtil.writeObjectToJsonFile(dicData=self.lstDicParsedProductJson, strJsonFilePath=strProductJsonFilePath)
@@ -103,3 +134,56 @@ class CrawlerForVIATOR:
                 soup = BeautifulSoup(xmlFile.read(), "xml")
             soupProduct = soup.Products.find("Product")
             return soupProduct
+            
+    #轉換 duration 資訊
+    def convertDurationStringToHourInt(self, strDurtation=None):
+        intDefaultDuration = 1
+        if not strDurtation or ("hour" not in strDurtation and "day" not in strDurtation):
+            return intDefaultDuration
+        else:
+            intTotalDurationHour = 0
+            mDurationHour = re.match("([\d]+) hour", strDurtation)
+            mDurationDay = re.match("([\d]+) day", strDurtation)
+            if mDurationHour:
+                intDurationHour = int(float(mDurationHour.group(1)))
+                intTotalDurationHour = intTotalDurationHour + intDurationHour
+            if mDurationDay:
+                intDurationDay = int(float(mDurationDay.group(1)))
+                intTotalDurationHour = intTotalDurationHour + (intDurationDay*24)
+            return intTotalDurationHour
+            
+    #下載 vapProducts.xml.zip
+    def downloadVapProductsXmlZip(self, uselessArg1=None):
+        #login
+        strPartnerAccount = "19993"
+        strPartnerPwd = "a768768a"
+        cj = http.cookiejar.MozillaCookieJar()
+        opener = urllib.request.build_opener(urllib.request.HTTPCookieProcessor(cj))
+        dicLoginData = urllib.parse.urlencode({
+            "adminPUID":strPartnerAccount,
+            "login_password":strPartnerPwd
+        }).encode("utf-8")
+        req = urllib.request.Request("https://www.partner.viator.com/partner/login.jspa", dicLoginData, method="POST")
+        response = opener.open(req)
+        #wget https://www.partner.viator.com/partner/admin/tools/links_feeds/downloadFeed.jspa?feed=Products&format=xml
+        strUrl = "https://www.partner.viator.com/partner/admin/tools/links_feeds/downloadFeed.jspa?feed=Products&format=xml"
+        req = urllib.request.Request(url=strUrl, method="GET")
+        response = opener.open(req)
+        byteVapProductsXmlZip = response.read()
+        #儲存 vapProducts.xml.zip
+        strPackageName = "findfine_crawler.resource.source_data.viator"
+        strZipFileName = "vapProducts.xml.zip"
+        strZipFilePath = self.fileUtil.getPackageResourcePath(strPackageName=strPackageName, strResourceName=strZipFileName)
+        with open(strZipFilePath, "bw+") as zipFile:
+            zipFile.write(byteVapProductsXmlZip)
+            
+    #解壓縮 vapProducts.xml.zip
+    def unzipVapProductsXmlZip(self, uselessArg1=None):
+        strPackageName = "findfine_crawler.resource.source_data.viator"
+        strZipFileName = "vapProducts.xml.zip"
+        strZipFilePath = self.fileUtil.getPackageResourcePath(strPackageName=strPackageName, strResourceName=strZipFileName)
+        with ZipFile(strZipFilePath, "r") as zipFile:
+            strPackageName = "findfine_crawler.resource.source_data"
+            strXmlBaseFolderPath = self.fileUtil.getPackageResourcePath(strPackageName=strPackageName, strResourceName="viator")
+            zipFile.extract("vapProducts.xml", strXmlBaseFolderPath)
+        

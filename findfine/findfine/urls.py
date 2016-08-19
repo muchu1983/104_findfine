@@ -39,6 +39,9 @@ urlpatterns = [
     #trip app
     url(r'^trip/filter$', trip_views.tripFilter),
     url(r'^trip/userCurrency$', trip_views.userCurrency),
+    url(r'^trip/addFavoriteTrip$', trip_views.addFavoriteTrip),
+    url(r'^trip/getFavoriteTrip$', trip_views.getFavoriteTrip),
+    url(r'^trip/removeFavoriteTrip$', trip_views.removeFavoriteTrip),
     #page app
     url(r'^$', page_views.showHomePage),
     url(r'^page/home$', page_views.showHomePage),

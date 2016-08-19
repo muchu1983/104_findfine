@@ -11,26 +11,26 @@ import datetime
 import json
 import logging
 import re
-#from findfine_crawler.localdb import LocalDbForJsonImporter
-from findfine_crawler.externaldb import ExternalDbForJsonImporter
+from findfine_crawler.localdb import LocalDbForJsonImporter
+#from findfine_crawler.externaldb import ExternalDbForJsonImporter
 from bennu.filesystemutility import FileSystemUtility as FilesysUtility
 from findfine_crawler.utility import Utility as FfUtility
 """
 將 product.json 內容存入 MySQL DB
 """
-class ImporterForBMG:
+class ImporterForVIATOR:
     #建構子
     def __init__(self):
         self.ffUtil = FfUtility()
         self.filesysUtil = FilesysUtility()
-        #self.db = LocalDbForJsonImporter()
-        self.db = ExternalDbForJsonImporter()
+        self.db = LocalDbForJsonImporter()
+        #self.db = ExternalDbForJsonImporter()
         self.dicSubCommandHandler = {"import":[self.importProductJsonToDb]}
         
     #取得 importer 使用資訊
     def getUseageMessage(self):
         return (
-            "- BeMyGuest -\n"
+            "- VIATOR -\n"
             "useage:\n"
             "import - import product.json to database \n"
         )
@@ -49,7 +49,7 @@ class ImporterForBMG:
         #清除 trip 資料
         #self.db.clearTripData()
         #讀取 json 檔
-        strBasedir = self.filesysUtil.getPackageResourcePath(strPackageName="findfine_crawler.resource.parsed_json", strResourceName="bmg")
+        strBasedir = self.filesysUtil.getPackageResourcePath(strPackageName="findfine_crawler.resource.parsed_json", strResourceName="viator")
         lstStrProductJsonFilePath = self.ffUtil.getFilePathListWithSuffixes(strBasedir=strBasedir, strSuffixes="_product.json")
         for strProductJsonFilePath in lstStrProductJsonFilePath:
             logging.info("read %s"%strProductJsonFilePath)
