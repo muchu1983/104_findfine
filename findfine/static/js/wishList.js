@@ -2,9 +2,9 @@
     $(document).ready(initWishList);
     function initWishList(){
         
-        var strFilterQueryUrl = "/trip/filter?1=1"; //TODO 需加入帳號 才能篩選 wish list
+        //TODO 需加入帳號 才能篩選 wish list
         
-        $.getJSON(strFilterQueryUrl, function(jsonResp){
+        $.getJSON("/trip/getFavoriteTrip", function(jsonResp){
 
             $(".content ul").html("");
         
@@ -17,24 +17,6 @@
                 var strTripDataHtml = getTripDataHtml(strUserCurrency, dicTripData["strTitle"], dicTripData["intUserCurrencyCost"], dicTripData["strIntroduction"], dicTripData["strLocation"], dicTripData["intDurationHour"], dicTripData["strOriginUrl"], dicTripData["strImageUrl"], dicTripData["intReviewStar"], dicTripData["intReviewVisitor"] );
                 $(".content ul").append(strTripDataHtml);
             };
-            
-        //page data
-            var dicPageData = jsonResp["page"];
-            console.log(dicPageData);
-            $("#current_page").html(dicPageData["current_page"]);
-            if (dicPageData["current_page"]-1 < 1){
-                $("#prev_page_link").hide();
-            }else{
-                $("#prev_page_link").show();
-                $("#prev_page_link").attr("page_value", dicPageData["current_page"]-1);
-            }
-            if (dicPageData["current_page"]+1 > dicPageData["total_page"]){
-                $("#next_page_link").hide();
-            }else{
-                $("#next_page_link").show();
-            $("#next_page_link").attr("page_value", dicPageData["current_page"]+1);
-            }
-
             
         });
 

@@ -1,6 +1,8 @@
 //本網頁讀取完成後 執行
 $(document).ready(initFind);
 
+
+
 function initFind(){
     initCurrencySelect();
     var keyword = tour.QueryString().keyword;
@@ -63,6 +65,7 @@ function initFind(){
         $("#current_page").html(parseInt($("#current_page").html())+1);
         search('');
     });
+    
     
     //不傳入sort條件
     search('');
@@ -329,7 +332,7 @@ function search(condition){
         var lstDicTripData = jsonResp["trip"];
         for (i = 0; i < lstDicTripData.length; i++) {
             var dicTripData = lstDicTripData[i];
-            var strTripDataHtml = getTripDataHtml(strUserCurrency, dicTripData["strTitle"], dicTripData["intUserCurrencyCost"], dicTripData["strIntroduction"], dicTripData["strLocation"], dicTripData["intDurationHour"], dicTripData["strOriginUrl"], dicTripData["strImageUrl"], dicTripData["intReviewStar"], dicTripData["intReviewVisitor"] );
+            var strTripDataHtml = getTripDataHtml(strUserCurrency, dicTripData["strTitle"], dicTripData["intUserCurrencyCost"], dicTripData["strIntroduction"], dicTripData["strLocation"], dicTripData["intDurationHour"], dicTripData["strOriginUrl"], dicTripData["strImageUrl"], dicTripData["intReviewStar"], dicTripData["intReviewVisitor"] ,dicTripData["intId"]);
             $("div.findResultDiv ul.lstTripData").append(strTripDataHtml);
         };
         //page data
@@ -353,7 +356,7 @@ function search(condition){
 };
 
 //組出單組查詢結果出來的html字串
-function getTripDataHtml(strUserCurrency, strTitle, intUserCurrencyCost, strIntroduction, strLocation, intDurationHour, strOriginUrl, strImageUrl, intReviewStar, intReviewVisitor ){
+function getTripDataHtml(strUserCurrency, strTitle, intUserCurrencyCost, strIntroduction, strLocation, intDurationHour, strOriginUrl, strImageUrl, intReviewStar, intReviewVisitor, intId ){
     var reviewStar;
     if(intReviewStar==0){
         reviewStar='☆☆☆☆☆';
@@ -396,11 +399,10 @@ function getTripDataHtml(strUserCurrency, strTitle, intUserCurrencyCost, strIntr
                 "<i class=\"fa fa-usd\"></i>",
                 "<span style=\"color:red\">"+intUserCurrencyCost+" "+strUserCurrency+"</span></br>",
             "</div>",
-            "<div class=\"favorite\">",
-                //TODO 要加TOUR KEY 觸發事件後加入 wish list
-                "<font size='6'>♥</font>",
-            "</div>",
-            "</div>",
+            //TODO 要加TOUR KEY 觸發事件後加入 wish list  intId
+            //"<div class=\"favorite\"><a href=\"/trip/addFavoriteTrip?intTripId=3\" return false;> ♥</a></div>",
+            "<div class=\"favorite\" onclick=\"addFavoriteTrip("+intId+")\">♥</div>",
+        "</div>",
     "</li>"
     ].join("");
     return strTripDataHtml;
@@ -451,3 +453,11 @@ function initCurrencySelect(){
         });
     });
 };
+
+function addFavoriteTrip(){
+        var strAddFavoriteTripUrl = "/trip/addFavoriteTrip?intTripId=" + 4;
+        $.getJSON(strAddFavoriteTripUrl, function(jsonResp){
+            var status = jsonResp["add_favorite_trip_status"];
+            alert(status);
+        });
+}
