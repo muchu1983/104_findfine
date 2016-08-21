@@ -37,7 +37,7 @@ function initFind(){
     
     $('#wishList').hide();
     $('#myFriends').hide();
-    $('#myTrips').hide();
+    $('#myPlans').hide();
     $('#myMessages').hide();
     $('#logOut').hide();
     
@@ -47,13 +47,17 @@ function initFind(){
         $('#loginBtn').html(strEmail);
         $('#wishList').show();
         $('#myFriends').show();
-        $('#myTrips').show();
+        $('#myPlans').show();
         $('#myMessages').show();
         $('#logOut').show();
     }
     
     $("#wishList").click(function(){
             window.location = "/page/wishList";
+    });
+    
+    $("#myPlans").click(function(){
+            window.location = "/page/myTrip";
     });
     
     //page
@@ -454,8 +458,8 @@ function initCurrencySelect(){
     });
 };
 
-function addFavoriteTrip(){
-        var strAddFavoriteTripUrl = "/trip/addFavoriteTrip?intTripId=" + 4;
+function addFavoriteTrip( intId ){
+        var strAddFavoriteTripUrl = "/trip/addFavoriteTrip?intTripId="+intId ;
         $.getJSON(strAddFavoriteTripUrl, function(jsonResp){
             var status = jsonResp["add_favorite_trip_status"];
             alert(status);

@@ -25,7 +25,7 @@ function initMap() {
     
     $('#wishList').hide();
     $('#myFriends').hide();
-    $('#myTrips').hide();
+    $('#myPlans').hide();
     $('#myMessages').hide();
     $('#logOut').hide();
     
@@ -35,13 +35,17 @@ function initMap() {
         $('#loginBtn').html(strEmail);
         $('#wishList').show();
         $('#myFriends').show();
-        $('#myTrips').show();
+        $('#myPlans').show();
         $('#myMessages').show();
         $('#logOut').show();
     }
     
     $("#wishList").click(function(){
             window.location = "/page/wishList";
+    });
+    
+    $("#myPlans").click(function(){
+            window.location = "/page/myTrip";
     });
 }
 

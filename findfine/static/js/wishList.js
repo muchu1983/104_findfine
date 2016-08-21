@@ -1,4 +1,5 @@
 (function($){
+    
     $(document).ready(initWishList);
     function initWishList(){
         
@@ -14,14 +15,14 @@
             var lstDicTripData = jsonResp["trip"];
             for (i = 0; i < lstDicTripData.length; i++) {
                 var dicTripData = lstDicTripData[i];
-                var strTripDataHtml = getTripDataHtml(strUserCurrency, dicTripData["strTitle"], dicTripData["intUserCurrencyCost"], dicTripData["strIntroduction"], dicTripData["strLocation"], dicTripData["intDurationHour"], dicTripData["strOriginUrl"], dicTripData["strImageUrl"], dicTripData["intReviewStar"], dicTripData["intReviewVisitor"] );
+                var strTripDataHtml = getTripDataHtml(strUserCurrency, dicTripData["strTitle"], dicTripData["intUserCurrencyCost"], dicTripData["strIntroduction"], dicTripData["strLocation"], dicTripData["intDurationHour"], dicTripData["strOriginUrl"], dicTripData["strImageUrl"], dicTripData["intReviewStar"], dicTripData["intReviewVisitor"], dicTripData["intId"] );
                 $(".content ul").append(strTripDataHtml);
             };
             
         });
 
         //組出單組查詢結果出來的html字串
-        function getTripDataHtml(strUserCurrency, strTitle, intUserCurrencyCost, strIntroduction, strLocation, intDurationHour, strOriginUrl, strImageUrl, intReviewStar, intReviewVisitor ){
+        function getTripDataHtml(strUserCurrency, strTitle, intUserCurrencyCost, strIntroduction, strLocation, intDurationHour, strOriginUrl, strImageUrl, intReviewStar, intReviewVisitor, intId ){
             var reviewStar;
             if(intReviewStar==0){
                 reviewStar='☆☆☆☆☆';
@@ -54,22 +55,36 @@
                             "<p><span> Duration:"+intDurationHour+"</span></p>",
                             "<p><span style=\"color:red\">Stars:"+reviewStar+"</span></p>",
                             "<p><span>review:"+intReviewVisitor+"</span></p>",
-                            "<p><button id=\"deleteTour\">delete</button><button id=\"addPlan\">add my plan</button></p>",
+                            //"<p><button id=\"deleteTour\">delete</button><button id=\"addPlan\">add my plan</button></p>",
+                            "<p><div class=\"favorite\" onclick=\"addPlan("+intId+")\">add plan</div><div class=\"favorite\" onclick=\"removeFavoriteTrip("+intId+")\">remove</div></p>",
                         "</div>",
             "</li>"
             ].join("");
             return strTripDataHtml;
         };
-        
-        //deleteTour+KEY
-        $("#deleteTour").click(function(){
-            alert("234");
-        });
-        //addPlan+KEY
-        $("#addPlan").click(function(){
-            alert("678");
-        });
-        
-        
     };
 })(jQuery);
+
+
+    function addPlan( intId ){
+        //若無plan 導頁至 myPlan
+        
+        //若有plan 下拉選單展示myPlan 選其一後 導頁至 editPlan
+    }
+
+    function removeFavoriteTrip( intId ){
+        var strAddFavoriteTripUrl = "/trip/removeFavoriteTrip?intTripId="+intId ;
+        $.getJSON(strAddFavoriteTripUrl, function(jsonResp){
+            var status = jsonResp["delete_favorite_trip_status"];
+            alert(status);
+        });
+        //initWishList();
+        window.location.reload();
+    }
+
+
+
+
+
+
+
