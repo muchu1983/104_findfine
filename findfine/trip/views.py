@@ -62,8 +62,7 @@ def tripFilter(request=None):
     if strOrderBy:
         qsetMatchedTrip = qsetMatchedTrip.order_by(strOrderBy)
     for matchedTrip in qsetMatchedTrip:
-        dicTripData = {}
-        convertTripDataToJsonDic(matchedTrip=matchedTrip, dicTripData=dicTripData, fUsdToUserCurrencyExRate=fUsdToUserCurrencyExRate)
+        dicTripData = convertTripDataToJsonDic(request=request, matchedTrip=matchedTrip, fUsdToUserCurrencyExRate=fUsdToUserCurrencyExRate)
         lstDicTripData.append(dicTripData)
     #分頁與輸出結果
     intTripPerPage = 20
@@ -79,7 +78,8 @@ def tripFilter(request=None):
     return JsonResponse(dicFilterResultJson, safe=False)
     
 #轉換 DB trip data 至 http response Json 物件
-def convertTripDataToJsonDic(matchedTrip=None, dicTripData=None, fUsdToUserCurrencyExRate=0.0):
+def convertTripDataToJsonDic(request=None, matchedTrip=None, fUsdToUserCurrencyExRate=0.0):
+    dicTripData = {}
     dicTripData["intId"] = matchedTrip.id
     dicTripData["strSource"] = matchedTrip.strSource
     dicTripData["strTitle"] = matchedTrip.strTitle
@@ -98,6 +98,8 @@ def convertTripDataToJsonDic(matchedTrip=None, dicTripData=None, fUsdToUserCurre
     dicTripData["strStyle"] = matchedTrip.strStyle
     dicTripData["strGuideLanguage"] = matchedTrip.strGuideLanguage
     dicTripData["intOption"] = matchedTrip.intOption
+    dicTripData["isFavoriteTrip"] = checkIsFavoriteTrip(request=request, matchedTrip=matchedTrip)
+    return dicTripData
     
 #設定與讀取 使用者 幣別
 def userCurrency(request=None):
@@ -149,12 +151,11 @@ def getFavoriteTrip(request=None):
     strUserEmail = request.session.get("logined_user_email", None)
     if strUserEmail:
         objUserAccount = UserAccount.objects.get(strEmail=strUserEmail)
-        qsetMatchedFavoriteTrip = FavoriteTrip.objects.filter(fkUserAccount = objUserAccount)
+        qsetMatchedFavoriteTrip = FavoriteTrip.objects.filter(fkUserAccount=objUserAccount)
         lstDicTripData = []
         for matchedFavoriteTrip in qsetMatchedFavoriteTrip:
             matchedTrip = matchedFavoriteTrip.fkTrip
-            dicTripData = {}
-            convertTripDataToJsonDic(matchedTrip=matchedTrip, dicTripData=dicTripData, fUsdToUserCurrencyExRate=fUsdToUserCurrencyExRate)
+            dicTripData = convertTripDataToJsonDic(request=request, matchedTrip=matchedTrip, fUsdToUserCurrencyExRate=fUsdToUserCurrencyExRate)
             lstDicTripData.append(dicTripData)
         dicResultJson = {
             "trip":lstDicTripData,
@@ -182,3 +183,19 @@ def removeFavoriteTrip(request=None):
         #尚未登入 導回登入頁
         return redirect("/account/login")
     
+#檢查是否為偏好的行程
+def checkIsFavoriteTrip(request=None, matchedTrip=None):
+    #從 session 取得已登入的 使用者 email
+    strUserEmail = request.session.get("logined_user_email", None)
+    if strUserEmail and matchedTrip:
+        isFavoriteTrip = False
+        objUserAccount = UserAccount.objects.get(strEmail=strUserEmail)
+        qsetMatchedFavoriteTrip = FavoriteTrip.objects.filter(fkUserAccount=objUserAccount)
+        for matchedFavoriteTrip in qsetMatchedFavoriteTrip:
+            if matchedFavoriteTrip.fkTrip.strOriginUrl == matchedTrip.strOriginUrl:
+                isFavoriteTrip = True
+                break
+        return isFavoriteTrip
+    else:
+        #尚未登入 一律"不是"偏好的行程
+        return False
