@@ -69,23 +69,35 @@ cmd /k cd "C:\Users\muchu\Desktop\caseWorkspace\004-findfine\FINDFINE_git_code" 
 cmd /k cd "C:\Users\josh\Desktop\test01\findfine_code" & c:\python34\python "$(FULL_CURRENT_PATH)" & ECHO & PAUSE & EXIT
 
 API
+=== 完成
 City Discovery:
 https://partner.city-discovery.com/affiliate/login.php
 Username: liangtian@hotmail.com
 Password: a768768a
+=== 完成
 Viator:
 https://www.partner.viator.com/partner/home.jspa
 Username: 19993
 Password: a768768a
-Withlocals:
-https://www.withlocals.com/api/v1/affiliates/feeds/base.xml
-Getyourguide:
+=== 完成
+BeMyGuest:
 https://apidemo.bemyguest.com.sg/client-app
 Username: liangtian@hotmail.com
 Password: a768768a
 X-Authorization: daz5m3vimo2u8ucz90yimfwpj8lfdszkb2utjvyk
+===
+Withlocals:
+https://www.withlocals.com/api/v1/affiliates/feeds/base.xml
+===
 gogobot:
 http://developers.gogobot.com/public/
+===
+GetYourGuide:
+=== 自己爬
+klook:
+voyagin:
+tripbaa:
+
 
 Registration 
 1. Title: Mr./Miss/Mz./Mrs. 
