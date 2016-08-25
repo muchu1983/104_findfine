@@ -33,6 +33,7 @@ function initFind(){
     $("#btnSearch").click(function(){
         $("#current_page").html("1");
         search("");
+        
     });
     
     $('#wishList').hide();
@@ -339,6 +340,7 @@ function search(condition){
             var strTripDataHtml = getTripDataHtml(strUserCurrency, dicTripData["strTitle"], dicTripData["intUserCurrencyCost"], dicTripData["strIntroduction"], dicTripData["strLocation"], dicTripData["intDurationHour"], dicTripData["strOriginUrl"], dicTripData["strImageUrl"], dicTripData["intReviewStar"], dicTripData["intReviewVisitor"] ,dicTripData["intId"]);
             $("div.findResultDiv ul.lstTripData").append(strTripDataHtml);
         };
+        
         //page data
         var dicPageData = jsonResp["page"];
         console.log(dicPageData);
@@ -356,6 +358,8 @@ function search(condition){
             $("#next_page_link").attr("page_value", dicPageData["current_page"]+1);
         }
     });
+    
+    
 
 };
 
@@ -409,6 +413,9 @@ function getTripDataHtml(strUserCurrency, strTitle, intUserCurrencyCost, strIntr
         "</div>",
     "</li>"
     ].join("");
+    
+    alert("5566");
+    
     return strTripDataHtml;
 };
 
