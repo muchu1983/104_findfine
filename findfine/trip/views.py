@@ -61,16 +61,17 @@ def tripFilter(request=None):
         qsetMatchedTrip = qsetMatchedTrip.filter(intDurationHour__lte=intMaxDurationHour, intDurationHour__gte=intMinDurationHour)
     if strOrderBy:
         qsetMatchedTrip = qsetMatchedTrip.order_by(strOrderBy)
-    for matchedTrip in qsetMatchedTrip:
+    #分頁與輸出結果 0:20,20:40,40:60....
+    intTripPerPage = 20
+    intTotalMatchedTripCount = qsetMatchedTrip.count()
+    for matchedTrip in qsetMatchedTrip[(intPageIndex-1)*intTripPerPage:intPageIndex*intTripPerPage if intPageIndex*intTripPerPage < intTotalMatchedTripCount else intTotalMatchedTripCount]:
         dicTripData = convertTripDataToJsonDic(request=request, matchedTrip=matchedTrip, fUsdToUserCurrencyExRate=fUsdToUserCurrencyExRate)
         lstDicTripData.append(dicTripData)
-    #分頁與輸出結果
-    intTripPerPage = 20
     dicFilterResultJson = {
-        "trip":lstDicTripData[(intPageIndex-1)*intTripPerPage:intPageIndex*intTripPerPage if intPageIndex*intTripPerPage < len(lstDicTripData) else len(lstDicTripData)],# 0:10,10:20,20:30....
+        "trip":lstDicTripData,
         "page":{
-            "total_trip":len(lstDicTripData),
-            "total_page":int((len(lstDicTripData)/intTripPerPage)+1),
+            "total_trip":intTotalMatchedTripCount,
+            "total_page":int((intTotalMatchedTripCount/intTripPerPage)+1),
             "trip_per_page":intTripPerPage,
             "current_page":intPageIndex
         }
