@@ -1,14 +1,8 @@
 (function($){
-    
     $(document).ready(initWishList);
     function initWishList(){
-        
-        //TODO 需加入帳號 才能篩選 wish list
-        
         $.getJSON("/trip/getFavoriteTrip", function(jsonResp){
-
             $(".content ul").html("");
-        
             var strUserCurrency = $("#moneySelect").val();
             $("div.userCurrencySpan").html(strUserCurrency);
         //trip data
@@ -18,7 +12,6 @@
                 var strTripDataHtml = getTripDataHtml(strUserCurrency, dicTripData["strTitle"], dicTripData["intUserCurrencyCost"], dicTripData["strIntroduction"], dicTripData["strLocation"], dicTripData["intDurationHour"], dicTripData["strOriginUrl"], dicTripData["strImageUrl"], dicTripData["intReviewStar"], dicTripData["intReviewVisitor"], dicTripData["intId"] );
                 $(".content ul").append(strTripDataHtml);
             };
-            
         });
 
         //組出單組查詢結果出來的html字串
@@ -63,24 +56,27 @@
             return strTripDataHtml;
         };
     };
+
 })(jQuery);
 
+function removeFavoriteTrip( intId ){
+    var strAddFavoriteTripUrl = "/trip/removeFavoriteTrip?intTripId="+intId ;
+    $.getJSON(strAddFavoriteTripUrl, function(jsonResp){
+        var status = jsonResp["delete_favorite_trip_status"];
+        alert(status);
+    });
+    initWishList();
+    //window.location.reload();
+    alert("after");
+}
 
-    function addPlan( intId ){
-        //若無plan 導頁至 myPlan
-        
-        //若有plan 下拉選單展示myPlan 選其一後 導頁至 editPlan
-    }
 
-    function removeFavoriteTrip( intId ){
-        var strAddFavoriteTripUrl = "/trip/removeFavoriteTrip?intTripId="+intId ;
-        $.getJSON(strAddFavoriteTripUrl, function(jsonResp){
-            var status = jsonResp["delete_favorite_trip_status"];
-            alert(status);
-        });
-        //initWishList();
-        window.location.reload();
-    }
+function addPlan( intId ){
+    //若無plan 導頁至 myPlan
+    //若有plan 下拉選單展示myPlan 選其一後 導頁至 editPlan
+}
+
+
 
 
 

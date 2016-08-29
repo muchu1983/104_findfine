@@ -337,7 +337,7 @@ function search(condition){
         var lstDicTripData = jsonResp["trip"];
         for (i = 0; i < lstDicTripData.length; i++) {
             var dicTripData = lstDicTripData[i];
-            var strTripDataHtml = getTripDataHtml(strUserCurrency, dicTripData["strTitle"], dicTripData["intUserCurrencyCost"], dicTripData["strIntroduction"], dicTripData["strLocation"], dicTripData["intDurationHour"], dicTripData["strOriginUrl"], dicTripData["strImageUrl"], dicTripData["intReviewStar"], dicTripData["intReviewVisitor"] ,dicTripData["intId"]);
+            var strTripDataHtml = getTripDataHtml(strUserCurrency, dicTripData["strTitle"], dicTripData["intUserCurrencyCost"], dicTripData["strIntroduction"], dicTripData["strLocation"], dicTripData["intDurationHour"], dicTripData["strOriginUrl"], dicTripData["strImageUrl"], dicTripData["intReviewStar"], dicTripData["intReviewVisitor"] ,dicTripData["intId"] ,dicTripData["isFavoriteTrip"]);
             $("div.findResultDiv ul.lstTripData").append(strTripDataHtml);
         };
         
@@ -364,7 +364,7 @@ function search(condition){
 };
 
 //組出單組查詢結果出來的html字串
-function getTripDataHtml(strUserCurrency, strTitle, intUserCurrencyCost, strIntroduction, strLocation, intDurationHour, strOriginUrl, strImageUrl, intReviewStar, intReviewVisitor, intId ){
+function getTripDataHtml(strUserCurrency, strTitle, intUserCurrencyCost, strIntroduction, strLocation, intDurationHour, strOriginUrl, strImageUrl, intReviewStar, intReviewVisitor, intId, isFavoriteTrip ){
     var reviewStar;
     if(intReviewStar==0){
         reviewStar='☆☆☆☆☆';
@@ -386,6 +386,17 @@ function getTripDataHtml(strUserCurrency, strTitle, intUserCurrencyCost, strIntr
     }
     
     var strIntroduction=strIntroduction.substr( 0 , 135 );
+    
+    var favoriteTrip ;
+    
+    //alert("isFavoriteTrip : "+isFavoriteTrip +"  length : "+isFavoriteTrip.toString());
+    
+    if(isFavoriteTrip.toString()=="true"){
+        favoriteTrip="<div class=\"favorite\">♥</div>";
+    }
+    if(isFavoriteTrip.toString()=="false"){
+        favoriteTrip="<div class=\"favorite\" onclick=\"addFavoriteTrip("+intId+")\">♡</div>";
+    }
     
     var strTripDataHtml = [
     "<li class=\"col-xs-12 col-md-6\">",
@@ -409,12 +420,12 @@ function getTripDataHtml(strUserCurrency, strTitle, intUserCurrencyCost, strIntr
             "</div>",
             //TODO 要加TOUR KEY 觸發事件後加入 wish list  intId
             //"<div class=\"favorite\"><a href=\"/trip/addFavoriteTrip?intTripId=3\" return false;> ♥</a></div>",
-            "<div class=\"favorite\" onclick=\"addFavoriteTrip("+intId+")\">♥</div>",
+            //"<div class=\"favorite\" onclick=\"addFavoriteTrip("+intId+")\">♥</div>",
+            favoriteTrip,
+            //isFavoriteTrip
         "</div>",
     "</li>"
     ].join("");
-    
-    alert("5566");
     
     return strTripDataHtml;
 };
@@ -471,4 +482,7 @@ function addFavoriteTrip( intId ){
             var status = jsonResp["add_favorite_trip_status"];
             alert(status);
         });
+        initFind();
+        //alert("after");
+        
 }
