@@ -99,59 +99,45 @@ class CrawlerForKLOOK:
                 logging.info("save city url: %s"%strCityHref)
         
     #解析 city 頁面
-    def parseCityPage(self, strCountryPage1Url=None):
+    def parseCityPage(self, strCityPage1Url=None):
         #找尋 product 超連結
-        elesProductA = self.driver.find_elements_by_css_selector("article.product-listview div.product-info-container div div a")
+        elesProductA = self.driver.find_elements_by_css_selector("#cityTagActivities section.item a")
         for eleProductA in elesProductA:
             strProductUrl = eleProductA.get_attribute("href")
             #儲存 product 超連結至 localdb
-            logging.info("insert product url: %s"%strProductUrl)
-            self.db.insertProductUrlIfNotExists(strProductUrl=strProductUrl, strCountryPage1Url=strCountryPage1Url)
-    
-    #檢查 city 有無下一頁
-    def checkNextCountryPageExist(self):
-        isNextCountryPageExist = False
-        strNextPageAText = self.driver.find_element_by_css_selector("ul.pagination li.a-page:last-child a.toPage").text
-        if strNextPageAText and strNextPageAText == "»":
-            isNextCountryPageExist = True
-        return isNextCountryPageExist
+            if strProductUrl.startswith("https://www.klook.com/activity/"):
+                logging.info("insert product url: %s"%strProductUrl)
+                self.db.insertProductUrlIfNotExists(strProductUrl=strProductUrl, strCityPage1Url=strCityPage1Url)
         
     #爬取 city 頁面
     def crawlCityPage(self, uselessArg1=None):
         logging.info("crawl city page")
-        #取得 Db 中尚未下載的 topic url
-        lstStrNotObtainedCountryPage1Url = self.db.fetchallNotObtainedCountryUrl()
-        for strNotObtainedCountryPage1Url in lstStrNotObtainedCountryPage1Url:
-            #re 找出 country 名稱
-            strCountryName = re.match("^https://www.kkday.com/en/product/productlist/.*countryname=(.*)$", strNotObtainedCountryPage1Url).group(1)
-            #country 頁面
-            try:
-                intCountryPageNum = 1
-                #country 第1頁
-                time.sleep(random.randint(2,5)) #sleep random time
-                strCountryUrlPageSuffix = "&sort=hdesc&page=%d"%intCountryPageNum
-                self.driver.get(strNotObtainedCountryPage1Url + strCountryUrlPageSuffix)
+        #取得 Db 中尚未下載的 city url
+        lstStrNotObtainedCityPage1Url = self.db.fetchallNotObtainedCityUrl()
+        for strNotObtainedCityPage1Url in lstStrNotObtainedCityPage1Url:
+            #re 找出 city 名稱
+            strCityName = re.match("^https://www.klook.com/city/[\d]+-(.*)/$", strNotObtainedCityPage1Url).group(1)
+            #city 頁面
+            intCityPageNum = 1
+            #city 第1頁
+            time.sleep(random.randint(2,5)) #sleep random time
+            self.driver.get(strNotObtainedCityPage1Url)
+            #解析 product 超連結
+            self.parseCityPage(strCityPage1Url=strNotObtainedCityPage1Url)
+            #檢查 city 有無下一頁
+            elesNextPageA = self.driver.find_elements_by_css_selector("#Pagination a.next")
+            while len(elesNextPageA) > 0:
+                time.sleep(random.randint(5,8)) #sleep random time
+                intCityPageNum = intCityPageNum+1
+                elesNextPageA[0].click()
+                time.sleep(5) #wait click action complete
                 #解析 product 超連結
-                self.parseCountryPage(strCountryPage1Url=strNotObtainedCountryPage1Url)
-                #檢查 country 有無下一頁
-                isNextCountryPageExist = self.checkNextCountryPageExist()
-                while isNextCountryPageExist:
-                    time.sleep(random.randint(5,8)) #sleep random time
-                    intCountryPageNum = intCountryPageNum+1
-                    strCountryUrlPageSuffix = "&sort=hdesc&page=%d"%intCountryPageNum
-                    self.driver.get(strNotObtainedCountryPage1Url + strCountryUrlPageSuffix)
-                    #解析 product 超連結
-                    self.parseCountryPage(strCountryPage1Url=strNotObtainedCountryPage1Url)
-                    #檢查 country 有無下一頁
-                    isNextCountryPageExist = self.checkNextCountryPageExist()
-                #更新 country DB 為已抓取 (isGot = 1)
-                self.db.updateCountryStatusIsGot(strCountryPage1Url=strNotObtainedCountryPage1Url)
-                logging.info("got country %s find %d pages"%(strCountryName, intCountryPageNum))
-            except Exception as e:
-                logging.warning(str(e))
-                logging.warning("selenium driver crashed. skip get country: %s"%strCountryName)
-            finally:
-                self.restartDriver() #重啟
+                self.parseCityPage(strCityPage1Url=strNotObtainedCityPage1Url)
+                #檢查 city 有無下一頁
+                elesNextPageA = self.driver.find_elements_by_css_selector("#Pagination a.next")
+            #更新 country DB 為已抓取 (isGot = 1)
+            self.db.updateCityStatusIsGot(strCityPage1Url=strNotObtainedCityPage1Url)
+            logging.info("got city %s find %d pages"%(strCityName, intCityPageNum))
             
     #解析 product 頁面
     def parseProductPage(self, strProductUrl=None):
