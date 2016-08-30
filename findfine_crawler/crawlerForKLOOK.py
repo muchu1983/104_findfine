@@ -143,106 +143,62 @@ class CrawlerForKLOOK:
     def parseProductPage(self, strProductUrl=None):
         dicProductJson = {}
         #strSource
-        dicProductJson["strSource"] = "KKDAY"
+        dicProductJson["strSource"] = "KLOOK"
         #strOriginUrl
         dicProductJson["strOriginUrl"] = strProductUrl
         #strImageUrl
-        strImageDivStyle = self.driver.find_element_by_css_selector("div#header-imageview div.productPage-photos div.img-bg-full").get_attribute("style")
-        strImageDivStyle = re.sub("[:;\"\s\(\)]", "", strImageDivStyle).strip()
-        strImageUrl = re.match("^background-imageurl//(img\.kkday\.com/image/.*)$", strImageDivStyle).group(1)
-        dicProductJson["strImageUrl"] = "http://" + strImageUrl.strip()
         #strTitle
-        strTitle = self.driver.find_element_by_css_selector("div.productview div.container div.productPage-detail h1").text
-        dicProductJson["strTitle"] = strTitle.strip()
         #strLocation
-        strLocation = self.driver.find_element_by_css_selector("div.productview div.container div.productPage-detail div.col-md-pull-4 span.h5").text
-        strLocation = re.sub("The location：", "", strLocation)
-        dicProductJson["strLocation"] = strLocation.strip()
         #intUsdCost
-        strUsdCostText = self.driver.find_element_by_css_selector("div.lowestPrice div.text-right h2.h1").text
-        strUsdCostText = re.sub("[^\d]", "", strUsdCostText.strip())
-        dicProductJson["intUsdCost"] = int(int(strUsdCostText)/31.735)
         #intReviewStar
-        elesStarI = self.driver.find_elements_by_css_selector("div.div-star span.h5 i.fa-star.text-primary")
-        dicProductJson["intReviewStar"] = len(elesStarI)
         #intReviewVisitor
-        intReviewVisitor = 0
-        elesReviewVisitorSpan = self.driver.find_elements_by_css_selector("div.div-star span.h5 span.text-primary")
-        if len(elesReviewVisitorSpan) > 0:
-            strReviewVisitorText = elesReviewVisitorSpan[0].text
-            intReviewVisitor = int(strReviewVisitorText.strip())
-        dicProductJson["intReviewVisitor"] = intReviewVisitor
         #strIntroduction
-        strIntroduction = self.driver.find_element_by_css_selector("div.prod-intro span").text
-        dicProductJson["strIntroduction"] = strIntroduction.strip()
         #intDurationHour
-        intDurationHour = 0
-        strDurationText = self.driver.find_element_by_css_selector("div.productview div.container div.productPage-detail div.col-md-12 span.h5").text
-        strIntInDurationHourText = re.sub("[^\d]", "", strDurationText)
-        if "hour" in strDurationText:
-            intDurationHour = int(strIntInDurationHourText)
-        elif "day" in strDurationText:
-            intDurationHour = int(strIntInDurationHourText)*24
-        else:
-            pass
-        dicProductJson["intDurationHour"] = intDurationHour
         #strGuideLanguage
-        lstStrGuideLanguage = []
-        elesGuideLanguageImg = self.driver.find_elements_by_css_selector("div.productview div.container div.productPage-detail div.guide_lang_image img")
-        for eleGuideLanguageImg in elesGuideLanguageImg:
-            lstStrGuideLanguage.append(eleGuideLanguageImg.get_attribute("data-original-title").strip())
-        dicProductJson["strGuideLanguage"] = ",".join(lstStrGuideLanguage)
         #intOption (待確認)
-        dicProductJson["intOption"] = None
         #strStyle (kkday 無該資料)
-        dicProductJson["strStyle"] = None
         self.lstDicParsedProductJson.append(dicProductJson)
     
-    #爬取 product 頁面 (strCountryPage1Url == None 會自動找尋已爬取完成之 country)
-    def crawlProductPage(self, strCountryPage1Url=None):
+    #爬取 product 頁面 (strCityPage1Url == None 會自動找尋已爬取完成之 city)
+    def crawlProductPage(self, strCityPage1Url=None):
         #清空計憶體殘留資料
         self.lstDicParsedProductJson = []
         self.intProductJsonIndex = 1
-        if not strCountryPage1Url:
-            #未指定 country
-            lstStrObtainedCountryUrl = self.db.fetchallCompletedObtainedCountryUrl()
-            for strObtainedCountryUrl in lstStrObtainedCountryUrl:
-                self.crawlProductPageWithGivenCountryUrl(strCountryPage1Url=strObtainedCountryUrl)
+        if not strCityPage1Url:
+            #未指定 city
+            lstStrObtainedCityUrl = self.db.fetchallCompletedObtainedCityUrl()
+            for strObtainedCountryUrl in lstStrObtainedCityUrl:
+                self.crawlProductPageWithGivenCityUrl(strCityPage1Url=strObtainedCountryUrl)
         else:
-            #有指定 country url
-            self.crawlProductPageWithGivenCountryUrl(strCountryPage1Url=strCountryPage1Url)
+            #有指定 city url
+            self.crawlProductPageWithGivenCityUrl(strCityPage1Url=strCityPage1Url)
         #將最後資料寫入 json
         if len(self.lstDicParsedProductJson) > 0:
             strJsonFileName = "%d_product.json"%(self.intProductJsonIndex*100)
-            strProductJsonFilePath = self.fileUtil.getPackageResourcePath(strPackageName="findfine_crawler.resource.parsed_json.kkday", strResourceName=strJsonFileName)
+            strProductJsonFilePath = self.fileUtil.getPackageResourcePath(strPackageName="findfine_crawler.resource.parsed_json.klook", strResourceName=strJsonFileName)
             self.ffUtil.writeObjectToJsonFile(dicData=self.lstDicParsedProductJson, strJsonFilePath=strProductJsonFilePath)
             self.lstDicParsedProductJson = []
             
-    #爬取 product 頁面 (指定 country url)
-    def crawlProductPageWithGivenCountryUrl(self, strCountryPage1Url=None):
-        logging.info("crawl product page with country %s"%strCountryPage1Url)
-        #取得 DB 紀錄中，指定 strCountryPage1Url country 的 product url
-        lstStrProductUrl = self.db.fetchallProductUrlByCountryUrl(strCountryPage1Url=strCountryPage1Url)
+    #爬取 product 頁面 (指定 city url)
+    def crawlProductPageWithGivenCityUrl(self, strCityPage1Url=None):
+        logging.info("crawl product page with city %s"%strCityPage1Url)
+        #取得 DB 紀錄中，指定 strCityPage1Url city 的 product url
+        lstStrProductUrl = self.db.fetchallProductUrlByCityUrl(strCityPage1Url=strCityPage1Url)
         for strProductUrl in lstStrProductUrl:
             #檢查 product 是否已下載
             if not self.db.checkProductIsGot(strProductUrl=strProductUrl):
                 time.sleep(random.randint(5,8)) #sleep random time
-                try:
-                    self.driver.get(strProductUrl)
-                    #解析 product 頁面
-                    self.parseProductPage(strProductUrl=strProductUrl)
-                    #更新 product DB 為已爬取 (isGot = 1)
-                    #self.db.updateProductStatusIsGot(strProductUrl=strProductUrl)
-                except Exception as e:
-                    logging.warning(str(e))
-                    logging.warning("selenium driver crashed. skip get product: %s"%strProductUrl)
-                    self.restartDriver() #重啟 
+                self.driver.get(strProductUrl)
+                #解析 product 頁面
+                self.parseProductPage(strProductUrl=strProductUrl)
+                #更新 product DB 為已爬取 (isGot = 1)
+                #self.db.updateProductStatusIsGot(strProductUrl=strProductUrl)
             #顯示進度
             logging.info("進度: %d/100"%len(self.lstDicParsedProductJson))
             #寫入 json
             if len(self.lstDicParsedProductJson) == 100:
                 strJsonFileName = "%d_product.json"%(self.intProductJsonIndex*100)
-                strProductJsonFilePath = self.fileUtil.getPackageResourcePath(strPackageName="findfine_crawler.resource.parsed_json.kkday", strResourceName=strJsonFileName)
+                strProductJsonFilePath = self.fileUtil.getPackageResourcePath(strPackageName="findfine_crawler.resource.parsed_json.klook", strResourceName=strJsonFileName)
                 self.ffUtil.writeObjectToJsonFile(dicData=self.lstDicParsedProductJson, strJsonFilePath=strProductJsonFilePath)
                 self.intProductJsonIndex = self.intProductJsonIndex+1
                 self.lstDicParsedProductJson = []

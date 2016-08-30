@@ -29,7 +29,7 @@ class CrawlerForKLOOKTest(unittest.TestCase):
     def test_crawlIndexPage(self):
         logging.info("CrawlerForKLOOKTest.test_crawlIndexPage")
         self.crawler.crawlIndexPage()
-    """
+    
     #測試爬取 city page
     def test_crawlCityPage(self):
         logging.info("CrawlerForKLOOKTest.test_crawlCityPage")
@@ -39,7 +39,7 @@ class CrawlerForKLOOKTest(unittest.TestCase):
     def test_crawlProductPage(self):
         logging.info("CrawlerForKLOOKTest.test_crawlProductPage")
         self.crawler.crawlProductPage(strCityPage1Url=None)
-    """
+    
 #測試開始
 if __name__ == "__main__":
     unittest.main(exit=False)
