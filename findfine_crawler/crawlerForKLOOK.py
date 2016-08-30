@@ -13,6 +13,7 @@ import re
 import random
 from selenium import webdriver
 from selenium.common.exceptions import NoSuchElementException
+from selenium.webdriver.common.action_chains import ActionChains
 from bennu.filesystemutility import FileSystemUtility as FilesysUtility
 from findfine_crawler.utility import Utility as FfUtility
 from findfine_crawler.localdb import LocalDbForKLOOK
@@ -95,8 +96,9 @@ class CrawlerForKLOOK:
             strCityHref = eleCityA.get_attribute("href")
             #儲存 city 超連結至 localdb
             if strCityHref.startswith("https://www.klook.com/city/"):
-                self.db.insertCityIfNotExists(strCityPage1Url=strCityHref)
-                logging.info("save city url: %s"%strCityHref)
+                strCityPage1Url = strCityHref + u"1-page/" #加上頁碼會切換到選擇 Browse All 的 filter
+                self.db.insertCityIfNotExists(strCityPage1Url=strCityPage1Url)
+                logging.info("save city url: %s"%strCityPage1Url)
         
     #解析 city 頁面
     def parseCityPage(self, strCityPage1Url=None):
@@ -189,6 +191,16 @@ class CrawlerForKLOOK:
             if not self.db.checkProductIsGot(strProductUrl=strProductUrl):
                 time.sleep(random.randint(5,8)) #sleep random time
                 self.driver.get(strProductUrl)
+                #切換目前幣別至 USD
+                strCurrentCurrencyText = self.driver.find_element_by_css_selector("#j_currency a:nth-of-type(1)").text
+                logging.info("目前幣別: %s"%strCurrentCurrencyText)
+                if strCurrentCurrencyText != "USD":
+                    logging.info("切換目前幣別至 USD")
+                    eleCurrencyLi = self.driver.find_element_by_css_selector("#j_currency")
+                    eleUsdA = self.driver.find_element_by_css_selector("#j_currency li a[data-value=USD]")
+                    actHoverThenClick = ActionChains(self.driver)
+                    actHoverThenClick.move_to_element(eleCurrencyLi).move_to_element(eleUsdA).click().perform()
+                    time.sleep(10) #等待幣別轉換完成
                 #解析 product 頁面
                 self.parseProductPage(strProductUrl=strProductUrl)
                 #更新 product DB 為已爬取 (isGot = 1)
