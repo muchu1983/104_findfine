@@ -61,6 +61,9 @@ class LocalDbForJsonImporter:
     #清除 行程 資料
     def clearTripData(self):
         deleteCursor = self.mysqlConnection.cursor(buffered=True)
+        strDeleteSql = ("DELETE FROM trip_favoritetrip")
+        deleteCursor.execute(strDeleteSql)
+        self.mysqlConnection.commit()
         strDeleteSql = ("DELETE FROM trip_trip")
         deleteCursor.execute(strDeleteSql)
         self.mysqlConnection.commit()
