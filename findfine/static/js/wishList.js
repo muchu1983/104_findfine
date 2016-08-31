@@ -1,5 +1,6 @@
-(function($){
+
     $(document).ready(initWishList);
+    
     function initWishList(){
         $.getJSON("/trip/getFavoriteTrip", function(jsonResp){
             $(".content ul").html("");
@@ -9,10 +10,13 @@
             var lstDicTripData = jsonResp["trip"];
             for (i = 0; i < lstDicTripData.length; i++) {
                 var dicTripData = lstDicTripData[i];
+
                 var strTripDataHtml = getTripDataHtml(strUserCurrency, dicTripData["strTitle"], dicTripData["intUserCurrencyCost"], dicTripData["strIntroduction"], dicTripData["strLocation"], dicTripData["intDurationHour"], dicTripData["strOriginUrl"], dicTripData["strImageUrl"], dicTripData["intReviewStar"], dicTripData["intReviewVisitor"], dicTripData["intId"] );
                 $(".content ul").append(strTripDataHtml);
             };
+
         });
+        
 
         //組出單組查詢結果出來的html字串
         function getTripDataHtml(strUserCurrency, strTitle, intUserCurrencyCost, strIntroduction, strLocation, intDurationHour, strOriginUrl, strImageUrl, intReviewStar, intReviewVisitor, intId ){
@@ -57,7 +61,6 @@
         };
     };
 
-})(jQuery);
 
 function removeFavoriteTrip( intId ){
     var strAddFavoriteTripUrl = "/trip/removeFavoriteTrip?intTripId="+intId ;
