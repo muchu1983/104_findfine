@@ -174,10 +174,20 @@ class CrawlerForKLOOK:
         elesIntroduction = self.driver.find_elements_by_css_selector("section.activity div.j_blank_window.actinfo *")
         for eleIntroduction in elesIntroduction:
             strIntroduction = strIntroduction + u" " + re.sub("\s", " ", eleIntroduction.text.strip())
+        dicProductJson["strIntroduction"] = strIntroduction
         #intDurationHour
+        strDurationHour = self.driver.find_element_by_css_selector("section.activity section.j_blank_window.actinfo:nth-of-type(1) div div:nth-of-type(1) p").text
+        strDurationHour = re.sub("\s", " ", strDurationHour.lower())
+        intDurationHour = self.convertDurationStringToHourInt(strDurtation=strDurationHour)
+        dicProductJson["intDurationHour"] = intDurationHour
         #strGuideLanguage
+        strGuideLanguage = self.driver.find_element_by_css_selector("section.activity section.j_blank_window.actinfo:nth-of-type(1) div div:nth-of-type(2) p").text
+        strGuideLanguage = re.match("^language (.*)$", re.sub("\s", " ", strGuideLanguage.lower())).group(1)
+        dicProductJson["strGuideLanguage"] = strGuideLanguage
         #intOption (待確認)
-        #strStyle (kkday 無該資料)
+        dicProductJson["intOption"] = None
+        #strStyle (klook 無該資料)
+        dicProductJson["strStyle"] = None
         self.lstDicParsedProductJson.append(dicProductJson)
     
     #爬取 product 頁面 (strCityPage1Url == None 會自動找尋已爬取完成之 city)
@@ -238,3 +248,20 @@ class CrawlerForKLOOK:
                 self.ffUtil.writeObjectToJsonFile(dicData=self.lstDicParsedProductJson, strJsonFilePath=strProductJsonFilePath)
                 self.intProductJsonIndex = self.intProductJsonIndex+1
                 self.lstDicParsedProductJson = []
+                
+    #轉換 duration 資訊
+    def convertDurationStringToHourInt(self, strDurtation=None):
+        intDefaultDuration = 1
+        if not strDurtation or ("hour" not in strDurtation and "day" not in strDurtation):
+            return intDefaultDuration
+        else:
+            intTotalDurationHour = 0
+            mDurationHour = re.search("([\d]+) hour", strDurtation)
+            mDurationDay = re.search("([\d]+) day", strDurtation)
+            if mDurationHour:
+                intDurationHour = int(float(mDurationHour.group(1)))
+                intTotalDurationHour = intTotalDurationHour + intDurationHour
+            if mDurationDay:
+                intDurationDay = int(float(mDurationDay.group(1)))
+                intTotalDurationHour = intTotalDurationHour + (intDurationDay*24)
+            return intTotalDurationHour
