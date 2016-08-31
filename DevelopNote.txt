@@ -93,6 +93,9 @@ gogobot:
 http://developers.gogobot.com/public/
 ===
 GetYourGuide:
+https://partner.getyourguide.com/en/home.php
+帳號：liangtian@hotmail.com
+密碼：768768
 === 自己爬
 klook:
 voyagin:
