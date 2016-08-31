@@ -1,5 +1,6 @@
-(function($){
+
     $(document).ready(initWishList);
+    
     function initWishList(){
         $.getJSON("/trip/getFavoriteTrip", function(jsonResp){
             $(".content ul").html("");
@@ -9,10 +10,13 @@
             var lstDicTripData = jsonResp["trip"];
             for (i = 0; i < lstDicTripData.length; i++) {
                 var dicTripData = lstDicTripData[i];
+
                 var strTripDataHtml = getTripDataHtml(strUserCurrency, dicTripData["strTitle"], dicTripData["intUserCurrencyCost"], dicTripData["strIntroduction"], dicTripData["strLocation"], dicTripData["intDurationHour"], dicTripData["strOriginUrl"], dicTripData["strImageUrl"], dicTripData["intReviewStar"], dicTripData["intReviewVisitor"], dicTripData["intId"] );
                 $(".content ul").append(strTripDataHtml);
             };
+
         });
+        
 
         //組出單組查詢結果出來的html字串
         function getTripDataHtml(strUserCurrency, strTitle, intUserCurrencyCost, strIntroduction, strLocation, intDurationHour, strOriginUrl, strImageUrl, intReviewStar, intReviewVisitor, intId ){
@@ -39,7 +43,7 @@
             var strIntroduction=strIntroduction.substr( 0 , 135 );
     
             var strTripDataHtml = [
-            "<li style=\"list-style-type:none;\">",
+            "<li id="+intId+" style=\"list-style-type:none;\">",
                         "<div>",
                             //TODO 需要每個TOUR的KEY
                             "<p><img src=\""+strImageUrl+"\"/><p>",
@@ -57,17 +61,19 @@
         };
     };
 
-})(jQuery);
 
 function removeFavoriteTrip( intId ){
     var strAddFavoriteTripUrl = "/trip/removeFavoriteTrip?intTripId="+intId ;
     $.getJSON(strAddFavoriteTripUrl, function(jsonResp){
         var status = jsonResp["delete_favorite_trip_status"];
-        alert(status);
     });
-    initWishList();
+    
+    $('#'+intId+'').hide();
+    
+    //alert(" initWishList() 前");
+    //initWishList();
+    //alert(" initWishList() 後");
     //window.location.reload();
-    alert("after");
 }
 
 
