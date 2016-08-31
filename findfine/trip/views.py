@@ -17,6 +17,7 @@ from trip.models import FavoriteTrip
 from trip.models import CustomizedTripPlan
 from account.models import UserAccount
 from itertools import chain
+from geopy.geocoders import GoogleV3
 
 #搜尋過瀘與排序 trip 
 def tripFilter(request=None):
@@ -200,3 +201,15 @@ def checkIsFavoriteTrip(request=None, matchedTrip=None):
     else:
         #尚未登入 一律"不是"偏好的行程
         return False
+        
+#使用 geopy 查找 經緯度
+def geopyGoogleV3(request=None):
+    strLocation = request.GET.get("location", None)
+    dicGeopyResult = {}
+    if strLocation:
+        geolocator = GoogleV3()
+        location, (latitude, longitude) = geolocator.geocode(strLocation, exactly_one=True)
+        dicGeopyResult["location"] = location
+        dicGeopyResult["latitude"] = latitude
+        dicGeopyResult["longitude"] = longitude
+    return JsonResponse(dicGeopyResult, safe=False)

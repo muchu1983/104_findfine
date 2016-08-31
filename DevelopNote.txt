@@ -4,6 +4,7 @@
 使用 pip 安裝的第三方庫
 python3 -m pip install "Django<1.9"
 python3 -m pip install BeautifulSoup4
+python3 -m pip install geopy
 lxml-3.6.0.win-amd64-py3.4.exe
 
 開發使用的資料庫版本

@@ -11,6 +11,7 @@ import time
 import logging
 import re
 import random
+import urllib.parse
 from selenium import webdriver
 from selenium.common.exceptions import NoSuchElementException
 from selenium.webdriver.common.action_chains import ActionChains
@@ -149,12 +150,30 @@ class CrawlerForKLOOK:
         #strOriginUrl
         dicProductJson["strOriginUrl"] = strProductUrl
         #strImageUrl
+        strImageSectionStyle = self.driver.find_element_by_css_selector("section.banner").get_attribute("style")
+        strImageSectionStyle = re.sub("[:;\"\s\(\)]", "", strImageSectionStyle).strip()
+        #strImageUrl 中會出現中文 先進行 urlencode
+        strImageUrl = u"https://" + urllib.parse.quote(re.match("^.*https//(res\.klook\.com/images/.*)$", strImageSectionStyle).group(1).strip())
+        dicProductJson["strImageUrl"] = strImageUrl
         #strTitle
+        strTitle = self.driver.find_element_by_css_selector("section.activity header h1.t_main").text
+        dicProductJson["strTitle"] = strTitle.strip()
         #strLocation
+        strLocation = self.driver.find_element_by_css_selector("section.activity header p span.icon-label:nth-of-type(1)").text
+        dicProductJson["strLocation"] = strLocation.strip()
         #intUsdCost
+        strUsdCost = self.driver.find_element_by_css_selector("div.right_price_box span.t_main").text
+        strUsdCost = re.sub("[^\d]", "", strUsdCost)
+        dicProductJson["intUsdCost"] = int(strUsdCost.strip())
         #intReviewStar
+        dicProductJson["intReviewStar"] = 5
         #intReviewVisitor
+        dicProductJson["intReviewVisitor"] = 1
         #strIntroduction
+        strIntroduction = u""
+        elesIntroduction = self.driver.find_elements_by_css_selector("section.activity div.j_blank_window.actinfo *")
+        for eleIntroduction in elesIntroduction:
+            strIntroduction = strIntroduction + u" " + re.sub("\s", " ", eleIntroduction.text.strip())
         #intDurationHour
         #strGuideLanguage
         #intOption (待確認)
@@ -190,21 +209,26 @@ class CrawlerForKLOOK:
             #檢查 product 是否已下載
             if not self.db.checkProductIsGot(strProductUrl=strProductUrl):
                 time.sleep(random.randint(5,8)) #sleep random time
-                self.driver.get(strProductUrl)
-                #切換目前幣別至 USD
-                strCurrentCurrencyText = self.driver.find_element_by_css_selector("#j_currency a:nth-of-type(1)").text
-                logging.info("目前幣別: %s"%strCurrentCurrencyText)
-                if strCurrentCurrencyText != "USD":
-                    logging.info("切換目前幣別至 USD")
-                    eleCurrencyLi = self.driver.find_element_by_css_selector("#j_currency")
-                    eleUsdA = self.driver.find_element_by_css_selector("#j_currency li a[data-value=USD]")
-                    actHoverThenClick = ActionChains(self.driver)
-                    actHoverThenClick.move_to_element(eleCurrencyLi).move_to_element(eleUsdA).click().perform()
-                    time.sleep(10) #等待幣別轉換完成
-                #解析 product 頁面
-                self.parseProductPage(strProductUrl=strProductUrl)
-                #更新 product DB 為已爬取 (isGot = 1)
-                #self.db.updateProductStatusIsGot(strProductUrl=strProductUrl)
+                try:
+                    self.driver.get(strProductUrl)
+                    #切換目前幣別至 USD
+                    strCurrentCurrencyText = self.driver.find_element_by_css_selector("#j_currency a:nth-of-type(1)").text
+                    logging.info("目前幣別: %s"%strCurrentCurrencyText)
+                    if strCurrentCurrencyText != "USD":
+                        logging.info("切換目前幣別至 USD")
+                        eleCurrencyLi = self.driver.find_element_by_css_selector("#j_currency")
+                        eleUsdA = self.driver.find_element_by_css_selector("#j_currency li a[data-value=USD]")
+                        actHoverThenClick = ActionChains(self.driver)
+                        actHoverThenClick.move_to_element(eleCurrencyLi).move_to_element(eleUsdA).click().perform()
+                        time.sleep(10) #等待幣別轉換完成
+                    #解析 product 頁面
+                    self.parseProductPage(strProductUrl=strProductUrl)
+                    #更新 product DB 為已爬取 (isGot = 1)
+                    #self.db.updateProductStatusIsGot(strProductUrl=strProductUrl)
+                except Exception as e:
+                    logging.warning(str(e))
+                    logging.warning("selenium driver crashed. skip get product: %s"%strProductUrl)
+                    self.restartDriver() #重啟 
             #顯示進度
             logging.info("進度: %d/100"%len(self.lstDicParsedProductJson))
             #寫入 json

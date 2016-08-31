@@ -81,7 +81,7 @@ class CrawlerForCITYDISCOVERY:
             #intUsdCost
             dicProductJson["intUsdCost"] = int(float(soupProduct.minPrice.string.strip()))
             #intReviewStar
-            dicProductJson["intReviewStar"] = 0
+            dicProductJson["intReviewStar"] = 5
             #intReviewVisitor
             dicProductJson["intReviewVisitor"] = 1
             #strIntroduction

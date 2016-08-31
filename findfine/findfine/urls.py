@@ -42,6 +42,7 @@ urlpatterns = [
     url(r'^trip/addFavoriteTrip$', trip_views.addFavoriteTrip),
     url(r'^trip/getFavoriteTrip$', trip_views.getFavoriteTrip),
     url(r'^trip/removeFavoriteTrip$', trip_views.removeFavoriteTrip),
+    url(r'^trip/geopyGoogleV3$', trip_views.geopyGoogleV3),
     #page app
     url(r'^$', page_views.showHomePage),
     url(r'^page/home$', page_views.showHomePage),
