@@ -43,7 +43,7 @@
             var strIntroduction=strIntroduction.substr( 0 , 135 );
     
             var strTripDataHtml = [
-            "<li style=\"list-style-type:none;\">",
+            "<li id="+intId+" style=\"list-style-type:none;\">",
                         "<div>",
                             //TODO 需要每個TOUR的KEY
                             "<p><img src=\""+strImageUrl+"\"/><p>",
@@ -66,11 +66,14 @@ function removeFavoriteTrip( intId ){
     var strAddFavoriteTripUrl = "/trip/removeFavoriteTrip?intTripId="+intId ;
     $.getJSON(strAddFavoriteTripUrl, function(jsonResp){
         var status = jsonResp["delete_favorite_trip_status"];
-        alert(status);
     });
-    initWishList();
+    
+    $('#'+intId+'').hide();
+    
+    //alert(" initWishList() 前");
+    //initWishList();
+    //alert(" initWishList() 後");
     //window.location.reload();
-    alert("after");
 }
 
 

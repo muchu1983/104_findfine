@@ -395,7 +395,7 @@ function getTripDataHtml(strUserCurrency, strTitle, intUserCurrencyCost, strIntr
         favoriteTrip="<div class=\"favorite\">♥</div>";
     }
     if(isFavoriteTrip.toString()=="false"){
-        favoriteTrip="<div class=\"favorite\" onclick=\"addFavoriteTrip("+intId+")\">♡</div>";
+        favoriteTrip="<div class=\"favorite\" id="+intId+" onclick=\"addFavoriteTrip("+intId+")\">♡</div>";
     }
     
     var strTripDataHtml = [
@@ -480,9 +480,16 @@ function addFavoriteTrip( intId ){
         var strAddFavoriteTripUrl = "/trip/addFavoriteTrip?intTripId="+intId ;
         $.getJSON(strAddFavoriteTripUrl, function(jsonResp){
             var status = jsonResp["add_favorite_trip_status"];
-            alert(status);
         });
-        initFind();
-        //alert("after");
+        //$('.favorite').html('♥');
+        //this.html('♥');  no
+        //this.$('.favorite').html('♥'); no
+        //$(this).$('.favorite').html('♥'); no
+        //$('this .favorite').html('♥'); 
+
+        $('#'+intId+'').html('♥');
         
+        //alert(" initFind() 前");
+        //initFind();
+        //alert(" initFind() 後");
 }
