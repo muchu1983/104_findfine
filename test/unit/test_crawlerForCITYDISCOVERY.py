@@ -24,7 +24,7 @@ class CrawlerForCITYDISCOVERYTest(unittest.TestCase):
     #收尾
     def tearDown(self):
         pass
-    """
+    
     #測試 下載 city-discovery-products_paidlinks.zip
     def test_downloadCityDiscoveryProductsPaidlinksZip(self):
         logging.info("CrawlerForCITYDISCOVERYTest.test_downloadCityDiscoveryProductsPaidlinksZip")
@@ -58,7 +58,7 @@ class CrawlerForCITYDISCOVERYTest(unittest.TestCase):
         self.assertTrue(self.crawler.convertDurationStringToHourInt(strDurtation="3 hours 30 minutes")>0)
         self.assertTrue(self.crawler.convertDurationStringToHourInt(strDurtation="1 day")>0)
         self.assertTrue(self.crawler.convertDurationStringToHourInt(strDurtation="2 days")>0)
-    
+    """
 #測試開始
 if __name__ == "__main__":
     unittest.main(exit=False)

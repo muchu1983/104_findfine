@@ -146,27 +146,31 @@ class CrawlerForCITYDISCOVERY:
     #下載 city-discovery-products_paidlinks.zip
     def downloadCityDiscoveryProductsPaidlinksZip(self, uselessArg1=None):
         #login
-        strPartnerAccount = "19993"
+        strPartnerAccount = "liangtian@hotmail.com"
         strPartnerPwd = "a768768a"
         cj = http.cookiejar.MozillaCookieJar()
         opener = urllib.request.build_opener(urllib.request.HTTPCookieProcessor(cj))
         dicLoginData = urllib.parse.urlencode({
-            "adminPUID":strPartnerAccount,
-            "login_password":strPartnerPwd
+            "user_email":strPartnerAccount,
+            "user_pass":strPartnerPwd
         }).encode("utf-8")
-        req = urllib.request.Request("https://www.partner.viator.com/partner/login.jspa", dicLoginData, method="POST")
+        req = urllib.request.Request("https://partner.city-discovery.com/affiliate/authenticate.php", dicLoginData, method="POST")
         response = opener.open(req)
-        #wget https://www.partner.viator.com/partner/admin/tools/links_feeds/downloadFeed.jspa?feed=Products&format=xml
-        strUrl = "https://www.partner.viator.com/partner/admin/tools/links_feeds/downloadFeed.jspa?feed=Products&format=xml"
+        logging.info("wait partner login")
+        time.sleep(30)
+        #wget http://partner.city-discovery.com/affiliate/xml_download_all_products.php
+        logging.info("wget http://partner.city-discovery.com/affiliate/xml_download_all_products.php")
+        strUrl = "http://partner.city-discovery.com/affiliate/xml_download_all_products.php"
         req = urllib.request.Request(url=strUrl, method="GET")
         response = opener.open(req)
-        byteVapProductsXmlZip = response.read()
+        byteCityDiscoveryProductsZip = response.read()
         #儲存 vapProducts.xml.zip
-        strPackageName = "findfine_crawler.resource.source_data.viator"
-        strZipFileName = "vapProducts.xml.zip"
+        strPackageName = "findfine_crawler.resource.source_data.city_discovery"
+        strZipFileName = "city-discovery-products_paidlinks.zip"
         strZipFilePath = self.fileUtil.getPackageResourcePath(strPackageName=strPackageName, strResourceName=strZipFileName)
         with open(strZipFilePath, "bw+") as zipFile:
-            zipFile.write(byteVapProductsXmlZip)
+            zipFile.write(byteCityDiscoveryProductsZip)
+        logging.info("city-discovery-products_paidlinks.zip saved")
             
     #解壓縮 city-discovery-products_paidlinks.zip
     def unzipCityDiscoveryProductsPaidlinksZip(self, uselessArg1=None):
