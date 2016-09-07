@@ -40,10 +40,13 @@ urlpatterns = [
     #trip app
     url(r'^trip/filter$', trip_views.tripFilter),
     url(r'^trip/userCurrency$', trip_views.userCurrency),
-    url(r'^trip/addFavoriteTrip$', trip_views.addFavoriteTrip),
     url(r'^trip/getFavoriteTrip$', trip_views.getFavoriteTrip),
+    url(r'^trip/addFavoriteTrip$', trip_views.addFavoriteTrip),
     url(r'^trip/removeFavoriteTrip$', trip_views.removeFavoriteTrip),
     url(r'^trip/geopyGoogleV3$', trip_views.geopyGoogleV3),
+    url(r'^trip/getCustomizedTripPlan$', trip_views.getCustomizedTripPlan),
+    url(r'^trip/addCustomizedTripPlan$', trip_views.addCustomizedTripPlan),
+    url(r'^trip/removeCustomizedTripPlan$', trip_views.removeCustomizedTripPlan),
     #page app
     url(r'^$', page_views.showHomePage),
     url(r'^page/home$', page_views.showHomePage),

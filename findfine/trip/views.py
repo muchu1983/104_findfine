@@ -15,6 +15,7 @@ from trip.models import Trip
 from trip.models import ExRate
 from trip.models import FavoriteTrip
 from trip.models import CustomizedTripPlan
+from trip.models import CustomizedTripPlanItem
 from account.models import UserAccount
 from itertools import chain
 from geopy.geocoders import GoogleV3
@@ -213,3 +214,89 @@ def geopyGoogleV3(request=None):
         dicGeopyResult["latitude"] = latitude
         dicGeopyResult["longitude"] = longitude
     return JsonResponse(dicGeopyResult, safe=False)
+    
+#取得自訂 行程規劃
+def getCustomizedTripPlan(request=None):
+    #從 session 取得已登入的 使用者 email
+    strUserEmail = request.session.get("logined_user_email", None)
+    if strUserEmail:
+        objUserAccount = UserAccount.objects.get(strEmail=strUserEmail)
+        qsetMatchedPlan = CustomizedTripPlan.objects.filter(fkUserAccount=objUserAccount)
+        lstDicPlanData = []
+        for matchedPlan in qsetMatchedPlan:
+            dicPlanData = {
+                "intId":matchedPlan.id,
+                "strName":matchedPlan.strName
+            }
+            lstDicPlanData.append(dicPlanData)
+        dicResultJson = {
+            "plan":lstDicPlanData,
+            "meta":{}
+        }
+        return JsonResponse(dicResultJson, safe=False)
+    else:
+        #尚未登入 導回登入頁
+        return redirect("/account/login")
+    
+#新增自訂 行程規劃
+def addCustomizedTripPlan(request=None):
+    #從 session 取得已登入的 使用者 email
+    strUserEmail = request.session.get("logined_user_email", None)
+    if strUserEmail:
+        strPlanName = request.GET.get("strPlanName", "My New Plan")
+        objUserAccount = UserAccount.objects.get(strEmail=strUserEmail)
+        CustomizedTripPlan.objects.update_or_create(
+            fkUserAccount = objUserAccount,
+            strName = strPlanName
+        )
+        return JsonResponse({"add_customized_trip_plan_status":"ok"}, safe=False)
+    else:
+        #尚未登入 導回登入頁
+        return redirect("/account/login")
+    
+#刪除自訂 行程規劃
+def removeCustomizedTripPlan(request=None):
+    #從 session 取得已登入的 使用者 email
+    strUserEmail = request.session.get("logined_user_email", None)
+    if strUserEmail:
+        objUserAccount = UserAccount.objects.get(strEmail=strUserEmail)
+        intPlanId = int(request.GET.get("intPlanId", None))
+        CustomizedTripPlan.objects.filter(
+            fkUserAccount = objUserAccount,
+            id = intPlanId
+        ).delete()
+        return JsonResponse({"delete_customized_trip_plan_status":"ok"}, safe=False)
+    else:
+        #尚未登入 導回登入頁
+        return redirect("/account/login")
+    
+#取得自訂 行程規劃項目
+def getCustomizedTripPlanItem(request=None):
+    #從 session 取得已登入的 使用者 email
+    strUserEmail = request.session.get("logined_user_email", None)
+    if strUserEmail:
+        pass
+    else:
+        #尚未登入 導回登入頁
+        return redirect("/account/login")
+    
+#新增自訂 行程規劃項目
+def addCustomizedTripPlanItem(request=None):
+    #從 session 取得已登入的 使用者 email
+    strUserEmail = request.session.get("logined_user_email", None)
+    if strUserEmail:
+        pass
+    else:
+        #尚未登入 導回登入頁
+        return redirect("/account/login")
+    
+#刪除自訂 行程規劃項目
+def removeCustomizedTripPlanItem(request=None):
+    #從 session 取得已登入的 使用者 email
+    strUserEmail = request.session.get("logined_user_email", None)
+    if strUserEmail:
+        pass
+    else:
+        #尚未登入 導回登入頁
+        return redirect("/account/login")
+    
