@@ -7,6 +7,7 @@ This file is part of BSD license
 <https://opensource.org/licenses/BSD-3-Clause>
 """
 import datetime
+from django.utils import timezone
 from django.shortcuts import render
 from django.shortcuts import redirect
 from django.http import JsonResponse
@@ -272,20 +273,128 @@ def removeCustomizedTripPlan(request=None):
     
 #取得自訂 行程規劃項目
 def getCustomizedTripPlanItem(request=None):
+    #從 session 取得使用者的幣別匯率資訊
+    strUserCurrency = getUserCurrencyFromSession(request=request)
+    matchedExRate = ExRate.objects.get(strCurrencyName=strUserCurrency)
+    fUsdToUserCurrencyExRate = matchedExRate.fUSDollar
     #從 session 取得已登入的 使用者 email
     strUserEmail = request.session.get("logined_user_email", None)
     if strUserEmail:
-        pass
+        objUserAccount = UserAccount.objects.get(strEmail=strUserEmail)
+        intPlanId = int(request.GET.get("intPlanId", None))
+        objCustomizedTripPlan =  CustomizedTripPlan.objects.get(
+            fkUserAccount = objUserAccount,
+            id = intPlanId
+        )
+        qsetMatchedPlanItem = CustomizedTripPlanItem.objects.filter(
+            fkCustomizedTripPlan = objCustomizedTripPlan
+        )
+        lstPlanItemData = []
+        for matchedPlanItem in qsetMatchedPlanItem:
+            dicPlanItemData = convertPlanItemDataToJsonDic(matchedPlanItem=matchedPlanItem, fUsdToUserCurrencyExRate=fUsdToUserCurrencyExRate)
+            lstPlanItemData.append(dicPlanItemData)
+        dicResultJson = {
+            "plan_item":lstPlanItemData,
+            "meta":{}
+        }
+        return JsonResponse(dicResultJson, safe=False)
     else:
         #尚未登入 導回登入頁
         return redirect("/account/login")
+    
+#轉換 DB CustomizedTripPlanItem data 至 http response Json 物件
+def convertPlanItemDataToJsonDic(matchedPlanItem=None, fUsdToUserCurrencyExRate=0.0):
+    dicPlanItemData = {}
+    dicPlanItemData["intPlanItemId"] = matchedPlanItem.id
+    dicPlanItemData["strTitle"] = matchedPlanItem.strTitle
+    dicPlanItemData["strOriginUrl"] = matchedPlanItem.strOriginUrl
+    dicPlanItemData["strImageUrl"] = matchedPlanItem.strImageUrl
+    dicPlanItemData["strLocation"] = matchedPlanItem.strLocation
+    dicPlanItemData["intUsdCost"] = matchedPlanItem.intUsdCost
+    if matchedPlanItem.intUsdCost:
+        dicPlanItemData["intUserCurrencyCost"] = int(matchedPlanItem.intUsdCost*fUsdToUserCurrencyExRate)
+    else:
+        dicPlanItemData["intUserCurrencyCost"] = None
+    dicPlanItemData["intDurationHour"] = matchedPlanItem.intDurationHour
+    dicPlanItemData["strComment"] = matchedPlanItem.strComment
+    dicPlanItemData["strLongitude"] = matchedPlanItem.strLongitude
+    dicPlanItemData["strLatitude"] = matchedPlanItem.strLatitude
+    if matchedPlanItem.dtDatetimeFrom:
+        dicPlanItemData["strDatetimeFrom"] = matchedPlanItem.dtDatetimeFrom.strftime("%Y-%m-%d-%H-%M")
+    else:
+        dicPlanItemData["strDatetimeFrom"] = None
+    if matchedPlanItem.dtDatetimeTo:
+        dicPlanItemData["strDatetimeTo"] = matchedPlanItem.dtDatetimeTo.strftime("%Y-%m-%d-%H-%M")
+    else:
+        dicPlanItemData["strDatetimeTo"] = None
+    return dicPlanItemData
     
 #新增自訂 行程規劃項目
 def addCustomizedTripPlanItem(request=None):
     #從 session 取得已登入的 使用者 email
     strUserEmail = request.session.get("logined_user_email", None)
     if strUserEmail:
-        pass
+        currentTimezone = timezone.get_current_timezone()
+        objUserAccount = UserAccount.objects.get(strEmail=strUserEmail)
+        intPlanId = int(request.GET.get("intPlanId", None))
+        objCustomizedTripPlan =  CustomizedTripPlan.objects.get(
+            fkUserAccount = objUserAccount,
+            id = intPlanId
+        )
+        #設定 註解
+        strComment = request.GET.get("strComment", "")
+        #設定 開始時間 與 結束時間
+        strDatetimeFrom = request.GET.get("strDatetimeFrom", None)
+        strDatetimeTo = request.GET.get("strDatetimeTo", None)
+        dtDatetimeFrom = None
+        dtDatetimeTo = None
+        if strDatetimeFrom:
+            dtDatetimeFrom = datetime.datetime.strptime(strDatetimeFrom, "%Y-%m-%d-%H-%M")
+        if strDatetimeTo:
+            dtDatetimeTo = datetime.datetime.strptime(strDatetimeTo, "%Y-%m-%d-%H-%M")
+        #設定 行程資料
+        strTripId = request.GET.get("intTripId", None)
+        objTrip = None
+        dicGeopyResult = {}
+        if strTripId is not None:
+            intTripId = int(strTripId)
+            objTrip = Trip.objects.get(id=intTripId)
+            #查找經緯度
+            strLocation = objTrip.strLocation
+            if strLocation:
+                geolocator = GoogleV3()
+                location, (latitude, longitude) = geolocator.geocode(strLocation, exactly_one=True)
+                dicGeopyResult["location"] = location
+                dicGeopyResult["latitude"] = latitude
+                dicGeopyResult["longitude"] = longitude
+        #upsert 行程規劃
+        CustomizedTripPlanItem.objects.update_or_create(
+            #行程規劃 ForeignKey
+            fkCustomizedTripPlan = objCustomizedTripPlan,
+            #註解
+            strComment = strComment,
+            #規劃開始日期
+            dtDatetimeFrom = currentTimezone.localize(dtDatetimeFrom) if dtDatetimeFrom else None,
+            #規劃結束日期
+            dtDatetimeTo = currentTimezone.localize(dtDatetimeTo) if dtDatetimeTo else None,
+            #項目標題
+            strTitle = objTrip.strTitle if objTrip else None,
+            #原始 URL
+            strOriginUrl = objTrip.strOriginUrl if objTrip else None,
+            #主要圖片 url
+            strImageUrl = objTrip.strImageUrl if objTrip else None,
+            #地點
+            strLocation = objTrip.strLocation if objTrip else None,
+            #金額 (USD)
+            intUsdCost = objTrip.intUsdCost if objTrip else None,
+            #行程總時數 (Hour)
+            intDurationHour = objTrip.intDurationHour if objTrip else None,
+            #經度
+            strLongitude = dicGeopyResult.get("longitude", None),
+            #緯度
+            strLatitude = dicGeopyResult.get("latitude", None)
+        )
+        return JsonResponse({"add_customized_trip_plan_item_status":"ok"}, safe=False)
     else:
         #尚未登入 導回登入頁
         return redirect("/account/login")
@@ -295,7 +404,18 @@ def removeCustomizedTripPlanItem(request=None):
     #從 session 取得已登入的 使用者 email
     strUserEmail = request.session.get("logined_user_email", None)
     if strUserEmail:
-        pass
+        objUserAccount = UserAccount.objects.get(strEmail=strUserEmail)
+        intPlanId = int(request.GET.get("intPlanId", None))
+        intPlanItemId = int(request.GET.get("intPlanItemId", None))
+        objCustomizedTripPlan =  CustomizedTripPlan.objects.get(
+            fkUserAccount = objUserAccount,
+            id = intPlanId
+        )
+        CustomizedTripPlanItem.objects.filter(
+            fkCustomizedTripPlan = objCustomizedTripPlan,
+            id = intPlanItemId
+        ).delete()
+        return JsonResponse({"delete_customized_trip_plan_item_status":"ok"}, safe=False)
     else:
         #尚未登入 導回登入頁
         return redirect("/account/login")

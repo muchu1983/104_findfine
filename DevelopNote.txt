@@ -5,6 +5,7 @@
 python3 -m pip install "Django<1.9"
 python3 -m pip install BeautifulSoup4
 python3 -m pip install geopy
+python3 -m pip install pytz
 lxml-3.6.0.win-amd64-py3.4.exe
 
 開發使用的資料庫版本

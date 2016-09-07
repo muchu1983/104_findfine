@@ -60,7 +60,7 @@ class CustomizedTripPlan(models.Model):
     
 #使用者自訂 行程規劃項目
 class CustomizedTripPlanItem(models.Model):
-    #使用者帳號 ForeignKey
+    #行程規劃 ForeignKey
     fkCustomizedTripPlan = models.ForeignKey(CustomizedTripPlan, null=False, on_delete=models.CASCADE)
     #項目標題
     strTitle = models.CharField(max_length=255, null=True)
