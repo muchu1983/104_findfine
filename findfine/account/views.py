@@ -229,3 +229,15 @@ def verifyEmail(request):
         qsetMatchedUserAccount.update(strLevel="Email verified.")
     #將用戶導向通知頁
     return render(request, "notice.html", {"strMessage":"Email (%s) verification SUCCESS. your account level updated."%strEmail})
+    
+#用戶登出
+def userLogout(request):
+    strUserEmail = request.session.get("logined_user_email", None)
+    print(type(request.session))
+    strStatus = None
+    if strUserEmail:
+        del request.session["logined_user_email"]
+        strStatus = u"%s logout success"%strUserEmail
+    else:
+        strStatus = u"logout failed (not logined yet)"
+    return JsonResponse({"logout_status":strStatus}, safe=False)
