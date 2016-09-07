@@ -207,7 +207,9 @@ def sendEmailVerification(request):
             strFrom="FindFineTour",
             strTo="me",
             strMsg=strMsg,
-            lstStrTarget=[strUserEmail]
+            lstStrTarget=[strUserEmail],
+            strAccount="public.muchu1983@gmail",
+            strPassword="bee520520bee"
         )
     return redirect("/account/userinfo")
     
