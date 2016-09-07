@@ -27,7 +27,7 @@ def showLoginPage(request):
         dicOAuthSetting = {
             "strGoogleOauthScope":"https://www.googleapis.com/auth/userinfo.email https://www.googleapis.com/auth/userinfo.profile https://www.googleapis.com/auth/calendar",
             "strGoogleOauthState":"",
-            "strGoogleOauthRedirectUri":"http://bennu.ddns.net:8000/account/googleOAuth2",
+            "strGoogleOauthRedirectUri":"http://www.findfinetour.com:8000/account/googleOAuth2",
             "strGoogleOauthClientId":"985086432043-i429lmduehq54ltguuckc1780rabheot.apps.googleusercontent.com"
         }
         return render(request, "login.html", dicOAuthSetting)
@@ -133,7 +133,7 @@ def googleOAuth2(request):
     #資料
     strGoogleClientId = "985086432043-i429lmduehq54ltguuckc1780rabheot.apps.googleusercontent.com"
     strGoogleClientSecret = "L1PYFFVi4g8vF4sg3EbCGM5u"
-    strRedirectUri = "http://bennu.ddns.net:8000/account/googleOAuth2"
+    strRedirectUri = "http://www.findfinetour.com:8000/account/googleOAuth2"
     #交付 授權碼 給 Google 取得 access token
     dicAccessTokenData = {
         "code":strOAuthCode,
@@ -194,7 +194,7 @@ def sendEmailVerification(request):
             }
         )
         strMsg = (
-            "<a href=\"http://bennu.ddns.net:8000/account/verifyEmail?"
+            "<a href=\"http://www.findfinetour.com:8000/account/verifyEmail?"
                 "strEmail=%s&"
                 "strUUID=%s\">"
                     "click me"
