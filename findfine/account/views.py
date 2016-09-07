@@ -233,10 +233,10 @@ def verifyEmail(request):
 #用戶登出
 def userLogout(request):
     strUserEmail = request.session.get("logined_user_email", None)
-    print(type(request.session))
     strStatus = None
     if strUserEmail:
         del request.session["logined_user_email"]
+        request.session.modified = True
         strStatus = u"%s logout success"%strUserEmail
     else:
         strStatus = u"logout failed (not logined yet)"
