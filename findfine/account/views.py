@@ -208,6 +208,7 @@ def sendEmailVerification(request):
             strTo="me",
             strMsg=strMsg,
             lstStrTarget=[strUserEmail],
+            strSmtp="smtp.gmail.com:587",
             strAccount="public.muchu1983@gmail",
             strPassword="bee520520bee"
         )
