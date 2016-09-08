@@ -209,7 +209,7 @@ def sendEmailVerification(request):
             strMsg=strMsg,
             lstStrTarget=[strUserEmail],
             strSmtp="smtp.gmail.com:587",
-            strAccount="public.muchu1983@gmail",
+            strAccount="public.muchu1983@gmail.com",
             strPassword="bee520520bee"
         )
     return redirect("/account/userinfo")
