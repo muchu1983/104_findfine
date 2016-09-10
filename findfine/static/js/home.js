@@ -23,6 +23,9 @@ function initMap() {
         }
     });
     
+    
+
+    
     $('#wishList').hide();
     $('#myFriends').hide();
     $('#myPlans').hide();
@@ -43,6 +46,14 @@ function initMap() {
     $("#wishList").click(function(){
             window.location = "/page/wishList";
     });
+    
+    $("#logOut").click(function(){
+        if($("#logOut").html()=="Log Out"){
+            window.location = "/account/logout";
+        }
+    });
+    
+    
     
     $("#myPlans").click(function(){
             window.location = "/page/myTrip";
@@ -104,3 +115,6 @@ $(function() {
     };
     
 })(jQuery);
+
+
+
