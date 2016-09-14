@@ -40,9 +40,6 @@
                 $('.content').append(getPlanDataHtml(planName));
             }
         })
-        
-        //刪除plan      /trip/removeTripPlan?intPlanId=NNN
-        
     };
 })(jQuery);
 
@@ -56,5 +53,5 @@ function deletePlan( intId ){
 
 function editPlan( intId ){
     alert("editPlan");
-    window.location = "/trip/getTripPlanItem?intPlanId="+intId;
+    window.location = "/page/tripEdit?intPlanId="+intId;
 }

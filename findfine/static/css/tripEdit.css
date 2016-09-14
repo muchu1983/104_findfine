@@ -34,9 +34,16 @@ body{
 .right{
     height: 100%;
     width: 50%;
-    background: orange;
     float: left;
 }
+
+.right ul li{
+    height: 20%;
+    width: 20%;
+    float: left;
+    margin: 2% 2% 2% 2%;
+}
+
 
 .list{
     margin: 1% 1%;
