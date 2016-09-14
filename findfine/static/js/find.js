@@ -57,6 +57,12 @@ function initFind(){
             window.location = "/page/wishList";
     });
     
+    $("#logOut").click(function(){
+        if($("#logOut").html()=="Log Out"){
+            window.location = "/account/logout";
+        }
+    });
+    
     $("#myPlans").click(function(){
             window.location = "/page/myTrip";
     });
