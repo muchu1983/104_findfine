@@ -16,6 +16,8 @@ from findfine_crawler.crawlerForCITYDISCOVERY import CrawlerForCITYDISCOVERY
 from findfine_crawler.importerForCITYDISCOVERY import ImporterForCITYDISCOVERY
 from findfine_crawler.crawlerForKLOOK import CrawlerForKLOOK
 from findfine_crawler.importerForKLOOK import ImporterForKLOOK
+from findfine_crawler.crawlerForTRIPBAA import CrawlerForTRIPBAA
+from findfine_crawler.importerForTRIPBAA import ImporterForTRIPBAA
 from findfine_crawler.crawlerForExRate import CrawlerForExRate
 from findfine_crawler.importerForExRate import ImporterForExRate
 """
@@ -33,6 +35,7 @@ class FindfineShell:
             "viator":CrawlerForVIATOR(),
             "citydiscovery":CrawlerForCITYDISCOVERY(),
             "klook":CrawlerForKLOOK(),
+            "tripbaa":CrawlerForTRIPBAA(),
             "exrate":CrawlerForExRate()
         }
         
@@ -42,6 +45,7 @@ class FindfineShell:
             "viator":ImporterForVIATOR(),
             "citydiscovery":ImporterForCITYDISCOVERY(),
             "klook":ImporterForKLOOK(),
+            "tripbaa":ImporterForTRIPBAA(),
             "exrate":ImporterForExRate()
         }
         

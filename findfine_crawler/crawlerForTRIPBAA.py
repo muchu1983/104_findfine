@@ -151,7 +151,7 @@ class CrawlerForTRIPBAA:
         self.lstDicParsedProductJson.append(dicProductJson)
         
     #爬取 product 頁面
-    def crawlProductPage(self):
+    def crawlProductPage(self, uselessArg1=None):
         logging.info("crawl product page")
         #清空計憶體殘留資料
         self.lstDicParsedProductJson = []
