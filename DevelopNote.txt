@@ -1,6 +1,11 @@
 開發使用的 python 版本
 3.4.4
 
+Notepad++ 執行設定值 (執行爬蟲 code)
+CTRL + F10
+cmd /k cd "C:\Users\muchu\Desktop\caseWorkspace\004-findfine\FINDFINE_git_code" & c:\python34\python "$(FULL_CURRENT_PATH)" & ECHO & PAUSE & EXIT
+cmd /k cd "C:\Users\josh\Desktop\test01\findfine_code" & c:\python34\python "$(FULL_CURRENT_PATH)" & ECHO & PAUSE & EXIT
+
 使用 pip 安裝的第三方庫
 python3 -m pip install "Django<1.9"
 python3 -m pip install BeautifulSoup4
@@ -61,48 +66,37 @@ https://hellowings.uservoice.com/forums/242654-general-discussion-forum
 mockup 工具
 https://app.moqups.com
 
-需要使用爬蟲的資料來源
-https://www.kkday.com/zh-tw/home/index2
-http://www.visitacity.com/
-
-Notepad++ 執行設定值 (執行爬蟲 code)
-CTRL + F10
-cmd /k cd "C:\Users\muchu\Desktop\caseWorkspace\004-findfine\FINDFINE_git_code" & c:\python34\python "$(FULL_CURRENT_PATH)" & ECHO & PAUSE & EXIT
-cmd /k cd "C:\Users\josh\Desktop\test01\findfine_code" & c:\python34\python "$(FULL_CURRENT_PATH)" & ECHO & PAUSE & EXIT
-
-API
-=== 完成
-City Discovery:
+API 串接狀況
+===
+City Discovery: 完成
 https://partner.city-discovery.com/affiliate/login.php
 Username: liangtian@hotmail.com
 Password: a768768a
-=== 完成
-Viator:
+===
+Viator: 完成
 https://www.partner.viator.com/partner/home.jspa
 Username: 19993
 Password: a768768a
-=== 完成
-BeMyGuest:
+===
+BeMyGuest: 完成
 https://apidemo.bemyguest.com.sg/client-app
 Username: liangtian@hotmail.com
 Password: a768768a
 X-Authorization: daz5m3vimo2u8ucz90yimfwpj8lfdszkb2utjvyk
 ===
-Withlocals:
-https://www.withlocals.com/api/v1/affiliates/feeds/base.xml
-===
-gogobot:
-http://developers.gogobot.com/public/
-===
-GetYourGuide:
+GetYourGuide: 未授權
 https://partner.getyourguide.com/en/home.php
 帳號： liangtian@hotmail.com
 密碼： 768768
-=== 自己爬
-klook: 完成
+===
+Withlocals:
+https://www.withlocals.com/api/v1/affiliates/feeds/base.xml
+===
+klook: 完成 (自製爬蟲)
+===
+tripbaa: 完成 (自製爬蟲)
+===
 voyagin:
-tripbaa:
-
 
 Registration 
 1. Title: Mr./Miss/Mz./Mrs. 

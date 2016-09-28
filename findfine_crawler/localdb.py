@@ -321,3 +321,64 @@ class LocalDbForKLOOK:
         self.db.commitSQL(strSQL=strSQL)
         strSQL = "DELETE FROM klook_city"
         self.db.commitSQL(strSQL=strSQL)
+        
+#KLOOK crawler localdb (SQLite3)
+class LocalDbForTRIPBAA:
+    
+    #建構子
+    def __init__(self):
+        self.db = SQLite3Db(strResFolderPath="findfine_crawler.resource")
+        self.initialDb()
+        
+    #初取化資料庫
+    def initialDb(self):
+        strSQLCreateTable = (
+            "CREATE TABLE IF NOT EXISTS tripbaa_product("
+            "id INTEGER PRIMARY KEY,"
+            "strProductUrl TEXT NOT NULL,"
+            "isGot BOOLEAN NOT NULL)"
+        )
+        self.db.commitSQL(strSQL=strSQLCreateTable)
+        
+    #若無重覆 儲存 product URL
+    def insertProductUrlIfNotExists(self, strProductUrl=None):
+        strSQL = "SELECT * FROM tripbaa_product WHERE strProductUrl='%s'"%strProductUrl
+        lstRowData = self.db.fetchallSQL(strSQL=strSQL)
+        if len(lstRowData) == 0:
+            strSQL = "INSERT INTO tripbaa_product VALUES(NULL, '%s', 0)"%strProductUrl
+            self.db.commitSQL(strSQL=strSQL)
+        
+    #取得 product url (isGot = False:未下載 True:已下載)
+    def fetchallProductUrl(self, isGot=False):
+        dicIsGotCode = {True:"1", False:"0"}
+        strSQL = "SELECT strProductUrl FROM tripbaa_product WHERE isGot=%s"%dicIsGotCode.get(isGot, "0")
+        lstRowData = self.db.fetchallSQL(strSQL=strSQL)
+        lstStrProductUrl = []
+        for rowData in lstRowData:
+            lstStrProductUrl.append(rowData["strProductUrl"])
+        return lstStrProductUrl
+        
+    #檢查 product 是否已下載
+    def checkProductIsGot(self, strProductUrl=None):
+        isGot = True
+        strSQL = "SELECT * FROM tripbaa_product WHERE strProductUrl='%s'"%strProductUrl
+        lstRowData = self.db.fetchallSQL(strSQL=strSQL)
+        for rowData in lstRowData:
+            if rowData["isGot"] == 0:
+                isGot = False
+        return isGot
+        
+    #更新 product 為已完成下載狀態
+    def updateProductStatusIsGot(self, strProductUrl=None):
+        strSQL = "UPDATE tripbaa_product SET isGot=1 WHERE strProductUrl='%s'"%strProductUrl
+        self.db.commitSQL(strSQL=strSQL)
+        
+    #更新 product 尚未開始下載狀態
+    def updateProductStatusIsNotGot(self, strProductUrl=None):
+        strSQL = "UPDATE tripbaa_product SET isGot=0 WHERE strProductUrl='%s'"%strProductUrl
+        self.db.commitSQL(strSQL=strSQL)
+        
+    #清除測試資料 (clear table)
+    def clearTestData(self):
+        strSQL = "DELETE FROM tripbaa_product"
+        self.db.commitSQL(strSQL=strSQL)
