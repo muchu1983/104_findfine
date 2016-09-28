@@ -9,16 +9,16 @@ This file is part of BSD license
 import unittest
 import logging
 import json
-from findfine_crawler.importerForKLOOK import ImporterForKLOOK
+from findfine_crawler.importerForTRIPBAA import ImporterForTRIPBAA
 """
-測試 KLOOK product.json 資料 import 至 DB
+測試 Tripbaa product.json 資料 import 至 DB
 """
-class ImporterForKLOOKTest(unittest.TestCase):
+class ImporterForTRIPBAATest(unittest.TestCase):
 
     #準備
     def setUp(self):
         logging.basicConfig(level=logging.INFO)
-        self.importer = ImporterForKLOOK()
+        self.importer = ImporterForTRIPBAA()
         
     #收尾
     def tearDown(self):
@@ -26,7 +26,7 @@ class ImporterForKLOOKTest(unittest.TestCase):
     
     #測試 import product.json to db
     def test_import(self):
-        logging.info("ImporterForKLOOKTest.test_import")
+        logging.info("ImporterForTRIPBAATest.test_import")
         self.importer.importProductJsonToDb()
     
 #測試開始

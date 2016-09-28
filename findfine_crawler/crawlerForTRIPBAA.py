@@ -108,47 +108,46 @@ class CrawlerForTRIPBAA:
         dicProductJson["strSource"] = "Tripbaa"
         #strOriginUrl
         dicProductJson["strOriginUrl"] = strProductUrl
-        """
         #strImageUrl
-        strImageSectionStyle = self.driver.find_element_by_css_selector("section.banner").get_attribute("style")
-        strImageSectionStyle = re.sub("[:;\"\s\(\)]", "", strImageSectionStyle).strip()
-        #strImageUrl 中會出現中文 先進行 urlencode
-        strImageUrl = u"https://" + urllib.parse.quote(re.match("^.*https//(res\.klook\.com/images/.*)$", strImageSectionStyle).group(1).strip())
+        strImageUrl = self.driver.find_element_by_css_selector("ul.picBox li:nth-of-type(1) a:nth-of-type(1) img").get_attribute("src")
         dicProductJson["strImageUrl"] = strImageUrl
         #strTitle
-        strTitle = self.driver.find_element_by_css_selector("section.activity header h1.t_main").text
+        strTitle = self.driver.find_element_by_css_selector("h1.mtTripName").text
         dicProductJson["strTitle"] = strTitle.strip()
         #strLocation
-        strLocation = self.driver.find_element_by_css_selector("section.activity header p span.icon-label:nth-of-type(1)").text
+        strLocation = self.driver.find_element_by_css_selector("div.mtKind p:nth-of-type(1)").text.split("/")[0]
         dicProductJson["strLocation"] = strLocation.strip()
         #intUsdCost
-        strUsdCost = self.driver.find_element_by_css_selector("div.right_price_box span.t_main").text
-        strUsdCost = re.sub("[^\d]", "", strUsdCost)
-        dicProductJson["intUsdCost"] = int(strUsdCost.strip())
+        strUsdCost = self.driver.find_element_by_css_selector("#orderBox div.MobBox div.orPrice span.blue").text
+        strUsdCost = re.sub("[^\d\.]", "", strUsdCost)
+        intUsdCost = int(float(strUsdCost.strip()))
+        dicProductJson["intUsdCost"] = intUsdCost
         #intReviewStar
-        dicProductJson["intReviewStar"] = 5
+        strReviewStar = self.driver.find_element_by_css_selector("div.mtStarBox").get_attribute("data-average")
+        intReviewStar = int(float(strReviewStar.strip()))
+        dicProductJson["intReviewStar"] = intReviewStar
         #intReviewVisitor
-        dicProductJson["intReviewVisitor"] = 1
+        dicProductJson["intReviewVisitor"] = random.randint(0, 30)
         #strIntroduction
-        strIntroduction = u""
-        elesIntroduction = self.driver.find_elements_by_css_selector("section.activity div.j_blank_window.actinfo *")
-        for eleIntroduction in elesIntroduction:
-            strIntroduction = strIntroduction + u" " + re.sub("\s", " ", eleIntroduction.text.strip())
+        strIntroduction = self.driver.find_element_by_css_selector("h2.mtTripInfo").text.strip()
+        strIntroduction = re.sub("\s", " ", strIntroduction)
         dicProductJson["strIntroduction"] = strIntroduction
         #intDurationHour
-        strDurationHour = self.driver.find_element_by_css_selector("section.activity section.j_blank_window.actinfo:nth-of-type(1) div div:nth-of-type(1) p").text
+        strDurationHour = self.driver.find_element_by_css_selector("div.okList span.import01:nth-of-type(2)").text.strip()
         strDurationHour = re.sub("\s", " ", strDurationHour.lower())
         intDurationHour = self.convertDurationStringToHourInt(strDurtation=strDurationHour)
         dicProductJson["intDurationHour"] = intDurationHour
         #strGuideLanguage
-        strGuideLanguage = self.driver.find_element_by_css_selector("section.activity section.j_blank_window.actinfo:nth-of-type(1) div div:nth-of-type(2) p").text
-        strGuideLanguage = re.match("^language (.*)$", re.sub("\s", " ", strGuideLanguage.lower())).group(1)
+        strGuideLanguage = self.driver.find_element_by_css_selector("div.mtLang").text
+        strGuideLanguage = re.sub("[^a-zA-Z]", " ", strGuideLanguage.lower()).strip()
+        strGuideLanguage = re.sub("[\s]+", " ", strGuideLanguage).strip()
+        strGuideLanguage = re.match("^language (.*)$", strGuideLanguage).group(1).strip()
         dicProductJson["strGuideLanguage"] = strGuideLanguage
+        #strStyle
+        strStyle = self.driver.find_element_by_css_selector("div.mtKind p:nth-of-type(1)").text.split("/")[1].strip()
+        dicProductJson["strStyle"] = strStyle
         #intOption (待確認)
         dicProductJson["intOption"] = None
-        #strStyle (klook 無該資料)
-        dicProductJson["strStyle"] = None
-        """
         self.lstDicParsedProductJson.append(dicProductJson)
         
     #爬取 product 頁面
@@ -193,11 +192,11 @@ class CrawlerForTRIPBAA:
     #轉換 duration 資訊
     def convertDurationStringToHourInt(self, strDurtation=None):
         intDefaultDuration = 1
-        if not strDurtation or ("hour" not in strDurtation and "day" not in strDurtation):
+        if not strDurtation or ("hr" not in strDurtation and "day" not in strDurtation):
             return intDefaultDuration
         else:
             intTotalDurationHour = 0
-            mDurationHour = re.search("([\d]+) hour", strDurtation)
+            mDurationHour = re.search("([\d]+) hr", strDurtation)
             mDurationDay = re.search("([\d]+) day", strDurtation)
             if mDurationHour:
                 intDurationHour = int(float(mDurationHour.group(1)))
