@@ -382,3 +382,123 @@ class LocalDbForTRIPBAA:
     def clearTestData(self):
         strSQL = "DELETE FROM tripbaa_product"
         self.db.commitSQL(strSQL=strSQL)
+        
+#Voyagin crawler localdb (SQLite3)
+class LocalDbForVOYAGIN:
+    
+    #建構子
+    def __init__(self):
+        self.db = SQLite3Db(strResFolderPath="findfine_crawler.resource")
+        self.initialDb()
+        
+    #初取化資料庫
+    def initialDb(self):
+        strSQLCreateTable = (
+            "CREATE TABLE IF NOT EXISTS voyagin_product("
+            "id INTEGER PRIMARY KEY,"
+            "strProductUrl TEXT NOT NULL,"
+            "intCountryId INTEGER NOT NULL,"
+            "isGot BOOLEAN NOT NULL)"
+        )
+        self.db.commitSQL(strSQL=strSQLCreateTable)
+        strSQLCreateTable = (
+            "CREATE TABLE IF NOT EXISTS voyagin_country("
+            "id INTEGER PRIMARY KEY,"
+            "strCountryPage1Url TEXT NOT NULL,"
+            "isGot BOOLEAN NOT NULL)"
+        )
+        self.db.commitSQL(strSQL=strSQLCreateTable)
+        
+    #若無重覆，儲存 country
+    def insertCountryIfNotExists(self, strCountryPage1Url=None):
+        strSQL = "SELECT * FROM voyagin_country WHERE strCountryPage1Url='%s'"%strCountryPage1Url
+        lstRowData = self.db.fetchallSQL(strSQL=strSQL)
+        if len(lstRowData) == 0:
+            strSQL = "INSERT INTO voyagin_country VALUES(NULL, '%s', 0)"%strCountryPage1Url
+            self.db.commitSQL(strSQL=strSQL)
+        
+    #取得所有 country 第一頁 url (指定 isGot 狀態)
+    def fetchallCountryUrl(self, isGot=False):
+        dicIsGotCode = {True:"1", False:"0"}
+        strSQL = "SELECT strCountryPage1Url FROM voyagin_country WHERE isGot=%s"%dicIsGotCode[isGot]
+        lstRowData = self.db.fetchallSQL(strSQL=strSQL)
+        lstStrCountryPage1Url = []
+        for rowData in lstRowData:
+            lstStrCountryPage1Url.append(rowData["strCountryPage1Url"])
+        return lstStrCountryPage1Url
+        
+    #取得所有未完成下載的 country 第一頁 url
+    def fetchallNotObtainedCountryUrl(self):
+        return self.fetchallCountryUrl(isGot=False)
+        
+    #取得所有已完成下載的 country 第一頁 url
+    def fetchallCompletedObtainedCountryUrl(self):
+        return self.fetchallCountryUrl(isGot=True)
+        
+    #更新 country 為已完成下載狀態
+    def updateCountryStatusIsGot(self, strCountryPage1Url=None):
+        strSQL = "UPDATE voyagin_country SET isGot=1 WHERE strCountryPage1Url='%s'"%strCountryPage1Url
+        self.db.commitSQL(strSQL=strSQL)
+        
+    #取得 country id
+    def fetchCountryIdByUrl(self, strCountryPage1Url=None):
+        strSQL = "SELECT * FROM voyagin_country WHERE strCountryPage1Url='%s'"%strCountryPage1Url
+        lstRowData = self.db.fetchallSQL(strSQL=strSQL)
+        return lstRowData[0]["id"]
+        
+    #若無重覆 儲存 product URL
+    def insertProductUrlIfNotExists(self, strProductUrl=None, strCountryPage1Url=None):
+        intCountryId = self.fetchCountryIdByUrl(strCountryPage1Url=strCountryPage1Url)
+        #insert product url if not exists
+        strSQL = "SELECT * FROM voyagin_product WHERE strProductUrl='%s'"%strProductUrl
+        lstRowData = self.db.fetchallSQL(strSQL=strSQL)
+        if len(lstRowData) == 0:
+            strSQL = "INSERT INTO voyagin_product VALUES(NULL, '%s', %d, 0)"%(strProductUrl, intCountryId)
+            self.db.commitSQL(strSQL=strSQL)
+        
+    #取得指定 country 的 product url
+    def fetchallProductUrlByCountryUrl(self, strCountryPage1Url=None):
+        intCountryId = self.fetchCountryIdByUrl(strCountryPage1Url=strCountryPage1Url)
+        strSQL = "SELECT * FROM voyagin_product WHERE intCountryId=%d"%intCountryId
+        lstRowData = self.db.fetchallSQL(strSQL=strSQL)
+        lstStrProductUrl = []
+        for rowData in lstRowData:
+            lstStrProductUrl.append(rowData["strProductUrl"])
+        return lstStrProductUrl
+        
+    #檢查 product 是否已下載
+    def checkProductIsGot(self, strProductUrl=None):
+        isGot = True
+        strSQL = "SELECT * FROM voyagin_product WHERE strProductUrl='%s'"%strProductUrl
+        lstRowData = self.db.fetchallSQL(strSQL=strSQL)
+        for rowData in lstRowData:
+            if rowData["isGot"] == 0:
+                isGot = False
+        return isGot
+        
+    #更新 product 為已完成下載狀態
+    def updateProductStatusIsGot(self, strProductUrl=None):
+        strSQL = "UPDATE voyagin_product SET isGot=1 WHERE strProductUrl='%s'"%strProductUrl
+        self.db.commitSQL(strSQL=strSQL)
+        
+    #取得所有已完成下載的 product url
+    def fetchallCompletedObtainedProductUrl(self):
+        strSQL = "SELECT strProductUrl FROM voyagin_product WHERE isGot=1"
+        lstRowData = self.db.fetchallSQL(strSQL=strSQL)
+        lstStrProductUrl = []
+        for rowData in lstRowData:
+            lstStrProductUrl.append(rowData["strProductUrl"])
+        return lstStrProductUrl
+        
+    #更新 product 尚未開始下載狀態
+    def updateProductStatusIsNotGot(self, strProductUrl=None):
+        strSQL = "UPDATE voyagin_product SET isGot=0 WHERE strProductUrl='%s'"%strProductUrl
+        self.db.commitSQL(strSQL=strSQL)
+        
+    #清除測試資料 (clear table)
+    def clearTestData(self):
+        strSQL = "DELETE FROM voyagin_product"
+        self.db.commitSQL(strSQL=strSQL)
+        strSQL = "DELETE FROM voyagin_country"
+        self.db.commitSQL(strSQL=strSQL)
+        

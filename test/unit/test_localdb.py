@@ -12,6 +12,7 @@ from findfine_crawler.localdb import LocalDbForKKDAY
 from findfine_crawler.localdb import LocalDbForJsonImporter
 from findfine_crawler.localdb import LocalDbForKLOOK
 from findfine_crawler.localdb import LocalDbForTRIPBAA
+from findfine_crawler.localdb import LocalDbForVOYAGIN
 """
 測試 本地端資料庫存取
 """
@@ -89,7 +90,7 @@ class LocalDbTest(unittest.TestCase):
         db.updateProductStatusIsNotGot(strProductUrl="http://product/for/unit/test")
         self.assertFalse(db.checkProductIsGot(strProductUrl="http://product/for/unit/test"))
         db.clearTestData() #清除本次測試資料
-    """
+    
     #測試 Tripbaa 本地端資料庫存取
     def test_localdb_for_tripbaa(self):
         logging.info("LocalDbTest.test_localdb_for_tripbaa")
@@ -101,6 +102,25 @@ class LocalDbTest(unittest.TestCase):
         db.updateProductStatusIsGot(strProductUrl="http://product/for/unit/test")
         self.assertTrue(db.checkProductIsGot(strProductUrl="http://product/for/unit/test"))
         self.assertEqual(db.fetchallProductUrl(isGot=True), ["http://product/for/unit/test"])
+        db.updateProductStatusIsNotGot(strProductUrl="http://product/for/unit/test")
+        self.assertFalse(db.checkProductIsGot(strProductUrl="http://product/for/unit/test"))
+        db.clearTestData() #清除本次測試資料
+    """
+    #測試 voyagin 本地端資料庫存取
+    def test_localdb_for_voyagin(self):
+        logging.info("LocalDbTest.test_localdb_for_voyagin")
+        db = LocalDbForVOYAGIN()
+        db.clearTestData() #清除前次測試資料
+        db.insertCountryIfNotExists(strCountryPage1Url="http://country_for_unit_test")
+        self.assertEqual(db.fetchallNotObtainedCountryUrl(), ["http://country_for_unit_test"])
+        db.updateCountryStatusIsGot(strCountryPage1Url="http://country_for_unit_test")
+        self.assertEqual(db.fetchallCompletedObtainedCountryUrl(), ["http://country_for_unit_test"])
+        db.insertProductUrlIfNotExists(strProductUrl="http://product/for/unit/test", strCountryPage1Url="http://country_for_unit_test")
+        self.assertEqual(db.fetchallProductUrlByCountryUrl(strCountryPage1Url="http://country_for_unit_test"), ["http://product/for/unit/test"])
+        self.assertFalse(db.checkProductIsGot(strProductUrl="http://product/for/unit/test"))
+        db.updateProductStatusIsGot(strProductUrl="http://product/for/unit/test")
+        self.assertTrue(db.checkProductIsGot(strProductUrl="http://product/for/unit/test"))
+        self.assertEqual(db.fetchallCompletedObtainedProductUrl(), ["http://product/for/unit/test"])
         db.updateProductStatusIsNotGot(strProductUrl="http://product/for/unit/test")
         self.assertFalse(db.checkProductIsGot(strProductUrl="http://product/for/unit/test"))
         db.clearTestData() #清除本次測試資料
