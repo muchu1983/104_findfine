@@ -24,22 +24,22 @@ class CrawlerForVOYAGINTest(unittest.TestCase):
     #收尾
     def tearDown(self):
         self.crawler.quitDriver()
-    """
+    
     #測試爬取 index page
     def test_crawlIndexPage(self):
-        logging.info("CrawlerForKKDAYTest.test_crawlIndexPage")
+        logging.info("CrawlerForVOYAGINTest.test_crawlIndexPage")
         self.crawler.crawlIndexPage()
-    
+    """
     #測試爬取 country page
     def test_crawlCountryicPage(self):
-        logging.info("CrawlerForKKDAYTest.test_crawlCountryicPage")
+        logging.info("CrawlerForVOYAGINTest.test_crawlCountryicPage")
         self.crawler.crawlCountryPage()
-    """
+    
     #測試爬取 product page
     def test_crawlProductPage(self):
-        logging.info("CrawlerForKKDAYTest.test_crawlProductPage")
+        logging.info("CrawlerForVOYAGINTest.test_crawlProductPage")
         self.crawler.crawlProductPage(strCountryPage1Url=None)
-    
+    """
 #測試開始
 if __name__ == "__main__":
     unittest.main(exit=False)

@@ -13,6 +13,7 @@ import re
 import random
 from selenium import webdriver
 from selenium.common.exceptions import NoSuchElementException
+from selenium.webdriver.common.action_chains import ActionChains
 from bennu.filesystemutility import FileSystemUtility as FilesysUtility
 from findfine_crawler.utility import Utility as FfUtility
 from findfine_crawler.localdb import LocalDbForVOYAGIN
@@ -38,9 +39,9 @@ class CrawlerForVOYAGIN:
     #取得 spider 使用資訊
     def getUseageMessage(self):
         return (
-            "- KKDAY -\n"
+            "- VOYAGIN -\n"
             "useage:\n"
-            "index - crawl index page of KKDAY \n"
+            "index - crawl index page of VOYAGIN \n"
             "country - crawl not obtained country page \n"
             "product [country_page_1_url] - crawl not obtained product page [of given country_page_1_url] \n"
         )
@@ -77,30 +78,30 @@ class CrawlerForVOYAGIN:
         self.dicSubCommandHandler[strSubcommand](strArg1)
         self.quitDriver() #quit selenium driver
         
+    #切換幣別為 USD
+    def changePageCurrencyToUSD(self):
+        eleCurrency = self.driver.find_element_by_css_selector("nav#globalNav ul.g-menu li.settings div.set-currency")
+        eleUsd = self.driver.find_element_by_css_selector("div.setting-menu div.outer ul li a[data-value=USD]")
+        actHoverThenClick = ActionChains(self.driver)
+        actHoverThenClick.move_to_element(eleCurrency).move_to_element(eleUsd).click().perform()
+        time.sleep(5)
+        
     #爬取 index 頁面 
     def crawlIndexPage(self, uselessArg1=None):
         logging.info("crawl index page")
-        #KKDAY index 頁面
-        self.driver.get("https://www.kkday.com/en/home")
-        #點擊搜尋
-        self.driver.find_element_by_css_selector("#header-main-keywordSearch-button").click()
-        time.sleep(5)
-        #一一點擊區域
-        lstEleAreaA = self.driver.find_elements_by_css_selector("#area_country_menu ul.slideTogglePage[role=area] li a")
-        for indexOfLstEleAreaA in range(len(lstEleAreaA)):
-            lstEleAreaA[indexOfLstEleAreaA].click()
-            time.sleep(5)
-            #解析國家超連結
-            lstEleCountryA = self.driver.find_elements_by_css_selector("#area_country_menu ul.slideTogglePage[role=country] li a")
-            for eleCountryA in lstEleCountryA:
-                strCountryHref = eleCountryA.get_attribute("href")
-                #儲存國家超連結至 localdb
-                self.db.insertCountryIfNotExists(strCountryPage1Url=strCountryHref)
-                logging.info("save country url: %s"%strCountryHref)
-            self.driver.find_element_by_css_selector("#previousBtn").click()
-            time.sleep(5)
-            lstEleAreaA = self.driver.find_elements_by_css_selector("#area_country_menu ul.slideTogglePage li a")
-    
+        #VOYAGIN index 頁面
+        self.driver.get("https://www.govoyagin.com/?lang=en")
+        #切換幣別為 USD
+        self.changePageCurrencyToUSD()
+        #解析國家超連結
+        lstEleCountryA = self.driver.find_elements_by_css_selector("#countries-list div.outer ul li a")
+        for eleCountryA in lstEleCountryA:
+            strCountryHref = eleCountryA.get_attribute("href")
+            strCountryPage1Url = strCountryHref + u"&page=1"
+            #儲存國家超連結至 localdb
+            self.db.insertCountryIfNotExists(strCountryPage1Url=strCountryPage1Url)
+            logging.info("save country url: %s"%strCountryHref)
+            
     #解析 country 頁面
     def parseCountryPage(self, strCountryPage1Url=None):
         #找尋 product 超連結
