@@ -8,17 +8,17 @@ This file is part of BSD license
 """
 import unittest
 import logging
-from findfine_crawler.crawlerForKKDAY import CrawlerForKKDAY
+from findfine_crawler.crawlerForVOYAGIN import CrawlerForVOYAGIN
 """
-測試 爬取 KKDAY
+測試 爬取 VOYAGIN
 """
 
-class CrawlerForKKDAYTest(unittest.TestCase):
+class CrawlerForVOYAGINTest(unittest.TestCase):
 
     #準備
     def setUp(self):
         logging.basicConfig(level=logging.INFO)
-        self.crawler = CrawlerForKKDAY()
+        self.crawler = CrawlerForVOYAGIN()
         self.crawler.initDriver()
         
     #收尾

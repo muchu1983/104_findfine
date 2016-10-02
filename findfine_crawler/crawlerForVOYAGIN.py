@@ -15,11 +15,11 @@ from selenium import webdriver
 from selenium.common.exceptions import NoSuchElementException
 from bennu.filesystemutility import FileSystemUtility as FilesysUtility
 from findfine_crawler.utility import Utility as FfUtility
-from findfine_crawler.localdb import LocalDbForKKDAY
+from findfine_crawler.localdb import LocalDbForVOYAGIN
 """
-爬取 KKDAY 資料存至 資料庫
+爬取 VOYAGIN 資料存至 資料庫
 """
-class CrawlerForKKDAY:
+class CrawlerForVOYAGIN:
     
     #建構子
     def __init__(self):
@@ -30,7 +30,7 @@ class CrawlerForKKDAY:
         }
         self.ffUtil = FfUtility()
         self.fileUtil = FilesysUtility()
-        self.db = LocalDbForKKDAY()
+        self.db = LocalDbForVOYAGIN()
         self.lstDicParsedProductJson = []  #product.json 資料
         self.intProductJsonIndex = 1
         self.driver = None

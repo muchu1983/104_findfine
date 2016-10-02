@@ -9,11 +9,11 @@ This file is part of BSD license
 import unittest
 import logging
 import json
-from findfine_crawler.importerForKKDAY import ImporterForKKDAY
+from findfine_crawler.importerForVOYAGIN import ImporterForVOYAGIN
 """
-測試 KKDAY product.json 資料 import 至 DB
+測試 VOYAGIN product.json 資料 import 至 DB
 """
-class ImporterForKKDAYTest(unittest.TestCase):
+class ImporterForVOYAGINTest(unittest.TestCase):
 
     #準備
     def setUp(self):
