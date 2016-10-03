@@ -29,7 +29,7 @@ class CrawlerForVOYAGINTest(unittest.TestCase):
     def test_crawlIndexPage(self):
         logging.info("CrawlerForVOYAGINTest.test_crawlIndexPage")
         self.crawler.crawlIndexPage()
-    """
+    
     #測試爬取 country page
     def test_crawlCountryPage(self):
         logging.info("CrawlerForVOYAGINTest.test_crawlCountryPage")
@@ -39,7 +39,7 @@ class CrawlerForVOYAGINTest(unittest.TestCase):
     def test_crawlProductPage(self):
         logging.info("CrawlerForVOYAGINTest.test_crawlProductPage")
         self.crawler.crawlProductPage(strCountryPage1Url=None)
-    """
+    
 #測試開始
 if __name__ == "__main__":
     unittest.main(exit=False)

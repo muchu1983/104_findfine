@@ -176,6 +176,11 @@ class CrawlerForVOYAGIN:
         dicProductJson["strSource"] = "Voyagin"
         #strOriginUrl
         dicProductJson["strOriginUrl"] = strProductUrl
+        #intDurationHour
+        (strLocation, intDurationHour) = self.db.fetchLocationAndDurationHourByProductUrl(strProductUrl=strProductUrl)
+        dicProductJson["intDurationHour"] = intDurationHour
+        #strLocation
+        dicProductJson["strLocation"] = strLocation
         """
         #strImageUrl
         strImageDivStyle = self.driver.find_element_by_css_selector("div#header-imageview div.productPage-photos div.img-bg-full").get_attribute("style")
@@ -185,10 +190,6 @@ class CrawlerForVOYAGIN:
         #strTitle
         strTitle = self.driver.find_element_by_css_selector("div.productview div.container div.productPage-detail h1").text
         dicProductJson["strTitle"] = strTitle.strip()
-        #strLocation
-        strLocation = self.driver.find_element_by_css_selector("div.productview div.container div.productPage-detail div.col-md-pull-4 span.h5").text
-        strLocation = re.sub("The location：", "", strLocation)
-        dicProductJson["strLocation"] = strLocation.strip()
         #intUsdCost
         strUsdCostText = self.driver.find_element_by_css_selector("div.lowestPrice div.text-right h2.h1").text
         strUsdCostText = re.sub("[^\d]", "", strUsdCostText.strip())
@@ -206,17 +207,6 @@ class CrawlerForVOYAGIN:
         #strIntroduction
         strIntroduction = self.driver.find_element_by_css_selector("div.prod-intro span").text
         dicProductJson["strIntroduction"] = strIntroduction.strip()
-        #intDurationHour
-        intDurationHour = 0
-        strDurationText = self.driver.find_element_by_css_selector("div.productview div.container div.productPage-detail div.col-md-12 span.h5").text
-        strIntInDurationHourText = re.sub("[^\d]", "", strDurationText)
-        if "hour" in strDurationText:
-            intDurationHour = int(strIntInDurationHourText)
-        elif "day" in strDurationText:
-            intDurationHour = int(strIntInDurationHourText)*24
-        else:
-            pass
-        dicProductJson["intDurationHour"] = intDurationHour
         #strGuideLanguage
         lstStrGuideLanguage = []
         elesGuideLanguageImg = self.driver.find_elements_by_css_selector("div.productview div.container div.productPage-detail div.guide_lang_image img")
