@@ -97,15 +97,14 @@ class CrawlerForVOYAGIN:
         lstEleCountryA = self.driver.find_elements_by_css_selector("#countries-list div.outer ul li a")
         for eleCountryA in lstEleCountryA:
             strCountryHref = eleCountryA.get_attribute("href")
-            strCountryPage1Url = strCountryHref + u"&page=1"
             #儲存國家超連結至 localdb
-            self.db.insertCountryIfNotExists(strCountryPage1Url=strCountryPage1Url)
+            self.db.insertCountryIfNotExists(strCountryPage1Url=strCountryHref)
             logging.info("save country url: %s"%strCountryHref)
             
     #解析 country 頁面
     def parseCountryPage(self, strCountryPage1Url=None):
         #找尋 product 超連結
-        elesProductA = self.driver.find_elements_by_css_selector("article.product-listview div.product-info-container div div a")
+        elesProductA = self.driver.find_elements_by_css_selector("ul#discover-ul li.activity-list a.act-body")
         for eleProductA in elesProductA:
             strProductUrl = eleProductA.get_attribute("href")
             #儲存 product 超連結至 localdb
@@ -115,8 +114,8 @@ class CrawlerForVOYAGIN:
     #檢查 country 有無下一頁
     def checkNextCountryPageExist(self):
         isNextCountryPageExist = False
-        strNextPageAText = self.driver.find_element_by_css_selector("ul.pagination li.a-page:last-child a.toPage").text
-        if strNextPageAText and strNextPageAText == "»":
+        elesNextPageA = self.driver.find_elements_by_css_selector("div.next a.pager-btn")
+        if len(elesNextPageA) > 0:
             isNextCountryPageExist = True
         return isNextCountryPageExist
         
@@ -127,14 +126,16 @@ class CrawlerForVOYAGIN:
         lstStrNotObtainedCountryPage1Url = self.db.fetchallNotObtainedCountryUrl()
         for strNotObtainedCountryPage1Url in lstStrNotObtainedCountryPage1Url:
             #re 找出 country 名稱
-            strCountryName = re.match("^https://www.kkday.com/en/product/productlist/.*countryname=(.*)$", strNotObtainedCountryPage1Url).group(1)
+            strCountryName = re.match("^https://www.govoyagin.com/things_to_do/(.*)?lang=en$", strNotObtainedCountryPage1Url).group(1)
             #country 頁面
             try:
                 intCountryPageNum = 1
                 #country 第1頁
                 time.sleep(random.randint(2,5)) #sleep random time
-                strCountryUrlPageSuffix = "&sort=hdesc&page=%d"%intCountryPageNum
+                strCountryUrlPageSuffix = "&page=%d"%intCountryPageNum
                 self.driver.get(strNotObtainedCountryPage1Url + strCountryUrlPageSuffix)
+                #切換幣別為 USD
+                self.changePageCurrencyToUSD()
                 #解析 product 超連結
                 self.parseCountryPage(strCountryPage1Url=strNotObtainedCountryPage1Url)
                 #檢查 country 有無下一頁
@@ -142,7 +143,7 @@ class CrawlerForVOYAGIN:
                 while isNextCountryPageExist:
                     time.sleep(random.randint(5,8)) #sleep random time
                     intCountryPageNum = intCountryPageNum+1
-                    strCountryUrlPageSuffix = "&sort=hdesc&page=%d"%intCountryPageNum
+                    strCountryUrlPageSuffix = "&page=%d"%intCountryPageNum
                     self.driver.get(strNotObtainedCountryPage1Url + strCountryUrlPageSuffix)
                     #解析 product 超連結
                     self.parseCountryPage(strCountryPage1Url=strNotObtainedCountryPage1Url)
@@ -232,7 +233,7 @@ class CrawlerForVOYAGIN:
         #將最後資料寫入 json
         if len(self.lstDicParsedProductJson) > 0:
             strJsonFileName = "%d_product.json"%(self.intProductJsonIndex*100)
-            strProductJsonFilePath = self.fileUtil.getPackageResourcePath(strPackageName="findfine_crawler.resource.parsed_json.kkday", strResourceName=strJsonFileName)
+            strProductJsonFilePath = self.fileUtil.getPackageResourcePath(strPackageName="findfine_crawler.resource.parsed_json.voyagin", strResourceName=strJsonFileName)
             self.ffUtil.writeObjectToJsonFile(dicData=self.lstDicParsedProductJson, strJsonFilePath=strProductJsonFilePath)
             self.lstDicParsedProductJson = []
             
@@ -248,7 +249,7 @@ class CrawlerForVOYAGIN:
                 try:
                     self.driver.get(strProductUrl)
                     #解析 product 頁面
-                    self.parseProductPage(strProductUrl=strProductUrl)
+                    #self.parseProductPage(strProductUrl=strProductUrl)
                     #更新 product DB 為已爬取 (isGot = 1)
                     #self.db.updateProductStatusIsGot(strProductUrl=strProductUrl)
                 except Exception as e:
@@ -260,7 +261,7 @@ class CrawlerForVOYAGIN:
             #寫入 json
             if len(self.lstDicParsedProductJson) == 100:
                 strJsonFileName = "%d_product.json"%(self.intProductJsonIndex*100)
-                strProductJsonFilePath = self.fileUtil.getPackageResourcePath(strPackageName="findfine_crawler.resource.parsed_json.kkday", strResourceName=strJsonFileName)
+                strProductJsonFilePath = self.fileUtil.getPackageResourcePath(strPackageName="findfine_crawler.resource.parsed_json.voyagin", strResourceName=strJsonFileName)
                 self.ffUtil.writeObjectToJsonFile(dicData=self.lstDicParsedProductJson, strJsonFilePath=strProductJsonFilePath)
                 self.intProductJsonIndex = self.intProductJsonIndex+1
                 self.lstDicParsedProductJson = []
