@@ -84,7 +84,8 @@ class CrawlerForVOYAGIN:
         eleUsd = self.driver.find_element_by_css_selector("div.setting-menu div.outer ul li a[data-value=USD]")
         actHoverThenClick = ActionChains(self.driver)
         actHoverThenClick.move_to_element(eleCurrency).move_to_element(eleUsd).click().perform()
-        time.sleep(5)
+        time.sleep(10)
+        logging.info("change currency to USD success.")
         
     #爬取 index 頁面 
     def crawlIndexPage(self, uselessArg1=None):
@@ -126,7 +127,7 @@ class CrawlerForVOYAGIN:
         lstStrNotObtainedCountryPage1Url = self.db.fetchallNotObtainedCountryUrl()
         for strNotObtainedCountryPage1Url in lstStrNotObtainedCountryPage1Url:
             #re 找出 country 名稱
-            strCountryName = re.match("^https://www.govoyagin.com/things_to_do/(.*)?lang=en$", strNotObtainedCountryPage1Url).group(1)
+            strCountryName = re.match("^https://www.govoyagin.com/things_to_do/(.*)\?lang=en$", strNotObtainedCountryPage1Url).group(1)
             #country 頁面
             try:
                 intCountryPageNum = 1
@@ -249,9 +250,11 @@ class CrawlerForVOYAGIN:
             if not self.db.checkProductIsGot(strProductUrl=strProductUrl):
                 time.sleep(random.randint(5,8)) #sleep random time
                 try:
-                    self.driver.get(strProductUrl)
+                    self.driver.get(strProductUrl + "?lang=en")
+                    #切換幣別為 USD
+                    self.changePageCurrencyToUSD()
                     #解析 product 頁面
-                    #self.parseProductPage(strProductUrl=strProductUrl)
+                    self.parseProductPage(strProductUrl=strProductUrl)
                     #更新 product DB 為已爬取 (isGot = 1)
                     #self.db.updateProductStatusIsGot(strProductUrl=strProductUrl)
                 except Exception as e:
