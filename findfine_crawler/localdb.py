@@ -397,6 +397,8 @@ class LocalDbForVOYAGIN:
             "CREATE TABLE IF NOT EXISTS voyagin_product("
             "id INTEGER PRIMARY KEY,"
             "strProductUrl TEXT NOT NULL,"
+            "strLocation TEXT NOT NULL,"
+            "intDurationHour INTEGER NOT NULL,"
             "intCountryId INTEGER NOT NULL,"
             "isGot BOOLEAN NOT NULL)"
         )
@@ -447,14 +449,20 @@ class LocalDbForVOYAGIN:
         return lstRowData[0]["id"]
         
     #若無重覆 儲存 product URL
-    def insertProductUrlIfNotExists(self, strProductUrl=None, strCountryPage1Url=None):
+    def insertProductUrlIfNotExists(self, strProductUrl=None, strLocation=None, intDurationHour=None, strCountryPage1Url=None):
         intCountryId = self.fetchCountryIdByUrl(strCountryPage1Url=strCountryPage1Url)
         #insert product url if not exists
         strSQL = "SELECT * FROM voyagin_product WHERE strProductUrl='%s'"%strProductUrl
         lstRowData = self.db.fetchallSQL(strSQL=strSQL)
         if len(lstRowData) == 0:
-            strSQL = "INSERT INTO voyagin_product VALUES(NULL, '%s', %d, 0)"%(strProductUrl, intCountryId)
+            strSQL = "INSERT INTO voyagin_product VALUES(NULL, '%s', '%s', %d, %d, 0)"%(strProductUrl, strLocation, intDurationHour, intCountryId)
             self.db.commitSQL(strSQL=strSQL)
+        
+    #取得指定 product 的 location 及 duration hour
+    def fetchLocationAndDurationHourByProductUrl(self, strProductUrl=None):
+        strSQL = "SELECT * FROM voyagin_product WHERE strProductUrl='%s'"%strProductUrl
+        lstRowData = self.db.fetchallSQL(strSQL=strSQL)
+        return (lstRowData[0]["strLocation"], lstRowData[0]["intDurationHour"])
         
     #取得指定 country 的 product url
     def fetchallProductUrlByCountryUrl(self, strCountryPage1Url=None):

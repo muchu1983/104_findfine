@@ -105,12 +105,22 @@ class CrawlerForVOYAGIN:
     #解析 country 頁面
     def parseCountryPage(self, strCountryPage1Url=None):
         #找尋 product 超連結
-        elesProductA = self.driver.find_elements_by_css_selector("ul#discover-ul li.activity-list a.act-body")
-        for eleProductA in elesProductA:
-            strProductUrl = eleProductA.get_attribute("href")
+        elesProduct = self.driver.find_elements_by_css_selector("ul#discover-ul li.activity-list")
+        for eleProduct in elesProduct:
+            strProductUrl = eleProduct.find_element_by_css_selector("a.act-body").get_attribute("href")
+            strLocation = eleProduct.find_element_by_css_selector("a.act-body div.info span.location").text.strip()
+            intDurationNum = int(float(eleProduct.find_element_by_css_selector("a.act-body div.info span.duration span.duration-number").text.strip()))
+            strDurationUnit = eleProduct.find_element_by_css_selector("a.act-body div.info span.duration span.duration-unit").text.strip()
+            intDurationHour = 0
+            if "hour" in strDurationUnit:
+                intDurationHour = intDurationNum
+            elif "day" in strDurationUnit:
+                intDurationHour = intDurationNum * 24
+            else:
+                intDurationHour = 1 #default
             #儲存 product 超連結至 localdb
             logging.info("insert product url: %s"%strProductUrl)
-            self.db.insertProductUrlIfNotExists(strProductUrl=strProductUrl, strCountryPage1Url=strCountryPage1Url)
+            self.db.insertProductUrlIfNotExists(strProductUrl=strProductUrl, strLocation=strLocation, intDurationHour=intDurationHour, strCountryPage1Url=strCountryPage1Url)
     
     #檢查 country 有無下一頁
     def checkNextCountryPageExist(self):
