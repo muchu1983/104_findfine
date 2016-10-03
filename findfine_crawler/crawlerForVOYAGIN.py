@@ -191,31 +191,30 @@ class CrawlerForVOYAGIN:
         strUsdCostText = self.driver.find_element_by_css_selector("#bookit-area span.order-price__amount.price").text
         strUsdCostText = re.sub("[^\d]", "", strUsdCostText.strip())
         dicProductJson["intUsdCost"] = int(strUsdCostText)
-        """
         #intReviewStar
-        elesStarI = self.driver.find_elements_by_css_selector("div.div-star span.h5 i.fa-star.text-primary")
-        dicProductJson["intReviewStar"] = len(elesStarI)
+        isRatingReviewsDivExists = True if len(self.driver.find_elements_by_css_selector("div#activity_information div.rating-reviews")) == 1 else False
+        print(isRatingReviewsDivExists)
+        if isRatingReviewsDivExists:
+            strStarsValue = self.driver.find_element_by_css_selector("div#activity_information div.rating-reviews div.rating-stars").get_attribute("data-value")
+            dicProductJson["intReviewStar"] = int(float(strStarsValue))
+        else:
+            dicProductJson["intReviewStar"] = 0
         #intReviewVisitor
-        intReviewVisitor = 0
-        elesReviewVisitorSpan = self.driver.find_elements_by_css_selector("div.div-star span.h5 span.text-primary")
-        if len(elesReviewVisitorSpan) > 0:
-            strReviewVisitorText = elesReviewVisitorSpan[0].text
-            intReviewVisitor = int(strReviewVisitorText.strip())
-        dicProductJson["intReviewVisitor"] = intReviewVisitor
+        if isRatingReviewsDivExists:
+            strReviewText = self.driver.find_element_by_css_selector("div#activity_information div.rating-reviews a span.review-number").text
+            dicProductJson["intReviewVisitor"] = int(float(strReviewText))
+        else:
+            dicProductJson["intReviewVisitor"] = 0
         #strIntroduction
-        strIntroduction = self.driver.find_element_by_css_selector("div.prod-intro span").text
+        strIntroduction = self.driver.find_element_by_css_selector("#descriptions_body").text
+        strIntroduction = re.sub("[\s]+", " ", strIntroduction)
         dicProductJson["strIntroduction"] = strIntroduction.strip()
-        #strGuideLanguage
-        lstStrGuideLanguage = []
-        elesGuideLanguageImg = self.driver.find_elements_by_css_selector("div.productview div.container div.productPage-detail div.guide_lang_image img")
-        for eleGuideLanguageImg in elesGuideLanguageImg:
-            lstStrGuideLanguage.append(eleGuideLanguageImg.get_attribute("data-original-title").strip())
-        dicProductJson["strGuideLanguage"] = ",".join(lstStrGuideLanguage)
+        #strGuideLanguage (voyagin 無該資料)
+        dicProductJson["strGuideLanguage"] = "english"
         #intOption (待確認)
         dicProductJson["intOption"] = None
-        #strStyle (kkday 無該資料)
+        #strStyle (voyagin 無該資料)
         dicProductJson["strStyle"] = None
-        """
         self.lstDicParsedProductJson.append(dicProductJson)
     
     #爬取 product 頁面 (strCountryPage1Url == None 會自動找尋已爬取完成之 country)
@@ -246,7 +245,7 @@ class CrawlerForVOYAGIN:
         for strProductUrl in lstStrProductUrl:
             #檢查 product 是否已下載
             if not self.db.checkProductIsGot(strProductUrl=strProductUrl):
-                time.sleep(random.randint(5,8)) #sleep random time
+                time.sleep(random.randint(7,10)) #sleep random time
                 try:
                     self.driver.get(strProductUrl + "?lang=en")
                     #切換幣別為 USD
