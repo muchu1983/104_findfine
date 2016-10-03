@@ -39,7 +39,7 @@ class CrawlerForVOYAGIN:
     #取得 spider 使用資訊
     def getUseageMessage(self):
         return (
-            "- VOYAGIN -\n"
+            "- VOYAGIN (need proxy)-\n"
             "useage:\n"
             "index - crawl index page of VOYAGIN \n"
             "country - crawl not obtained country page \n"
@@ -181,19 +181,17 @@ class CrawlerForVOYAGIN:
         dicProductJson["intDurationHour"] = intDurationHour
         #strLocation
         dicProductJson["strLocation"] = strLocation
-        """
         #strImageUrl
-        strImageDivStyle = self.driver.find_element_by_css_selector("div#header-imageview div.productPage-photos div.img-bg-full").get_attribute("style")
-        strImageDivStyle = re.sub("[:;\"\s\(\)]", "", strImageDivStyle).strip()
-        strImageUrl = re.match("^background-imageurl//(img\.kkday\.com/image/.*)$", strImageDivStyle).group(1)
-        dicProductJson["strImageUrl"] = "http://" + strImageUrl.strip()
+        strImageUrl = self.driver.find_element_by_css_selector("#visual-area-bg div.bg-visual img").get_attribute("src")
+        dicProductJson["strImageUrl"] = strImageUrl.strip()
         #strTitle
-        strTitle = self.driver.find_element_by_css_selector("div.productview div.container div.productPage-detail h1").text
+        strTitle = self.driver.find_element_by_css_selector("#activity_information h1").text
         dicProductJson["strTitle"] = strTitle.strip()
         #intUsdCost
-        strUsdCostText = self.driver.find_element_by_css_selector("div.lowestPrice div.text-right h2.h1").text
+        strUsdCostText = self.driver.find_element_by_css_selector("#bookit-area span.order-price__amount.price").text
         strUsdCostText = re.sub("[^\d]", "", strUsdCostText.strip())
-        dicProductJson["intUsdCost"] = int(int(strUsdCostText)/31.735)
+        dicProductJson["intUsdCost"] = int(strUsdCostText)
+        """
         #intReviewStar
         elesStarI = self.driver.find_elements_by_css_selector("div.div-star span.h5 i.fa-star.text-primary")
         dicProductJson["intReviewStar"] = len(elesStarI)
@@ -235,7 +233,7 @@ class CrawlerForVOYAGIN:
             self.crawlProductPageWithGivenCountryUrl(strCountryPage1Url=strCountryPage1Url)
         #將最後資料寫入 json
         if len(self.lstDicParsedProductJson) > 0:
-            strJsonFileName = "%d_product.json"%(self.intProductJsonIndex*100)
+            strJsonFileName = "%d_product.json"%(self.intProductJsonIndex*5)
             strProductJsonFilePath = self.fileUtil.getPackageResourcePath(strPackageName="findfine_crawler.resource.parsed_json.voyagin", strResourceName=strJsonFileName)
             self.ffUtil.writeObjectToJsonFile(dicData=self.lstDicParsedProductJson, strJsonFilePath=strProductJsonFilePath)
             self.lstDicParsedProductJson = []
@@ -262,10 +260,10 @@ class CrawlerForVOYAGIN:
                     logging.warning("selenium driver crashed. skip get product: %s"%strProductUrl)
                     self.restartDriver() #重啟 
             #顯示進度
-            logging.info("進度: %d/100"%len(self.lstDicParsedProductJson))
+            logging.info("進度: %d/5"%len(self.lstDicParsedProductJson))
             #寫入 json
-            if len(self.lstDicParsedProductJson) == 100:
-                strJsonFileName = "%d_product.json"%(self.intProductJsonIndex*100)
+            if len(self.lstDicParsedProductJson) == 5:
+                strJsonFileName = "%d_product.json"%(self.intProductJsonIndex*5)
                 strProductJsonFilePath = self.fileUtil.getPackageResourcePath(strPackageName="findfine_crawler.resource.parsed_json.voyagin", strResourceName=strJsonFileName)
                 self.ffUtil.writeObjectToJsonFile(dicData=self.lstDicParsedProductJson, strJsonFilePath=strProductJsonFilePath)
                 self.intProductJsonIndex = self.intProductJsonIndex+1

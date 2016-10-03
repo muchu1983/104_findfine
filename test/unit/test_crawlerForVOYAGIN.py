@@ -10,7 +10,7 @@ import unittest
 import logging
 from findfine_crawler.crawlerForVOYAGIN import CrawlerForVOYAGIN
 """
-測試 爬取 VOYAGIN
+測試 爬取 VOYAGIN (必須設定 proxy)
 """
 
 class CrawlerForVOYAGINTest(unittest.TestCase):
