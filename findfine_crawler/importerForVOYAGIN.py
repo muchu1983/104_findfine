@@ -30,7 +30,7 @@ class ImporterForVOYAGIN:
     #取得 importer 使用資訊
     def getUseageMessage(self):
         return (
-            "- KKDAY -\n"
+            "- VOYAGIN -\n"
             "useage:\n"
             "import - import product.json to database \n"
         )

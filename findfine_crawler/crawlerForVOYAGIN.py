@@ -162,9 +162,10 @@ class CrawlerForVOYAGIN:
     def parseProductPage(self, strProductUrl=None):
         dicProductJson = {}
         #strSource
-        dicProductJson["strSource"] = "KKDAY"
+        dicProductJson["strSource"] = "Voyagin"
         #strOriginUrl
         dicProductJson["strOriginUrl"] = strProductUrl
+        """
         #strImageUrl
         strImageDivStyle = self.driver.find_element_by_css_selector("div#header-imageview div.productPage-photos div.img-bg-full").get_attribute("style")
         strImageDivStyle = re.sub("[:;\"\s\(\)]", "", strImageDivStyle).strip()
@@ -215,6 +216,7 @@ class CrawlerForVOYAGIN:
         dicProductJson["intOption"] = None
         #strStyle (kkday 無該資料)
         dicProductJson["strStyle"] = None
+        """
         self.lstDicParsedProductJson.append(dicProductJson)
     
     #爬取 product 頁面 (strCountryPage1Url == None 會自動找尋已爬取完成之 country)

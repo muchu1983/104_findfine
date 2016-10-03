@@ -18,7 +18,7 @@ class ImporterForVOYAGINTest(unittest.TestCase):
     #準備
     def setUp(self):
         logging.basicConfig(level=logging.INFO)
-        self.importer = ImporterForKKDAY()
+        self.importer = ImporterForVOYAGIN()
         
     #收尾
     def tearDown(self):
@@ -26,7 +26,7 @@ class ImporterForVOYAGINTest(unittest.TestCase):
     
     #測試 import product.json to db
     def test_import(self):
-        logging.info("ImporterForKKDAYTest.test_import")
+        logging.info("ImporterForVOYAGINTest.test_import")
         self.importer.importProductJsonToDb()
     
 #測試開始
