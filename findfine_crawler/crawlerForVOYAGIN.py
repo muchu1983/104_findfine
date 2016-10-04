@@ -193,7 +193,6 @@ class CrawlerForVOYAGIN:
         dicProductJson["intUsdCost"] = int(strUsdCostText)
         #intReviewStar
         isRatingReviewsDivExists = True if len(self.driver.find_elements_by_css_selector("div#activity_information div.rating-reviews")) == 1 else False
-        print(isRatingReviewsDivExists)
         if isRatingReviewsDivExists:
             strStarsValue = self.driver.find_element_by_css_selector("div#activity_information div.rating-reviews div.rating-stars").get_attribute("data-value")
             dicProductJson["intReviewStar"] = int(float(strStarsValue))
