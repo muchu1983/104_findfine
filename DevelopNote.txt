@@ -111,3 +111,12 @@ Registration
 10. Confirm password
 11. Term of condition 使用者條款
 12. 驗證碼
+
+後台
+1.文章推薦行程更新 (行程搜尋/)
+2.會員增加 trip 到 withlist 記錄
+3.使用者點擊 trip 超連結點擊率 記錄   <span onclick=""><a href=""></span>   <a href=""><span onclick=""></a>
+4.使用者停留時間 (無法達成)
+5.每日人流量 (使用者/會員) 每周每月
+6.下架產品
+7.ip 管理 - 禁權 (暫不處理)
