@@ -26,9 +26,9 @@ function initMap() {
     
 
     
-    $('#wishList').hide();
+    // $('#wishList').hide();
     $('#myFriends').hide();
-    $('#myPlans').hide();
+    // $('#myPlans').hide();
     $('#myMessages').hide();
     $('#logOut').hide();
     

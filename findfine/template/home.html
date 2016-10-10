@@ -37,11 +37,17 @@
         <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
     <![endif]-->
     <script type="text/javascript">
-        var strEmail = "{{strEmail}}";
-        //alert(strEmail);
+    var strEmail = "{{strEmail}}";
+    //alert(strEmail);
     </script>
+    <!-- ripple-button -->
+    <link rel="stylesheet" href="/static/vendor/ripple/css/style.css">
+    <script src="/static/vendor/ripple/js/index.js"></script>
+    <!-- icon-font -->
+    <link rel="stylesheet" href="/static/icon-font/style.css">
+    <!-- google font Roboto -->
+    <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
 </head>
-
 <!-- TODO 每個log都可以回首頁 -->
 
 <body id="page-top" class="index" style="background-image:url('/static/img/bg.jpg');">
@@ -53,16 +59,33 @@
                 <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
                     <span class="sr-only">Toggle navigation</span> Menu <i class="fa fa-bars"></i>
                 </button>
-                <a class="navbar-brand page-scroll" href="#page-top"></a>
+                <a class="icon-logo" href="#page-top"></a>
             </div>
             <!-- Collect the nav links, forms, and other content for toggling -->
             <div class="collapse navbar-collapse customFixed" id="bs-example-navbar-collapse-1">
-                <div id="logOut" class="btn btn-info pull-right">Log Out</div>
-                <div id="wishList" class="btn btn-info pull-right">wish list</div>
-                <div id="myFriends" class="btn btn-info pull-right">my friends</div>
-                <div id="myPlans" class="btn btn-info pull-right">my plans</div>
-                <div id="myMessages" class="btn btn-info pull-right">my messages</div>
-                <div id="loginBtn" class="btn btn-info pull-right">Log In</div>
+                <div id="logOut" class="btn btn-info">Log Out</div>
+                <div id="wishList" class="btn btn-info">
+                    <span class="icon_blk">                  
+                        <span class="icon-quill"></span>
+                        <span class="icon-scroll"></span>
+                        <span class="extend_line"></span>
+                    </span>
+                    <span class="text">Wishlist</span>
+                </div>
+                <div id="myPlans" class="btn btn-info">
+                    <span class="icon_blk">
+                        <span class="icon-airplane"></span>
+                        <span class="icon-notebook"></span>
+                        <svg height="80" width="300">
+                          <g fill="none" stroke="#ffffff" stroke-width="4">
+                            <path stroke-dasharray="10,10" d="M5 40 l215 0" />
+                          </g>
+                        </svg>
+                    </span>
+                    <span class="text">My Plan</span>
+                </div>
+                <!-- <div id="myFriends" class="btn btn-info">my friends</div>
+                <div id="myMessages" class="btn btn-info">my messages</div> -->
                 <ul class="nav navbar-nav navbar-right">
                     <li class="hidden">
                         <a href="#page-top"></a>
@@ -94,7 +117,7 @@
                         </div>
                     </li>
                 </ul>
-                
+                <div id="loginBtn" class="btn btn-info">Log In</div>
             </div>
             <!-- /.navbar-collapse -->
         </div>
@@ -104,7 +127,7 @@
     <header class="home">
         <div class="container">
             <div class="intro-text">
-                <div class="intro-lead-in">Paint your life in</div>
+                <div class="intro-lead-in">Find Fine Tour</div>
                 <!-- <div class="intro-heading">Paint your life in</div> -->
                 <!-- <a href="#services" class="page-scroll btn btn-xl">Tell Me More</a> -->
                 <div id="locationField" class="col-xs-12 col-md-6 col-md-offset-3">
@@ -272,13 +295,12 @@
                     <h2 class="section-heading">Story of the Month</h2>
                     <h3 class="section-subheading text-muted"></h3>
                     <!--<h3 class="section-subheading text-muted">Lorem ipsum dolor sit amet consectetur.</h3>-->
-                    
                 </div>
             </div>
             <div class="row">
                 <div class="col-lg-12">
                     <ul class="timeline">
-                    <!-- TODO 圖文  皆放大 -->
+                        <!-- TODO 圖文  皆放大 -->
                         <!-- timeline-inverted 向右 -->
                         <li class="timeline-inverted">
                             <div class="timeline-image">
@@ -293,7 +315,7 @@
                                 </div>
                                 <div class="timeline-body">
                                     <p class="text-muted">The Taj Mahal, a wonder of the world and world heritage site,is a magnificent specimen of Mughal architecture. Most people know the Taj Mahal,a mausoleum in Agra, India, as a monument of love symbolizing the eternal love of a Mughal emperor Shah Jahan towards his wife Mumtaz. However,not many are aware that the Taj Mahal also tells the story of maternal death1 and, by extension,a hostof issues surrounding it that is emblematic of reproductive health in India...</p>
-                                    <p class="text-muted"><a href="" class="portfolio-link" data-lat="27.175015" data-lng="78.042155" data-place="Taj Mahal">read more</a></P> 
+                                    <p class="text-muted"><a href="" class="portfolio-link" data-lat="27.175015" data-lng="78.042155" data-place="Taj Mahal">read more</a></P>
                                 </div>
                             </div>
                         </li>
@@ -330,7 +352,7 @@
         </div>
     </aside>
     <!-- Team Section -->
-    <section id="team" >
+    <section id="team">
         <div class="container">
             <div class="row">
                 <div class="col-lg-12 text-center">
@@ -397,7 +419,7 @@
             <div class="row">
                 <div class="col-xs-1 col-md-2"></div>
                 <div class="col-xs-10 col-md-8">
-                <!-- TODO 加log-->
+                    <!-- TODO 加log-->
                     <div class="logoImg"></div><span class="copyright">Copyright © 2016 FindFineTour All rights reserved.</span>
                 </div>
                 <div class="col-xs-1 col-md-2"></div>
