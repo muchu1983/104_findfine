@@ -154,9 +154,10 @@ class CrawlerForGYG:
     def parseProductPage(self, strProductUrl=None):
         dicProductJson = {}
         #strSource
-        dicProductJson["strSource"] = "KLOOK"
+        dicProductJson["strSource"] = "GetYourGuide"
         #strOriginUrl
         dicProductJson["strOriginUrl"] = strProductUrl
+        """
         #strImageUrl
         strImageSectionStyle = self.driver.find_element_by_css_selector("section.banner").get_attribute("style")
         strImageSectionStyle = re.sub("[:;\"\s\(\)]", "", strImageSectionStyle).strip()
@@ -196,6 +197,7 @@ class CrawlerForGYG:
         dicProductJson["intOption"] = None
         #strStyle (klook 無該資料)
         dicProductJson["strStyle"] = None
+        """
         self.lstDicParsedProductJson.append(dicProductJson)
     
     #爬取 product 頁面 (strCityPage1Url == None 會自動找尋已爬取完成之 city)
@@ -229,16 +231,6 @@ class CrawlerForGYG:
                 time.sleep(random.randint(5,8)) #sleep random time
                 try:
                     self.driver.get(strProductUrl)
-                    #切換目前幣別至 USD
-                    strCurrentCurrencyText = self.driver.find_element_by_css_selector("#j_currency a:nth-of-type(1)").text
-                    logging.info("目前幣別: %s"%strCurrentCurrencyText)
-                    if strCurrentCurrencyText != "USD":
-                        logging.info("切換目前幣別至 USD")
-                        eleCurrencyLi = self.driver.find_element_by_css_selector("#j_currency")
-                        eleUsdA = self.driver.find_element_by_css_selector("#j_currency li a[data-value=USD]")
-                        actHoverThenClick = ActionChains(self.driver)
-                        actHoverThenClick.move_to_element(eleCurrencyLi).move_to_element(eleUsdA).click().perform()
-                        time.sleep(10) #等待幣別轉換完成
                     #解析 product 頁面
                     self.parseProductPage(strProductUrl=strProductUrl)
                     #更新 product DB 為已爬取 (isGot = 1)
