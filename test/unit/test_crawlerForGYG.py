@@ -29,7 +29,7 @@ class CrawlerForGYGTest(unittest.TestCase):
     def test_crawlIndexPage(self):
         logging.info("CrawlerForGYGTest.test_crawlIndexPage")
         self.crawler.crawlIndexPage()
-    """
+    
     #測試爬取 city page
     def test_crawlCityPage(self):
         logging.info("CrawlerForGYGTest.test_crawlCityPage")
@@ -39,7 +39,7 @@ class CrawlerForGYGTest(unittest.TestCase):
     def test_crawlProductPage(self):
         logging.info("CrawlerForGYGTest.test_crawlProductPage")
         self.crawler.crawlProductPage(strCityPage1Url=None)
-    
+    """
     #測試 轉換 duration 資訊
     def test_convertDurationStringToHourInt(self):
         logging.info("CrawlerForGYGTest.test_convertDurationStringToHourInt")
