@@ -24,7 +24,7 @@ class CrawlerForGYGTest(unittest.TestCase):
     #收尾
     def tearDown(self):
         self.crawler.quitDriver()
-    
+    """
     #測試爬取 index page
     def test_crawlIndexPage(self):
         logging.info("CrawlerForGYGTest.test_crawlIndexPage")
@@ -34,7 +34,7 @@ class CrawlerForGYGTest(unittest.TestCase):
     def test_crawlCityPage(self):
         logging.info("CrawlerForGYGTest.test_crawlCityPage")
         self.crawler.crawlCityPage()
-    
+    """
     #測試爬取 product page
     def test_crawlProductPage(self):
         logging.info("CrawlerForGYGTest.test_crawlProductPage")
