@@ -20,6 +20,8 @@ from findfine_crawler.crawlerForTRIPBAA import CrawlerForTRIPBAA
 from findfine_crawler.importerForTRIPBAA import ImporterForTRIPBAA
 from findfine_crawler.crawlerForVOYAGIN import CrawlerForVOYAGIN
 from findfine_crawler.importerForVOYAGIN import ImporterForVOYAGIN
+from findfine_crawler.crawlerForGYG import CrawlerForGYG
+from findfine_crawler.importerForGYG import ImporterForGYG
 from findfine_crawler.crawlerForExRate import CrawlerForExRate
 from findfine_crawler.importerForExRate import ImporterForExRate
 """
@@ -39,6 +41,7 @@ class FindfineShell:
             "klook":CrawlerForKLOOK(),
             "tripbaa":CrawlerForTRIPBAA(),
             "voyagin":CrawlerForVOYAGIN(),
+            "gyg":CrawlerForGYG(),
             "exrate":CrawlerForExRate()
         }
         
@@ -50,6 +53,7 @@ class FindfineShell:
             "klook":ImporterForKLOOK(),
             "tripbaa":ImporterForTRIPBAA(),
             "voyagin":ImporterForVOYAGIN(),
+            "gyg":ImporterForGYG(),
             "exrate":ImporterForExRate()
         }
         
