@@ -510,3 +510,122 @@ class LocalDbForVOYAGIN:
         strSQL = "DELETE FROM voyagin_country"
         self.db.commitSQL(strSQL=strSQL)
         
+#GetYourGuide crawler localdb (SQLite3)
+class LocalDbForGYG:
+    
+    #建構子
+    def __init__(self):
+        self.db = SQLite3Db(strResFolderPath="findfine_crawler.resource")
+        self.initialDb()
+        
+    #初取化資料庫
+    def initialDb(self):
+        strSQLCreateTable = (
+            "CREATE TABLE IF NOT EXISTS gyg_product("
+            "id INTEGER PRIMARY KEY,"
+            "strProductUrl TEXT NOT NULL,"
+            "intCityId INTEGER NOT NULL,"
+            "isGot BOOLEAN NOT NULL)"
+        )
+        self.db.commitSQL(strSQL=strSQLCreateTable)
+        strSQLCreateTable = (
+            "CREATE TABLE IF NOT EXISTS gyg_city("
+            "id INTEGER PRIMARY KEY,"
+            "strCityPage1Url TEXT NOT NULL,"
+            "isGot BOOLEAN NOT NULL)"
+        )
+        self.db.commitSQL(strSQL=strSQLCreateTable)
+        
+    #若無重覆，儲存 city
+    def insertCityIfNotExists(self, strCityPage1Url=None):
+        strSQL = "SELECT * FROM gyg_city WHERE strCityPage1Url='%s'"%strCityPage1Url
+        lstRowData = self.db.fetchallSQL(strSQL=strSQL)
+        if len(lstRowData) == 0:
+            strSQL = "INSERT INTO gyg_city VALUES(NULL, '%s', 0)"%strCityPage1Url
+            self.db.commitSQL(strSQL=strSQL)
+        
+    #取得所有 city 第一頁 url (指定 isGot 狀態)
+    def fetchallCityUrl(self, isGot=False):
+        dicIsGotCode = {True:"1", False:"0"}
+        strSQL = "SELECT strCityPage1Url FROM gyg_city WHERE isGot=%s"%dicIsGotCode[isGot]
+        lstRowData = self.db.fetchallSQL(strSQL=strSQL)
+        lstStrCityPage1Url = []
+        for rowData in lstRowData:
+            lstStrCityPage1Url.append(rowData["strCityPage1Url"])
+        return lstStrCityPage1Url
+        
+    #取得所有未完成下載的 city 第一頁 url
+    def fetchallNotObtainedCityUrl(self):
+        return self.fetchallCityUrl(isGot=False)
+        
+    #取得所有已完成下載的 city 第一頁 url
+    def fetchallCompletedObtainedCityUrl(self):
+        return self.fetchallCityUrl(isGot=True)
+        
+    #更新 city 為已完成下載狀態
+    def updateCityStatusIsGot(self, strCityPage1Url=None):
+        strSQL = "UPDATE gyg_city SET isGot=1 WHERE strCityPage1Url='%s'"%strCityPage1Url
+        self.db.commitSQL(strSQL=strSQL)
+        
+    #取得 city id
+    def fetchCityIdByUrl(self, strCityPage1Url=None):
+        strSQL = "SELECT * FROM gyg_city WHERE strCityPage1Url='%s'"%strCityPage1Url
+        lstRowData = self.db.fetchallSQL(strSQL=strSQL)
+        return lstRowData[0]["id"]
+        
+    #若無重覆 儲存 product URL
+    def insertProductUrlIfNotExists(self, strProductUrl=None, strCityPage1Url=None):
+        intCityId = self.fetchCityIdByUrl(strCityPage1Url=strCityPage1Url)
+        #insert product url if not exists
+        strSQL = "SELECT * FROM gyg_product WHERE strProductUrl='%s'"%strProductUrl
+        lstRowData = self.db.fetchallSQL(strSQL=strSQL)
+        if len(lstRowData) == 0:
+            strSQL = "INSERT INTO gyg_product VALUES(NULL, '%s', %d, 0)"%(strProductUrl, intCityId)
+            self.db.commitSQL(strSQL=strSQL)
+        
+    #取得指定 city 的 product url
+    def fetchallProductUrlByCityUrl(self, strCityPage1Url=None):
+        intCityId = self.fetchCityIdByUrl(strCityPage1Url=strCityPage1Url)
+        strSQL = "SELECT * FROM gyg_product WHERE intCityId=%d"%intCityId
+        lstRowData = self.db.fetchallSQL(strSQL=strSQL)
+        lstStrProductUrl = []
+        for rowData in lstRowData:
+            lstStrProductUrl.append(rowData["strProductUrl"])
+        return lstStrProductUrl
+        
+    #檢查 product 是否已下載
+    def checkProductIsGot(self, strProductUrl=None):
+        isGot = True
+        strSQL = "SELECT * FROM gyg_product WHERE strProductUrl='%s'"%strProductUrl
+        lstRowData = self.db.fetchallSQL(strSQL=strSQL)
+        for rowData in lstRowData:
+            if rowData["isGot"] == 0:
+                isGot = False
+        return isGot
+        
+    #更新 product 為已完成下載狀態
+    def updateProductStatusIsGot(self, strProductUrl=None):
+        strSQL = "UPDATE gyg_product SET isGot=1 WHERE strProductUrl='%s'"%strProductUrl
+        self.db.commitSQL(strSQL=strSQL)
+        
+    #取得所有已完成下載的 product url
+    def fetchallCompletedObtainedProductUrl(self):
+        strSQL = "SELECT strProductUrl FROM gyg_product WHERE isGot=1"
+        lstRowData = self.db.fetchallSQL(strSQL=strSQL)
+        lstStrProductUrl = []
+        for rowData in lstRowData:
+            lstStrProductUrl.append(rowData["strProductUrl"])
+        return lstStrProductUrl
+        
+    #更新 product 尚未開始下載狀態
+    def updateProductStatusIsNotGot(self, strProductUrl=None):
+        strSQL = "UPDATE gyg_product SET isGot=0 WHERE strProductUrl='%s'"%strProductUrl
+        self.db.commitSQL(strSQL=strSQL)
+        
+    #清除測試資料 (clear table)
+    def clearTestData(self):
+        strSQL = "DELETE FROM gyg_product"
+        self.db.commitSQL(strSQL=strSQL)
+        strSQL = "DELETE FROM gyg_city"
+        self.db.commitSQL(strSQL=strSQL)
+        

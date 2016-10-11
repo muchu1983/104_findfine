@@ -89,6 +89,11 @@ https://partner.getyourguide.com/en/home.php
 帳號： liangtian@hotmail.com
 密碼： 768768
 ===
+rent-a-guide:
+http://www.rent-a-guide.com/
+liangtian@hotmail.com
+768768768
+===
 Withlocals:
 https://www.withlocals.com/api/v1/affiliates/feeds/base.xml
 ===
@@ -96,7 +101,7 @@ klook: 完成 (自製爬蟲)
 ===
 tripbaa: 完成 (自製爬蟲)
 ===
-voyagin:
+voyagin: 完成 (自製爬蟲)
 
 Registration 
 1. Title: Mr./Miss/Mz./Mrs. 
