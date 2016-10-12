@@ -195,11 +195,11 @@ class CrawlerForKKDAY:
         #intDurationHour
         intDurationHour = 0
         strDurationText = self.driver.find_element_by_css_selector("div.productview div.container div.productPage-detail div.col-md-12 span.h5").text
-        strIntInDurationHourText = re.sub("[^\d]", "", strDurationText)
+        strIntInDurationHourText = re.sub("[^\d\.]", "", strDurationText)
         if "hour" in strDurationText:
-            intDurationHour = int(strIntInDurationHourText)
+            intDurationHour = int(float(strIntInDurationHourText))
         elif "day" in strDurationText:
-            intDurationHour = int(strIntInDurationHourText)*24
+            intDurationHour = int(float(strIntInDurationHourText))*24
         else:
             pass
         dicProductJson["intDurationHour"] = intDurationHour

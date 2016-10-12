@@ -152,7 +152,7 @@ class CrawlerForVOYAGIN:
                 #檢查 country 有無下一頁
                 isNextCountryPageExist = self.checkNextCountryPageExist()
                 while isNextCountryPageExist:
-                    time.sleep(random.randint(5,8)) #sleep random time
+                    time.sleep(random.randint(120,300)) #sleep random time
                     intCountryPageNum = intCountryPageNum+1
                     strCountryUrlPageSuffix = "&page=%d"%intCountryPageNum
                     self.driver.get(strNotObtainedCountryPage1Url + strCountryUrlPageSuffix)
@@ -244,7 +244,7 @@ class CrawlerForVOYAGIN:
         for strProductUrl in lstStrProductUrl:
             #檢查 product 是否已下載
             if not self.db.checkProductIsGot(strProductUrl=strProductUrl):
-                time.sleep(random.randint(7,10)) #sleep random time
+                time.sleep(random.randint(120,300)) #sleep random time
                 try:
                     self.driver.get(strProductUrl + "?lang=en")
                     #切換幣別為 USD

@@ -34,7 +34,7 @@ class CrawlerForGYGTest(unittest.TestCase):
     def test_crawlCityPage(self):
         logging.info("CrawlerForGYGTest.test_crawlCityPage")
         self.crawler.crawlCityPage()
-    """
+    
     #測試爬取 product page
     def test_crawlProductPage(self):
         logging.info("CrawlerForGYGTest.test_crawlProductPage")
@@ -48,7 +48,7 @@ class CrawlerForGYGTest(unittest.TestCase):
         self.assertTrue(self.crawler.convertDurationStringToHourInt(strDurtation="3 hours 30 minutes")>0)
         self.assertTrue(self.crawler.convertDurationStringToHourInt(strDurtation="1 day")>0)
         self.assertTrue(self.crawler.convertDurationStringToHourInt(strDurtation="1 - 2 days")>0)
-    """
+    
 #測試開始
 if __name__ == "__main__":
     unittest.main(exit=False)

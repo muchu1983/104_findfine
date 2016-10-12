@@ -256,8 +256,8 @@ class CrawlerForKLOOK:
             return intDefaultDuration
         else:
             intTotalDurationHour = 0
-            mDurationHour = re.search("([\d]+) hour", strDurtation)
-            mDurationDay = re.search("([\d]+) day", strDurtation)
+            mDurationHour = re.search("([\d\.]+) hour", strDurtation)
+            mDurationDay = re.search("([\d\.]+) day", strDurtation)
             if mDurationHour:
                 intDurationHour = int(float(mDurationHour.group(1)))
                 intTotalDurationHour = intTotalDurationHour + intDurationHour

@@ -196,8 +196,8 @@ class CrawlerForTRIPBAA:
             return intDefaultDuration
         else:
             intTotalDurationHour = 0
-            mDurationHour = re.search("([\d]+) hr", strDurtation)
-            mDurationDay = re.search("([\d]+) day", strDurtation)
+            mDurationHour = re.search("([\d\.]+) hr", strDurtation)
+            mDurationDay = re.search("([\d\.]+) day", strDurtation)
             if mDurationHour:
                 intDurationHour = int(float(mDurationHour.group(1)))
                 intTotalDurationHour = intTotalDurationHour + intDurationHour

@@ -123,7 +123,7 @@ class CrawlerForGYG:
         lstStrNotObtainedCityPage1Url = self.db.fetchallNotObtainedCityUrl()
         for strNotObtainedCityPage1Url in lstStrNotObtainedCityPage1Url:
             #re 找出 city 名稱
-            strCityName = re.match("^https://www\.getyourguide\.com/s/\?q=(.*)&lc=[\d]+$", strNotObtainedCityPage1Url).group(1)
+            strCityName = re.sub("%20", " ", re.match("^https://www\.getyourguide\.com/s/\?q=(.*)&lc=[\d]+$", strNotObtainedCityPage1Url).group(1))
             #city 頁面
             intCityPageNum = 1
             #city 第1頁
@@ -151,53 +151,67 @@ class CrawlerForGYG:
             logging.info("got city %s find %d pages"%(strCityName, intCityPageNum))
             
     #解析 product 頁面
-    def parseProductPage(self, strProductUrl=None):
+    def parseProductPage(self, strProductUrl=None, strCityName=None):
         dicProductJson = {}
         #strSource
         dicProductJson["strSource"] = "GetYourGuide"
         #strOriginUrl
-        dicProductJson["strOriginUrl"] = strProductUrl
-        """
+        dicProductJson["strOriginUrl"] = strProductUrl + u"?partner_id=JOIL1TN"
         #strImageUrl
-        strImageSectionStyle = self.driver.find_element_by_css_selector("section.banner").get_attribute("style")
-        strImageSectionStyle = re.sub("[:;\"\s\(\)]", "", strImageSectionStyle).strip()
-        #strImageUrl 中會出現中文 先進行 urlencode
-        strImageUrl = u"https://" + urllib.parse.quote(re.match("^.*https//(res\.klook\.com/images/.*)$", strImageSectionStyle).group(1).strip())
+        strImageUrl = None
+        elesImg = self.driver.find_elements_by_css_selector("#photos div.photo-viewer-slider img.photo-item")
+        for eleImg in elesImg:
+            strImgSrc = eleImg.get_attribute("src")
+            if strImgSrc.startswith("https://cdn.getyourguide.com/img/"):
+                strImageUrl = strImgSrc
+                break
         dicProductJson["strImageUrl"] = strImageUrl
         #strTitle
-        strTitle = self.driver.find_element_by_css_selector("section.activity header h1.t_main").text
+        strTitle = self.driver.find_element_by_css_selector("h1#activity-title").text
         dicProductJson["strTitle"] = strTitle.strip()
         #strLocation
-        strLocation = self.driver.find_element_by_css_selector("section.activity header p span.icon-label:nth-of-type(1)").text
-        dicProductJson["strLocation"] = strLocation.strip()
+        dicProductJson["strLocation"] = strCityName
+        
         #intUsdCost
-        strUsdCost = self.driver.find_element_by_css_selector("div.right_price_box span.t_main").text
-        strUsdCost = re.sub("[^\d]", "", strUsdCost)
-        dicProductJson["intUsdCost"] = int(strUsdCost.strip())
+        intUsdCost = 0
+        strUsdCost = self.driver.find_element_by_css_selector("header.header p.total-price").text.strip()
+        if strUsdCost == "Sold out": #已售完
+            intUsdCost = 0
+        else:
+            elesDealPriceSpan = self.driver.find_elements_by_css_selector("header.header p.total-price span.deal-price")
+            isDealPriceExists = True if len(elesDealPriceSpan) > 0 else False
+            if isDealPriceExists: #特價
+                intUsdCost = int(float(re.sub("[^0-9\.]", "", elesDealPriceSpan[0].text)))
+            else: #標價
+                intUsdCost = int(float(re.sub("[^0-9\.]", "", strUsdCost)))
+        dicProductJson["intUsdCost"] = intUsdCost
         #intReviewStar
-        dicProductJson["intReviewStar"] = 5
+        strRatingTitle = self.driver.find_element_by_css_selector("div.activity-rating span.rating").get_attribute("title").strip()
+        strReviewStar = re.match("^Rating: ([0-9\.]+) out of 5$", strRatingTitle).group(1)
+        intReviewStar = int(float(strReviewStar))
+        dicProductJson["intReviewStar"] = intReviewStar
         #intReviewVisitor
-        dicProductJson["intReviewVisitor"] = 1
+        strReviewVisitor = re.sub("[^\d]", "", self.driver.find_element_by_css_selector("#rating-link").text).strip()
+        intReviewVisitor = int(float(strReviewVisitor))
+        dicProductJson["intReviewVisitor"] = intReviewVisitor
         #strIntroduction
         strIntroduction = u""
-        elesIntroduction = self.driver.find_elements_by_css_selector("section.activity div.j_blank_window.actinfo *")
+        elesIntroduction = self.driver.find_elements_by_css_selector("#highlights *")
         for eleIntroduction in elesIntroduction:
             strIntroduction = strIntroduction + u" " + re.sub("\s", " ", eleIntroduction.text.strip())
-        dicProductJson["strIntroduction"] = strIntroduction
+        dicProductJson["strIntroduction"] = strIntroduction.strip()
         #intDurationHour
-        strDurationHour = self.driver.find_element_by_css_selector("section.activity section.j_blank_window.actinfo:nth-of-type(1) div div:nth-of-type(1) p").text
+        strDurationHour = self.driver.find_element_by_css_selector("div.key-info-box div div.time").text.strip()
         strDurationHour = re.sub("\s", " ", strDurationHour.lower())
         intDurationHour = self.convertDurationStringToHourInt(strDurtation=strDurationHour)
         dicProductJson["intDurationHour"] = intDurationHour
         #strGuideLanguage
-        strGuideLanguage = self.driver.find_element_by_css_selector("section.activity section.j_blank_window.actinfo:nth-of-type(1) div div:nth-of-type(2) p").text
-        strGuideLanguage = re.match("^language (.*)$", re.sub("\s", " ", strGuideLanguage.lower())).group(1)
+        strGuideLanguage = self.driver.find_element_by_css_selector("div.key-info-box div.live-guide div.lang").text.strip().lower()
         dicProductJson["strGuideLanguage"] = strGuideLanguage
         #intOption (待確認)
         dicProductJson["intOption"] = None
-        #strStyle (klook 無該資料)
+        #strStyle (GetYourGuide 無該資料)
         dicProductJson["strStyle"] = None
-        """
         self.lstDicParsedProductJson.append(dicProductJson)
     
     #爬取 product 頁面 (strCityPage1Url == None 會自動找尋已爬取完成之 city)
@@ -223,6 +237,8 @@ class CrawlerForGYG:
     #爬取 product 頁面 (指定 city url)
     def crawlProductPageWithGivenCityUrl(self, strCityPage1Url=None):
         logging.info("crawl product page with city %s"%strCityPage1Url)
+        #re 找出 city 名稱
+        strCityName = re.sub("%20", " ", re.match("^https://www\.getyourguide\.com/s/\?q=(.*)&lc=[\d]+$", strCityPage1Url).group(1))
         #取得 DB 紀錄中，指定 strCityPage1Url city 的 product url
         lstStrProductUrl = self.db.fetchallProductUrlByCityUrl(strCityPage1Url=strCityPage1Url)
         for strProductUrl in lstStrProductUrl:
@@ -232,7 +248,7 @@ class CrawlerForGYG:
                 try:
                     self.driver.get(strProductUrl)
                     #解析 product 頁面
-                    self.parseProductPage(strProductUrl=strProductUrl)
+                    self.parseProductPage(strProductUrl=strProductUrl, strCityName=strCityName)
                     #更新 product DB 為已爬取 (isGot = 1)
                     #self.db.updateProductStatusIsGot(strProductUrl=strProductUrl)
                 except Exception as e:
@@ -256,8 +272,8 @@ class CrawlerForGYG:
             return intDefaultDuration
         else:
             intTotalDurationHour = 0
-            mDurationHour = re.search("([\d]+) hour", strDurtation)
-            mDurationDay = re.search("([\d]+) day", strDurtation)
+            mDurationHour = re.search("([\d\.]+) hour", strDurtation)
+            mDurationDay = re.search("([\d\.]+) day", strDurtation)
             if mDurationHour:
                 intDurationHour = int(float(mDurationHour.group(1)))
                 intTotalDurationHour = intTotalDurationHour + intDurationHour
