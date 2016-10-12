@@ -56,7 +56,7 @@ class ImporterForKKDAY:
             lstDicProductData = self.ffUtil.readObjectFromJsonFile(strJsonFilePath=strProductJsonFilePath)
             for dicProductData in lstDicProductData:
                 try:
-                    #INSERT INTO
-                    self.db.insertTripIfNotExists(dicTripData=dicProductData)
+                    #UPSERT
+                    self.db.upsertTrip(dicTripData=dicProductData)
                 except Exception as e:
                     logging.warning("insert trip failed: %s"%(str(e)))

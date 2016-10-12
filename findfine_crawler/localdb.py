@@ -24,7 +24,7 @@ class LocalDbForJsonImporter:
         self.mysqlConnection.close()
     
     #若無重覆，儲存 trip 資料
-    def insertTripIfNotExists(self, dicTripData=None):
+    def upsertTrip(self, dicTripData=None):
         queryCursor = self.mysqlConnection.cursor(buffered=True)
         upsertCursor = self.mysqlConnection.cursor(buffered=True)
         strQuerySql = ("SELECT * FROM trip_trip WHERE strOriginUrl=%(strOriginUrl)s")
@@ -40,7 +40,18 @@ class LocalDbForJsonImporter:
                 lstStrTableValue.append("%%(%s)s"%strTripDataKey)
             strTableValue = ",".join(lstStrTableValue)
             strInsertSql = "INSERT INTO trip_trip (%s) VALUES (%s)"%(strTableField, strTableValue)
-            queryCursor.execute(strInsertSql, dicTripData)
+            upsertCursor.execute(strInsertSql, dicTripData)
+        else:
+            #trip 資料 key
+            lstStrTripDataKey = list(dicTripData.keys())
+            #SET 欄位字串
+            lstStrSET = []
+            for strTripDataKey in lstStrTripDataKey:
+                if strTripDataKey != "strOriginUrl":
+                    lstStrSET.append("%s=%%(%s)s"%(strTripDataKey, strTripDataKey))
+            strSET = ",".join(lstStrSET)
+            strUpdateSql = "UPDATE trip_trip SET %s WHERE strOriginUrl=%%(strOriginUrl)s"%strSET
+            upsertCursor.execute(strUpdateSql, dicTripData)
         self.mysqlConnection.commit()
     
     #新增或更新 匯率 資料
@@ -55,7 +66,13 @@ class LocalDbForJsonImporter:
                 "INSERT INTO trip_exrate (strCurrencyName, fUSDollar, dtUpdateTime)"
                 "VALUES (%(strCurrencyName)s, %(fUSDollar)s, %(dtUpdateTime)s)"
             )
-            queryCursor.execute(strInsertSql, dicExRateData)
+            upsertCursor.execute(strInsertSql, dicExRateData)
+        else:
+            strUpdateSql = (
+                "UPDATE trip_exrate SET fUSDollar=%(fUSDollar)s, dtUpdateTime=%(dtUpdateTime)s"
+                "WHERE  strCurrencyName=%(strCurrencyName)s"
+            )
+            upsertCursor.execute(strUpdateSql, dicExRateData)
         self.mysqlConnection.commit()
     
     #清除 行程 資料
