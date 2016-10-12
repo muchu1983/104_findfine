@@ -11,6 +11,7 @@ import time
 import logging
 import re
 import random
+import datetime
 import urllib.parse
 from selenium import webdriver
 from selenium.common.exceptions import NoSuchElementException
@@ -157,6 +158,10 @@ class CrawlerForGYG:
         dicProductJson["strSource"] = "GetYourGuide"
         #strOriginUrl
         dicProductJson["strOriginUrl"] = strProductUrl + u"?partner_id=JOIL1TN"
+        #strUpdateStatus
+        dicProductJson["strUpdateStatus"] = "up-to-date"
+        #strUpdateTime
+        dicProductJson["strUpdateTime"] = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
         #strImageUrl
         strImageUrl = None
         elesImg = self.driver.find_elements_by_css_selector("#photos div.photo-viewer-slider img.photo-item")

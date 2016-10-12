@@ -46,7 +46,7 @@ class LocalDbTest(unittest.TestCase):
         db.updateProductStatusIsNotGot(strProductUrl="http://product/for/unit/test")
         self.assertFalse(db.checkProductIsGot(strProductUrl="http://product/for/unit/test"))
         db.clearTestData() #清除本次測試資料
-    
+    """
     #測試 importer json 資料到 MySQL
     def test_localdb_for_json_importer(self):
         logging.info("LocalDbTest.test_localdb_for_json_importer")
@@ -56,7 +56,7 @@ class LocalDbTest(unittest.TestCase):
             "strSource":"test",
             "strOriginUrl":"https://test",
             "strUpdateStatus":"up-to-date",
-            "dtUpdateTime":datetime.datetime.now(),
+            "strUpdateTime":datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
             "strTitle":"test",
             "strImageUrl":"https://image.test",
             "intDurationHour":24,
@@ -83,7 +83,7 @@ class LocalDbTest(unittest.TestCase):
         db.clearTestData() #清除前次測試資料
         db.setTripDataStatusAsOutOfDate(strSource="KKDAY")
         db.clearTestData() #清除本次測試資料
-    """
+    
     #測試 KLOOK 本地端資料庫存取
     def test_localdb_for_klook(self):
         logging.info("LocalDbTest.test_localdb_for_klook")
