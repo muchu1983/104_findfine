@@ -129,7 +129,7 @@ class CrawlerForGYG:
             #city 第1頁
             time.sleep(random.randint(2,5)) #sleep random time
             self.driver.get(strNotObtainedCityPage1Url)
-            time.sleep(10)
+            time.sleep(60)
             #解析 product 超連結
             self.parseCityPage(strCityPage1Url=strNotObtainedCityPage1Url) #parse 第一頁
             #點開 show more activities
@@ -139,7 +139,7 @@ class CrawlerForGYG:
                 time.sleep(random.randint(5,8)) #sleep random time
                 intCityPageNum = intCityPageNum+1
                 eleShowMoreBtn.click()
-                time.sleep(10) #wait click action complete
+                time.sleep(60) #wait click action complete
                 #解析 product 超連結
                 self.parseCityPage(strCityPage1Url=strNotObtainedCityPage1Url) #parse 第二三四...n-1 頁
                 #檢查 city page 有無 show more activities
