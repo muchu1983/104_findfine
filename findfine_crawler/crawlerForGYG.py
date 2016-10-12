@@ -134,7 +134,7 @@ class CrawlerForGYG:
             #解析 product 超連結
             self.parseCityPage(strCityPage1Url=strNotObtainedCityPage1Url) #parse 第一頁
             #點開 show more activities
-            elesShowMoreBtn = self.driver.find_elements_by_css_selector("div.load-more span.btn")
+            elesShowMoreBtn = self.driver.find_elements_by_css_selector(".activities-show-more .btn")
             while len(elesShowMoreBtn) > 0 and elesShowMoreBtn[0].is_displayed():
                 eleShowMoreBtn = elesShowMoreBtn[0]
                 time.sleep(random.randint(5,8)) #sleep random time
@@ -144,7 +144,7 @@ class CrawlerForGYG:
                 #解析 product 超連結
                 self.parseCityPage(strCityPage1Url=strNotObtainedCityPage1Url) #parse 第二三四...n-1 頁
                 #檢查 city page 有無 show more activities
-                elesShowMoreBtn = self.driver.find_elements_by_css_selector("div.load-more span.btn")
+                elesShowMoreBtn = self.driver.find_elements_by_css_selector(".activities-show-more .btn")
             #解析 product 超連結
             self.parseCityPage(strCityPage1Url=strNotObtainedCityPage1Url) #parse 最後一頁
             #更新 country DB 為已抓取 (isGot = 1)
@@ -191,13 +191,17 @@ class CrawlerForGYG:
                 intUsdCost = int(float(re.sub("[^0-9\.]", "", strUsdCost)))
         dicProductJson["intUsdCost"] = intUsdCost
         #intReviewStar
-        strRatingTitle = self.driver.find_element_by_css_selector("div.activity-rating span.rating").get_attribute("title").strip()
-        strReviewStar = re.match("^Rating: ([0-9\.]+) out of 5$", strRatingTitle).group(1)
-        intReviewStar = int(float(strReviewStar))
+        intReviewStar = 0
+        if len(self.driver.find_elements_by_css_selector("div.activity-rating span.rating")) > 0:
+            strRatingTitle = self.driver.find_element_by_css_selector("div.activity-rating span.rating").get_attribute("title").strip()
+            strReviewStar = re.match("^Rating: ([0-9\.]+) out of 5$", strRatingTitle).group(1)
+            intReviewStar = int(float(strReviewStar))
         dicProductJson["intReviewStar"] = intReviewStar
         #intReviewVisitor
-        strReviewVisitor = re.sub("[^\d]", "", self.driver.find_element_by_css_selector("#rating-link").text).strip()
-        intReviewVisitor = int(float(strReviewVisitor))
+        intReviewVisitor = 0
+        if len(self.driver.find_elements_by_css_selector("#rating-link")) > 0:
+            strReviewVisitor = re.sub("[^\d]", "", self.driver.find_element_by_css_selector("#rating-link").text).strip()
+            intReviewVisitor = int(float(strReviewVisitor))
         dicProductJson["intReviewVisitor"] = intReviewVisitor
         #strIntroduction
         strIntroduction = u""
