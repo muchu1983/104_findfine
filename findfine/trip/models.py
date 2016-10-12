@@ -17,6 +17,10 @@ class Trip(models.Model):
     strOriginUrl = models.TextField(null=False)
     #主要圖片 url
     strImageUrl = models.TextField(null=False)
+    #更新狀態 (out-of-date, up-to-date)
+    #strUpdateStatus = models.CharField(max_length=255, null=True)
+    #更新日期
+    #dtUpdateTime = models.DateTimeField(null=True)
     #標題
     strTitle = models.CharField(max_length=255, null=True)
     #地點

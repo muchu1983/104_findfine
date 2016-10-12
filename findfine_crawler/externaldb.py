@@ -54,6 +54,17 @@ class ExternalDbForJsonImporter:
             upsertCursor.execute(strUpdateSql, dicTripData)
         self.mysqlConnection.commit()
     
+    #設定指定 strSource 的 trip 為過期資料
+    def setTripDataStatusAsOutOfDate(self, strSource=None):
+        updateCursor = self.mysqlConnection.cursor(buffered=True)
+        dicUpdateData = {
+            "strUpdateStatus":"out-of-date",
+            "strSource":strSource
+        }
+        strUpdateSql = "UPDATE trip_trip SET strUpdateStatus=%(strUpdateStatus)s WHERE strSource=%(strSource)s"
+        updateCursor.execute(strUpdateSql, dicUpdateData)
+        self.mysqlConnection.commit()
+        
     #新增或更新 匯率 資料
     def upsertExRate(self, dicExRateData=None):
         dicExRateData["dtUpdateTime"] = datetime.datetime.strptime(dicExRateData["strUpdateTime"], "%Y-%m-%d %H:%M:%S")
