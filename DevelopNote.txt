@@ -55,14 +55,6 @@ startapp page
 Django 後台 root 帳號/密碼 (透過 manage.py syncdb 設定)
 findfine_web_root/asdfASDF1234
 
-參考 template
-http://www.tourradar.com/
-http://www.comparealltravel.com/
-http://www.meetclub.tw/article/view/id/37726
-https://tw.hellowings.com/
-http://www.backpackers.com.tw/forum/showthread.php?t=1728352
-https://hellowings.uservoice.com/forums/242654-general-discussion-forum
-
 mockup 工具
 https://app.moqups.com
 
@@ -84,11 +76,6 @@ Username: liangtian@hotmail.com
 Password: a768768a
 X-Authorization: daz5m3vimo2u8ucz90yimfwpj8lfdszkb2utjvyk
 ===
-GetYourGuide: 未授權
-https://partner.getyourguide.com/en/home.php
-帳號： liangtian@hotmail.com
-密碼： 768768
-===
 rent-a-guide:
 http://www.rent-a-guide.com/
 liangtian@hotmail.com
@@ -102,6 +89,11 @@ klook: 完成 (自製爬蟲)
 tripbaa: 完成 (自製爬蟲)
 ===
 voyagin: 完成 (自製爬蟲)
+===
+GetYourGuide: 完成 (自製爬蟲)
+https://partner.getyourguide.com/en/home.php
+帳號： liangtian@hotmail.com
+密碼： 768768
 
 Registration 
 1. Title: Mr./Miss/Mz./Mrs. 
