@@ -51,7 +51,9 @@ class CrawlerForGYG:
     #取得 selenium driver 物件
     def getDriver(self):
         chromeDriverExeFilePath = self.fileUtil.getPackageResourcePath(strPackageName="findfine_crawler.resource", strResourceName="chromedriver.exe")
-        driver = webdriver.Chrome(chromeDriverExeFilePath)
+        options = webdriver.ChromeOptions()
+        options.add_argument("--start-maximized")
+        driver = webdriver.Chrome(executable_path=chromeDriverExeFilePath, chrome_options=options)
         return driver
         
     #初始化 selenium driver 物件
