@@ -46,8 +46,8 @@ class ImporterForVOYAGIN:
     
     #import product.json to MySQL DB
     def importProductJsonToDb(self, uselessArg1=None):
-        #清除 trip 資料
-        #self.db.clearTripData()
+        #設定 Voyagin trip 資料的 status 為 out-of-date
+        self.db.setTripDataStatusAsOutOfDate(strSource="Voyagin")
         #讀取 json 檔
         strBasedir = self.filesysUtil.getPackageResourcePath(strPackageName="findfine_crawler.resource.parsed_json", strResourceName="voyagin")
         lstStrProductJsonFilePath = self.ffUtil.getFilePathListWithSuffixes(strBasedir=strBasedir, strSuffixes="_product.json")

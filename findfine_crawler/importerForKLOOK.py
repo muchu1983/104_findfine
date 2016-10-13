@@ -46,8 +46,8 @@ class ImporterForKLOOK:
     
     #import product.json to MySQL DB
     def importProductJsonToDb(self, uselessArg1=None):
-        #清除 trip 資料
-        #self.db.clearTripData()
+        #設定 KLOOK trip 資料的 status 為 out-of-date
+        self.db.setTripDataStatusAsOutOfDate(strSource="KLOOK")
         #讀取 json 檔
         strBasedir = self.filesysUtil.getPackageResourcePath(strPackageName="findfine_crawler.resource.parsed_json", strResourceName="klook")
         lstStrProductJsonFilePath = self.ffUtil.getFilePathListWithSuffixes(strBasedir=strBasedir, strSuffixes="_product.json")

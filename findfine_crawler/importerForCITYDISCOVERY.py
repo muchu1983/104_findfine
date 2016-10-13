@@ -46,8 +46,8 @@ class ImporterForCITYDISCOVERY:
     
     #import product.json to MySQL DB
     def importProductJsonToDb(self, uselessArg1=None):
-        #清除 trip 資料
-        #self.db.clearTripData()
+        #設定 City-Discovery trip 資料的 status 為 out-of-date
+        self.db.setTripDataStatusAsOutOfDate(strSource="City-Discovery")
         #讀取 json 檔
         strBasedir = self.filesysUtil.getPackageResourcePath(strPackageName="findfine_crawler.resource.parsed_json", strResourceName="city_discovery")
         lstStrProductJsonFilePath = self.ffUtil.getFilePathListWithSuffixes(strBasedir=strBasedir, strSuffixes="_product.json")
