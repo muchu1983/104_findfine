@@ -9,6 +9,7 @@ This file is part of BSD license
 import os
 import time
 import logging
+import datetime
 import re
 import random
 from selenium import webdriver
@@ -176,6 +177,10 @@ class CrawlerForVOYAGIN:
         dicProductJson["strSource"] = "Voyagin"
         #strOriginUrl
         dicProductJson["strOriginUrl"] = strProductUrl
+        #strUpdateStatus
+        dicProductJson["strUpdateStatus"] = "up-to-date"
+        #strUpdateTime
+        dicProductJson["strUpdateTime"] = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
         #intDurationHour
         (strLocation, intDurationHour) = self.db.fetchLocationAndDurationHourByProductUrl(strProductUrl=strProductUrl)
         dicProductJson["intDurationHour"] = intDurationHour

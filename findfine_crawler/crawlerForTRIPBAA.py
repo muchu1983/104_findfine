@@ -9,6 +9,7 @@ This file is part of BSD license
 import os
 import time
 import logging
+import datetime
 import re
 import random
 import urllib.parse
@@ -108,6 +109,10 @@ class CrawlerForTRIPBAA:
         dicProductJson["strSource"] = "Tripbaa"
         #strOriginUrl
         dicProductJson["strOriginUrl"] = strProductUrl
+        #strUpdateStatus
+        dicProductJson["strUpdateStatus"] = "up-to-date"
+        #strUpdateTime
+        dicProductJson["strUpdateTime"] = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
         #strImageUrl
         strImageUrl = self.driver.find_element_by_css_selector("ul.picBox li:nth-of-type(1) a:nth-of-type(1) img").get_attribute("src")
         dicProductJson["strImageUrl"] = strImageUrl

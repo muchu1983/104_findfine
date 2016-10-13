@@ -9,6 +9,7 @@ This file is part of BSD license
 import os
 import time
 import logging
+import datetime
 import re
 import random
 import urllib.parse
@@ -149,6 +150,10 @@ class CrawlerForKLOOK:
         dicProductJson["strSource"] = "KLOOK"
         #strOriginUrl
         dicProductJson["strOriginUrl"] = strProductUrl
+        #strUpdateStatus
+        dicProductJson["strUpdateStatus"] = "up-to-date"
+        #strUpdateTime
+        dicProductJson["strUpdateTime"] = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
         #strImageUrl
         strImageSectionStyle = self.driver.find_element_by_css_selector("section.banner").get_attribute("style")
         strImageSectionStyle = re.sub("[:;\"\s\(\)]", "", strImageSectionStyle).strip()

@@ -69,6 +69,10 @@ class CrawlerForVIATOR:
             dicProductJson["strSource"] = "Viator"
             #strOriginUrl
             dicProductJson["strOriginUrl"] = soupProduct.ProductURLs.ProductURL.string
+            #strUpdateStatus
+            dicProductJson["strUpdateStatus"] = "up-to-date"
+            #strUpdateTime
+            dicProductJson["strUpdateTime"] = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
             #strImageUrl
             if soupProduct.ProductImage and soupProduct.ProductImage.ImageURL:
                 dicProductJson["strImageUrl"] = soupProduct.ProductImage.ImageURL.string

@@ -69,6 +69,10 @@ class CrawlerForCITYDISCOVERY:
             dicProductJson["strSource"] = "City-Discovery"
             #strOriginUrl
             dicProductJson["strOriginUrl"] = soupProduct.link.string.strip()
+            #strUpdateStatus
+            dicProductJson["strUpdateStatus"] = "up-to-date"
+            #strUpdateTime
+            dicProductJson["strUpdateTime"] = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
             #strImageUrl
             dicProductJson["strImageUrl"] = soupProduct.bigImage.string.strip()
             #strTitle

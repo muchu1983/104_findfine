@@ -8,6 +8,7 @@ This file is part of BSD license
 """
 import os
 import time
+import datetime
 import logging
 import re
 import random
@@ -163,6 +164,10 @@ class CrawlerForKKDAY:
         dicProductJson["strSource"] = "KKDAY"
         #strOriginUrl
         dicProductJson["strOriginUrl"] = strProductUrl
+        #strUpdateStatus
+        dicProductJson["strUpdateStatus"] = "up-to-date"
+        #strUpdateTime
+        dicProductJson["strUpdateTime"] = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
         #strImageUrl
         strImageDivStyle = self.driver.find_element_by_css_selector("div#header-imageview div.productPage-photos div.img-bg-full").get_attribute("style")
         strImageDivStyle = re.sub("[:;\"\s\(\)]", "", strImageDivStyle).strip()

@@ -68,6 +68,10 @@ class CrawlerForBMG:
                 dicProductJson["strSource"] = "BeMyGuest"
                 #strOriginUrl
                 dicProductJson["strOriginUrl"] = dicProductDetailData.get("url", None)
+                #strUpdateStatus
+                dicProductJson["strUpdateStatus"] = "up-to-date"
+                #strUpdateTime
+                dicProductJson["strUpdateTime"] = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
                 #strImageUrl
                 strBasePhotosUrl = dicProductDetailData.get("photosUrl", None)
                 strOriginalImgPath = dicProductDetailData.get("photos", [{}])[0].get("paths", {}).get("original", None)
