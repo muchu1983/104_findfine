@@ -176,7 +176,6 @@ class CrawlerForGYG:
         dicProductJson["strTitle"] = strTitle.strip()
         #strLocation
         dicProductJson["strLocation"] = strCityName
-        
         #intUsdCost
         intUsdCost = 0
         strUsdCost = self.driver.find_element_by_css_selector("header.header p.total-price").text.strip()
@@ -215,7 +214,9 @@ class CrawlerForGYG:
         intDurationHour = self.convertDurationStringToHourInt(strDurtation=strDurationHour)
         dicProductJson["intDurationHour"] = intDurationHour
         #strGuideLanguage
-        strGuideLanguage = self.driver.find_element_by_css_selector("div.key-info-box div.live-guide div.lang").text.strip().lower()
+        strGuideLanguage = u"english"
+        if len(self.driver.find_elements_by_css_selector("div.key-info-box div.live-guide div.lang")) > 0:
+            strGuideLanguage = self.driver.find_element_by_css_selector("div.key-info-box div.live-guide div.lang").text.strip().lower()
         dicProductJson["strGuideLanguage"] = strGuideLanguage
         #intOption (待確認)
         dicProductJson["intOption"] = None
