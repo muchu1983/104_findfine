@@ -180,16 +180,25 @@ class CrawlerForGYG:
         dicProductJson["strLocation"] = strCityName
         #intUsdCost
         intUsdCost = 0
-        strUsdCost = self.driver.find_element_by_css_selector("header.header p.total-price").text.strip()
-        if strUsdCost == "Sold out": #已售完
-            intUsdCost = 0
+        if len(self.driver.find_elements_by_css_selector("header.header p.total-price")) > 0:
+            strUsdCost = self.driver.find_element_by_css_selector("header.header p.total-price").text.strip()
+            if strUsdCost == "Sold out": #已售完
+                intUsdCost = 0
+            else:
+                elesDealPriceSpan = self.driver.find_elements_by_css_selector("header.header p.total-price span.deal-price")
+                isDealPriceExists = True if len(elesDealPriceSpan) > 0 else False
+                if isDealPriceExists: #特價
+                    intUsdCost = int(float(re.sub("[^0-9\.]", "", elesDealPriceSpan[0].text)))
+                else: #標價
+                    intUsdCost = int(float(re.sub("[^0-9\.]", "", strUsdCost)))
+        elif len(self.driver.find_elements_by_css_selector("div.activity-column-minor p.price strong.price-actual")) > 0:
+            strUsdCost = self.driver.find_element_by_css_selector("div.activity-column-minor p.price strong.price-actual").text.strip()
+            intUsdCost = int(float(re.sub("[^0-9\.]", "", strUsdCost)))
+        elif len(self.driver.find_elements_by_css_selector("div.price-detail p.price strong.price-actual")) > 0:
+            strUsdCost = self.driver.find_element_by_css_selector("div.price-detail p.price strong.price-actual").text.strip()
+            intUsdCost = int(float(re.sub("[^0-9\.]", "", strUsdCost)))
         else:
-            elesDealPriceSpan = self.driver.find_elements_by_css_selector("header.header p.total-price span.deal-price")
-            isDealPriceExists = True if len(elesDealPriceSpan) > 0 else False
-            if isDealPriceExists: #特價
-                intUsdCost = int(float(re.sub("[^0-9\.]", "", elesDealPriceSpan[0].text)))
-            else: #標價
-                intUsdCost = int(float(re.sub("[^0-9\.]", "", strUsdCost)))
+            pass
         dicProductJson["intUsdCost"] = intUsdCost
         #intReviewStar
         intReviewStar = 0
