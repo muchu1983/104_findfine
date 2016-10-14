@@ -89,11 +89,14 @@ klook: 完成 (自製爬蟲)
 tripbaa: 完成 (自製爬蟲)
 ===
 voyagin: 完成 (自製爬蟲)
+Tracking code: ?lang=zh-TW&acode=findfinetour
+銷售記錄: https://www.govoyagin.com/activities/japan-tokyo-rent-go-karts-and-ride-around-akihabara/2534?lang=zh-TW&acode=findfinetour
 ===
 GetYourGuide: 完成 (自製爬蟲)
 https://partner.getyourguide.com/en/home.php
 帳號： liangtian@hotmail.com
 密碼： 768768
+Tracking code: ?partner_id=JOIL1TN
 
 Registration 
 1. Title: Mr./Miss/Mz./Mrs. 
