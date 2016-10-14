@@ -176,7 +176,7 @@ class CrawlerForVOYAGIN:
         #strSource
         dicProductJson["strSource"] = "Voyagin"
         #strOriginUrl
-        dicProductJson["strOriginUrl"] = strProductUrl
+        dicProductJson["strOriginUrl"] = strProductUrl + u"?lang=en&acode=findfinetour"
         #strUpdateStatus
         dicProductJson["strUpdateStatus"] = "up-to-date"
         #strUpdateTime
