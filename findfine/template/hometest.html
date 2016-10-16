@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="en">
+<!-- TODO 有@記號 需改成連結  hinet 設定網址 不要home-->
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <title>FindFineTour</title>
+    <!-- Bootstrap Core CSS -->
+    <link href="../static/vendor/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/static/vendor/bootstrap-select/dist/css/bootstrap-select.min.css" rel="stylesheet">
+    <!-- Custom Fonts -->
+    <link href="../static/vendor/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+    <link href='https://fonts.googleapis.com/css?family=Raleway:400,600' rel='stylesheet' type='text/css'>
+    <link href='https://fonts.googleapis.com/css?family=Caudex|Cormorant+Garamond' rel='stylesheet' type='text/css'>
+    <!-- custom CSS -->
+    <link href="../static/css/custom.css" rel="stylesheet">
+    <link href="../static/css/bootstrapCustom.css" rel="stylesheet">
+    <!-- jQuery core-->
+    <script src="../static/vendor/jquery/dist/jquery.min.js"></script>
+    <!-- Bootstrap Js -->
+    <script src="../static/vendor/bootstrap/dist/js/bootstrap.min.js"></script>
+    <!-- Bootstrap SelectPicker Js -->
+    <script src="../static/vendor/bootstrap-select/dist/js/bootstrap-select.min.js"></script>
+    <!-- velocity animation -->
+    <script src="../static/vendor/velocity/velocity.min.js"></script>
+    <!-- custom JavaScript -->
+    <script src="../static/js/custom.js"></script>
+    <script src="../static/js/home.js"></script>
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBNW1g69sGY8q_45F0Ob1lMbZn3fWyiL1o&signed_in=true&libraries=places&callback=initMap" async defer></script>
+    <!-- 低瀏覽器版本相容條件註解 -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+    <script type="text/javascript">
+    var strEmail = "{{strEmail}}";
+    //alert(strEmail);
+    </script>
+    <!-- ripple-button -->
+    <link rel="stylesheet" href="../static/vendor/ripple/css/style.css">
+    <script src="../static/vendor/ripple/js/index.js"></script>
+    <!-- icon-font -->
+    <link rel="stylesheet" href="../static/icon-font/style.css">
+    <!-- google font Roboto -->
+    <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
+    <!-- 暫時隱藏一些東西的CSS -->
+    <link href="../static/css/temperary.css" rel="stylesheet">
+</head>
+<!-- TODO 每個log都可以回首頁 -->
+
+<body id="page-top" class="index">
+    <!-- Navigation -->
+    <nav id="mainNav" class="navbar navbar-default navbar-custom navbar-fixed-top">
+        <div class="container">
+            <!-- Brand and toggle get grouped for better mobile display -->
+            <div class="navbar-header page-scroll">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                    <span class="sr-only">Toggle navigation</span> Menu <i class="fa fa-bars"></i>
+                </button>
+                <a class="icon-logo" href="#page-top"></a>
+                <div class="mini_searchbar">
+                    <span class="icon-magnifier"></span>
+                    <input type="text" name="" placeholder="Where are you going?">
+                </div>
+            </div>
+            <div class="header_btn_blk" id="bs-example-navbar-collapse-1">
+                <ul class="nav navbar-nav">
+                    <li class="hidden">
+                        <a href="#page-top"></a>
+                    </li>
+                    <li>
+                        <div class="CurrencyDiv navSelect">
+                            <select id="moneySelect" name="" class="bsSelect">
+                                <option value="USD" data-content='USD'></option>
+                                <option value="EUR" data-content='EUR'></option>
+                                <option value="CNY" data-content='CNY'></option>
+                                <option value="GBP" data-content='GBP'></option>
+                                <option value="JPY" data-content='JPY'></option>
+                                <option value="AUD" data-content='AUD'></option>
+                                <option value="NZD" data-content='NZD'></option>
+                                <option value="SGD" data-content='SGD'></option>
+                                <option value="HKD" data-content='HKD'></option>
+                                <option value="TWD" data-content='TWD'></option>
+                            </select>
+                        </div>
+                    </li>
+                </ul>
+                <!-- <div id="logOut" class="btn btn-info">Log Out</div> -->
+                <div id="wishList" class="header_btn btn-info">
+                    <span class="icon_blk">                  
+                        <span class="icon-quill"></span>
+                    <span class="icon-scroll"></span>
+                    <span class="extend_line"></span>
+                    </span>
+                    <span class="text">Wishlist</span>
+                </div>
+                <div id="myPlans" class="header_btn btn-info">
+                    <span class="icon_blk">
+                        <span class="icon-airplane"></span>
+                    <span class="icon-notebook"></span>
+                    <svg class="extend_dotted_line">
+                        <g fill="none" stroke="#ffffff" stroke-width="1">
+                            <path stroke-dasharray="5,5" d="M0 0 80 0" />
+                        </g>
+                    </svg>
+                    </span>
+                    <span class="text">My Plan</span>
+                </div>
+                <!-- <div id="myFriends" class="btn btn-info">my friends</div>
+                <div id="myMessages" class="btn btn-info">my messages</div> -->
+                <div id="loginBtn" class="header_btn btn-info">Log In</div>
+                <div id="headBtn" class="head_btn" style="background-image: url(../static/img/head_sample.jpg);"></div>
+            </div>
+            <svg width="1500px" height="257px" class="plane_print">
+                <path class="cover" fill="none" stroke="#ffffff" stroke-width="1" stroke-linecap="square" stroke-dasharray="5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,2000" d="M0.568,255.942c0,0,299-45,215-129 c-19.879-19.879-20-55,72-56c24.94-0.271,169-2,169-2h737.507c0,0,2.607,0,20.493,0c25.011,0,40,4,54-13s8-42-5-50 c-29.304-18.033-73,11-45,54s279,76,279,76" />
+                </path>
+            </svg>
+            <div class="flying_plane icon-airplane"></div>
+            <!-- /.navbar-collapse -->
+        </div>
+        <!-- /.container-fluid -->
+    </nav>
+    <!-- Header -->
+    <header class="home" sty>
+        <div class="container">
+            <div class="intro-text">
+                <div class="intro-lead-in">
+                    <span class="icon-logo_text"></span>
+                </div>
+                <p class="subtitle">find the tour, find the life</p>
+                <!-- <div class="intro-heading">Paint your life in</div> -->
+                <!-- <a href="#services" class="page-scroll btn btn-xl">Tell Me More</a> -->
+                <div class="headerbg_logo">
+                    <span class="icon-logo_back"></span>
+                </div>
+                <div id="locationField">
+                    <div>
+                        <div class="input-group input-group-sm head_searchbar_blk">
+                            <input id="autocomplete" class="head_searchbar" placeholder="Where are you going?" type="text"></input>
+                            <div class="ripple_blk search_btn">
+                                <button id="btnFindTrip" type="button" class="ripple">Find Tours</button>
+                            </div>
+                            <span class="icon-magnifier"></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+    <!-- Portfolio Grid Section -->
+    <section id="portfolio">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12 text-center">
+                    <h2 class="section-heading">Explore Classic Cities</h2>
+                    <h3 class="section-subheading text-muted">Discover tours, discover fun</h3>
+                </div>
+            </div>
+            <div class="row">
+                <div class="home_city type_2">
+                    <a href="" class="portfolio-link" data-lat="14.5401107" data-lng="-74.96763650000003" data-place="Caribbean" style="background-image: url(../static/img/Caribbean.jpg);">
+                        <span class="name">Caribbean</span>
+                    </a>
+                </div>
+                <div class="home_city type_1">
+                    <div class="inner_blk">
+                        <a href="" class="portfolio-link" data-lat="39.904211" data-lng="116.40739499999995" data-place="Beijing" style="background-image: url(../static/img/Beijing2.jpg);">
+                            <span class="name">BeiJing</span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- About Section -->
+    <section id="about" class="bg-light-gray">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12 text-center">
+                    <h2 class="section-heading">Story of the Month</h2>
+                    <h3 class="section-subheading text-muted"></h3>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-12">
+                    <ul class="timeline">
+                        <!-- TODO 圖文  皆放大 -->
+                        <!-- timeline-inverted 向右 -->
+                        <li class="timeline-inverted">
+                            <div class="timeline-image">
+                                <a href="" class="portfolio-link" data-lat="27.175015" data-lng="78.042155" data-place="Taj Mahal">
+                                    <img class="img-responsive" src="/static/img/TajMahal.jpg" alt="">
+                                </a>
+                            </div>
+                            <div class="timeline-panel">
+                                <div class="timeline-heading">
+                                    <h4>Aug 2016</h4>
+                                    <h4 class="subheading">The Taj Mahal</h4>
+                                </div>
+                                <div class="timeline-body">
+                                    <p class="text-muted">The Taj Mahal, a wonder of the world and world heritage site,is a magnificent specimen of Mughal architecture. Most people know the Taj Mahal,a mausoleum in Agra, India, as a monument of love symbolizing the eternal love of a Mughal emperor Shah Jahan towards his wife Mumtaz. However,not many are aware that the Taj Mahal also tells the story of maternal death1 and, by extension,a hostof issues surrounding it that is emblematic of reproductive health in India...</p>
+                                    <p class="text-muted"><a href="" class="portfolio-link" data-lat="27.175015" data-lng="78.042155" data-place="Taj Mahal">read more</a></P>
+                                </div>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- 廣告 Aside -->
+    <aside class="clients">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-3 col-sm-6">
+                    <a href="#">
+                    </a>
+                </div>
+                <div class="col-md-3 col-sm-6">
+                    <a href="#">
+                    </a>
+                </div>
+                <div class="col-md-3 col-sm-6">
+                    <a href="#">
+                    </a>
+                </div>
+                <div class="col-md-3 col-sm-6">
+                    <a href="#">
+                    </a>
+                </div>
+            </div>
+        </div>
+    </aside>
+    <!-- Team Section -->
+    <section id="team">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12 text-center">
+                    <h2 class="section-heading">Quick Link</h2>
+                    <h3 class="section-subheading text-muted"></h3>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-xs-12 col-md-2 col-md-offset-2"><a href="/page/aboutUs" target="_blank">      About Us</a></div>
+                <div class="col-xs-12 col-md-2"><a href="/page/termsOfUse" target="_blank">   Terms of Use</a> </div>
+                <div class="col-xs-12 col-md-2"><a href="/page/advertisement" target="_blank">Advertisement</a> </div>
+                <div class="col-xs-12 col-md-2"><a href="/page/partnership" target="_blank">  Partnership</a> </div>
+                <div class="col-xs-12 col-md-2"><a href="/page/contactUs" target="_blank">    Contact Us</a> </div>
+            </div>
+        </div>
+    </section>
+    <footer class="bg-light-white">
+        <div class="container">
+            <div class="row">
+                <div class="col-xs-1 col-md-2"></div>
+                <div class="col-xs-10 col-md-8">
+                    <!-- TODO 加log-->
+                    <div class="logoImg"></div><span class="copyright">Copyright © 2016 FindFineTour All rights reserved.</span>
+                </div>
+                <div class="col-xs-1 col-md-2"></div>
+            </div>
+        </div>
+    </footer>
+</body>
+
+</html>

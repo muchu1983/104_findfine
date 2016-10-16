@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<!-- TODO 有@記號 需改成連結  hinet 設定網址 不要home-->
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link href="../static/vendor/bootstrap-select/dist/css/bootstrap-select.min.css" rel="stylesheet">
+    <!-- Custom Fonts -->
+    <link href="../static/vendor/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+    <link href='https://fonts.googleapis.com/css?family=Raleway:400,600' rel='stylesheet' type='text/css'>
+    <link href='https://fonts.googleapis.com/css?family=Caudex|Cormorant+Garamond' rel='stylesheet' type='text/css'>
+    <!-- custom CSS -->
+    <link href="../static/css/custom.css" rel="stylesheet">
+    <link href="../static/css/bootstrapCustom.css" rel="stylesheet">
+    <!-- jQuery core-->
+    <script src="../static/vendor/jquery/dist/jquery.min.js"></script>
+    <!-- ripple-button -->
+    <link rel="stylesheet" href="../static/vendor/ripple/css/style.css">
+        <script src="../static/vendor/ripple/js/index.js"></script>
+    <!-- icon-font -->
+    <link rel="stylesheet" href="../static/icon-font/style.css">
+    <!-- google font Roboto -->
+    <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
+    <style type="text/css">
+    body {
+        background-color: black;
+    }
+    .back {
+        position: relative;
+        z-index: 200;
+    }
+    
+    .cover {
+        position: relative;
+        z-index: 50;
+    }
+    
+    .move_obj {
+        motion-path
+    }
+    .btn_blk{
+        width: 250px;
+        height: 70px;
+        border-radius: 35px;
+        overflow: hidden;
+        position: relative;
+        z-index: 1;
+
+    }
+    .search_btn{
+        width: 100%;
+        height: 100%;
+        border-radius: 35px;
+    }
+    </style>
+</head>
+<!-- TODO 每個log都可以回首頁 -->
+
+<body>
+<div class="btn_blk">
+    <button id="btnFindTrip" type="button" class="search_btn ripple">Find Tours</button>
+</div>
+
+
+</body>
+
+</html>
+
+                <div class="head_searchbar_blk">
+                    <span class="icon-magnifier"></span>
+                    <input id="autocomplete" class="head_searchbar" placeholder="Where are you going?" type="text">
+                    </input>
+                    <div class="ripple_blk"></div>
+                    <button id="btnFindTrip" type="button" class="search_btn ripple">Find Tours</button>
+                </div>
