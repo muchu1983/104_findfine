@@ -11,7 +11,7 @@ button{
   cursor: pointer;
   background: #89669b;
   color: white;
-  padding: 18px 60px;
+  padding: 20px 20px;
   border-radius: 2px;
   font-size: 22px;
 }
@@ -33,7 +33,13 @@ button{
 }
 
 .ripple{
+  display: block;
   overflow:hidden;
+}
+.ripple_blk{
+  position: relative;
+  overflow: hidden;
+  z-index: 100;
 }
 
 .ripple-effect{
