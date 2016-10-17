@@ -70,7 +70,7 @@ https://www.partner.viator.com/partner/home.jspa
 Username: 19993
 Password: a768768a
 ===
-BeMyGuest: 完成
+BeMyGuest: 完成但 Auth key 過期
 https://apidemo.bemyguest.com.sg/client-app
 Username: liangtian@hotmail.com
 Password: a768768a

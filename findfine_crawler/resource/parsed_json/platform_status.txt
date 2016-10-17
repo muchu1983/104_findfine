@@ -1,0 +1,10 @@
+2016-10-17
+bmg demo 版 X-Auth key 過期
+city_discovery okay
+exrate okay
+gyg okay
+kkday 已不再需要更新
+klook 測試中
+tripbaa okay
+viator okay
+voyagin 抓取中
