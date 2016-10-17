@@ -98,20 +98,22 @@ class CrawlerForKLOOK:
             strCityHref = eleCityA.get_attribute("href")
             #儲存 city 超連結至 localdb
             if strCityHref.startswith("https://www.klook.com/city/"):
-                strCityPage1Url = strCityHref + u"1-page/" #加上頁碼會切換到選擇 Browse All 的 filter
-                self.db.insertCityIfNotExists(strCityPage1Url=strCityPage1Url)
-                logging.info("save city url: %s"%strCityPage1Url)
+                self.db.insertCityIfNotExists(strCityPage1Url=strCityHref)
+                logging.info("save city url: %s"%strCityHref)
         
-    #解析 city 頁面
+    #解析 city 頁面 回傳找到的 product 數量
     def parseCityPage(self, strCityPage1Url=None):
+        intFoundProduct = 0
         #找尋 product 超連結
-        elesProductA = self.driver.find_elements_by_css_selector("#cityTagActivities section.item a")
+        elesProductA = self.driver.find_elements_by_css_selector("#activities div.j_activity_item a")
         for eleProductA in elesProductA:
             strProductUrl = eleProductA.get_attribute("href")
             #儲存 product 超連結至 localdb
-            if strProductUrl.startswith("https://www.klook.com/activity/"):
+            if strProductUrl.startswith("https://www.klook.com/activity/") and "'" not in strProductUrl:
                 logging.info("insert product url: %s"%strProductUrl)
                 self.db.insertProductUrlIfNotExists(strProductUrl=strProductUrl, strCityPage1Url=strCityPage1Url)
+                intFoundProduct = intFoundProduct+1
+        return intFoundProduct
         
     #爬取 city 頁面
     def crawlCityPage(self, uselessArg1=None):
@@ -125,21 +127,19 @@ class CrawlerForKLOOK:
             intCityPageNum = 1
             #city 第1頁
             time.sleep(random.randint(2,5)) #sleep random time
-            self.driver.get(strNotObtainedCityPage1Url)
+            strCityPageUrl = strNotObtainedCityPage1Url + u"?p=%d"%intCityPageNum #加上頁碼
+            self.driver.get(strCityPageUrl)
             #解析 product 超連結
-            self.parseCityPage(strCityPage1Url=strNotObtainedCityPage1Url)
-            #檢查 city 有無下一頁
-            elesNextPageA = self.driver.find_elements_by_css_selector("#Pagination a.next")
-            while len(elesNextPageA) > 0:
+            intFoundProduct = self.parseCityPage(strCityPage1Url=strNotObtainedCityPage1Url)
+            while intFoundProduct != 0:
                 time.sleep(random.randint(5,8)) #sleep random time
                 intCityPageNum = intCityPageNum+1
-                elesNextPageA[0].click()
+                strCityPageUrl = strNotObtainedCityPage1Url + u"?p=%d"%intCityPageNum #加上頁碼
+                self.driver.get(strCityPageUrl)
                 time.sleep(5) #wait click action complete
                 #解析 product 超連結
-                self.parseCityPage(strCityPage1Url=strNotObtainedCityPage1Url)
-                #檢查 city 有無下一頁
-                elesNextPageA = self.driver.find_elements_by_css_selector("#Pagination a.next")
-            #更新 country DB 為已抓取 (isGot = 1)
+                intFoundProduct = self.parseCityPage(strCityPage1Url=strNotObtainedCityPage1Url)
+            #更新 city DB 為已抓取 (isGot = 1)
             self.db.updateCityStatusIsGot(strCityPage1Url=strNotObtainedCityPage1Url)
             logging.info("got city %s find %d pages"%(strCityName, intCityPageNum))
             
