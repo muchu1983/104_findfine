@@ -60,6 +60,23 @@ https://app.moqups.com
 
 API 串接狀況
 ===
+Withlocals:
+https://publisher.affili.net/Login/NewLogin.aspx
+帳號： 775078
+密碼： a768768a
+http://productdata-download.affili.net/affilinet_products_5489_775266.XML?auth=Kqrks2fyWbDexhuNvLWN&type=XML
+===
+rent-a-guide:
+http://www.rent-a-guide.com/
+liangtian@hotmail.com
+768768768
+===
+BeMyGuest: 完成，但 Auth key 為 demo 版本，且已過期
+https://apidemo.bemyguest.com.sg/client-app
+Username: liangtian@hotmail.com
+Password: a768768a
+X-Authorization: daz5m3vimo2u8ucz90yimfwpj8lfdszkb2utjvyk
+===
 City Discovery: 完成
 https://partner.city-discovery.com/affiliate/login.php
 Username: liangtian@hotmail.com
@@ -70,27 +87,15 @@ https://www.partner.viator.com/partner/home.jspa
 Username: 19993
 Password: a768768a
 ===
-BeMyGuest: 完成但 Auth key 過期
-https://apidemo.bemyguest.com.sg/client-app
-Username: liangtian@hotmail.com
-Password: a768768a
-X-Authorization: daz5m3vimo2u8ucz90yimfwpj8lfdszkb2utjvyk
-===
-rent-a-guide:
-http://www.rent-a-guide.com/
-liangtian@hotmail.com
-768768768
-===
-Withlocals:
-https://www.withlocals.com/api/v1/affiliates/feeds/base.xml
-===
 klook: 完成 (自製爬蟲)
+目前無 Tracking code
 ===
 tripbaa: 完成 (自製爬蟲)
+目前無 Tracking code
 ===
 voyagin: 完成 (自製爬蟲)
 Tracking code: ?lang=zh-TW&acode=findfinetour
-銷售記錄: https://www.govoyagin.com/activities/japan-tokyo-rent-go-karts-and-ride-around-akihabara/2534?lang=zh-TW&acode=findfinetour
+銷售記錄: https://www.govoyagin.com/affiliates/findfinetour+BAhJIhFmaW5kZmluZXRvdXIGOgZFVA==--5da05bb4220d079d0b84bab47a9eb0d1408d0032
 ===
 GetYourGuide: 完成 (自製爬蟲)
 https://partner.getyourguide.com/en/home.php
@@ -116,7 +121,7 @@ Registration
 1.文章推薦行程更新 (行程搜尋/)
 2.會員增加 trip 到 withlist 記錄
 3.使用者點擊 trip 超連結點擊率 記錄   <span onclick=""><a href=""></span>   <a href=""><span onclick=""></a>
-4.使用者停留時間 (無法達成)
+4.下架產品
 5.每日人流量 (使用者/會員) 每周每月
-6.下架產品
-7.ip 管理 - 禁權 (暫不處理)
+6.使用者停留時間 (無法達成，無需施作。)
+7.ip 管理 - 禁權 (網路管理功能，並非網站功能，暫不處理)
