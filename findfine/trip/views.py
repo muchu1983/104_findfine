@@ -86,6 +86,8 @@ def convertTripDataToJsonDic(request=None, matchedTrip=None, fUsdToUserCurrencyE
     dicTripData = {}
     dicTripData["intId"] = matchedTrip.id
     dicTripData["strSource"] = matchedTrip.strSource
+    dicTripData["strUpdateStatus"] = matchedTrip.strUpdateStatus
+    dicTripData["dtUpdateTime"] = matchedTrip.dtUpdateTime
     dicTripData["strTitle"] = matchedTrip.strTitle
     dicTripData["strLocation"] = matchedTrip.strLocation
     dicTripData["intUsdCost"] = matchedTrip.intUsdCost
