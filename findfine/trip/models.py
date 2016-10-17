@@ -14,7 +14,7 @@ class Trip(models.Model):
     #來源網站
     strSource = models.CharField(max_length=255, null=False)
     #原始 URL
-    strOriginUrl = models.TextField(null=False)
+    strOriginUrl = models.CharField(db_index=True, max_length=255, null=False)
     #主要圖片 url
     strImageUrl = models.TextField(null=False)
     #更新狀態 (out-of-date, up-to-date)
