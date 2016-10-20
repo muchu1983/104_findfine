@@ -2,6 +2,7 @@
     $(document).ready(initTripEdit);
     function initTripEdit(){
         
+        var intId ;
 
         
         $('#calendar').fullCalendar({
@@ -12,10 +13,67 @@
             },
             editable: true,
             droppable: true,
+            eventClick: function(calEvent, jsEvent, view) {
+                            $(this).remove();
+                            $(this).css('visibility','hidden');
+                            
+                            //取得intPlanId
+                            var intPlanId = (location.href).substring( (location.href).indexOf("=")+1 , (location.href).length )
+
+                          //將 trip 移除 my plans 中
+                            var removeTripPlanItem = "/trip/removeTripPlanItem?intPlanId="+intPlanId+"&intPlanItemId="+intId ;
+                            $.getJSON(removeTripPlanItem, function(jsonResp){
+                            });
+                        },
+
             drop: function() {
-                if ($('#drop-remove').is(':checked')) {
-                    $(this).remove();
-                }
+                
+
+                    
+                    //處理this物件的字串
+                    var a = $(this).html().substring( $(this).html().indexOf("||")+2);
+                    var strUserCurrency = a.substring( 0 , a.indexOf("||"));
+                    
+                    var b = a.substring( a.indexOf("||")+2);
+                    var strTitle = b.substring( 0 , b.indexOf("||"));
+                    
+                    var c = b.substring( b.indexOf("||")+2);
+                    var intUserCurrencyCost = c.substring( 0 , c.indexOf("||"));
+                    
+                    var d = c.substring( c.indexOf("||")+2);
+                    var strIntroduction = d.substring( 0 , d.indexOf("||"));
+                    
+                    var e = d.substring( d.indexOf("||")+2);
+                    var strLocation = e.substring( 0 , e.indexOf("||"));
+                    
+                    var f = e.substring( e.indexOf("||")+2);
+                    var intDurationHour = f.substring( 0 , f.indexOf("||"));
+                    
+                    var g = f.substring( f.indexOf("||")+2);
+                    var strOriginUrl = g.substring( 0 , g.indexOf("||"));
+                    
+                    var h = g.substring( g.indexOf("||")+2);
+                    var strImageUrl = h.substring( 0 , h.indexOf("||"));
+                    
+                    var i = h.substring( h.indexOf("||")+2);
+                    var intReviewStar = i.substring( 0 , i.indexOf("||"));
+                    
+                    var j = i.substring( i.indexOf("||")+2);
+                    var intReviewVisitor = j.substring( 0 , j.indexOf("||"));
+                    
+                    var k = j.substring( j.indexOf("||")+2);
+                    intId = k.substring( 0 , k.indexOf("||"));
+                    
+                    //取得intPlanId
+                    var intPlanId = (location.href).substring( (location.href).indexOf("=")+1 , (location.href).length )
+                    
+                    //將 trip 加入 my plans 中
+                    var addTripPlanItem = "/trip/addTripPlanItem?intPlanId="+intPlanId+"&intTripId="+intId+"&intReviewVisitor="+intReviewVisitor+"&intReviewStar="+intReviewStar+"&strImageUrl="+strImageUrl+"&strOriginUrl="+strOriginUrl+"&intDurationHour="+intDurationHour+"&strLocation="+strLocation+"&strIntroduction="+strIntroduction+"&intUserCurrencyCost="+intUserCurrencyCost+"&strTitle="+strTitle+"&strUserCurrency="+strUserCurrency ;
+                    $.getJSON(addTripPlanItem, function(jsonResp){
+                    });
+                    $('#calendar').fullCalendar( 'refetchEvents' );
+                    $('#calendar').fullCalendar( 'refresh' );
+                    
             }
         });
         
@@ -44,7 +102,6 @@
         
         
         $('.fc-event').each(function() {
-            alert($(this).text());
             $(this).data('event', {
                 title: $.trim($(this).text()), 
                 stick: true 
@@ -54,14 +111,7 @@
                 revert: true,
                 revertDuration: 0
             });
-            //將 trip 加入 my plans 中
-            //http://127.0.0.1:8000/trip/addTripPlanItem?intPlanId=3&strComment=%2277%22
-            
-            //var addTripPlanItem = "/trip/addTripPlanItem?intPlanId="+intId;
-            //$.getJSON(addTripPlanItem, function(jsonResp){
-            //    alert("jsonResp"+jsonResp);
-            //    });
-            
+
         });
         
         
@@ -87,6 +137,7 @@
                 reviewStar='★★★★★';
             }
 
+            var strHidden = "||"+strUserCurrency+"||"+strTitle+"||"+intUserCurrencyCost+"||"+strIntroduction+"||"+strLocation+"||"+intDurationHour+"||"+strOriginUrl+"||"+strImageUrl+"||"+intReviewStar+"||"+intReviewVisitor+"||"+intId+"||" ;
             
             var strTripDataHtml = [
             "<li id="+intId+" style=\"list-style-type:none;\">",
@@ -102,6 +153,7 @@
                             "<p><span> Duration:"+intDurationHour+"</span></p>",
                             "<p><span style=\"color:red\">Stars:"+reviewStar+"</span></p>",
                             "<p><span>review:"+intReviewVisitor+"</span></p>",
+                            "<p><input type='hidden' value='hidden:"+strHidden+"'><p>",
                         "</div>",
             "</li>"
             ].join("");
