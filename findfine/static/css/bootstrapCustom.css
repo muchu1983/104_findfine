@@ -6,6 +6,10 @@
     color: #2bb0b9;
     padding: 10px 20px;
 }
+#page-top .navbar-custom.affix .navbar-nav li a {
+    color: #2bb0b9;
+    padding: 10px 20px;
+}
 
 .container {
     padding-left: 0;

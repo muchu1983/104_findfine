@@ -3,7 +3,7 @@ $(document).ready(initFind);
 
 
 
-function initFind(){
+function initFind() {
     initCurrencySelect();
     var keyword = tour.QueryString().keyword;
     //js取值
@@ -15,82 +15,108 @@ function initFind(){
     $('#pac-input').val(keyword);
     //將值填入place欄位
     $('#placeID').val(keyword);
+
     var $toggleCollapse = $('.toggleCollapse');
-    $('#moreInfo').on('show.bs.collapse',function(){
-       $toggleCollapse.html(' less');
-    }).on('hide.bs.collapse',function(){
-       $toggleCollapse.html(' more');
+    $('#moreInfo').on('show.bs.collapse', function() {
+        $toggleCollapse.html(' less');
+    }).on('hide.bs.collapse', function() {
+        $toggleCollapse.html(' more');
     });
-    
+
     //登入按鈕
-    $("#loginBtn").click(function(){
-        if($("#loginBtn").html()=="Log In"){
+    $("#loginBtn").click(function() {
+        if ($("#loginBtn").html() == "Log In") {
             window.location = "/account/login";
         }
     });
-    
+
     //搜尋按鈕
-    $("#btnSearch").click(function(){
+    $("#btnSearch").click(function() {
         $("#current_page").html("1");
         search("");
-        
+
     });
-    
-    $('#wishList').hide();
+
+    // $('#wishList').hide();
     $('#myFriends').hide();
-    $('#myPlans').hide();
+    // $('#myPlans').hide();
     $('#myMessages').hide();
     $('#logOut').hide();
-    
+
     //strEmail 如已登入 不顯示login button 並顯示會員帳號
-    if(strEmail=="None"){
-    }else{
+    if (strEmail == "None") {} else {
         $('#loginBtn').html(strEmail);
         $('#wishList').show();
         $('#myFriends').show();
         $('#myPlans').show();
         $('#myMessages').show();
         $('#logOut').show();
+        $('#loginBtn').hide();
     }
-    
-    $("#wishList").click(function(){
-            window.location = "/page/wishList";
+
+    $("#wishList").click(function() {
+        window.location = "/page/wishList";
     });
-    
-    $("#logOut").click(function(){
-        if($("#logOut").html()=="Log Out"){
+
+    $("#logOut").click(function() {
+        if ($("#logOut").html() == "Log Out") {
             window.location = "/account/logout";
         }
     });
-    
-    $("#myPlans").click(function(){
-            window.location = "/page/myTrip";
+
+    $("#myPlans").click(function() {
+        window.location = "/page/myTrip";
     });
-    
+
     //page
-    $("#prev_page_link").click(function(){
-        $("#current_page").html(parseInt($("#current_page").html())-1);
+    $("#prev_page_link").click(function() {
+        $("#current_page").html(parseInt($("#current_page").html()) - 1);
         search('');
     });
-    $("#next_page_link").click(function(){
-        $("#current_page").html(parseInt($("#current_page").html())+1);
+    $("#next_page_link").click(function() {
+        $("#current_page").html(parseInt($("#current_page").html()) + 1);
         search('');
     });
-    
-    
+
+
     //不傳入sort條件
     search('');
-    
+
+
+    // CODE BY davidturtle
+    $("#moreFilter").click(function(event) {
+        if ($(".searchContent > .row").hasClass('active')) {
+            $("#moreFilter p").html("more filters");
+        } else {
+            $("#moreFilter p").html("less filters");
+
+        }
+        $(".searchContent > .row").toggleClass('active');
+
+    });
+
+    // 飛機飛呀飛
+    planeFly(5000);
+    $(".plane_print").addClass('active');
+
+    // 頁面下滑選單效果
+    topNavDown(800);
+
 };
 
 //hmoe頁面傳值至find頁面 googleMap呈現
-function initMap(sendLat,sendLng) {
+function initMap(sendLat, sendLng) {
     var map = new google.maps.Map(document.getElementById('map'), {
         center: {
             lat: Number(tour.QueryString().lat),
             lng: Number(tour.QueryString().lng)
         },
-        zoom: 13
+        zoom: 13,
+        // 滑鼠滾輪滾動不影響地圖縮放
+        scrollwheel: false,
+        navigationControl: false,
+        mapTypeControl: false,
+        scaleControl: false,
     });
     var input = /** @type {!HTMLInputElement} */ (
         document.getElementById('placeID'));
@@ -106,7 +132,7 @@ function initMap(sendLat,sendLng) {
     var marker = new google.maps.Marker({
         map: map,
         // anchorPoint: new google.maps.Point(0, -29)
-        position:map.center
+        position: map.center
     });
 
     autocomplete.addListener('place_changed', function() {
@@ -150,352 +176,404 @@ function initMap(sendLat,sendLng) {
 }
 
 //home頁面到find頁面 or 按下search鍵 會執行的動作 可傳入排序條件
-function search(condition){
-    
-//主搜尋
+function search(condition) {
+
+    //主搜尋
     //地點
-    var place         = $("#placeID").val();
+    // var place         = $("#placeID").val();
     //預算下限
-    var budgetDown    = $("#budgetDownID").val();
+    // var budgetDown    = $("#budgetDownID").val();
     //預算上限
-    var budgetUp      = $("#budgetUpID").val();
+    // var budgetUp      = $("#budgetUpID").val();
     //時間起迄
-    var startFrom     =$("#startFrom").val();
-    var to            =$("#to").val();
-//摺疊搜尋
+    // var startFrom     =$("#startFrom").val();
+    // var to            =$("#to").val();
+    //摺疊搜尋
     //旅遊時間長短
-    var duration      =$('input:checkbox:checked[name="duration"]').map(function() { return $(this).val(); }).get();
+    var duration = $('input:checkbox:checked[name="duration"]').map(function() {
+        return $(this).val();
+    }).get();
     //人數
-    var passenger =$("#passenger").val();
+    var passenger = $("#passenger").val();
     //類型
-    var style         =$('input:checkbox:checked[name="style"]').map(function() { return $(this).val(); }).get();
+    var style = $('input:checkbox:checked[name="style"]').map(function() {
+        return $(this).val();
+    }).get();
     //旅遊時間點開始
-    var tourStarts    =$('#tourStarts :selected').text();
+    var tourStarts = $('#tourStarts :selected').text();
     //旅遊時間點結束
-    var tourEnds      =$('#tourEnds :selected').text();
+    var tourEnds = $('#tourEnds :selected').text();
     //導覽語言
-    var guideLanguage =$('input:checkbox:checked[name="guideLanguage"]').map(function() { return $(this).val(); }).get();
+    var guideLanguage = $('input:checkbox:checked[name="guideLanguage"]').map(function() {
+        return $(this).val();
+    }).get();
     //可立即參與
-    var availability  =$('input:checkbox:checked[name="availability"]').map(function() { return $(this).val(); }).get();
+    var availability = $('input:checkbox:checked[name="availability"]').map(function() {
+        return $(this).val();
+    }).get();
     //萬用搜尋
-    var attrations    =$("#attrations").val();  
-    
+    var attrations = $("#attrations").val();
+
     var strFilterQueryUrl = "/trip/filter?1=1";
     //place
-    if (place != ""){
-        strFilterQueryUrl = strFilterQueryUrl + "&keyword=" + place;
-    };
+    // if (place != ""){
+    //     strFilterQueryUrl = strFilterQueryUrl + "&keyword=" + place;
+    // };
     //budgetDown
-    if (budgetDown != ""){
-        strFilterQueryUrl = strFilterQueryUrl + "&min_budget=" + budgetDown;
-    };
+    // if (budgetDown != ""){
+    //     strFilterQueryUrl = strFilterQueryUrl + "&min_budget=" + budgetDown;
+    // };
     //budgetUp
-    if (budgetUp != ""){
-        strFilterQueryUrl = strFilterQueryUrl + "&max_budget=" + budgetUp;
-    };
+    // if (budgetUp != ""){
+    //     strFilterQueryUrl = strFilterQueryUrl + "&max_budget=" + budgetUp;
+    // };
     //startFrom db無資料
-    if (startFrom != ""){
-        strFilterQueryUrl = strFilterQueryUrl + "&date_from=" + startFrom;
-    };
+    // if (startFrom != ""){
+    //     strFilterQueryUrl = strFilterQueryUrl + "&date_from=" + startFrom;
+    // };
     //to db無資料
-    if (to != ""){
-        strFilterQueryUrl = strFilterQueryUrl + "&date_to=" + to;
-    };
-    
+    // if (to != ""){
+    //     strFilterQueryUrl = strFilterQueryUrl + "&date_to=" + to;
+    // };
+
     //duration
-    if (duration != ""){
-        for(var i=0;duration.length>i;i++){
-            if(duration[i]=="1"){
+    if (duration != "") {
+        for (var i = 0; duration.length > i; i++) {
+            if (duration[i] == "1") {
                 strFilterQueryUrl = strFilterQueryUrl + "&min_duration=0&max_duration=1";
             }
-            if(duration[i]=="2"){
+            if (duration[i] == "2") {
                 strFilterQueryUrl = strFilterQueryUrl + "&min_duration=1&max_duration=2";
             }
-            if(duration[i]=="3"){
+            if (duration[i] == "3") {
                 strFilterQueryUrl = strFilterQueryUrl + "&min_duration=2&max_duration=3";
             }
-            if(duration[i]=="4"){
+            if (duration[i] == "4") {
                 strFilterQueryUrl = strFilterQueryUrl + "&min_duration=3&max_duration=6";
             }
-            if(duration[i]=="5"){
+            if (duration[i] == "5") {
                 strFilterQueryUrl = strFilterQueryUrl + "&min_duration=12&max_duration=24";
             }
-            if(duration[i]=="5"){
+            if (duration[i] == "5") {
                 strFilterQueryUrl = strFilterQueryUrl + "&min_duration=24&max_duration=1000";
             }
         }
     };
     //passenger 目前沒有
-    if (passenger != ""){
+    if (passenger != "") {
         strFilterQueryUrl = strFilterQueryUrl + "&keyword=" + passengerDown;
     };
     //style 目前db無資料 js需修改
-    if (style != ""){
-        for(var i=0;duration.length>i;i++){
-            if(style[i]=="Cultural"){
+    if (style != "") {
+        for (var i = 0; duration.length > i; i++) {
+            if (style[i] == "Cultural") {
                 strFilterQueryUrl = strFilterQueryUrl + "&style=" + style;
             }
-            if(style[i]=="Food"){
+            if (style[i] == "Food") {
                 strFilterQueryUrl = strFilterQueryUrl + "&style=" + style;
             }
-            if(style[i]=="Fashion"){
+            if (style[i] == "Fashion") {
                 strFilterQueryUrl = strFilterQueryUrl + "&style=" + style;
             }
-            if(style[i]=="Wild"){
+            if (style[i] == "Wild") {
                 strFilterQueryUrl = strFilterQueryUrl + "&style=" + style;
             }
-            if(style[i]=="Sports"){
+            if (style[i] == "Sports") {
                 strFilterQueryUrl = strFilterQueryUrl + "&style=" + style;
             }
-            if(style[i]=="Eco"){
+            if (style[i] == "Eco") {
                 strFilterQueryUrl = strFilterQueryUrl + "&style=" + style;
             }
         }
     };
     //tourStarts 程式尚未實作
-    if (tourStarts != ""){
+    if (tourStarts != "") {
         strFilterQueryUrl = strFilterQueryUrl + "&date_from=" + tourStarts;
     };
     //tourEnds  程式尚未實作
-    if (tourEnds != ""){
+    if (tourEnds != "") {
         strFilterQueryUrl = strFilterQueryUrl + "&date_to=" + tourEnds;
     };
     //guideLanguage 
-    if (guideLanguage != ""){
-        for(var i=0;guideLanguage.length>i;i++){
-            if(guideLanguage[i]=="English"){
+    if (guideLanguage != "") {
+        for (var i = 0; guideLanguage.length > i; i++) {
+            if (guideLanguage[i] == "English") {
                 strFilterQueryUrl = strFilterQueryUrl + "&guide_language=English";
             }
-            if(guideLanguage[i]=="Chinese"){
+            if (guideLanguage[i] == "Chinese") {
                 strFilterQueryUrl = strFilterQueryUrl + "&guide_language=中文";
             }
         }
     };
     //availability db 無資料
-    if (availability != ""){
-        for(var i=0;availability.length>i;i++){
-            if(availability[i]=="instantConfirmation"){
+    if (availability != "") {
+        for (var i = 0; availability.length > i; i++) {
+            if (availability[i] == "instantConfirmation") {
                 strFilterQueryUrl = strFilterQueryUrl + "&option=" + option[i];
             }
-            if(availability[i]=="onRequest"){
+            if (availability[i] == "onRequest") {
                 strFilterQueryUrl = strFilterQueryUrl + "&option=" + option[i];
             }
         }
     };
     //attrations
-    if (attrations != ""){
+    if (attrations != "") {
         strFilterQueryUrl = strFilterQueryUrl + "&keyword=" + attrations;
     };
 
     //排序條件
-    if(condition !=""){
-        if(condition=='intUsdCost'){
+    if (condition != "") {
+        if (condition == 'intUsdCost') {
             //預算
-            if($("#sortByBudgetID").val() =="Budget ↓"){
-                strFilterQueryUrl = strFilterQueryUrl + "&order_by=" +condition;
+            if ($("#sortByBudgetID").val() == "Budget ↓") {
+                strFilterQueryUrl = strFilterQueryUrl + "&order_by=" + condition;
                 $("#sortByBudgetID").val("Budget ↑");
                 $("#hiddenID").val("Budget ↓");
-                
-            }else{
-                strFilterQueryUrl = strFilterQueryUrl + "&order_by=-" +condition;
+
+            } else {
+                strFilterQueryUrl = strFilterQueryUrl + "&order_by=-" + condition;
                 $("#sortByBudgetID").val("Budget ↓");
                 $("#hiddenID").val("Budget ↑");
             }
         }
-        if(condition=='intDurationHour'){
+        if (condition == 'intDurationHour') {
             //tour長短
-            if($("#sortByDurationHourID").val() =="Duration ↓"){
-                strFilterQueryUrl = strFilterQueryUrl + "&order_by=" +condition;
+            if ($("#sortByDurationHourID").val() == "Duration ↓") {
+                strFilterQueryUrl = strFilterQueryUrl + "&order_by=" + condition;
                 $("#sortByDurationHourID").val("Duration ↑");
                 $("#hiddenID").val("Duration ↓");
-            }else{
-                strFilterQueryUrl = strFilterQueryUrl + "&order_by=-" +condition;
+            } else {
+                strFilterQueryUrl = strFilterQueryUrl + "&order_by=-" + condition;
                 $("#sortByDurationHourID").val("Duration ↓");
                 $("#hiddenID").val("Duration ↑");
             }
         }
-        if(condition=='intReviewStar'){
+        if (condition == 'intReviewStar') {
             //評分高低
-            if($("#sortByReviewStarID").val() =="ReviewStar ↓"){
-                strFilterQueryUrl = strFilterQueryUrl + "&order_by=" +condition;
+            if ($("#sortByReviewStarID").val() == "ReviewStar ↓") {
+                strFilterQueryUrl = strFilterQueryUrl + "&order_by=" + condition;
                 $("#sortByReviewStarID").val("ReviewStar ↑");
                 $("#hiddenID").val("ReviewStar ↓");
-            }else{
-                strFilterQueryUrl = strFilterQueryUrl + "&order_by=-" +condition;
+            } else {
+                strFilterQueryUrl = strFilterQueryUrl + "&order_by=-" + condition;
                 $("#sortByReviewStarID").val("Star ↓");
                 $("#hiddenID").val("ReviewStar ↑");
             }
         }
     }
-    
+
     //page
-    console.log("page index: "+$("#current_page").html());
+    console.log("page index: " + $("#current_page").html());
     strFilterQueryUrl = strFilterQueryUrl + "&page=" + $("#current_page").html();
-    
+
     //alert(" 254:strFilterQueryUrl:"+strFilterQueryUrl);
-    $.getJSON(strFilterQueryUrl, function(jsonResp){
+    $.getJSON(strFilterQueryUrl, function(jsonResp) {
         //console.log(jsonResp);
         $("div.findResultDiv ul.lstTripData").html("");
-        
         var strUserCurrency = $("#moneySelect").val();
-        $("div.userCurrencySpan").html(strUserCurrency);
+        $("div.userCurrencySpan").html("(" + strUserCurrency + ")");
         //trip data
         var lstDicTripData = jsonResp["trip"];
         for (i = 0; i < lstDicTripData.length; i++) {
             var dicTripData = lstDicTripData[i];
-            var strTripDataHtml = getTripDataHtml(strUserCurrency, dicTripData["strTitle"], dicTripData["intUserCurrencyCost"], dicTripData["strIntroduction"], dicTripData["strLocation"], dicTripData["intDurationHour"], dicTripData["strOriginUrl"], dicTripData["strImageUrl"], dicTripData["intReviewStar"], dicTripData["intReviewVisitor"] ,dicTripData["intId"] ,dicTripData["isFavoriteTrip"]);
+            var strTripDataHtml = getTripDataHtml(strUserCurrency, dicTripData["strTitle"], dicTripData["intUserCurrencyCost"], dicTripData["strIntroduction"], dicTripData["strLocation"], dicTripData["intDurationHour"], dicTripData["strOriginUrl"], dicTripData["strImageUrl"], dicTripData["intReviewStar"], dicTripData["intReviewVisitor"], dicTripData["intId"], dicTripData["isFavoriteTrip"]);
             $("div.findResultDiv ul.lstTripData").append(strTripDataHtml);
         };
-        
+
         //page data
         var dicPageData = jsonResp["page"];
         console.log(dicPageData);
         $("#current_page").html(dicPageData["current_page"]);
-        if (dicPageData["current_page"]-1 < 1){
+        if (dicPageData["current_page"] - 1 < 1) {
             $("#prev_page_link").hide();
-        }else{
+        } else {
             $("#prev_page_link").show();
-            $("#prev_page_link").attr("page_value", dicPageData["current_page"]-1);
+            $("#prev_page_link").attr("page_value", dicPageData["current_page"] - 1);
         }
-        if (dicPageData["current_page"]+1 > dicPageData["total_page"]){
+        if (dicPageData["current_page"] + 1 > dicPageData["total_page"]) {
             $("#next_page_link").hide();
-        }else{
+        } else {
             $("#next_page_link").show();
-            $("#next_page_link").attr("page_value", dicPageData["current_page"]+1);
+            $("#next_page_link").attr("page_value", dicPageData["current_page"] + 1);
         }
     });
-    
-    
+
+
 
 };
 
 //組出單組查詢結果出來的html字串
-function getTripDataHtml(strUserCurrency, strTitle, intUserCurrencyCost, strIntroduction, strLocation, intDurationHour, strOriginUrl, strImageUrl, intReviewStar, intReviewVisitor, intId, isFavoriteTrip ){
-    var reviewStar;
-    if(intReviewStar==0){
-        reviewStar='☆☆☆☆☆';
+function getTripDataHtml(strUserCurrency, strTitle, intUserCurrencyCost, strIntroduction, strLocation, intDurationHour, strOriginUrl, strImageUrl, intReviewStar, intReviewVisitor, intId, isFavoriteTrip) {
+
+    var reviewStar = "";
+    fillstarQan = intReviewStar;
+    emptystarQan = 5-intReviewStar;
+    for (var fillstarCount = 0; fillstarCount < fillstarQan; fillstarCount++) {
+        reviewStar+="<span class='icon-star_fill'></span>";
     }
-    if(intReviewStar==1){
-        reviewStar='★☆☆☆☆';
+    for (var emptystarCount = 0; emptystarCount< emptystarQan; emptystarCount++) {
+        reviewStar+="<span class='icon-star_empty'></span>";
     }
-    if(intReviewStar==2){
-        reviewStar='★★☆☆☆';
-    }
-    if(intReviewStar==3){
-        reviewStar='★★★☆☆';
-    }
-    if(intReviewStar==4){
-        reviewStar='★★★★☆';
-    }
-    if(intReviewStar==5){
-        reviewStar='★★★★★';
-    }
-    
-    var strIntroduction=strIntroduction.substr( 0 , 135 );
-    
-    var favoriteTrip ;
-    
+
+
+    // if (intReviewStar == 0) {
+    //     reviewStar = '☆☆☆☆☆';
+    // }
+    // if (intReviewStar == 1) {
+    //     reviewStar = '★☆☆☆☆';
+    // }
+    // if (intReviewStar == 2) {
+    //     reviewStar = '★★☆☆☆';
+    // }
+    // if (intReviewStar == 3) {
+    //     reviewStar = '★★★☆☆';
+    // }
+    // if (intReviewStar == 4) {
+    //     reviewStar = '★★★★☆';
+    // }
+    // if (intReviewStar == 5) {
+    //     reviewStar = '★★★★★';
+    // }
+    // @Q@設定文字擷取字數
+    var strIntroduction = strIntroduction.substr(0, 75);
+
+    var favoriteTrip;
+
     //alert("isFavoriteTrip : "+isFavoriteTrip +"  length : "+isFavoriteTrip.toString());
-    
-    if(isFavoriteTrip.toString()=="true"){
-        favoriteTrip="<div class=\"favorite\">♥</div>";
+
+    if (isFavoriteTrip.toString() == "true") {
+        favoriteTrip = "<div class=\"favorite\">♥</div>";
     }
-    if(isFavoriteTrip.toString()=="false"){
-        favoriteTrip="<div class=\"favorite\" id="+intId+" onclick=\"addFavoriteTrip("+intId+")\">♡</div>";
+    if (isFavoriteTrip.toString() == "false") {
+        favoriteTrip = "<div class=\"favorite\" id=" + intId + " onclick=\"addFavoriteTrip(" + intId + ")\">♡</div>";
     }
-    
     var strTripDataHtml = [
-    "<li class=\"col-xs-12 col-md-6\">",
-        "<div class=\"tripData\">",
-            "<div class=\"tripImgDiv col-xs-4\">",
-                "<img src=\""+strImageUrl+"\"/>",
-            "</div>",
-            "<div class=\"col-xs-8\">",
-            "<div class=\"tripContentDiv\">",
-                "<p><span style=\"color:orange\">"+strTitle+"</span></p>",
-                "<span class=\"trimText\">"+strIntroduction+"...<a href="+strOriginUrl+" target=\"_blank\"> read more</a></span><br>",
-                "<span><i class=\"fa fa-clock-o\"></i> Duration:"+intDurationHour+"</span><br>",
-                "<span style=\"color:red\">Stars:"+reviewStar+"</span><br>",
-                "<span><i class=\"fa fa-user\"></i> review:"+intReviewVisitor+"</span><br>",
-            "</div>",
-            "</div>",
-            "<div class=\"tripPriceAndWishDiv\">",
-                "<span class=\"pull-right\">",
-                "<i class=\"fa fa-usd\"></i>",
-                "<span style=\"color:red\">"+intUserCurrencyCost+" "+strUserCurrency+"</span></br>",
-            "</div>",
-            //TODO 要加TOUR KEY 觸發事件後加入 wish list  intId
-            //"<div class=\"favorite\"><a href=\"/trip/addFavoriteTrip?intTripId=3\" return false;> ♥</a></div>",
-            //"<div class=\"favorite\" onclick=\"addFavoriteTrip("+intId+")\">♥</div>",
-            favoriteTrip,
-            //isFavoriteTrip
+        "<div class=\"tour\">",
+        "<div class=\"card active\" style=\"background-image:url("+strImageUrl+");\">",
+        "<div class=\"name\">",
+        "<p>"+strTitle+"</p>",
         "</div>",
-    "</li>"
+        "<p class=\"place\">"+strLocation+"</p>",
+        "<p class=\"duration\">"+intDurationHour+"<span>HR</span></p>",
+        "<div class=\"price\">",
+        "<span class=\"country\">"+strUserCurrency+"</span> $",
+        "<span class=\"number\">"+intUserCurrencyCost+"</span>",
+        "</div>",
+        "<div class=\"star\">"+reviewStar+"</div>",
+        "<p class=\"trimtext\">"+strIntroduction+"</p>",
+        "<div class=\"ripple_blk readmore_btn\">",
+        "<a target=\"_blank\" href="+strOriginUrl+" class=\"ripple\" data-ripple-color=\"#2bb0b9\">Read More</a>",
+        "</div>",
+        "<div class=\"footprint_blk\">",
+        "<span class=\"icon-tourdash footprint\"></span>",
+        "</div>",
+        "<div class=\"add_wish_btn\">",
+        "<p class=\"oriword\">Add To WishList</p>",
+        "<span class=\"icon-wishlist\"></span>",
+        "<p class=\"actword\">My Wishlist</p>",
+        "<span class=\"icon-quill\"></span>",
+        "<span class=\"extend_line\"></span>",
+        "</div>",
+        "<div class=\"darken_bg\"></div>",
+        "</div>",
+        "</div>"        
     ].join("");
-    
+
     return strTripDataHtml;
 };
+//     var strTripDataHtml = [
+//         "<li class=\"col-xs-12 col-md-6\">",
+//         "<div class=\"tripData\">",
+//         "<div class=\"tripImgDiv col-xs-4\">",
+//         "<img src=\"" + strImageUrl + "\"/>",
+//         "</div>",
+//         "<div class=\"col-xs-8\">",
+//         "<div class=\"tripContentDiv\">",
+//         "<p><span style=\"color:orange\">" + strTitle + "</span></p>",
+//         "<span class=\"trimText\">" + strIntroduction + "...<a href=" + strOriginUrl + " target=\"_blank\"> read more</a></span><br>",
+//         "<span><i class=\"fa fa-clock-o\"></i> Duration:" + intDurationHour + "</span><br>",
+//         "<span style=\"color:red\">Stars:" + reviewStar + "</span><br>",
+//         "<span><i class=\"fa fa-user\"></i> review:" + intReviewVisitor + "</span><br>",
+//         "</div>",
+//         "</div>",
+//         "<div class=\"tripPriceAndWishDiv\">",
+//         "<span class=\"pull-right\">",
+//         "<i class=\"fa fa-usd\"></i>",
+//         "<span style=\"color:red\">" + intUserCurrencyCost + " " + strUserCurrency + "</span></br>",
+//         "</div>",
+//         //TODO 要加TOUR KEY 觸發事件後加入 wish list  intId
+//         //"<div class=\"favorite\"><a href=\"/trip/addFavoriteTrip?intTripId=3\" return false;> ♥</a></div>",
+//         //"<div class=\"favorite\" onclick=\"addFavoriteTrip("+intId+")\">♥</div>",
+//         favoriteTrip,
+//         //isFavoriteTrip
+//         "</div>",
+//         "</li>"
+        
+//     ].join("");
+
+//     return strTripDataHtml;
+// };
 
 //幣別功能
-function initCurrencySelect(){
+function initCurrencySelect() {
     //設定目前幣別
     var strUserCurrencyUrl = "/trip/userCurrency";
-    $.getJSON(strUserCurrencyUrl, function(jsonResp){
+    $.getJSON(strUserCurrencyUrl, function(jsonResp) {
         strUserCurrency = jsonResp["strUserCurrency"];
         $("#moneySelect").val(strUserCurrency);
         $("#moneySelect").selectpicker("refresh");
         console.log("init user currency selection: " + strUserCurrency);
     });
     //切換目前幣別
-    $("#moneySelect").change(function(){
+    $("#moneySelect").change(function() {
         var strSelectedCurrencyVal = $("#moneySelect").find(":selected").val();
         var strChangeUserCurrencyUrl = strUserCurrencyUrl + "?user_currency=" + strSelectedCurrencyVal;
-        $.getJSON(strChangeUserCurrencyUrl, function(jsonResp){
+        $.getJSON(strChangeUserCurrencyUrl, function(jsonResp) {
             strUserCurrency = jsonResp["strUserCurrency"];
             console.log("switch user currency to: " + strUserCurrency);
             //重新搜尋
             console.log("research");
             //這裡要帶排序條件
 
-            if($("#hiddenID").val()=="Budget ↓"){
+            if ($("#hiddenID").val() == "Budget ↓") {
                 search("intUsdCost");
             }
-            if($("#hiddenID").val()=="Budget ↑"){
+            if ($("#hiddenID").val() == "Budget ↑") {
                 search("intUsdCost");
             }
-            if($("#hiddenID").val()=="Duration ↓"){
+            if ($("#hiddenID").val() == "Duration ↓") {
                 search("intDurationHour");
             }
-            if($("#hiddenID").val()=="Duration ↑"){
+            if ($("#hiddenID").val() == "Duration ↑") {
                 search("intDurationHour");
             }
-            if($("#hiddenID").val()=="ReviewStar ↓"){
+            if ($("#hiddenID").val() == "ReviewStar ↓") {
                 search("intReviewStar");
             }
-            if($("#hiddenID").val()=="ReviewStar ↑"){
+            if ($("#hiddenID").val() == "ReviewStar ↑") {
                 search("intReviewStar");
             }
-            if($("#hiddenID").val()==""){
+            if ($("#hiddenID").val() == "") {
                 search("");
             }
         });
     });
 };
 
-function addFavoriteTrip( intId ){
-        var strAddFavoriteTripUrl = "/trip/addFavoriteTrip?intTripId="+intId ;
-        $.getJSON(strAddFavoriteTripUrl, function(jsonResp){
-            var status = jsonResp["add_favorite_trip_status"];
-        });
-        //$('.favorite').html('♥');
-        //this.html('♥');  no
-        //this.$('.favorite').html('♥'); no
-        //$(this).$('.favorite').html('♥'); no
-        //$('this .favorite').html('♥'); 
+function addFavoriteTrip(intId) {
+    var strAddFavoriteTripUrl = "/trip/addFavoriteTrip?intTripId=" + intId;
+    $.getJSON(strAddFavoriteTripUrl, function(jsonResp) {
+        var status = jsonResp["add_favorite_trip_status"];
+    });
+    //$('.favorite').html('♥');
+    //this.html('♥');  no
+    //this.$('.favorite').html('♥'); no
+    //$(this).$('.favorite').html('♥'); no
+    //$('this .favorite').html('♥'); 
 
-        $('#'+intId+'').html('♥');
-        
-        //alert(" initFind() 前");
-        //initFind();
-        //alert(" initFind() 後");
+    $('#' + intId + '').html('♥');
+
+    //alert(" initFind() 前");
+    //initFind();
+    //alert(" initFind() 後");
 }

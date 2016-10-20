@@ -104,7 +104,11 @@ $(function() {
             $(this).addClass('active');
             next();
         });
+
         
+        // 頁面下滑選單效果
+        topNavDown(800);
+
     };
 
     //幣別

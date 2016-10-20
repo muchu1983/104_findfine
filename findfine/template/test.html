@@ -26,54 +26,67 @@
     <!-- google font Roboto -->
     <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
     <style type="text/css">
-    body {
-        background-color: black;
+    /*body {
+        background-color: yellow;
     }
-    .back {
-        position: relative;
-        z-index: 200;
-    }
-    
-    .cover {
-        position: relative;
-        z-index: 50;
-    }
-    
-    .move_obj {
-        motion-path
-    }
-    .btn_blk{
-        width: 250px;
-        height: 70px;
-        border-radius: 35px;
-        overflow: hidden;
-        position: relative;
-        z-index: 1;
-
-    }
-    .search_btn{
-        width: 100%;
-        height: 100%;
-        border-radius: 35px;
-    }
+    input {
+    float: left;
+    width: 180px;
+    height: 40px;
+    border-radius: 100px;
+    border: solid 1px #ffffff;
+    background-color: transparent;
+    font-family: Roboto;
+    font-size: 14px;
+    line-height: 1;
+    letter-spacing: 1px;
+    color: #ffffff;
+}::-webkit-input-placeholder {
+    color: green;
+}
+input[type=date]{
+    position: relative;
+    width: 500px;
+}
+::-webkit-datetime-edit { padding: 1em; }
+::-webkit-datetime-edit-fields-wrapper { background: green; }
+::-webkit-datetime-edit-text { color: red; padding: 0 0.3em; }
+::-webkit-datetime-edit-month-field { color: blue; }
+::-webkit-datetime-edit-day-field { color: green; }
+::-webkit-datetime-edit-year-field { color: purple; }
+.dada::-webkit-inner-spin-button { display: none; }
+::-webkit-calendar-picker-indicator { 
+    position: absolute;
+    background: orange;
+opacity: 1; }*/
     </style>
+    <script type="text/javascript">
+        $('a.button').click(function(){
+            if (condition == 'true'){
+                function1(someVariable, function() {
+                  function2(someOtherVariable);
+                });
+            }
+            else {
+                doThis(someVariable);
+            }
+        });
+
+
+        function function1(param, callback) {
+          ...do stuff
+          callback();
+        } 
+    </script>
 </head>
 <!-- TODO 每個log都可以回首頁 -->
 
 <body>
-<div class="btn_blk">
-    <button id="btnFindTrip" type="button" class="search_btn ripple">Find Tours</button>
-</div>
+<input id="placeID" class="form-control" placeholder="Enter Something" type="text"></input>
+<input class="dada" type="date" name="">
+<input class="dada" type="time" name="">
 
-
+<p>david1 david2 david3 david4 daivd5</p>
 </body>
 
 </html>
-
-                <div class="head_searchbar_blk">
-                    <span class="icon-magnifier"></span>
-                    <input id="autocomplete" class="head_searchbar" placeholder="Where are you going?" type="text">
-                    </input>
-                    <div class="ripple_blk"></div>
-                    <button id="btnFindTrip" type="button" class="search_btn ripple">Find Tours</button>
-                </div>

@@ -36,3 +36,15 @@ function addToWishlistBtnClick(){
         }
     });
 }
+
+function topNavDown(distance){
+        $(window).scroll(function() {
+        var top_position = $(window).scrollTop();
+        if (top_position > distance) {
+            $("#page-top .navbar-custom").addClass('down');
+        }else{
+            $("#page-top .navbar-custom").removeClass('down');
+
+        }
+    });
+}
