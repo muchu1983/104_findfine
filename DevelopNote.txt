@@ -62,8 +62,10 @@ API 串接狀況
 ===
 Withlocals:
 https://publisher.affili.net/Login/NewLogin.aspx
-帳號： 775078
-密碼： a768768a
+帳號1： 775266
+密碼1： welcome2016
+帳號2： 775078
+密碼2： a768768a
 http://productdata-download.affili.net/affilinet_products_5489_775266.XML?auth=Kqrks2fyWbDexhuNvLWN&type=XML
 ===
 rent-a-guide:

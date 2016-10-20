@@ -65,7 +65,7 @@ def tripFilter(request=None):
     if strOrderBy:
         qsetMatchedTrip = qsetMatchedTrip.order_by(strOrderBy)
     #分頁與輸出結果 0:20,20:40,40:60....
-    intTripPerPage = 20
+    intTripPerPage = 15
     intTotalMatchedTripCount = qsetMatchedTrip.count()
     for matchedTrip in qsetMatchedTrip[(intPageIndex-1)*intTripPerPage:intPageIndex*intTripPerPage if intPageIndex*intTripPerPage < intTotalMatchedTripCount else intTotalMatchedTripCount]:
         dicTripData = convertTripDataToJsonDic(request=request, matchedTrip=matchedTrip, fUsdToUserCurrencyExRate=fUsdToUserCurrencyExRate)
