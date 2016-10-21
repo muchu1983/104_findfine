@@ -1,0 +1,325 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <title>FindFineTour</title>
+    <!-- Bootstrap Core CSS -->
+    <link href="/static/vendor/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/static/vendor/bootstrap-select/dist/css/bootstrap-select.min.css" rel="stylesheet">
+    <!-- Bootstrap daterangepicker -->
+    <link href="/static/vendor/bootstrap-daterangepicker/daterangepicker.css" rel="stylesheet">
+    <!-- Custom Fonts -->
+    <link href="/static/vendor/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+    <link href='https://fonts.googleapis.com/css?family=Raleway:400,600' rel='stylesheet' type='text/css'>
+    <link href='https://fonts.googleapis.com/css?family=Tangerine' rel='stylesheet' type='text/css'>
+    <!-- custom CSS -->
+    <link href="/static/css/custom.css" rel="stylesheet">
+    <!-- jQuery core-->
+    <script src="/static/vendor/jquery/dist/jquery.min.js"></script>
+    <!-- Bootstrap Js -->
+    <script src="/static/vendor/bootstrap/dist/js/bootstrap.min.js"></script>
+    <!-- Bootstrap SelectPicker Js -->
+    <script src="/static/vendor/bootstrap-select/dist/js/bootstrap-select.min.js"></script>
+    <!-- moment -->
+    <script src="/static/vendor/moment/min/moment.min.js"></script>
+    <!-- Bootstrap DateRange Js -->
+    <script src="/static/vendor/bootstrap-daterangepicker/daterangepicker.js"></script>
+    <!-- velocity animation -->
+    <!-- <script sr/static/vendor/velocity/velocity.min.js"></script> -->
+    <!-- custom JavaScript -->
+    <script src="/static/js/custom.js"></script>
+    <script src="/static/js/find.js"></script>
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBNW1g69sGY8q_45F0Ob1lMbZn3fWyiL1o&signed_in=true&libraries=places&callback=initMap" async defer></script></script>
+
+    <script type="text/javascript">
+        var strKeywordFromHome = "{{keyword}}";
+        var strEmail = "{{strEmail}}";
+        //alert(strEmail);
+    </script>
+    <!-- 低瀏覽器版本相容條件註解 -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+</head>
+
+<body id="page-top" style="background-image:url('/static/img/bg.jpg');">
+    <!-- Navigation -->
+    <nav id="mainNav" class="navbar navbar-default navbar-custom navbar-fixed-top">
+        <div class="container">
+            <!-- Brand and toggle get grouped for better mobile display -->
+            <div class="navbar-header page-scroll">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                    <span class="sr-only">Toggle navigation</span> Menu <i class="fa fa-bars"></i>
+                </button>
+                <a class="navbar-brand page-scroll" href="#page-top"></a>
+            </div>
+            <!-- Collect the nav links, forms, and other content for toggling -->
+            <div class="collapse navbar-collapse customFixed" id="bs-example-navbar-collapse-1">
+                <div id="logOut" class="btn btn-info pull-right">Log Out</div>
+                <div id="wishList" class="btn btn-info pull-right">wish list</div>
+                <div id="myFriends" class="btn btn-info pull-right">my friends</div>
+                <div id="myPlans" class="btn btn-info pull-right">my plans</div>
+                <div id="myMessages" class="btn btn-info pull-right">my messages</div>
+                <div id="loginBtn" class="btn btn-info pull-right">Log In</div>
+
+                <ul class="nav navbar-nav navbar-right">
+                    <li class="hidden">
+                        <a href="#page-top"></a>
+                    </li>
+                    <!--
+                    <li>
+                        <div class="LanguageDiv navSelect">
+                            <select name="" class="bsSelect">
+                                <option value="EN">English</option>
+                                <option value="ZH">Chinese</option>
+                            </select>
+                        </div>
+                    </li>
+                    -->
+                    <li>
+                    <!-- 語言幣別 login 太中間 log 不要白底 要靠左-->
+                        <div class="CurrencyDiv navSelect">
+                            <select id="moneySelect" name="" class="bsSelect">
+                                <option value="USD" data-content='USD <img class="pull-right" src="/static/img/United States.png" style="width:20px;heidht:20px;display:inline-block;">'>></option>
+                                <option value="EUR" data-content='EUR <img class="pull-right" src="/static/img/European Union.png" style="width:20px;heidht:20px;display:inline-block;">'>></option>
+                                <option value="CNY" data-content='CNY <img class="pull-right" src="/static/img/China.png" style="width:20px;heidht:20px;display:inline-block;">'>></option>
+                                <option value="GBP" data-content='GBP <img class="pull-right" src="/static/img/United Kingdom.png" style="width:20px;heidht:20px;display:inline-block;">'>></option>
+                                <option value="JPY" data-content='JPY <img class="pull-right" src="/static/img/Japan.png" style="width:20px;heidht:20px;display:inline-block;">'>></option>
+                                <option value="AUD" data-content='AUD <img class="pull-right" src="/static/img/Australia.png" style="width:20px;heidht:20px;display:inline-block;">'>></option>
+                                <option value="NZD" data-content='NZD <img class="pull-right" src="/static/img/New Zealand.png" style="width:20px;heidht:20px;display:inline-block;">'>></option>
+                                <option value="SGD" data-content='SGD <img class="pull-right" src="/static/img/Singapore.png" style="width:20px;heidht:20px;display:inline-block;">'>></option>
+                                <option value="HKD" data-content='HKD <img class="pull-right" src="/static/img/Hong Kong.png" style="width:20px;heidht:20px;display:inline-block;">'>></option>
+                                <option value="TWD" data-content='TWD <img class="pull-right" src="/static/img/Taiwan.png" style="width:20px;heidht:20px;display:inline-block;">'>></option>
+                            </select>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+            <!-- /.navbar-collapse -->
+        </div>
+        <!-- /.container-fluid -->
+    </nav>
+    <header class="find">
+        <div class="container">
+            <div class="intro-text">
+                <div class="searchContent col-xs-12 col-md-6">
+                    <div class="row">
+                        <div class="col-xs-12">
+                            <div class="form-group">
+                                <label for="">Location</label>
+                                <input id="placeID" class="form-control" placeholder="Enter Something" type="text"></input>
+                            </div>
+                        </div>
+                        <div class="col-xs-12">
+                        <!-- TODO 後要加幣別 -->
+                            <div class="form-group">
+                                <label for="">Budget</label>
+                                <div class="row">
+                                    <div class="col-xs-5">
+                                        <input id="budgetDownID" class="form-control" placeholder="lower" type="text"></input>
+                                    </div>
+                                    <div class="col-xs-1">
+                                        ~
+                                    </div>
+                                    <div class="col-xs-5">
+                                        <input id="budgetUpID" class="form-control" placeholder="upper" type="text"></input>
+                                    </div>
+                                    <div class="col-xs-1 userCurrencySpan">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-xs-12">
+                            <div class="form-group">
+                            <!-- TODO 要有下拉的到三角形-->
+                                <label for="">Start</label>
+                                <div class="row">
+                                    <div class="col-xs-5">
+                                        <input id="startFrom" class="bs_date form-control" placeholder="From" type="text"></input>
+                                    </div>
+                                    <div class="col-xs-1">
+                                        ~
+                                    </div>
+                                    <div class="col-xs-5">
+                                        <input id="to" class="bs_date form-control" placeholder="To" type="text"></input>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-xs-12">
+                            <a class="pull-right" href="javascript:void(0)"><i class="toggleCollapse fa fa-caret-down" data-toggle="collapse" data-target="#moreInfo" aria-expanded="false" aria-controls="moreInfo"> more</i></a>
+                            <div class="collapse pull-right" id="moreInfo">
+                                <div class="card card-block">
+                                    <div class="row">
+                                        <div class="col-xs-12">
+                                            <div class="form-group">
+                                                <label for="">Duration</label>
+                                                <select name="duration" id="duration" class="selectpicker form-control" multiple data-actions-box="true">
+                                                    <option value="1">1hr</option>
+                                                    <option value="2">2hrs</option>
+                                                    <option value="3">3hrs</option>
+                                                    <option value="4">4~6hr</option>
+                                                    <option value="5">1Day</option>
+                                                    <option value="6">More than 1 Day</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="col-xs-12">
+                                            <div class="form-group">
+                                                <label for="">Style</label>
+                                                <select name="style" id="" class="selectpicker form-control" multiple data-actions-box="true">
+                                                    <option value="Cultural">Cultural tour</option>
+                                                    <option value="Food">Food tour</option>
+                                                    <option value="Fashion">Fashion tour</option>
+                                                    <option value="Wild">Wild life tour</option>
+                                                    <option value="Sports">Sports tour</option>
+                                                    <option value="Eco">Eco tour</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="col-xs-12">
+                                            <div class="form-group">
+                                                <label for="">Passenger</label>
+                                                <div class="row">
+                                                    <div class="col-xs-6">
+                                                        <input id="passenger" class="form-control" placeholder="Person(s)" type="text"></input>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-xs-5">
+                                            <div class="form-group">
+                                                <label for="">Tour Starts</label>
+                                                <select name="tourStarts" id="tourStarts" class="selectpicker form-control">
+                                                    <option></option>
+                                                    <option>00:00</option>
+                                                    <option>02:00</option>
+                                                    <option>06:00</option>
+                                                    <option>08:00</option>
+                                                    <option>10:00</option>
+                                                    <option>12:00</option>
+                                                    <option>14:00</option>
+                                                    <option>16:00</option>
+                                                    <option>18:00</option>
+                                                    <option>20:00</option>
+                                                    <option>22:00</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="col-xs-1">
+                                        ~
+                                        </div>
+                                        <div class="col-xs-5">
+                                            <div class="form-group">
+                                                <label for="">Tour end</label>
+                                                <select name="tourEnds" id="tourEnds" class="selectpicker form-control">
+                                                    <option></option>
+                                                    <option>00:00</option>
+                                                    <option>02:00</option>
+                                                    <option>06:00</option>
+                                                    <option>08:00</option>
+                                                    <option>10:00</option>
+                                                    <option>12:00</option>
+                                                    <option>14:00</option>
+                                                    <option>16:00</option>
+                                                    <option>18:00</option>
+                                                    <option>20:00</option>
+                                                    <option>22:00</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="col-xs-12">
+                                            <div class="form-group">
+                                                <label for="">Guide's language</label>
+                                                <select name="guideLanguage" id="guideLanguage" class="selectpicker form-control" multiple data-actions-box="true">
+                                                    <option value="">English</option>
+                                                    <option value="">中文</option>
+                                                    <option value="">Deutsch</option>
+                                                    <option value="">Français</option>
+                                                    <option value="">Español</option>
+                                                    <option value="">العربية</option>
+                                                    <option value="">日本語</option>
+                                                    <option value="">Pусский</option>
+                                                    <option value="">Italia</option>
+                                                    <option value="">Nederland</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="col-xs-12">
+                                            <div class="form-group">
+                                                <label for="">Availability</label>
+                                                <select name="availability" id="availability" class="selectpicker form-control" multiple>
+                                                    <option value="">Instant confirmation</option>
+                                                    <option value="">On request</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="col-xs-12">
+                                            <div class="form-group">
+                                                <label for="">Attrations</label>
+                                                <input id="attrations" class="form-control" placeholder="Attrations" type="text"></input>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                        <div class="col-xs-12">
+                            <div class="form-group">
+                                <label for=""></label>
+                                <div id="btnSearch" class="btn btn-info full">Search</div>
+                            </div>
+                        </div>
+                        <div class="clearfix"></div>
+                    </div>
+                </div>
+                <!-- 範圍要大 知道附近靠哪裡 -->
+                <div id="mapDiv" class="col-xs-12 col-md-6">
+                <div id="map"></div>
+                </div>
+            </div>
+        </div>
+    </header>
+    <div id="findContent" class="container">
+        <div class="row">
+            <div class="col-xs-12">
+                <div class="findResultDiv">
+                    <div class="sortedBy pull-right">
+                        <span><input class="btn btn-info" id="sortByBudgetID"       type="button" onclick='search("intUsdCost")'      value="Budget ↓">    </span>
+                        <span><input class="btn btn-info" id="sortByDurationHourID" type="button" onclick='search("intDurationHour")' value="Duration ↓">  </span>
+                        <span><input class="btn btn-info" id="sortByReviewStarID"   type="button" onclick='search("intReviewStar")'   value="Star ↓"></span>
+                        <input type="hidden" id="hiddenID" value="">
+                    </div>
+                <!--TODO 排版有跑掉 js 有需要改寫 加介紹-->
+                    <ul class="lstTripData row">
+                    </ul>
+                </div>
+            </div>
+            <div class="page_link">
+                <a href="javascript:void(0)" id="prev_page_link">prev</a>
+                <span href="javascript:void(0)" id="current_page">1</span>
+                <a href="javascript:void(0)" id="next_page_link">next</a>
+            </div>
+        </div>
+    </div>
+    <footer class="bg-light-white">
+        <div class="container">
+            <div class="row">
+                <div class="col-xs-1 col-md-2"></div>
+                <div class="col-xs-10 col-md-8">
+                <!-- TODO 加log-->
+                    <div class="logoImg"></div><span class="copyright">Copyright © 2016 FindFineTour All rights reserved.</span>
+                </div>
+                <div class="col-xs-1 col-md-2"></div>
+            </div>
+        </div>
+    </footer>
+</body>
+</html>

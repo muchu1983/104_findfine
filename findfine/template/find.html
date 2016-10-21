@@ -1,325 +1,409 @@
-<!DOCTYPE html>
-<html lang="en">
+    <!DOCTYPE html>
+    <html lang="en">
 
-<head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="">
-    <meta name="author" content="">
-    <title>FindFineTour</title>
-    <!-- Bootstrap Core CSS -->
-    <link href="/static/vendor/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link href="/static/vendor/bootstrap-select/dist/css/bootstrap-select.min.css" rel="stylesheet">
-    <!-- Bootstrap daterangepicker -->
-    <link href="/static/vendor/bootstrap-daterangepicker/daterangepicker.css" rel="stylesheet">
-    <!-- Custom Fonts -->
-    <link href="/static/vendor/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
-    <link href='https://fonts.googleapis.com/css?family=Raleway:400,600' rel='stylesheet' type='text/css'>
-    <link href='https://fonts.googleapis.com/css?family=Tangerine' rel='stylesheet' type='text/css'>
-    <!-- custom CSS -->
-    <link href="/static/css/custom.css" rel="stylesheet">
-    <!-- jQuery core-->
-    <script src="/static/vendor/jquery/dist/jquery.min.js"></script>
-    <!-- Bootstrap Js -->
-    <script src="/static/vendor/bootstrap/dist/js/bootstrap.min.js"></script>
-    <!-- Bootstrap SelectPicker Js -->
-    <script src="/static/vendor/bootstrap-select/dist/js/bootstrap-select.min.js"></script>
-    <!-- moment -->
-    <script src="/static/vendor/moment/min/moment.min.js"></script>
-    <!-- Bootstrap DateRange Js -->
-    <script src="/static/vendor/bootstrap-daterangepicker/daterangepicker.js"></script>
-    <!-- velocity animation -->
-    <!-- <script sr/static/vendor/velocity/velocity.min.js"></script> -->
-    <!-- custom JavaScript -->
-    <script src="/static/js/custom.js"></script>
-    <script src="/static/js/find.js"></script>
-    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBNW1g69sGY8q_45F0Ob1lMbZn3fWyiL1o&signed_in=true&libraries=places&callback=initMap" async defer></script></script>
-
-    <script type="text/javascript">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="description" content="">
+        <meta name="author" content="">
+        <title>FindFineTour</title>
+        <!-- Bootstrap Core CSS -->
+        <link href="/static/vendor/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+        <link href="/static/vendor/bootstrap-select/dist/css/bootstrap-select.min.css" rel="stylesheet">
+        <link href="/static/css/bootstrapCustom.css" rel="stylesheet">
+        <!-- Bootstrap daterangepicker -->
+        <link href="/static/vendor/bootstrap-daterangepicker/daterangepicker.css" rel="stylesheet">
+        <!-- Custom Fonts -->
+        <link href="/static/vendor/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+        <link href='https://fonts.googleapis.com/css?family=Raleway:400,600' rel='stylesheet' type='text/css'>
+        <link href='https://fonts.googleapis.com/css?family=Caudex|Cormorant+Garamond' rel='stylesheet' type='text/css'>
+        <!-- custom CSS -->
+        <link href="/static/css/custom.css" rel="stylesheet">
+        <!-- jQuery core-->
+        <script src="/static/vendor/jquery/dist/jquery.min.js"></script>
+        <!-- Bootstrap Js -->
+        <script src="/static/vendor/bootstrap/dist/js/bootstrap.min.js"></script>
+        <!-- Bootstrap SelectPicker Js -->
+        <script src="/static/vendor/bootstrap-select/dist/js/bootstrap-select.min.js"></script>
+        <!-- moment -->
+        <script src="/static/vendor/moment/min/moment.min.js"></script>
+        <!-- Bootstrap DateRange Js -->
+        <script src="/static/vendor/bootstrap-daterangepicker/daterangepicker.js"></script>
+        <!-- velocity animation -->
+        <!-- <script sr/static/vendor/velocity/velocity.min.js"></script> -->
+        <!-- custom JavaScript -->
+        <script src="/static/js/custom.js"></script>
+        <script src="/static/js/function.js"></script>
+        <script src="/static/js/find.js"></script>
+        <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBNW1g69sGY8q_45F0Ob1lMbZn3fWyiL1o&signed_in=true&libraries=places&callback=initMap" async defer></script>
+        </script>
+        <script type="text/javascript">
         var strKeywordFromHome = "{{keyword}}";
         var strEmail = "{{strEmail}}";
         //alert(strEmail);
-    </script>
-    <!-- 低瀏覽器版本相容條件註解 -->
-    <!--[if lt IE 9]>
-        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
-        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
-    <![endif]-->
-</head>
+        </script>
+        <!-- 低瀏覽器版本相容條件註解 -->
+        <!--[if lt IE 9]>
+            <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+            <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+        <![endif]-->
+        <!-- ripple-button -->
+        <link rel="stylesheet" href="/static/vendor/ripple/css/style.css">
+        <script src="/static/vendor/ripple/js/index.js"></script>
+        <!-- icon-font -->
+        <link rel="stylesheet" href="/static/icon-font/style.css">
+        <!-- google font Roboto -->
+        <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
+    </head>
 
-<body id="page-top" style="background-image:url('/static/img/bg.jpg');">
-    <!-- Navigation -->
-    <nav id="mainNav" class="navbar navbar-default navbar-custom navbar-fixed-top">
-        <div class="container">
-            <!-- Brand and toggle get grouped for better mobile display -->
-            <div class="navbar-header page-scroll">
-                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
-                    <span class="sr-only">Toggle navigation</span> Menu <i class="fa fa-bars"></i>
-                </button>
-                <a class="navbar-brand page-scroll" href="#page-top"></a>
-            </div>
-            <!-- Collect the nav links, forms, and other content for toggling -->
-            <div class="collapse navbar-collapse customFixed" id="bs-example-navbar-collapse-1">
-                <div id="logOut" class="btn btn-info pull-right">Log Out</div>
-                <div id="wishList" class="btn btn-info pull-right">wish list</div>
-                <div id="myFriends" class="btn btn-info pull-right">my friends</div>
-                <div id="myPlans" class="btn btn-info pull-right">my plans</div>
-                <div id="myMessages" class="btn btn-info pull-right">my messages</div>
-                <div id="loginBtn" class="btn btn-info pull-right">Log In</div>
-
-                <ul class="nav navbar-nav navbar-right">
-                    <li class="hidden">
-                        <a href="#page-top"></a>
-                    </li>
-                    <!--
-                    <li>
-                        <div class="LanguageDiv navSelect">
-                            <select name="" class="bsSelect">
-                                <option value="EN">English</option>
-                                <option value="ZH">Chinese</option>
-                            </select>
-                        </div>
-                    </li>
-                    -->
-                    <li>
-                    <!-- 語言幣別 login 太中間 log 不要白底 要靠左-->
-                        <div class="CurrencyDiv navSelect">
-                            <select id="moneySelect" name="" class="bsSelect">
-                                <option value="USD" data-content='USD <img class="pull-right" src="/static/img/United States.png" style="width:20px;heidht:20px;display:inline-block;">'>></option>
-                                <option value="EUR" data-content='EUR <img class="pull-right" src="/static/img/European Union.png" style="width:20px;heidht:20px;display:inline-block;">'>></option>
-                                <option value="CNY" data-content='CNY <img class="pull-right" src="/static/img/China.png" style="width:20px;heidht:20px;display:inline-block;">'>></option>
-                                <option value="GBP" data-content='GBP <img class="pull-right" src="/static/img/United Kingdom.png" style="width:20px;heidht:20px;display:inline-block;">'>></option>
-                                <option value="JPY" data-content='JPY <img class="pull-right" src="/static/img/Japan.png" style="width:20px;heidht:20px;display:inline-block;">'>></option>
-                                <option value="AUD" data-content='AUD <img class="pull-right" src="/static/img/Australia.png" style="width:20px;heidht:20px;display:inline-block;">'>></option>
-                                <option value="NZD" data-content='NZD <img class="pull-right" src="/static/img/New Zealand.png" style="width:20px;heidht:20px;display:inline-block;">'>></option>
-                                <option value="SGD" data-content='SGD <img class="pull-right" src="/static/img/Singapore.png" style="width:20px;heidht:20px;display:inline-block;">'>></option>
-                                <option value="HKD" data-content='HKD <img class="pull-right" src="/static/img/Hong Kong.png" style="width:20px;heidht:20px;display:inline-block;">'>></option>
-                                <option value="TWD" data-content='TWD <img class="pull-right" src="/static/img/Taiwan.png" style="width:20px;heidht:20px;display:inline-block;">'>></option>
-                            </select>
-                        </div>
-                    </li>
-                </ul>
-            </div>
-            <!-- /.navbar-collapse -->
-        </div>
-        <!-- /.container-fluid -->
-    </nav>
-    <header class="find">
-        <div class="container">
-            <div class="intro-text">
-                <div class="searchContent col-xs-12 col-md-6">
-                    <div class="row">
-                        <div class="col-xs-12">
-                            <div class="form-group">
-                                <label for="">Location</label>
-                                <input id="placeID" class="form-control" placeholder="Enter Something" type="text"></input>
+    <body id="page-top" style="background-image:url('/static/img/bg.jpg');">
+        <!-- Navigation -->
+        <nav id="mainNav" class="navbar navbar-default navbar-custom navbar-fixed-top">
+            <div class="container">
+                <!-- Brand and toggle get grouped for better mobile display -->
+                <div class="navbar-header page-scroll">
+                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                        <span class="sr-only">Toggle navigation</span> Menu <i class="fa fa-bars"></i>
+                    </button>
+                    <a class="icon-logo" href="#page-top"></a>
+                    <div class="mini_searchbar">
+                        <span class="icon-magnifier"></span>
+                        <input type="text" name="" placeholder="Where are you going?">
+                    </div>
+                </div>
+                <div class="header_btn_blk" id="bs-example-navbar-collapse-1">
+                    <ul class="nav navbar-nav">
+                        <li class="hidden">
+                            <a href="#page-top"></a>
+                        </li>
+                        <li>
+                            <div class="CurrencyDiv navSelect">
+                                <select id="moneySelect" name="" class="bsSelect">
+                                    <option value="USD" data-content='USD'></option>
+                                    <option value="EUR" data-content='EUR'></option>
+                                    <option value="CNY" data-content='CNY'></option>
+                                    <option value="GBP" data-content='GBP'></option>
+                                    <option value="JPY" data-content='JPY'></option>
+                                    <option value="AUD" data-content='AUD'></option>
+                                    <option value="NZD" data-content='NZD'></option>
+                                    <option value="SGD" data-content='SGD'></option>
+                                    <option value="HKD" data-content='HKD'></option>
+                                    <option value="TWD" data-content='TWD'></option>
+                                </select>
                             </div>
-                        </div>
-                        <div class="col-xs-12">
-                        <!-- TODO 後要加幣別 -->
-                            <div class="form-group">
-                                <label for="">Budget</label>
-                                <div class="row">
-                                    <div class="col-xs-5">
+                        </li>
+                    </ul>
+                    <!-- <div id="logOut" class="btn btn-info">Log Out</div> -->
+                    <div id="wishList" class="header_btn btn-info">
+                        <span class="icon_blk">                  
+                            <span class="icon-quill"></span>
+                        <span class="icon-scroll"></span>
+                        <span class="extend_line"></span>
+                        </span>
+                        <span class="text">Wishlist</span>
+                    </div>
+                    <div id="myPlans" class="header_btn btn-info">
+                        <span class="icon_blk">
+                            <span class="icon-airplane"></span>
+                        <span class="icon-notebook"></span>
+                        <svg class="extend_dotted_line">
+                            <g fill="none" stroke="#ffffff" stroke-width="1">
+                                <path stroke-dasharray="5,5" d="M0 0 80 0" />
+                            </g>
+                        </svg>
+                        </span>
+                        <span class="text">My Plan</span>
+                    </div>
+                    <!-- <div id="myFriends" class="btn btn-info">my friends</div>
+                    <div id="myMessages" class="btn btn-info">my messages</div> -->
+                    <div id="loginBtn" class="header_btn btn-info">Log In</div>
+                    <div id="headBtn" class="head_btn" style="background-image: url(/static/img/head_sample.jpg);"></div>
+                </div>
+                <!-- /.navbar-collapse -->
+            </div>
+            <!-- /.container-fluid -->
+        </nav>
+
+        <svg width="1500px" height="257px" class="plane_print">
+            <path class="cover" fill="none" stroke="#ffffff" stroke-width="1" stroke-linecap="square" stroke-dasharray="5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,2000" d="M0.568,255.942c0,0,299-45,215-129 c-19.879-19.879-20-55,72-56c24.94-0.271,169-2,169-2h737.507c0,0,2.607,0,20.493,0c25.011,0,40,4,54-13s8-42-5-50 c-29.304-18.033-73,11-45,54s279,76,279,76" />
+            </path>
+        </svg>
+        <div class="flying_plane icon-airplane"></div>
+        <header class="find">
+            <div class="container">
+                <div class="intro-text">
+                    <div class="searchContent col-xs-12 col-md-6">
+                        <div class="row">
+                            <div class="col-xs-12 local_blk">
+                                <div class="form-group">
+                                    <label class="title" for="">Location</label>
+                                    <!-- <div class="place_sel_blk icon-dropdown_icon">
+                                        <div class="place_sel sel_blk_180">
+                                            Select a place
+                                        </div>
+                                    </div>
+                                    <div class="place_sel_dropdown_blk"></div> -->
+                                    <input id="placeID" class="form-control sel_blk_180" placeholder="Enter Something" type="text"></input>
+                                </div>
+                            </div>
+                            <div class="col-xs-12 budget_blk">
+                                <!-- TODO 後要加幣別 -->
+                                <div class="form-group">
+                                    <label class="title" for="">Budget</label>
+                                    <div class="inner_input_blk">
+                                        <input id="budgetUpID" class="form-control" placeholder="upper" type="text"></input>
+                                        <span class="icon_to">~</span>
                                         <input id="budgetDownID" class="form-control" placeholder="lower" type="text"></input>
                                     </div>
-                                    <div class="col-xs-1">
-                                        ~
+                                    <!-- <div class="budget_sel_blk icon-dropdown_icon">
+                                        <div class="budget_sel sel_blk_180">$<span class="dfrom">0</span>~$<span class="dto">100</span></div>
                                     </div>
-                                    <div class="col-xs-5">
-                                        <input id="budgetUpID" class="form-control" placeholder="upper" type="text"></input>
+                                    <ul class="budget_dropdown">
+                                        <li>$<span class="dfrom">0</span>~$<span class="dto">100</span></li>
+                                        <li>$<span class="dfrom">100</span>~$<span class="dto">500</span></li>
+                                        <li>$<span class="dfrom">500</span>~$<span class="dto">2000</span></li>
+                                    </ul> -->
+                                </div>
+                                <!-- <div class="col-xs-5">
+                                    <input id="budgetDownID" class="form-control" placeholder="lower" type="text"></input>
+                                </div>
+                                <div class="col-xs-1">
+                                    ~
+                                </div>
+                                <div class="col-xs-5">
+                                    <input id="budgetUpID" class="form-control" placeholder="upper" type="text"></input>
+                                </div> -->
+                                <div class="userCurrencySpan">
+                                </div>
+                            </div>
+                            <div class="col-xs-12 date_blk">
+                                <div class="form-group">
+                                    <div class="date_sel_blk sel_blk_270">
+                                        <input type="date" name="">
+                                        <div class="sepline"></div>
+                                        <input type="date" name="">
                                     </div>
-                                    <div class="col-xs-1 userCurrencySpan">
+                                </div>
+                            </div>
+                            <div class="col-xs-12 morefilter_blk">
+                                <a id="moreFilter">
+                                    <i class="icon-dropdown_icon"></i>
+                                    <p class="pad20left">more filters</p>
+                                </a>
+                                <div class="footprint_blk">
+                                    <span class="icon-morefilter_footprint"></span>
+                                </div>
+                            </div>
+                            <div class="col-xs-12 duration_blk more_sel_blk">
+                                <div class="form-group">
+                                    <label class="title" for="">Duration</label>
+                                    <select name="duration" id="duration" class="selectpicker form-control" multiple data-actions-box="true">
+                                        <option value="1">1hr</option>
+                                        <option value="2">2hrs</option>
+                                        <option value="3">3hrs</option>
+                                        <option value="4">4~6hr</option>
+                                        <option value="5">1Day</option>
+                                        <option value="6">More than 1 Day</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-xs-12 style_blk more_sel_blk">
+                                <div class="form-group">
+                                    <label class="title" for="">Style</label>
+                                    <select name="style" id="" class="selectpicker form-control" multiple data-actions-box="true">
+                                        <option value="Cultural">Cultural tour</option>
+                                        <option value="Food">Food tour</option>
+                                        <option value="Fashion">Fashion tour</option>
+                                        <option value="Wild">Wild life tour</option>
+                                        <option value="Sports">Sports tour</option>
+                                        <option value="Eco">Eco tour</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-xs-12 more_sel_blk passenger_blk">
+                                <div class="form-group">
+                                    <label class="title" for="">Passenger</label>
+                                    <div class="">
+                                        <input id="passenger" class="form-control" placeholder="Person(s)" type="text"></input>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-xs-12 time_blk">
+                                <div class="form-group">
+                                    <label class="title" for="">Time</label>
+                                    <select name="tourEnds" id="tourEnds" class="selectpicker form-control">
+                                        <option></option>
+                                        <option>00:00</option>
+                                        <option>02:00</option>
+                                        <option>06:00</option>
+                                        <option>08:00</option>
+                                        <option>10:00</option>
+                                        <option>12:00</option>
+                                        <option>14:00</option>
+                                        <option>16:00</option>
+                                        <option>18:00</option>
+                                        <option>20:00</option>
+                                        <option>22:00</option>
+                                    </select>
+                                    <span class="icon_to">~</span>
+                                    <select name="tourStarts" id="tourStarts" class="selectpicker form-control">
+                                        <option></option>
+                                        <option>00:00</option>
+                                        <option>02:00</option>
+                                        <option>06:00</option>
+                                        <option>08:00</option>
+                                        <option>10:00</option>
+                                        <option>12:00</option>
+                                        <option>14:00</option>
+                                        <option>16:00</option>
+                                        <option>18:00</option>
+                                        <option>20:00</option>
+                                        <option>22:00</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-xs-12 guild_blk">
+                                <div class="form-group">
+                                    <label class="title" for="">Guide</label>
+                                    <select name="guideLanguage" id="guideLanguage" class="selectpicker form-control" multiple data-actions-box="true">
+                                        <option value="">English</option>
+                                        <option value="">中文</option>
+                                        <option value="">Deutsch</option>
+                                        <option value="">Français</option>
+                                        <option value="">Español</option>
+                                        <option value="">العربية</option>
+                                        <option value="">日本語</option>
+                                        <option value="">Pусский</option>
+                                        <option value="">Italia</option>
+                                        <option value="">Nederland</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-xs-12 avail_blk">
+                                <div class="form-group">
+                                    <label class="title" for="">Availability</label>
+                                    <select name="availability" id="availability" class="selectpicker form-control" multiple>
+                                        <option value="">Instant confirmation</option>
+                                        <option value="">On request</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-xs-12 attra_blk">
+                                <div class="form-group">
+                                    <label class="title" for="">Attrations</label>
+                                    <input id="attrations" class="form-control pad20left" placeholder="Attrations" type="text"></input>
+                                </div>
+                            </div>
+                            <div class="col-xs-12 find_btn">
+                                <div class="form-group">
+                                    <label for=""></label>
+                                    <div class="blue_ripple_blk link_btn ripple_blk">
+                                        <a id="btnSearch" class="ripple">Find Tours</a>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                        <div class="col-xs-12">
-                            <div class="form-group">
-                            <!-- TODO 要有下拉的到三角形-->
-                                <label for="">Start</label>
-                                <div class="row">
-                                    <div class="col-xs-5">
-                                        <input id="startFrom" class="bs_date form-control" placeholder="From" type="text"></input>
-                                    </div>
-                                    <div class="col-xs-1">
-                                        ~
-                                    </div>
-                                    <div class="col-xs-5">
-                                        <input id="to" class="bs_date form-control" placeholder="To" type="text"></input>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-xs-12">
-                            <a class="pull-right" href="javascript:void(0)"><i class="toggleCollapse fa fa-caret-down" data-toggle="collapse" data-target="#moreInfo" aria-expanded="false" aria-controls="moreInfo"> more</i></a>
+                        <!-- <div class="col-xs-12">
                             <div class="collapse pull-right" id="moreInfo">
                                 <div class="card card-block">
                                     <div class="row">
-                                        <div class="col-xs-12">
-                                            <div class="form-group">
-                                                <label for="">Duration</label>
-                                                <select name="duration" id="duration" class="selectpicker form-control" multiple data-actions-box="true">
-                                                    <option value="1">1hr</option>
-                                                    <option value="2">2hrs</option>
-                                                    <option value="3">3hrs</option>
-                                                    <option value="4">4~6hr</option>
-                                                    <option value="5">1Day</option>
-                                                    <option value="6">More than 1 Day</option>
-                                                </select>
-                                            </div>
-                                        </div>
-                                        <div class="col-xs-12">
-                                            <div class="form-group">
-                                                <label for="">Style</label>
-                                                <select name="style" id="" class="selectpicker form-control" multiple data-actions-box="true">
-                                                    <option value="Cultural">Cultural tour</option>
-                                                    <option value="Food">Food tour</option>
-                                                    <option value="Fashion">Fashion tour</option>
-                                                    <option value="Wild">Wild life tour</option>
-                                                    <option value="Sports">Sports tour</option>
-                                                    <option value="Eco">Eco tour</option>
-                                                </select>
-                                            </div>
-                                        </div>
-                                        <div class="col-xs-12">
-                                            <div class="form-group">
-                                                <label for="">Passenger</label>
-                                                <div class="row">
-                                                    <div class="col-xs-6">
-                                                        <input id="passenger" class="form-control" placeholder="Person(s)" type="text"></input>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="col-xs-5">
-                                            <div class="form-group">
-                                                <label for="">Tour Starts</label>
-                                                <select name="tourStarts" id="tourStarts" class="selectpicker form-control">
-                                                    <option></option>
-                                                    <option>00:00</option>
-                                                    <option>02:00</option>
-                                                    <option>06:00</option>
-                                                    <option>08:00</option>
-                                                    <option>10:00</option>
-                                                    <option>12:00</option>
-                                                    <option>14:00</option>
-                                                    <option>16:00</option>
-                                                    <option>18:00</option>
-                                                    <option>20:00</option>
-                                                    <option>22:00</option>
-                                                </select>
-                                            </div>
-                                        </div>
-                                        <div class="col-xs-1">
-                                        ~
-                                        </div>
-                                        <div class="col-xs-5">
-                                            <div class="form-group">
-                                                <label for="">Tour end</label>
-                                                <select name="tourEnds" id="tourEnds" class="selectpicker form-control">
-                                                    <option></option>
-                                                    <option>00:00</option>
-                                                    <option>02:00</option>
-                                                    <option>06:00</option>
-                                                    <option>08:00</option>
-                                                    <option>10:00</option>
-                                                    <option>12:00</option>
-                                                    <option>14:00</option>
-                                                    <option>16:00</option>
-                                                    <option>18:00</option>
-                                                    <option>20:00</option>
-                                                    <option>22:00</option>
-                                                </select>
-                                            </div>
-                                        </div>
-                                        <div class="col-xs-12">
-                                            <div class="form-group">
-                                                <label for="">Guide's language</label>
-                                                <select name="guideLanguage" id="guideLanguage" class="selectpicker form-control" multiple data-actions-box="true">
-                                                    <option value="">English</option>
-                                                    <option value="">中文</option>
-                                                    <option value="">Deutsch</option>
-                                                    <option value="">Français</option>
-                                                    <option value="">Español</option>
-                                                    <option value="">العربية</option>
-                                                    <option value="">日本語</option>
-                                                    <option value="">Pусский</option>
-                                                    <option value="">Italia</option>
-                                                    <option value="">Nederland</option>
-                                                </select>
-                                            </div>
-                                        </div>
-                                        <div class="col-xs-12">
-                                            <div class="form-group">
-                                                <label for="">Availability</label>
-                                                <select name="availability" id="availability" class="selectpicker form-control" multiple>
-                                                    <option value="">Instant confirmation</option>
-                                                    <option value="">On request</option>
-                                                </select>
-                                            </div>
-                                        </div>
-                                        <div class="col-xs-12">
-                                            <div class="form-group">
-                                                <label for="">Attrations</label>
-                                                <input id="attrations" class="form-control" placeholder="Attrations" type="text"></input>
-                                            </div>
-                                        </div>
                                     </div>
                                 </div>
-
                             </div>
                         </div>
                         <div class="col-xs-12">
                             <div class="form-group">
                                 <label for=""></label>
-                                <div id="btnSearch" class="btn btn-info full">Search</div>
+                                <div class="blue_ripple_blk link_btn ripple_blk">
+                                    <a id="btnSearch" class="ripple">Find Tours</a>
+                                </div>
                             </div>
                         </div>
-                        <div class="clearfix"></div>
+                        <div class="clearfix"></div> -->
+                    </div>
+                    <!-- 範圍要大 知道附近靠哪裡 -->
+                    <div id="mapDiv" class="col-xs-12 col-md-6">
+                        <div id="map"></div>
                     </div>
                 </div>
-                <!-- 範圍要大 知道附近靠哪裡 -->
-                <div id="mapDiv" class="col-xs-12 col-md-6">
-                <div id="map"></div>
-                </div>
             </div>
-        </div>
-    </header>
-    <div id="findContent" class="container">
-        <div class="row">
-            <div class="col-xs-12">
-                <div class="findResultDiv">
-                    <div class="sortedBy pull-right">
-                        <span><input class="btn btn-info" id="sortByBudgetID"       type="button" onclick='search("intUsdCost")'      value="Budget ↓">    </span>
-                        <span><input class="btn btn-info" id="sortByDurationHourID" type="button" onclick='search("intDurationHour")' value="Duration ↓">  </span>
-                        <span><input class="btn btn-info" id="sortByReviewStarID"   type="button" onclick='search("intReviewStar")'   value="Star ↓"></span>
-                        <input type="hidden" id="hiddenID" value="">
-                    </div>
-                <!--TODO 排版有跑掉 js 有需要改寫 加介紹-->
-                    <ul class="lstTripData row">
-                    </ul>
-                </div>
             </div>
-            <div class="page_link">
-                <a href="javascript:void(0)" id="prev_page_link">prev</a>
-                <span href="javascript:void(0)" id="current_page">1</span>
-                <a href="javascript:void(0)" id="next_page_link">next</a>
-            </div>
-        </div>
-    </div>
-    <footer class="bg-light-white">
-        <div class="container">
+        </header>
+        <div id="findContent" class="container">
             <div class="row">
-                <div class="col-xs-1 col-md-2"></div>
-                <div class="col-xs-10 col-md-8">
-                <!-- TODO 加log-->
-                    <div class="logoImg"></div><span class="copyright">Copyright © 2016 FindFineTour All rights reserved.</span>
+                <div class="col-xs-12">
+
+                    <div class="findResultDiv">
+                        <div class="sortedBy pull-right sort_blk">
+                            <span><input class="btn btn-info" id="sortByBudgetID"       type="button" onclick='search("intUsdCost")'      value="Budget ↓">    </span>
+                            <span><input class="btn btn-info" id="sortByDurationHourID" type="button" onclick='search("intDurationHour")' value="Duration ↓">  </span>
+                            <span><input class="btn btn-info" id="sortByReviewStarID"   type="button" onclick='search("intReviewStar")'   value="Star ↓"></span>
+                            <input type="hidden" id="hiddenID" value="">
+                        </div>
+                        <!--TODO 排版有跑掉 js 有需要改寫 加介紹-->
+                        <ul class="lstTripData row tour_blk">
+
+                        <div class="tour">
+                            <div class="card active" style="background-image:url(/static/img/lanterns-1043416_1920.jpg);">
+                                <p class="name">dasdqwdasdqewfdfwaegerhrstgarfawefweferfqwefefw fqwefefe</p>
+                                <p class="place">Tokyo, Japan</p>
+                                <p class="duration">Half Day</p>
+                                <div class="price">
+                                    <span class="country">NTD</span> $
+                                    <span class="number">1,000</span>
+                                </div>
+                                <div class="star">
+                                    <span class="icon-star_empty"></span>
+                                    <span class="icon-star_empty"></span>
+                                    <span class="icon-star_empty"></span>
+                                    <span class="icon-star_empty"></span>
+                                    <span class="icon-star_empty"></span>
+                                </div>
+                                <!-- <a class="more">read more</a> -->
+                                <p class="trimtext">'Taiko' is a Japanese drumming style very traditional in Japan while being largely popular overseas. Since our company's establishment,...</p>
+
+                                <div class="ripple_blk readmore_btn">
+                                    <a class="ripple" data-ripple-color="#2bb0b9">Read More</a>
+                                </div>
+                                <div class="footprint_blk">
+                                    <span class="icon-tourdash footprint"></span>
+                                </div>
+                                <div class="add_wish_btn">
+                                    <p class="oriword">Add To WishList</p>
+                                    <span class="icon-wishlist"></span>
+                                    <!-- animation -->
+                                    <p class="actword">My Wishlist</p>
+                                    <span class="icon-quill"></span>
+                                    <span class="extend_line"></span>
+                                </div>
+                                <div class="darken_bg"></div>
+                            </div>
+                            <!-- <div class="link_btn ripple_blk">
+                                <a class="ripple" data-ripple-color="#2bb0b9">Buy Tour</a>
+                            </div> -->
+                        </div>
+                        </ul>
+                    </div>
                 </div>
-                <div class="col-xs-1 col-md-2"></div>
+                <div class="page_link">
+                    <a href="javascript:void(0)" id="prev_page_link">prev</a>
+                    <span href="javascript:void(0)" id="current_page">1</span>
+                    <a href="javascript:void(0)" id="next_page_link">next</a>
+                </div>
             </div>
+        </div>
+        <footer>
+        <div class="container">
+            <ul class="link_blk">
+                <li><a>About</a></li>
+                <li><a>Terms of Use</a></li>
+                <li><a>Our Partner</a></li>
+                <li><a>Contact Us</a></li>
+            </ul>
+            <div class="copyright_blk">Copyright © 2016 FindFineTour All rights reserved.</div>
         </div>
     </footer>
-</body>
-</html>
+    </body>
+
+    </html>
