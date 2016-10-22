@@ -9,6 +9,8 @@
     <meta name="description" content="">
     <meta name="author" content="">
     <title>FindFineTour</title>
+    <!-- favicon -->
+    <link rel="shortcut icon" type="image/png" href="/static/img/favicon.png">
     <!-- Bootstrap Core CSS -->
     <link href="/static/vendor/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="/static/vendor/bootstrap-select/dist/css/bootstrap-select.min.css" rel="stylesheet">
@@ -50,6 +52,7 @@
     <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
     <!-- 暫時隱藏一些東西的CSS -->
     <link href="/static/css/temperary.css" rel="stylesheet">
+
 </head>
 <!-- TODO 每個log都可以回首頁 -->
 
@@ -185,7 +188,7 @@
             </div>
             <div class="city_blk">
                 <div class="home_city type_1">
-                    <a href="" class="portfolio-link" data-lat="35.0116363" data-lng="135.76802939999993" data-place="Kyoto" style="background-image: url(/static/img/kyoto-86202_1920.jpg);">
+                    <a class="portfolio-link" data-lat="24.1477358" data-lng="120.6736482" data-place="Taichung" style="background-image: url(/static/img/kyoto-86202_1920.jpg);">
                     </a>
                 </div>
                 <div class="home_city type_1">
@@ -239,11 +242,11 @@
             </a>
             <div class="month_blk">
                 <p class="text">Month</p>
-                <div class="month_sel_btn ripple_blk">
-                    <div class=" text ripple" data-ripple-color="#2bb0b9">December</div>
+                <div class="month_sel_btn">
+                    <div id="monthSelBtn" class="text" data-ripple-color="#2bb0b9">December</div>
                     <span class="caret"></span>
                 </div>
-                <ul class="month_dropdown_blk">
+                <ul id="monthDropDown" class="month_dropdown_blk">
                     <li>Januanry</li>
                     <li>Febuary</li>
                     <li>March</li>
@@ -274,117 +277,7 @@
                     <h3 class="section-subheading text-muted">come to find some tour</h3>
                 </div>
             </div>
-            <div class="row tour_blk">
-                <div class="tour">
-                    <div class="card active" style="background-image:url(/static/img/lanterns-1043416_1920.jpg);">
-                        <p class="name">dasdqwdasdqewfdfwaegerhrstgarfawefweferfqwefefw fqwefefe</p>
-                        <p class="place">Tokyo, Japan</p>
-                        <p class="duration">Half Day</p>
-                        <div class="price">
-                            <span class="country">NTD</span> $
-                            <span class="number">1,000</span>
-                        </div>
-                        <div class="star">
-                            <span class="icon-star_fill"></span>
-                            <span class="icon-star_empty"></span>
-                            <span class="icon-star_empty"></span>
-                            <span class="icon-star_empty"></span>
-                            <span class="icon-star_empty"></span>
-                        </div>
-                        <!-- <a class="more">read more</a> -->
-                        <p class="trimtext">'Taiko' is a Japanese drumming style very traditional in Japan while being largely popular overseas. Since our company's establishment,...</p>
-
-                        <div class="ripple_blk readmore_btn">
-                            <a class="ripple" data-ripple-color="#2bb0b9">Read More</a>
-                        </div>
-                        <div class="footprint_blk">
-                            <span class="icon-tourdash footprint"></span>
-                        </div>
-                        <div class="add_wish_btn">
-                            <p class="oriword">Add To WishList</p>
-                            <span class="icon-wishlist"></span>
-                            <!-- animation -->
-                            <p class="actword">My Wishlist</p>
-                            <span class="icon-quill"></span>
-                            <span class="extend_line"></span>
-                        </div>
-                        <div class="darken_bg"></div>
-                    </div>
-                    <!-- <div class="link_btn ripple_blk">
-                        <a class="ripple" data-ripple-color="#2bb0b9">Buy Tour</a>
-                    </div> -->
-                </div>
-                <div class="tour">
-                    <div class="card active" style="background-image:url(/static/img/mickey-mouse-832110_1920.jpg);">
-                        <div class="name">
-                            <p>TOKYO DISNEYKAND TOUR</p>
-                        </div>
-                        
-                        <p class="place">Tokyo, Japan</p>
-                        <p class="duration">Full Day</p>
-                        <div class="price">
-                            <span class="country">NTD</span> $
-                            <span class="number">4,000</span>
-                        </div>
-                        <div class="star">
-                            <span class="icon-star_empty"></span>
-                            <span class="icon-star_empty"></span>
-                            <span class="icon-star_empty"></span>
-                            <span class="icon-star_empty"></span>
-                            <span class="icon-star_empty"></span>
-                        </div>
-                        <a class="more">read more</a>
-                        <div class="footprint_blk">
-                            <span class="icon-tourdash footprint"></span>
-                        </div>
-                        <div class="add_wish_btn">
-                            <p class="oriword">Add To WishList</p>
-                            <span class="icon-wishlist"></span>
-                            <!-- animation -->
-                            <p class="actword">My Wishlist</p>
-                            <span class="icon-quill"></span>
-                            <span class="extend_line"></span>
-                        </div>
-                        <div class="darken_bg"></div>
-                    </div>
-                    <div class="link_btn ripple_blk">
-                        <a class="ripple" data-ripple-color="#2bb0b9">Buy Tour</a>
-                    </div>
-                </div>
-                <div class="tour">
-                    <div class="card" style="background-image:url(/static/img/landscape-1644439.jpg);">
-                        <p class="name">SOMEWHERE</p>
-                        <p class="place">Tokyo, Japan</p>
-                        <p class="duration">2 hour</p>
-                        <div class="price">
-                            <span class="country">NTD</span> $
-                            <span class="number">500</span>
-                        </div>
-                        <div class="star">
-                            <span class="icon-star_empty"></span>
-                            <span class="icon-star_empty"></span>
-                            <span class="icon-star_empty"></span>
-                            <span class="icon-star_empty"></span>
-                            <span class="icon-star_empty"></span>
-                        </div>
-                        <a class="more">read more</a>
-                        <div class="footprint_blk">
-                            <span class="icon-tourdash footprint"></span>
-                        </div>
-                        <div class="add_wish_btn">
-                            <p class="oriword">Add To WishList</p>
-                            <span class="icon-wishlist"></span>
-                            <!-- animation -->
-                            <p class="actword">My Wishlist</p>
-                            <span class="icon-quill"></span>
-                            <span class="extend_line"></span>
-                        </div>
-                        <div class="darken_bg"></div>
-                    </div>
-                    <div class="link_btn ripple_blk">
-                        <a class="ripple" data-ripple-color="#2bb0b9">Buy Tour</a>
-                    </div>
-                </div>
+            <div id="tourBlk" class="row tour_blk">
             </div>
             <div class="more_link_btn ripple_blk">
                 <a class="ripple">More Tours</a>

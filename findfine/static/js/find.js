@@ -68,39 +68,26 @@ function initFind() {
         window.location = "/page/myTrip";
     });
 
-    //page
-    $("#prev_page_link").click(function() {
-        $("#current_page").html(parseInt($("#current_page").html()) - 1);
-        search('');
-    });
-    $("#next_page_link").click(function() {
-        $("#current_page").html(parseInt($("#current_page").html()) + 1);
-        search('');
-    });
+
+    // 初始設定以星星排序 RE@Q@ davidturtle
+    var initSortCondition = [];
+    initSortCondition[0] = "Star";
+    initSortCondition[1] = "Decending";
+    search(initSortCondition);
 
 
-    //不傳入sort條件
-    search('');
+    // 搜尋區顯示更多/更少選項 @Q@davidturtle
+    moreFilterClick();
 
-
-    // CODE BY davidturtle
-    $("#moreFilter").click(function(event) {
-        if ($(".searchContent > .row").hasClass('active')) {
-            $("#moreFilter p").html("more filters");
-        } else {
-            $("#moreFilter p").html("less filters");
-
-        }
-        $(".searchContent > .row").toggleClass('active');
-
-    });
-
-    // 飛機飛呀飛
+    // 飛機飛呀飛 @Q@davidturtle
     planeFly(5000);
     $(".plane_print").addClass('active');
 
-    // 頁面下滑選單效果
+    // 頁面下滑選單效果 @Q@davidturtle
     topNavDown(800);
+
+    // 排序區域點擊效果 @Q@ davidturtle
+    sortBlkClick();
 
 };
 
@@ -180,14 +167,14 @@ function search(condition) {
 
     //主搜尋
     //地點
-    // var place         = $("#placeID").val();
+    var place = $("#placeID").val();
     //預算下限
-    // var budgetDown    = $("#budgetDownID").val();
+    var budgetDown = $("#budgetDownID").val();
     //預算上限
-    // var budgetUp      = $("#budgetUpID").val();
+    var budgetUp = $("#budgetUpID").val();
     //時間起迄
-    // var startFrom     =$("#startFrom").val();
-    // var to            =$("#to").val();
+    var startFrom = $("#startFrom").val();
+    var to = $("#to").val();
     //摺疊搜尋
     //旅遊時間長短
     var duration = $('input:checkbox:checked[name="duration"]').map(function() {
@@ -216,25 +203,25 @@ function search(condition) {
 
     var strFilterQueryUrl = "/trip/filter?1=1";
     //place
-    // if (place != ""){
-    //     strFilterQueryUrl = strFilterQueryUrl + "&keyword=" + place;
-    // };
+    if (place != "") {
+        strFilterQueryUrl = strFilterQueryUrl + "&keyword=" + place;
+    };
     //budgetDown
-    // if (budgetDown != ""){
-    //     strFilterQueryUrl = strFilterQueryUrl + "&min_budget=" + budgetDown;
-    // };
+    if (budgetDown != "") {
+        strFilterQueryUrl = strFilterQueryUrl + "&min_budget=" + budgetDown;
+    };
     //budgetUp
-    // if (budgetUp != ""){
-    //     strFilterQueryUrl = strFilterQueryUrl + "&max_budget=" + budgetUp;
-    // };
+    if (budgetUp != "") {
+        strFilterQueryUrl = strFilterQueryUrl + "&max_budget=" + budgetUp;
+    };
     //startFrom db無資料
-    // if (startFrom != ""){
-    //     strFilterQueryUrl = strFilterQueryUrl + "&date_from=" + startFrom;
-    // };
+    if (startFrom != "") {
+        strFilterQueryUrl = strFilterQueryUrl + "&date_from=" + startFrom;
+    };
     //to db無資料
-    // if (to != ""){
-    //     strFilterQueryUrl = strFilterQueryUrl + "&date_to=" + to;
-    // };
+    if (to != "") {
+        strFilterQueryUrl = strFilterQueryUrl + "&date_to=" + to;
+    };
 
     //duration
     if (duration != "") {
@@ -321,44 +308,26 @@ function search(condition) {
         strFilterQueryUrl = strFilterQueryUrl + "&keyword=" + attrations;
     };
 
-    //排序條件
-    if (condition != "") {
-        if (condition == 'intUsdCost') {
-            //預算
-            if ($("#sortByBudgetID").val() == "Budget ↓") {
-                strFilterQueryUrl = strFilterQueryUrl + "&order_by=" + condition;
-                $("#sortByBudgetID").val("Budget ↑");
-                $("#hiddenID").val("Budget ↓");
+    //排序條件 RE@Q@ davidturtle
+    if (condition != "" && condition[0] != "" && condition[1] != "" && condition[0] != "undefined" && condition[1] != "undefined") {
 
-            } else {
-                strFilterQueryUrl = strFilterQueryUrl + "&order_by=-" + condition;
-                $("#sortByBudgetID").val("Budget ↓");
-                $("#hiddenID").val("Budget ↑");
-            }
+        var order_text = "";
+        if (condition[1] == "Ascending") {
+            order_text = "&order_by=-";
+        } else if (condition[1] == "Decending") {
+            order_text = "&order_by=-";
+        } else {
+            console.log("get sortWay error");
         }
-        if (condition == 'intDurationHour') {
-            //tour長短
-            if ($("#sortByDurationHourID").val() == "Duration ↓") {
-                strFilterQueryUrl = strFilterQueryUrl + "&order_by=" + condition;
-                $("#sortByDurationHourID").val("Duration ↑");
-                $("#hiddenID").val("Duration ↓");
-            } else {
-                strFilterQueryUrl = strFilterQueryUrl + "&order_by=-" + condition;
-                $("#sortByDurationHourID").val("Duration ↓");
-                $("#hiddenID").val("Duration ↑");
-            }
-        }
-        if (condition == 'intReviewStar') {
-            //評分高低
-            if ($("#sortByReviewStarID").val() == "ReviewStar ↓") {
-                strFilterQueryUrl = strFilterQueryUrl + "&order_by=" + condition;
-                $("#sortByReviewStarID").val("ReviewStar ↑");
-                $("#hiddenID").val("ReviewStar ↓");
-            } else {
-                strFilterQueryUrl = strFilterQueryUrl + "&order_by=-" + condition;
-                $("#sortByReviewStarID").val("Star ↓");
-                $("#hiddenID").val("ReviewStar ↑");
-            }
+
+        if (condition[0] == "Duration") {
+            strFilterQueryUrl = strFilterQueryUrl + order_text + "intDurationHour";
+        } else if (condition[0] == "Budget") {
+            strFilterQueryUrl = strFilterQueryUrl + order_text + "intUsdCost";
+        } else if (condition[0] == "Star") {
+            strFilterQueryUrl = strFilterQueryUrl + order_text + "intReviewStar";
+        } else {
+            console.log("get sortVal error");
         }
     }
 
@@ -367,6 +336,7 @@ function search(condition) {
     strFilterQueryUrl = strFilterQueryUrl + "&page=" + $("#current_page").html();
 
     //alert(" 254:strFilterQueryUrl:"+strFilterQueryUrl);
+    console.log(strFilterQueryUrl);
     $.getJSON(strFilterQueryUrl, function(jsonResp) {
         //console.log(jsonResp);
         $("div.findResultDiv ul.lstTripData").html("");
@@ -374,6 +344,7 @@ function search(condition) {
         $("div.userCurrencySpan").html("(" + strUserCurrency + ")");
         //trip data
         var lstDicTripData = jsonResp["trip"];
+
         for (i = 0; i < lstDicTripData.length; i++) {
             var dicTripData = lstDicTripData[i];
             var strTripDataHtml = getTripDataHtml(strUserCurrency, dicTripData["strTitle"], dicTripData["intUserCurrencyCost"], dicTripData["strIntroduction"], dicTripData["strLocation"], dicTripData["intDurationHour"], dicTripData["strOriginUrl"], dicTripData["strImageUrl"], dicTripData["intReviewStar"], dicTripData["intReviewVisitor"], dicTripData["intId"], dicTripData["isFavoriteTrip"]);
@@ -383,23 +354,16 @@ function search(condition) {
         //page data
         var dicPageData = jsonResp["page"];
         console.log(dicPageData);
-        $("#current_page").html(dicPageData["current_page"]);
-        if (dicPageData["current_page"] - 1 < 1) {
-            $("#prev_page_link").hide();
-        } else {
-            $("#prev_page_link").show();
-            $("#prev_page_link").attr("page_value", dicPageData["current_page"] - 1);
-        }
-        if (dicPageData["current_page"] + 1 > dicPageData["total_page"]) {
-            $("#next_page_link").hide();
-        } else {
-            $("#next_page_link").show();
-            $("#next_page_link").attr("page_value", dicPageData["current_page"] + 1);
-        }
+
+        // 頁碼重整 RE@Q@ davidturtle
+        pageReload(dicPageData);
+
+        // add to wishlist 按鈕點擊 @Q@ davidturtle
+        addToWishlistBtnClick();
+
+        // ripple按鈕啟動 @Q@ davidturtle
+        initRippleBtn();
     });
-
-
-
 };
 
 //組出單組查詢結果出來的html字串
@@ -407,39 +371,18 @@ function getTripDataHtml(strUserCurrency, strTitle, intUserCurrencyCost, strIntr
 
     var reviewStar = "";
     fillstarQan = intReviewStar;
-    emptystarQan = 5-intReviewStar;
+    emptystarQan = 5 - intReviewStar;
     for (var fillstarCount = 0; fillstarCount < fillstarQan; fillstarCount++) {
-        reviewStar+="<span class='icon-star_fill'></span>";
+        reviewStar += "<span class='icon-star_fill'></span>";
     }
-    for (var emptystarCount = 0; emptystarCount< emptystarQan; emptystarCount++) {
-        reviewStar+="<span class='icon-star_empty'></span>";
+    for (var emptystarCount = 0; emptystarCount < emptystarQan; emptystarCount++) {
+        reviewStar += "<span class='icon-star_empty'></span>";
     }
-
-
-    // if (intReviewStar == 0) {
-    //     reviewStar = '☆☆☆☆☆';
-    // }
-    // if (intReviewStar == 1) {
-    //     reviewStar = '★☆☆☆☆';
-    // }
-    // if (intReviewStar == 2) {
-    //     reviewStar = '★★☆☆☆';
-    // }
-    // if (intReviewStar == 3) {
-    //     reviewStar = '★★★☆☆';
-    // }
-    // if (intReviewStar == 4) {
-    //     reviewStar = '★★★★☆';
-    // }
-    // if (intReviewStar == 5) {
-    //     reviewStar = '★★★★★';
-    // }
     // @Q@設定文字擷取字數
     var strIntroduction = strIntroduction.substr(0, 75);
+    var strTitle = strTitle.substr(0, 25);
 
     var favoriteTrip;
-
-    //alert("isFavoriteTrip : "+isFavoriteTrip +"  length : "+isFavoriteTrip.toString());
 
     if (isFavoriteTrip.toString() == "true") {
         favoriteTrip = "<div class=\"favorite\">♥</div>";
@@ -449,20 +392,20 @@ function getTripDataHtml(strUserCurrency, strTitle, intUserCurrencyCost, strIntr
     }
     var strTripDataHtml = [
         "<div class=\"tour\">",
-        "<div class=\"card active\" style=\"background-image:url("+strImageUrl+");\">",
+        "<div class=\"card active\" style=\"background-image:url(" + strImageUrl + ");\">",
         "<div class=\"name\">",
-        "<p>"+strTitle+"</p>",
+        "<p>" + strTitle + "...</p>",
         "</div>",
-        "<p class=\"place\">"+strLocation+"</p>",
-        "<p class=\"duration\">"+intDurationHour+"<span>HR</span></p>",
+        "<p class=\"place\">" + strLocation + "</p>",
+        "<p class=\"duration\">" + intDurationHour + "<span>HR</span></p>",
         "<div class=\"price\">",
-        "<span class=\"country\">"+strUserCurrency+"</span> $",
-        "<span class=\"number\">"+intUserCurrencyCost+"</span>",
+        "<span class=\"country\">" + strUserCurrency + "</span> $",
+        "<span class=\"number\">" + intUserCurrencyCost + "</span>",
         "</div>",
-        "<div class=\"star\">"+reviewStar+"</div>",
-        "<p class=\"trimtext\">"+strIntroduction+"</p>",
-        "<div class=\"ripple_blk readmore_btn\">",
-        "<a target=\"_blank\" href="+strOriginUrl+" class=\"ripple\" data-ripple-color=\"#2bb0b9\">Read More</a>",
+        "<div class=\"star\">" + reviewStar + "</div>",
+        "<p class=\"trimtext\">" + strIntroduction + "...</p>",
+        "<div class=\"readmore_btn\">",
+        "<a target=\"_blank\" href=" + strOriginUrl + " data-ripple-color=\"#2bb0b9\">Read More</a>",
         "</div>",
         "<div class=\"footprint_blk\">",
         "<span class=\"icon-tourdash footprint\"></span>",
@@ -476,43 +419,11 @@ function getTripDataHtml(strUserCurrency, strTitle, intUserCurrencyCost, strIntr
         "</div>",
         "<div class=\"darken_bg\"></div>",
         "</div>",
-        "</div>"        
+        "</div>"
     ].join("");
 
     return strTripDataHtml;
 };
-//     var strTripDataHtml = [
-//         "<li class=\"col-xs-12 col-md-6\">",
-//         "<div class=\"tripData\">",
-//         "<div class=\"tripImgDiv col-xs-4\">",
-//         "<img src=\"" + strImageUrl + "\"/>",
-//         "</div>",
-//         "<div class=\"col-xs-8\">",
-//         "<div class=\"tripContentDiv\">",
-//         "<p><span style=\"color:orange\">" + strTitle + "</span></p>",
-//         "<span class=\"trimText\">" + strIntroduction + "...<a href=" + strOriginUrl + " target=\"_blank\"> read more</a></span><br>",
-//         "<span><i class=\"fa fa-clock-o\"></i> Duration:" + intDurationHour + "</span><br>",
-//         "<span style=\"color:red\">Stars:" + reviewStar + "</span><br>",
-//         "<span><i class=\"fa fa-user\"></i> review:" + intReviewVisitor + "</span><br>",
-//         "</div>",
-//         "</div>",
-//         "<div class=\"tripPriceAndWishDiv\">",
-//         "<span class=\"pull-right\">",
-//         "<i class=\"fa fa-usd\"></i>",
-//         "<span style=\"color:red\">" + intUserCurrencyCost + " " + strUserCurrency + "</span></br>",
-//         "</div>",
-//         //TODO 要加TOUR KEY 觸發事件後加入 wish list  intId
-//         //"<div class=\"favorite\"><a href=\"/trip/addFavoriteTrip?intTripId=3\" return false;> ♥</a></div>",
-//         //"<div class=\"favorite\" onclick=\"addFavoriteTrip("+intId+")\">♥</div>",
-//         favoriteTrip,
-//         //isFavoriteTrip
-//         "</div>",
-//         "</li>"
-        
-//     ].join("");
-
-//     return strTripDataHtml;
-// };
 
 //幣別功能
 function initCurrencySelect() {
@@ -535,27 +446,11 @@ function initCurrencySelect() {
             console.log("research");
             //這裡要帶排序條件
 
-            if ($("#hiddenID").val() == "Budget ↓") {
-                search("intUsdCost");
-            }
-            if ($("#hiddenID").val() == "Budget ↑") {
-                search("intUsdCost");
-            }
-            if ($("#hiddenID").val() == "Duration ↓") {
-                search("intDurationHour");
-            }
-            if ($("#hiddenID").val() == "Duration ↑") {
-                search("intDurationHour");
-            }
-            if ($("#hiddenID").val() == "ReviewStar ↓") {
-                search("intReviewStar");
-            }
-            if ($("#hiddenID").val() == "ReviewStar ↑") {
-                search("intReviewStar");
-            }
-            if ($("#hiddenID").val() == "") {
-                search("");
-            }
+
+            var sortCondition = [];
+            sortCondition[0] = $("#sortValBtn .sort_val").html();
+            sortCondition[1] = $("#sortWayBtn .sort_val").html();
+            search(sortCondition);
         });
     });
 };
@@ -576,4 +471,122 @@ function addFavoriteTrip(intId) {
     //alert(" initFind() 前");
     //initFind();
     //alert(" initFind() 後");
+}
+
+// 搜尋區顯示更多/更少選項 @Q@ davidturtle
+function moreFilterClick() {
+    $("#moreFilter").click(function(event) {
+        if ($(".searchContent > .row").hasClass('active')) {
+            $("#moreFilter p").html("more filters");
+        } else {
+            $("#moreFilter p").html("less filters");
+
+        }
+        $(".searchContent > .row").toggleClass('active');
+
+    });
+}
+// 排序區域點擊效果 @Q@ davidturtle
+function sortBlkClick() {
+
+    // 初始設定
+    $("#sortValBtn .drop li").eq(0).addClass('active');
+    $("#sortWayBtn .drop li").eq(0).addClass('active');
+
+
+    $(window).click(function() {
+        if (!event.target.matches("#sortValBtn")) {
+            if ($("#sortValBtn > .drop").hasClass('active')) {
+
+                $("#sortValBtn > .drop").removeClass('active');
+            }
+        }
+        if (!event.target.matches("#sortWayBtn")) {
+            if ($("#sortWayBtn > .drop").hasClass('active')) {
+
+                $("#sortWayBtn > .drop").removeClass('active');
+            }
+        }
+    });
+
+    $("#sortValBtn").click(function(event) {
+        $(this).children('.drop').addClass('active');
+    });
+
+    $("#sortWayBtn").click(function(event) {
+        $(this).children('.drop').addClass('active');
+    });
+
+    $("#sortValBtn > ul li").click(function(event) {
+        $("#sortValBtn > .sort_val").html($(this).html());
+        $("#sortValBtn > ul li").removeClass('active');
+        $(this).addClass('active');
+
+        var sortCondition = [];
+        sortCondition[0] = $("#sortValBtn .sort_val").html();
+        sortCondition[1] = $("#sortWayBtn .sort_val").html();
+        search(sortCondition);
+    });
+
+    $("#sortWayBtn > ul li").click(function(event) {
+        $("#sortWayBtn > .sort_val").html($(this).children('.content').html());
+        $("#sortWayBtn > ul li").removeClass('active');
+        $(this).addClass('active');
+        if ($(this).children('.content').html() == "Ascending") {
+            $("#sortWayBtn .icon-diagram_up").removeClass('reverse');
+        } else {
+            $("#sortWayBtn .icon-diagram_up").addClass('reverse');
+        }
+
+        var sortCondition = [];
+        sortCondition[0] = $("#sortValBtn .sort_val").html();
+        sortCondition[1] = $("#sortWayBtn .sort_val").html();
+        search(sortCondition);
+    });
+}
+
+// 頁碼重整 RE@Q@ davidturtle
+function pageReload(pageDataArray) {
+
+    var preLinkVal = "<i class=\"icon-switchLeft\"></i><span>Previous</span>";
+    var nextLinkVal = "<span>Next</span><i class=\"icon-switchRight\"></i>";
+
+    $("#current_page").html(pageDataArray["current_page"]);
+
+    if (pageDataArray["current_page"] - 1 < 1) {
+        $("#prev_page_link").html("");
+        $("#first_page_link").html("");
+        $("#first_page_dot").html("");
+    } else {
+        $("#prev_page_link").html(preLinkVal);
+        $("#first_page_link").html("1");
+        $("#first_page_dot").html("...");
+    }
+    if (pageDataArray["current_page"] + 1 > pageDataArray["total_page"]) {
+        $("#next_page_link").html("");
+        $("#final_page_link").html("");
+        $("#final_page_dot").html("");
+    } else {
+        $("#next_page_link").html(nextLinkVal);
+        $("#final_page_link").html(pageDataArray["total_page"]);
+        $("#final_page_dot").html("...");
+    }
+
+    //頁面按鈕點擊效果 RE@Q@ davidturtle
+    $("#prev_page_link").click(function() {
+        $("#current_page").html(parseInt($("#current_page").html()) - 1);
+        search('');
+    });
+    $("#next_page_link").click(function() {
+        $("#current_page").html(parseInt($("#current_page").html()) + 1);
+        search('');
+    });
+    $("#first_page_link").click(function() {
+        $("#current_page").html("1");
+        search('');
+    });
+    $("#final_page_link").click(function() {
+        $("#current_page").html(pageDataArray["total_page"]);
+        search('');
+    });
 }
