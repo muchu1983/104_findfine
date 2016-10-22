@@ -3017,8 +3017,8 @@ input:-moz-placeholder {
 }
 
 .searchContent > .row.active >.morefilter_blk a >.icon-dropdown_icon {
-    top: 27px;
-    left: -14px;
+    top: -11px;
+    left: 1px;
     transform: rotate(180deg);
     -webkit-transform: rotate(180deg);
     -moz-transform: rotate(180deg);
