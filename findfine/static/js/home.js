@@ -113,7 +113,7 @@ $(function() {
         homeMonthStoryMenuLiClick();
         
         // 推薦TOUR設定
-        // 設定搜尋參數
+        // 設定搜尋參數 @Q@davidturtle @TODO 後台功能增加後須改寫
         var recomTourSearchCon = "/trip/filter?1=1&keyword=Taichung&page=1";
         homeRecomTour(recomTourSearchCon);
     };
