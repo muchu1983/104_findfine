@@ -33,7 +33,10 @@ function initFind() {
     //搜尋按鈕
     $("#btnSearch").click(function() {
         $("#current_page").html("1");
-        search("");
+        var sortCondition = [];
+            sortCondition[0] = $("#sortValBtn .sort_val").html();
+            sortCondition[1] = $("#sortWayBtn .sort_val").html();
+        search(sortCondition);
 
     });
 
@@ -88,6 +91,24 @@ function initFind() {
 
     // 排序區域點擊效果 @Q@ davidturtle
     sortBlkClick();
+
+    //頁面按鈕點擊效果 RE@Q@ davidturtle
+    $("#prev_page_link").click(function() {
+        $("#current_page").html(parseInt($("#current_page").html()) - 1);
+        search('');
+    });
+    $("#next_page_link").click(function() {
+        $("#current_page").html(parseInt($("#current_page").html()) + 1);
+        search('');
+    });
+    $("#first_page_link").click(function() {
+        $("#current_page").html("1");
+        search('');
+    });
+    $("#final_page_link").click(function() {
+        $("#current_page").html($("#final_page_link").html());
+        search('');
+    });
 
 };
 
@@ -571,22 +592,4 @@ function pageReload(pageDataArray) {
         $("#final_page_link").html(pageDataArray["total_page"]);
         $("#final_page_dot").html("...");
     }
-
-    //頁面按鈕點擊效果 RE@Q@ davidturtle
-    $("#prev_page_link").click(function() {
-        $("#current_page").html(parseInt($("#current_page").html()) - 1);
-        search('');
-    });
-    $("#next_page_link").click(function() {
-        $("#current_page").html(parseInt($("#current_page").html()) + 1);
-        search('');
-    });
-    $("#first_page_link").click(function() {
-        $("#current_page").html("1");
-        search('');
-    });
-    $("#final_page_link").click(function() {
-        $("#current_page").html(pageDataArray["total_page"]);
-        search('');
-    });
 }
