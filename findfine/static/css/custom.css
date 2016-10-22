@@ -2691,11 +2691,12 @@ input:-moz-placeholder {
 
 .date_sel_blk input::-webkit-calendar-picker-indicator {
     position: absolute;
-    width: 60px;
+    width: 130px;
     height: 100%;
     float: left;
     background: orange;
     opacity: 0;
+    z-index: 5;
 }
 
 .date_sel_blk input::-webkit-clear-button {
@@ -2704,6 +2705,7 @@ input:-moz-placeholder {
     right: 10px;
     top: 15px;
     color: #ffffff;
+    z-index: 6;
 }
 
 .blue_ripple_blk {
@@ -3017,8 +3019,8 @@ input:-moz-placeholder {
 }
 
 .searchContent > .row.active >.morefilter_blk a >.icon-dropdown_icon {
-    top: 27px;
-    left: -14px;
+    top: -11px;
+    left: 1px;
     transform: rotate(180deg);
     -webkit-transform: rotate(180deg);
     -moz-transform: rotate(180deg);
