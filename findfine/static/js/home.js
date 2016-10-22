@@ -92,23 +92,30 @@ $(function() {
         $("#loginBtn").click(function() {
             window.location = "/account/login";
         });
-        // 飛機飛呀飛
+        // 飛機飛呀飛 @Q@davidturtle
         planeFly(5000);
         $(".plane_print").addClass('active');
 
-        // add to wishlist 按鈕點擊
-        addToWishlistBtnClick();
 
-        // 大LOGO箭頭動畫
+        // 大LOGO箭頭動畫 @Q@davidturtle
         $(".intro-text > .arrow_blk_hideblk>.arrow_blk").delay(1500).queue(function(next) {
             $(this).addClass('active');
             next();
         });
 
-        
-        // 頁面下滑選單效果
+        // 頁面下滑選單效果 @Q@davidturtle
         topNavDown(800);
 
+        // 月份選單點擊效果 @Q@davidturtle
+        homeMonthStoryMenuClick();
+
+        // @TODO 實際抓出STORY資料
+        homeMonthStoryMenuLiClick();
+        
+        // 推薦TOUR設定
+        // 設定搜尋參數
+        var recomTourSearchCon = "/trip/filter?1=1&keyword=Taichung&page=1";
+        homeRecomTour(recomTourSearchCon);
     };
 
     //幣別
@@ -125,6 +132,7 @@ $(function() {
         $("#moneySelect").change(function() {
             var strSelectedCurrencyVal = $("#moneySelect").find(":selected").val();
             var strChangeUserCurrencyUrl = strUserCurrencyUrl + "?user_currency=" + strSelectedCurrencyVal;
+
             $.getJSON(strChangeUserCurrencyUrl, function(jsonResp) {
                 strUserCurrency = jsonResp["strUserCurrency"];
                 console.log("switch user currency to: " + strUserCurrency);
