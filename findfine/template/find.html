@@ -119,7 +119,7 @@
                 </div>
                 <!-- <div id="myFriends" class="btn btn-info">my friends</div>
                     <div id="myMessages" class="btn btn-info">my messages</div> -->
-                <div id="loginBtn" class="header_btn btn-info">Log In</div>
+                <!-- <div id="loginBtn" class="header_btn btn-info">Log In</div> -->
                 <div id="headBtn" class="head_btn" style="background-image: url(/static/img/head_sample.jpg);"></div>
             </div>
             <!-- /.navbar-collapse -->
@@ -174,41 +174,123 @@
                             </div>
                         </div>
                         <div class="col-xs-12 duration_blk more_sel_blk">
-                            <div class="form-group">
-                                <label class="title" for="">Duration</label>
-                                <select name="duration" id="duration" class="selectpicker form-control" multiple data-actions-box="true">
-                                    <option value="1">1hr</option>
-                                    <option value="2">2hrs</option>
-                                    <option value="3">3hrs</option>
-                                    <option value="4">4~6hr</option>
-                                    <option value="5">1Day</option>
-                                    <option value="6">More than 1 Day</option>
-                                </select>
+                            <label class="title">Duration</label>
+                            <div class="multi_sel_btn">
+                                <span class="value" id="durationVal">multiple choice</span>
+                                <i class="icon-dropdown_icon"></i>
+                                <ul class="menu">
+                                    <div class="clear_btn">clear all</div>
+                                    <li>
+                                        <span>1hr</span>
+                                        <i class="icon-checkmark"></i>
+                                    </li>
+                                    <li>
+                                        <span>2hrs</span>
+                                        <i class="icon-checkmark"></i>
+                                    </li>
+                                    <li>
+                                        <span>3hrs</span>
+                                        <i class="icon-checkmark"></i>
+                                    </li>
+                                    <li>
+                                        <span>4~6hr</span>
+                                        <i class="icon-checkmark"></i>
+                                    </li>
+                                    <li>
+                                        <span>1Day</span>
+                                        <i class="icon-checkmark"></i>
+                                    </li>
+                                    <li>
+                                        <span>More than 1 Day</span>
+                                        <i class="icon-checkmark"></i>
+                                    </li>
+                                </ul>
                             </div>
                         </div>
                         <div class="col-xs-12 style_blk more_sel_blk">
-                            <div class="form-group">
-                                <label class="title" for="">Style</label>
-                                <select name="style" id="" class="selectpicker form-control" multiple data-actions-box="true">
-                                    <option value="Cultural">Cultural tour</option>
-                                    <option value="Food">Food tour</option>
-                                    <option value="Fashion">Fashion tour</option>
-                                    <option value="Wild">Wild life tour</option>
-                                    <option value="Sports">Sports tour</option>
-                                    <option value="Eco">Eco tour</option>
-                                </select>
+                            <label class="title">Style</label>
+                            <div class="multi_sel_btn">
+                                <span class="value" id="styleVal">multiple choice</span>
+                                <i class="icon-dropdown_icon"></i>
+                                <ul class="menu">
+                                    <div class="clear_btn">clear all</div>
+                                    <li>
+                                        <span>Cultural tour</span>
+                                        <i class="icon-checkmark"></i>
+                                    </li>
+                                    <li>
+                                        <span>Food tour</span>
+                                        <i class="icon-checkmark"></i>
+                                    </li>
+                                    <li>
+                                        <span>Fashion tour</span>
+                                        <i class="icon-checkmark"></i>
+                                    </li>
+                                    <li>
+                                        <span>Wild life tour</span>
+                                        <i class="icon-checkmark"></i>
+                                    </li>
+                                    <li>
+                                        <span>Sports tour</span>
+                                        <i class="icon-checkmark"></i>
+                                    </li>
+                                    <li>
+                                        <span>Eco tour</span>
+                                        <i class="icon-checkmark"></i>
+                                    </li>
+                                </ul>
                             </div>
                         </div>
                         <div class="col-xs-12 more_sel_blk passenger_blk">
-                            <div class="form-group">
-                                <label class="title" for="">Passenger</label>
-                                <div class="">
-                                    <input id="passenger" class="form-control" placeholder="Person(s)" type="text"></input>
-                                </div>
+                            <label class="title">Passenger</label>
+                            <div class="plus_click_btn">
+                                <span class="value" id="passengerVal">click to add</span>
+                                <div class="click_btn icon-minus"></div>
+                                <div class="click_btn icon-plus"></div>
                             </div>
                         </div>
                         <div class="col-xs-12 time_blk">
-                            <div class="form-group">
+                            <label class="title">Tour time</label>
+                            <div class="single_sel_btn short">
+                                <span class="value" id="tourEnds">select</span>
+                                <i class="icon-dropdown_icon"></i>
+                                <ul class="menu">
+                                    <div class="clear_btn">clear</div>
+                                    <li>00:00</li>
+                                    <li>02:00</li>
+                                    <li>04:00</li>
+                                    <li>06:00</li>
+                                    <li>08:00</li>
+                                    <li>10:00</li>
+                                    <li>12:00</li>
+                                    <li>14:00</li>
+                                    <li>16:00</li>
+                                    <li>18:00</li>
+                                    <li>20:00</li>
+                                    <li>22:00</li>
+                                </ul>
+                            </div>
+                            <span class="icon_to">~</span>
+                            <div class="single_sel_btn short">
+                                <span class="value" id="tourStarts">select</span>
+                                <i class="icon-dropdown_icon"></i>
+                                <ul class="menu">
+                                    <div class="clear_btn">clear</div>
+                                    <li>00:00</li>
+                                    <li>02:00</li>
+                                    <li>04:00</li>
+                                    <li>06:00</li>
+                                    <li>08:00</li>
+                                    <li>10:00</li>
+                                    <li>12:00</li>
+                                    <li>14:00</li>
+                                    <li>16:00</li>
+                                    <li>18:00</li>
+                                    <li>20:00</li>
+                                    <li>22:00</li>
+                                </ul>
+                            </div>
+                            <!-- <div class="form-group">
                                 <label class="title" for="">Time</label>
                                 <select name="tourEnds" id="tourEnds" class="selectpicker form-control">
                                     <option></option>
@@ -239,10 +321,58 @@
                                     <option>20:00</option>
                                     <option>22:00</option>
                                 </select>
-                            </div>
+                            </div> -->
                         </div>
                         <div class="col-xs-12 guild_blk">
-                            <div class="form-group">
+                            <label class="title">Guide</label>
+                            <div class="multi_sel_btn">
+                                <span class="value" id="guideLanguage">multiple choice</span>
+                                <i class="icon-dropdown_icon"></i>
+                                <ul class="menu">
+                                    <div class="clear_btn">clear all</div>
+                                    <li>
+                                        <span>English</span>
+                                        <i class="icon-checkmark"></i>
+                                    </li>
+                                    <li>
+                                        <span>中文</span>
+                                        <i class="icon-checkmark"></i>
+                                    </li>
+                                    <li>
+                                        <span>日本語</span>
+                                        <i class="icon-checkmark"></i>
+                                    </li>
+                                    <li>
+                                        <span>Deutsch</span>
+                                        <i class="icon-checkmark"></i>
+                                    </li>
+                                    <li>
+                                        <span>Français</span>
+                                        <i class="icon-checkmark"></i>
+                                    </li>
+                                    <li>
+                                        <span>Español</span>
+                                        <i class="icon-checkmark"></i>
+                                    </li>
+                                    <li>
+                                        <span>العربية</span>
+                                        <i class="icon-checkmark"></i>
+                                    </li>
+                                    <li>
+                                        <span>Pусский</span>
+                                        <i class="icon-checkmark"></i>
+                                    </li>
+                                    <li>
+                                        <span>Italia</span>
+                                        <i class="icon-checkmark"></i>
+                                    </li>
+                                    <li>
+                                        <span>Nederland</span>
+                                        <i class="icon-checkmark"></i>
+                                    </li>
+                                </ul>
+                            </div>
+                            <!-- <div class="form-group">
                                 <label class="title" for="">Guide</label>
                                 <select name="guideLanguage" id="guideLanguage" class="selectpicker form-control" multiple data-actions-box="true">
                                     <option value="">English</option>
@@ -256,16 +386,26 @@
                                     <option value="">Italia</option>
                                     <option value="">Nederland</option>
                                 </select>
-                            </div>
+                            </div> -->
                         </div>
                         <div class="col-xs-12 avail_blk">
-                            <div class="form-group">
+                            <label class="title">Availability</label>
+                            <div class="single_sel_btn">
+                                <span class="value" id="availability">select</span>
+                                <i class="icon-dropdown_icon"></i>
+                                <ul class="menu">
+                                    <div class="clear_btn">clear</div>
+                                    <li>Instant confirmation</li>
+                                    <li>On request</li>
+                                </ul>
+                            </div>
+                            <!-- <div class="form-group">
                                 <label class="title" for="">Availability</label>
                                 <select name="availability" id="availability" class="selectpicker form-control" multiple>
                                     <option value="">Instant confirmation</option>
                                     <option value="">On request</option>
                                 </select>
-                            </div>
+                            </div> -->
                         </div>
                         <div class="col-xs-12 attra_blk">
                             <div class="form-group">
@@ -316,19 +456,19 @@
                         <p class="text">Sort By</p>
                         <div class="sort_sel_blk">
                             <div id="sortValBtn" class="left sel">
-                                <span class="sort_val">Star</span>
-                                <span class="icon-dropdown_icon"></span>
+                                <span class="click sort_val">Rating</span>
+                                <span class="click icon-dropdown_icon"></span>
                                 <ul class="left_drop drop">
-                                    <li>Star</li>
+                                    <li>Rating</li>
                                     <li>Budget</li>
                                     <li>Duration</li>
                                 </ul>
                             </div>
                             <div class="sepline"></div>
                             <div id="sortWayBtn" class="right sel">
-                                <span class="sort_val">Decending</span>
-                                <span class="icon-dropdown_icon"></span>
-                                <span class="icon-diagram_up reverse"></span>
+                                <span class="click sort_val">Decending</span>
+                                <span class="click icon-dropdown_icon"></span>
+                                <span class="click icon-diagram_up reverse"></span>
                                 <ul class="right_drop drop">
                                     <li>
                                         <i class="icon-diagram_up"></i>
