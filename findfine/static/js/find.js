@@ -34,8 +34,8 @@ function initFind() {
     $("#btnSearch").click(function() {
         $("#current_page").html("1");
         var sortCondition = [];
-            sortCondition[0] = $("#sortValBtn .sort_val").html();
-            sortCondition[1] = $("#sortWayBtn .sort_val").html();
+        sortCondition[0] = $("#sortValBtn .sort_val").html();
+        sortCondition[1] = $("#sortWayBtn .sort_val").html();
         search(sortCondition);
 
     });
@@ -45,16 +45,17 @@ function initFind() {
     // $('#myPlans').hide();
     $('#myMessages').hide();
     $('#logOut').hide();
+    $('#loginBtn').hide();
 
     //strEmail 如已登入 不顯示login button 並顯示會員帳號
     if (strEmail == "None") {} else {
-        $('#loginBtn').html(strEmail);
+        // $('#loginBtn').html(strEmail);
         $('#wishList').show();
-        $('#myFriends').show();
+        // $('#myFriends').show();
         $('#myPlans').show();
-        $('#myMessages').show();
-        $('#logOut').show();
-        $('#loginBtn').hide();
+        // $('#myMessages').show();
+        // $('#logOut').show();
+        // $('#loginBtn').hide();
     }
 
     $("#wishList").click(function() {
@@ -74,7 +75,7 @@ function initFind() {
 
     // 初始設定以星星排序 RE@Q@ davidturtle
     var initSortCondition = [];
-    initSortCondition[0] = "Star";
+    initSortCondition[0] = "Rating";
     initSortCondition[1] = "Decending";
     search(initSortCondition);
 
@@ -91,6 +92,15 @@ function initFind() {
 
     // 排序區域點擊效果 @Q@ davidturtle
     sortBlkClick();
+
+    // 多選單選項點擊 @Q@ davidturtle
+    multiSelClick("multiple choice");
+
+    // 加減選單點擊 @Q@ davidturtle
+    plusBtnClcik("click to add");
+
+    // 單選按鈕點擊 @Q@ davidturtle
+    singleSelClick("select");
 
     //頁面按鈕點擊效果 RE@Q@ davidturtle
     $("#prev_page_link").click(function() {
@@ -197,16 +207,15 @@ function search(condition) {
     var startFrom = $("#startFrom").val();
     var to = $("#to").val();
     //摺疊搜尋
-    //旅遊時間長短
-    var duration = $('input:checkbox:checked[name="duration"]').map(function() {
-        return $(this).val();
-    }).get();
+    //旅遊時間長短 RE@Q@ davidturtle
+    var duration = $('#durationVal').html().split(",");
+    // var duration = $('input:checkbox:checked[name="duration"]').map(function() {
+    //     return $(this).val();
+    // }).get();
     //人數
     var passenger = $("#passenger").val();
-    //類型
-    var style = $('input:checkbox:checked[name="style"]').map(function() {
-        return $(this).val();
-    }).get();
+    //類型 RE@Q@ davidturtle
+    var style = $('#styleVal').html().split(",");
     //旅遊時間點開始
     var tourStarts = $('#tourStarts :selected').text();
     //旅遊時間點結束
@@ -244,52 +253,52 @@ function search(condition) {
         strFilterQueryUrl = strFilterQueryUrl + "&date_to=" + to;
     };
 
-    //duration
+    //duration RE@Q@ davidturtle
     if (duration != "") {
         for (var i = 0; duration.length > i; i++) {
-            if (duration[i] == "1") {
+            if (duration[i] == "1hr") {
                 strFilterQueryUrl = strFilterQueryUrl + "&min_duration=0&max_duration=1";
             }
-            if (duration[i] == "2") {
+            if (duration[i] == "2hrs") {
                 strFilterQueryUrl = strFilterQueryUrl + "&min_duration=1&max_duration=2";
             }
-            if (duration[i] == "3") {
+            if (duration[i] == "3hrs") {
                 strFilterQueryUrl = strFilterQueryUrl + "&min_duration=2&max_duration=3";
             }
-            if (duration[i] == "4") {
+            if (duration[i] == "4~6hr") {
                 strFilterQueryUrl = strFilterQueryUrl + "&min_duration=3&max_duration=6";
             }
-            if (duration[i] == "5") {
+            if (duration[i] == "1Day") {
                 strFilterQueryUrl = strFilterQueryUrl + "&min_duration=12&max_duration=24";
             }
-            if (duration[i] == "5") {
+            if (duration[i] == "More than 1 Day") {
                 strFilterQueryUrl = strFilterQueryUrl + "&min_duration=24&max_duration=1000";
             }
         }
     };
     //passenger 目前沒有
     if (passenger != "") {
-        strFilterQueryUrl = strFilterQueryUrl + "&keyword=" + passengerDown;
+        // strFilterQueryUrl = strFilterQueryUrl + "&keyword=" + passengerDown;
     };
     //style 目前db無資料 js需修改
     if (style != "") {
         for (var i = 0; duration.length > i; i++) {
-            if (style[i] == "Cultural") {
+            if (style[i] == "Cultural tour") {
                 strFilterQueryUrl = strFilterQueryUrl + "&style=" + style;
             }
-            if (style[i] == "Food") {
+            if (style[i] == "Fashion tour") {
                 strFilterQueryUrl = strFilterQueryUrl + "&style=" + style;
             }
-            if (style[i] == "Fashion") {
+            if (style[i] == "Wild life tour") {
                 strFilterQueryUrl = strFilterQueryUrl + "&style=" + style;
             }
-            if (style[i] == "Wild") {
+            if (style[i] == "Sports tour") {
                 strFilterQueryUrl = strFilterQueryUrl + "&style=" + style;
             }
             if (style[i] == "Sports") {
                 strFilterQueryUrl = strFilterQueryUrl + "&style=" + style;
             }
-            if (style[i] == "Eco") {
+            if (style[i] == "Eco tour") {
                 strFilterQueryUrl = strFilterQueryUrl + "&style=" + style;
             }
         }
@@ -345,7 +354,7 @@ function search(condition) {
             strFilterQueryUrl = strFilterQueryUrl + order_text + "intDurationHour";
         } else if (condition[0] == "Budget") {
             strFilterQueryUrl = strFilterQueryUrl + order_text + "intUsdCost";
-        } else if (condition[0] == "Star") {
+        } else if (condition[0] == "Rating") {
             strFilterQueryUrl = strFilterQueryUrl + order_text + "intReviewStar";
         } else {
             console.log("get sortVal error");
@@ -497,14 +506,24 @@ function addFavoriteTrip(intId) {
 // 搜尋區顯示更多/更少選項 @Q@ davidturtle
 function moreFilterClick() {
     $("#moreFilter").click(function(event) {
-        if ($(".searchContent > .row").hasClass('active')) {
+        if ($(".searchContent").hasClass('active')) {
             $("#moreFilter p").html("more filters");
+            $(".searchContent").removeClass('active');
+
+            $(".searchContent").css({
+                "overflow": "hidden",
+            });
         } else {
             $("#moreFilter p").html("less filters");
+            $(".searchContent").addClass('active');
 
+            $(".searchContent").delay(1000).queue(function(next) {
+                $(this).css({
+                    "overflow": "initial",
+                });
+                next();
+            });
         }
-        $(".searchContent > .row").toggleClass('active');
-
     });
 }
 // 排序區域點擊效果 @Q@ davidturtle
@@ -516,17 +535,11 @@ function sortBlkClick() {
 
 
     $(window).click(function() {
-        if (!event.target.matches("#sortValBtn")) {
-            if ($("#sortValBtn > .drop").hasClass('active')) {
-
-                $("#sortValBtn > .drop").removeClass('active');
-            }
+        if (!event.target.matches("#sortValBtn") && !event.target.matches("#sortValBtn .click")) {
+            $("#sortValBtn > .drop").removeClass('active');
         }
-        if (!event.target.matches("#sortWayBtn")) {
-            if ($("#sortWayBtn > .drop").hasClass('active')) {
-
-                $("#sortWayBtn > .drop").removeClass('active');
-            }
+        if (!event.target.matches("#sortWayBtn") && !event.target.matches("#sortWayBtn .click")) {
+            $("#sortWayBtn > .drop").removeClass('active');
         }
     });
 

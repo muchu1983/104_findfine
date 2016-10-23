@@ -61,22 +61,12 @@ input[type=date]{
 opacity: 1; }*/
     </style>
     <script type="text/javascript">
-        $('a.button').click(function(){
-            if (condition == 'true'){
-                function1(someVariable, function() {
-                  function2(someOtherVariable);
-                });
-            }
-            else {
-                doThis(someVariable);
-            }
+        var testArray = [];
+        testArray[0] = "ddd";
+        testArray[1] = "ddasd";
+        jQuery(document).ready(function($) {
+            console.log(testArray.length);
         });
-
-
-        function function1(param, callback) {
-          ...do stuff
-          callback();
-        } 
     </script>
 </head>
 <!-- TODO 每個log都可以回首頁 -->
