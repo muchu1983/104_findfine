@@ -1,24 +1,302 @@
-<html>
-    <head>
-        <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-        <title>FindFineTour</title>
-        <!-- jquery and jquery-ui -->
-        <script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
-        <link rel="stylesheet" type="text/css" href="https://code.jquery.com/ui/1.12.0/themes/blitzer/jquery-ui.css">
-        <script src="https://code.jquery.com/ui/1.12.0/jquery-ui.min.js"></script>
-        <link rel="stylesheet" type="text/css" href="/static/css/wishList.css">
-        <script type="text/javascript" src="/static/js/wishList.js"></script>
-    </head>
-    <body>
-        <div class="loginbar">
-        置頂訊息
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <title>FindFineTour</title>
+    <!-- favicon -->
+    <link rel="shortcut icon" type="image/png" href="/static/img/favicon.png">
+    <!-- Bootstrap Core CSS -->
+    <link href="/static/vendor/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/static/vendor/bootstrap-select/dist/css/bootstrap-select.min.css" rel="stylesheet">
+    <link href="/static/css/bootstrapCustom.css" rel="stylesheet">
+    <!-- Bootstrap daterangepicker -->
+    <link href="/static/vendor/bootstrap-daterangepicker/daterangepicker.css" rel="stylesheet">
+    <!-- Custom Fonts -->
+    <link href="/static/vendor/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+    <link href='https://fonts.googleapis.com/css?family=Raleway:400,600' rel='stylesheet' type='text/css'>
+    <link href='https://fonts.googleapis.com/css?family=Caudex|Cormorant+Garamond' rel='stylesheet' type='text/css'>
+    <!-- custom CSS -->
+    <link href="/static/css/custom.css" rel="stylesheet">
+    <!-- jQuery core-->
+    <script src="/static/vendor/jquery/dist/jquery.min.js"></script>
+    <!-- Bootstrap Js -->
+    <script src="/static/vendor/bootstrap/dist/js/bootstrap.min.js"></script>
+    <!-- Bootstrap SelectPicker Js -->
+    <script src="/static/vendor/bootstrap-select/dist/js/bootstrap-select.min.js"></script>
+    <!-- moment -->
+    <script src="/static/vendor/moment/min/moment.min.js"></script>
+    <!-- Bootstrap DateRange Js -->
+    <script src="/static/vendor/bootstrap-daterangepicker/daterangepicker.js"></script>
+    <!-- custom JavaScript -->
+    <script src="/static/js/function.js"></script>
+    <script type="text/javascript" src="/static/js/wishList.js"></script>
+    <!-- 低瀏覽器版本相容條件註解 -->
+    <!--[if lt IE 9]>
+                <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+                <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+            <![endif]-->
+    <!-- ripple-button -->
+    <link rel="stylesheet" href="/static/vendor/ripple/css/style.css">
+    <script src="/static/vendor/ripple/js/index.js"></script>
+    <!-- icon-font -->
+    <link rel="stylesheet" href="/static/icon-font/style.css">
+    <!-- google font Roboto -->
+    <link href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700,900" rel="stylesheet">
+</head>
+
+<body id="page-top">
+    <nav id="mainNav" class="navbar navbar-default navbar-custom navbar-fixed-top">
+        <div class="container">
+            <!-- Brand and toggle get grouped for better mobile display -->
+            <div class="navbar-header page-scroll">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                    <span class="sr-only">Toggle navigation</span> Menu <i class="fa fa-bars"></i>
+                </button>
+                <a class="icon-logo" href="#page-top"></a>
+                <div class="mini_searchbar">
+                    <span class="icon-magnifier"></span>
+                    <input type="text" name="" placeholder="Where are you going?">
+                </div>
+            </div>
+            <div class="header_btn_blk" id="bs-example-navbar-collapse-1">
+                <ul class="nav navbar-nav currency_sel_blk">
+                    <li class="hidden">
+                        <a href="#page-top"></a>
+                    </li>
+                    <li>
+                        <div class="CurrencyDiv navSelect">
+                            <select id="moneySelect" name="" class="bsSelect">
+                                <option value="USD" data-content='USD'></option>
+                                <option value="EUR" data-content='EUR'></option>
+                                <option value="CNY" data-content='CNY'></option>
+                                <option value="GBP" data-content='GBP'></option>
+                                <option value="JPY" data-content='JPY'></option>
+                                <option value="AUD" data-content='AUD'></option>
+                                <option value="NZD" data-content='NZD'></option>
+                                <option value="SGD" data-content='SGD'></option>
+                                <option value="HKD" data-content='HKD'></option>
+                                <option value="TWD" data-content='TWD'></option>
+                            </select>
+                        </div>
+                    </li>
+                </ul>
+                <div id="wishList" class="header_btn btn-info">
+                    <span class="icon_blk">                  
+                            <span class="icon-quill"></span>
+                    <span class="icon-scroll"></span>
+                    <span class="extend_line"></span>
+                    </span>
+                    <span class="text">Wishlist</span>
+                </div>
+                <div id="myPlans" class="header_btn btn-info">
+                    <span class="icon_blk">
+                            <span class="icon-airplane"></span>
+                    <span class="icon-notebook"></span>
+                    <svg class="extend_dotted_line">
+                        <g fill="none" stroke="#ffffff" stroke-width="1">
+                            <path stroke-dasharray="5,5" d="M0 0 80 0" />
+                        </g>
+                    </svg>
+                    </span>
+                    <span class="text">My Plan</span>
+                </div>
+                <!-- <div id="myFriends" class="btn btn-info">my friends</div>
+                    <div id="myMessages" class="btn btn-info">my messages</div> -->
+                <!-- <div id="loginBtn" class="header_btn btn-info">Log In</div> -->
+                <div id="register" class="header_blk_btn hide">Sign Up</div>
+                <div id="loginBtn" class="header_blk_btn hide">Log In</div>
+                <div id="headBtn" class="head_btn" style="background-image: url(/static/img/head_sample.jpg);">
+                    <div class="head_menu">
+                        <div id="logOut">log Out</div>
+                    </div>
+                </div>
+            </div>
+            <!-- /.navbar-collapse -->
         </div>
-        <div class="nav">
-        my wish list
+        <!-- /.container-fluid -->
+    </nav>
+    <div class="wishlist_top_blk" style="background-image: url(/static/img/sunset_re.jpg);">
+        <div class="content_blk">
+            <div class="big_head_blk">
+                <div class="big_head" style="background-image: url(/static/img/head_sample.jpg);"></div>
+            </div>
+            <div class="name_blk">
+                <div class="inner_blk">
+                    <div class="user_name">Tzuyu</div>
+                    <span class="icon-gear"></span>
+                    <ul class="setting_menu"></ul>
+                </div>
+            </div>
+            <div class="sub_header_blk">
+                <div class="inner_blk">
+                    <div class="plans" id="plansSel">
+                        <div class="number">7</div>
+                        <div class="text">Plans</div>
+                        <div class="acting_line"></div>
+                    </div>
+                    <div class="wishes active">
+                        <div class="number">43</div>
+                        <div class="text">Wishes</div>
+                        <div class="acting_line"></div>
+                    </div>
+                    <div class="friends" id="friendsSel">
+                        <div class="number">132</div>
+                        <div class="text">Friends</div>
+                        <div class="acting_line"></div>
+                    </div>
+                </div>
+            </div>
         </div>
-        <div class="content">
-            <ul>
+        <div class="mainblk_bg_cover"></div>
+    </div>
+    <div class="folder_blk">
+        <div class="blk_title">MY WISHLIST</div>
+        <div class="sub_text_line">
+            <div class="inner_blk">
+                <div id="tourSubText">
+                    <span class="number">80</span>
+                    <span class="text">Tours</span>
+                </div>
+                <div id="citySubText">
+                    <span class="number">6</span>
+                    <span class="text">Cities</span>
+                </div>
+                <div id="folderSubText">
+                    <span class="number">2</span>
+                    <span class="text">Folders</span>
+                </div>
+            </div>
+        </div>
+        <div class="folders">
+            <div class="inner_blk">
+                <div class="newfolder">
+                    <div class="card">
+                        <span class="icon-plus"></span>
+                        <p class="text">Create A New Folder</p>
+                    </div>
+                </div>
+                <div class="folder">
+                    <div class="card">
+                        <div class="pic_blk">
+                            <div class="pic_1" style="background-image: url(/static/img/kyoto-86202_1920.jpg);"></div>
+                            <div class="pic_2" style="background-image: url(/static/img/mickey-mouse-832110_1920.jpg);"></div>
+                            <div class="pic_3" style="background-image: url(/static/img/lanterns-1043416_1920.jpg);"></div>
+                        </div>
+                        <div class="text_blk">
+                            <div class="folder_name">Japan</div>
+                            <div class="tour_text">Tour</div>
+                            <div class="tour_qua">53</div>
+                            <span class="more_btn icon-more_btn"></span>
+                        </div>
+                    </div>
+                    <ul class="menu">
+                        <li>Rename Folder</li>
+                        <li>Remove Folder</li>
+                    </ul>
+                </div>
+                <div class="folder">
+                    <div class="card">
+                        <div class="pic_blk">
+                            <div class="pic_1" style="background-image: url(/static/img/kyoto-86202_1920.jpg);"></div>
+                            <div class="pic_2" style="background-image: url(/static/img/mickey-mouse-832110_1920.jpg);"></div>
+                            <div class="pic_3" style="background-image: url(/static/img/lanterns-1043416_1920.jpg);"></div>
+                        </div>
+                        <div class="text_blk">
+                            <div class="folder_name">Japan</div>
+                            <div class="tour_text">Tour</div>
+                            <div class="tour_qua">53</div>
+                            <span class="more_btn icon-more_btn"></span>
+                        </div>
+                    </div>
+                    <ul class="menu">
+                        <li>Rename Folder</li>
+                        <li>Remove Folder</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="dashed_line"></div>
+    </div>
+    <div class="content_blk">
+        <div class="sortedBy sort_blk">
+            <p class="text">Sort By</p>
+            <div class="sort_sel_blk">
+                <div id="sortValBtn" class="left sel">
+                    <span class="click sort_val">Rating</span>
+                    <span class="click icon-dropdown_icon"></span>
+                    <ul class="left_drop drop">
+                        <li>Rating</li>
+                        <li>Budget</li>
+                        <li>Duration</li>
+                    </ul>
+                </div>
+                <div class="sepline"></div>
+                <div id="sortWayBtn" class="right sel">
+                    <span class="click sort_val">Decending</span>
+                    <span class="click icon-dropdown_icon"></span>
+                    <span class="click icon-diagram_up reverse"></span>
+                    <ul class="right_drop drop">
+                        <li>
+                            <i class="icon-diagram_up"></i>
+                            <span class="content">Ascending</span>
+                        </li>
+                        <li>
+                            <i class="icon-diagram_down"></i>
+                            <span class="content">Decending</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <ul class="wish_blk">
+            <div class="wish">
+                <div class="card active" style="background-image:url(https://en.tripbaa.com/travel/20160422121516fYf/downloads/customer/10000/2000/1979ktfsq/travel/plan_201604221239571_s.JPG);">
+                    <div class="name">
+                        <p>Private Guided Tour...</p>
+                    </div>
+                    <p class="place">Taipei</p>
+                    <p class="duration">8<span>HR</span></p>
+                    <div class="price"><span class="country">CNY</span> $<span class="number">1489</span></div>
+                    <div class="footprint_blk"><span class="icon-tourdash footprint"></span></div>
+                    <div class="folder_sel_btn">
+                        <div class="text">Choose Folders</div>
+                        <i class="icon-dropdown_icon"></i>
+                        <ul class="menu">
+                            <li>
+                                <span>favorite</span>
+                                <i class="icon-checkmark"></i>
+                            </li>
+                            <li>
+                                <span>japan</span>
+                                <i class="icon-checkmark"></i>
+                            </li>
+                            <li>
+                                <span>with parents</span>
+                                <i class="icon-checkmark"></i>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="darken_bg"></div>
+                </div>
+            </div>
+        </ul>
+    </div>
+    <footer>
+        <div class="container">
+            <ul class="link_blk">
+                <li><a>About</a></li>
+                <li><a>Terms of Use</a></li>
+                <li><a>Our Partner</a></li>
+                <li><a>Contact Us</a></li>
             </ul>
+            <div class="copyright_blk">Copyright © 2016 FindFineTour All rights reserved.</div>
         </div>
-    </body>
+    </footer>
+</body>
+
 </html>

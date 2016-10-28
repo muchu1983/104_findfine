@@ -5,6 +5,7 @@ function initMap() {
     var input = (document.getElementById('autocomplete'));
     var autocomplete = new google.maps.places.Autocomplete(input);
     autocomplete.addListener('place_changed', function() {
+
         var place = autocomplete.getPlace();
         if (!place.geometry) {
             //未獲得地點資訊
@@ -17,32 +18,64 @@ function initMap() {
         };
     });
 
+    var headInput = (document.getElementById('topSearch'));
+    var headAutocomplete = new google.maps.places.Autocomplete(headInput);
+    headAutocomplete.addListener('place_changed', function() {
+        var place = headAutocomplete.getPlace();
+        if (!place.geometry) {
+            //未獲得地點資訊
+            return;
+        }
+        tour.sendData = {
+            keyword: document.getElementById('topSearch').value,
+            lat: place.geometry.location.lat(),
+            lng: place.geometry.location.lng()
+        };
+    });
+
     //登入按鈕
     $("#loginBtn").click(function() {
         if ($("#loginBtn").html() == "Log In") {
             window.location = "/account/login";
         }
     });
+    //申請按鈕
+    $("#register").click(function() {
+        if ($("#register").html() == "Sign Up") {
+            window.location = "/account/register";
+        }
+    });
+    // 選單搜尋
+    $('#topSearch').keypress(function (e) {
+     var key = e.which;
+     if(key == 13)  // the enter key code
+      {
+        console.log("ada");
+      }
+    });  
 
-
-
-
-    // $('#wishList').hide();
+    $('#wishList').hide();
     $('#myFriends').hide();
-    // $('#myPlans').hide();
+    $('#myPlans').hide();
     $('#myMessages').hide();
     $('#logOut').hide();
-
+    $('#register').hide();
     $('#loginBtn').hide();
+
     //strEmail 如已登入 不顯示login button 並顯示會員帳號
-    if (strEmail == "None") {} else {
-        $('#loginBtn').html(strEmail);
+    if (strEmail == "None") {
+        // 暫時隱藏 為測試方便使用
+        // $('#register').show();
+        // $('#loginBtn').show();
+    } else {
         $('#wishList').show();
-        $('#myFriends').show();
         $('#myPlans').show();
-        $('#myMessages').show();
         $('#logOut').show();
+        $('#register').hide();
         $('#loginBtn').hide();
+        // $('#loginBtn').html(strEmail);
+        // $('#myFriends').show();
+        // $('#myMessages').show();
     }
 
     $("#wishList").click(function() {
@@ -54,8 +87,6 @@ function initMap() {
             window.location = "/account/logout";
         }
     });
-
-
 
     $("#myPlans").click(function() {
         window.location = "/page/myTrip";
@@ -74,6 +105,9 @@ $(function() {
         }
     });
 
+    // 選單搜尋 ENTER @Q@ davidturtle
+    headerSearch();
+
     //圖片展示區塊
     $('.portfolio-link').on('click', function(e) {
         e.preventDefault();
@@ -87,6 +121,7 @@ $(function() {
     $(document).ready(initHome);
 
     function initHome() {
+
         initCurrencySelect();
         //登入按鈕
         $("#loginBtn").click(function() {
@@ -111,34 +146,20 @@ $(function() {
 
         // @TODO 實際抓出STORY資料
         homeMonthStoryMenuLiClick();
-        
+
+        // add to wishlist 按鈕點擊 @Q@ davidturtle
+        addToWishlistBtnClick();
         // 推薦TOUR設定
         // 設定搜尋參數 @Q@davidturtle @TODO 後台功能增加後須改寫
         var recomTourSearchCon = "/trip/filter?1=1&keyword=Taichung&page=1";
         homeRecomTour(recomTourSearchCon);
+
+        $(".head_btn")  .click(function(event) {
+            $(this).children('.head_menu').toggleClass('active');
+        });
     };
 
-    //幣別
-    function initCurrencySelect() {
-        //設定目前幣別
-        var strUserCurrencyUrl = "/trip/userCurrency";
-        $.getJSON(strUserCurrencyUrl, function(jsonResp) {
-            strUserCurrency = jsonResp["strUserCurrency"];
-            $("#moneySelect").val(strUserCurrency);
-            $("#moneySelect").selectpicker("refresh")
-            console.log("init user currency selection: " + strUserCurrency);
-        });
-        //切換目前幣別
-        $("#moneySelect").change(function() {
-            var strSelectedCurrencyVal = $("#moneySelect").find(":selected").val();
-            var strChangeUserCurrencyUrl = strUserCurrencyUrl + "?user_currency=" + strSelectedCurrencyVal;
-
-            $.getJSON(strChangeUserCurrencyUrl, function(jsonResp) {
-                strUserCurrency = jsonResp["strUserCurrency"];
-                console.log("switch user currency to: " + strUserCurrency);
-            });
-        });
-
-    };
+    
 
 })(jQuery);
+ 

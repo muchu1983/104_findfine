@@ -30,6 +30,9 @@ function initFind() {
         }
     });
 
+    // 選單搜尋 ENTER @Q@ davidturtle
+    headerSearch();
+
     //搜尋按鈕
     $("#btnSearch").click(function() {
         $("#current_page").html("1");
@@ -396,64 +399,6 @@ function search(condition) {
     });
 };
 
-//組出單組查詢結果出來的html字串
-function getTripDataHtml(strUserCurrency, strTitle, intUserCurrencyCost, strIntroduction, strLocation, intDurationHour, strOriginUrl, strImageUrl, intReviewStar, intReviewVisitor, intId, isFavoriteTrip) {
-
-    var reviewStar = "";
-    fillstarQan = intReviewStar;
-    emptystarQan = 5 - intReviewStar;
-    for (var fillstarCount = 0; fillstarCount < fillstarQan; fillstarCount++) {
-        reviewStar += "<span class='icon-star_fill'></span>";
-    }
-    for (var emptystarCount = 0; emptystarCount < emptystarQan; emptystarCount++) {
-        reviewStar += "<span class='icon-star_empty'></span>";
-    }
-    // @Q@設定文字擷取字數
-    var strIntroduction = strIntroduction.substr(0, 75);
-    var strTitle = strTitle.substr(0, 25);
-
-    var favoriteTrip;
-
-    if (isFavoriteTrip.toString() == "true") {
-        favoriteTrip = "<div class=\"favorite\">♥</div>";
-    }
-    if (isFavoriteTrip.toString() == "false") {
-        favoriteTrip = "<div class=\"favorite\" id=" + intId + " onclick=\"addFavoriteTrip(" + intId + ")\">♡</div>";
-    }
-    var strTripDataHtml = [
-        "<div class=\"tour\">",
-        "<div class=\"card active\" style=\"background-image:url(" + strImageUrl + ");\">",
-        "<div class=\"name\">",
-        "<p>" + strTitle + "...</p>",
-        "</div>",
-        "<p class=\"place\">" + strLocation + "</p>",
-        "<p class=\"duration\">" + intDurationHour + "<span>HR</span></p>",
-        "<div class=\"price\">",
-        "<span class=\"country\">" + strUserCurrency + "</span> $",
-        "<span class=\"number\">" + intUserCurrencyCost + "</span>",
-        "</div>",
-        "<div class=\"star\">" + reviewStar + "</div>",
-        "<p class=\"trimtext\">" + strIntroduction + "...</p>",
-        "<div class=\"readmore_btn\">",
-        "<a target=\"_blank\" href=" + strOriginUrl + " data-ripple-color=\"#2bb0b9\">Read More</a>",
-        "</div>",
-        "<div class=\"footprint_blk\">",
-        "<span class=\"icon-tourdash footprint\"></span>",
-        "</div>",
-        "<div class=\"add_wish_btn\">",
-        "<p class=\"oriword\">Add To WishList</p>",
-        "<span class=\"icon-wishlist\"></span>",
-        "<p class=\"actword\">My Wishlist</p>",
-        "<span class=\"icon-quill\"></span>",
-        "<span class=\"extend_line\"></span>",
-        "</div>",
-        "<div class=\"darken_bg\"></div>",
-        "</div>",
-        "</div>"
-    ].join("");
-
-    return strTripDataHtml;
-};
 
 //幣別功能
 function initCurrencySelect() {
@@ -484,24 +429,6 @@ function initCurrencySelect() {
         });
     });
 };
-
-function addFavoriteTrip(intId) {
-    var strAddFavoriteTripUrl = "/trip/addFavoriteTrip?intTripId=" + intId;
-    $.getJSON(strAddFavoriteTripUrl, function(jsonResp) {
-        var status = jsonResp["add_favorite_trip_status"];
-    });
-    //$('.favorite').html('♥');
-    //this.html('♥');  no
-    //this.$('.favorite').html('♥'); no
-    //$(this).$('.favorite').html('♥'); no
-    //$('this .favorite').html('♥'); 
-
-    $('#' + intId + '').html('♥');
-
-    //alert(" initFind() 前");
-    //initFind();
-    //alert(" initFind() 後");
-}
 
 // 搜尋區顯示更多/更少選項 @Q@ davidturtle
 function moreFilterClick() {

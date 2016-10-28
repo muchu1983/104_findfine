@@ -2,7 +2,7 @@
 <html lang="en">
 
 <head>
-    <meta charset="utf-8">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="">
@@ -56,7 +56,7 @@
     <!-- icon-font -->
     <link rel="stylesheet" href="/static/icon-font/style.css">
     <!-- google font Roboto -->
-    <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700,900" rel="stylesheet">
 </head>
 
 <body id="page-top">
@@ -75,7 +75,7 @@
                 </div>
             </div>
             <div class="header_btn_blk" id="bs-example-navbar-collapse-1">
-                <ul class="nav navbar-nav">
+                <ul class="nav navbar-nav currency_sel_blk">
                     <li class="hidden">
                         <a href="#page-top"></a>
                     </li>
@@ -96,10 +96,9 @@
                         </div>
                     </li>
                 </ul>
-                <!-- <div id="logOut" class="btn btn-info">Log Out</div> -->
                 <div id="wishList" class="header_btn btn-info">
                     <span class="icon_blk">                  
-                            <span class="icon-quill"></span>
+                        <span class="icon-quill"></span>
                     <span class="icon-scroll"></span>
                     <span class="extend_line"></span>
                     </span>
@@ -107,7 +106,7 @@
                 </div>
                 <div id="myPlans" class="header_btn btn-info">
                     <span class="icon_blk">
-                            <span class="icon-airplane"></span>
+                        <span class="icon-airplane"></span>
                     <span class="icon-notebook"></span>
                     <svg class="extend_dotted_line">
                         <g fill="none" stroke="#ffffff" stroke-width="1">
@@ -118,9 +117,15 @@
                     <span class="text">My Plan</span>
                 </div>
                 <!-- <div id="myFriends" class="btn btn-info">my friends</div>
-                    <div id="myMessages" class="btn btn-info">my messages</div> -->
+                <div id="myMessages" class="btn btn-info">my messages</div> -->
                 <!-- <div id="loginBtn" class="header_btn btn-info">Log In</div> -->
-                <div id="headBtn" class="head_btn" style="background-image: url(/static/img/head_sample.jpg);"></div>
+                <div id="register" class="header_blk_btn hide">Sign Up</div>
+                <div id="loginBtn" class="header_blk_btn hide">Log In</div>
+                <div id="headBtn" class="head_btn" style="background-image: url(/static/img/head_sample.jpg);">
+                    <div class="head_menu">
+                        <div id="logOut">log Out</div>
+                    </div>
+                </div>
             </div>
             <!-- /.navbar-collapse -->
         </div>
@@ -245,8 +250,8 @@
                             <label class="title">Passenger</label>
                             <div class="plus_click_btn">
                                 <span class="value" id="passengerVal">click to add</span>
-                                <div class="click_btn icon-minus"></div>
-                                <div class="click_btn icon-plus"></div>
+                                <div class="click_btn icon-minus_round"></div>
+                                <div class="click_btn icon-plus_round"></div>
                             </div>
                         </div>
                         <div class="col-xs-12 time_blk">

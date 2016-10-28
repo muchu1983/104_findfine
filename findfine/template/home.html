@@ -3,7 +3,7 @@
 <!-- TODO 有@記號 需改成連結  hinet 設定網址 不要home-->
 
 <head>
-    <meta charset="utf-8">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="">
@@ -49,10 +49,9 @@
     <!-- icon-font -->
     <link rel="stylesheet" href="/static/icon-font/style.css">
     <!-- google font Roboto -->
-    <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700,900" rel="stylesheet">
     <!-- 暫時隱藏一些東西的CSS -->
     <link href="/static/css/temperary.css" rel="stylesheet">
-
 </head>
 <!-- TODO 每個log都可以回首頁 -->
 
@@ -68,11 +67,13 @@
                 <a class="icon-logo" href="#page-top"></a>
                 <div class="mini_searchbar">
                     <span class="icon-magnifier"></span>
-                    <input type="text" name="" placeholder="Where are you going?">
+                    <input id="topSearch" type="text" name="" placeholder="Where are you going?">
+                    <script type="text/javascript">
+                    </script>
                 </div>
             </div>
             <div class="header_btn_blk" id="bs-example-navbar-collapse-1">
-                <ul class="nav navbar-nav">
+                <ul class="nav navbar-nav currency_sel_blk">
                     <li class="hidden">
                         <a href="#page-top"></a>
                     </li>
@@ -93,7 +94,6 @@
                         </div>
                     </li>
                 </ul>
-                <!-- <div id="logOut" class="btn btn-info">Log Out</div> -->
                 <div id="wishList" class="header_btn btn-info">
                     <span class="icon_blk">                  
                         <span class="icon-quill"></span>
@@ -116,19 +116,27 @@
                 </div>
                 <!-- <div id="myFriends" class="btn btn-info">my friends</div>
                 <div id="myMessages" class="btn btn-info">my messages</div> -->
-                <div id="loginBtn" class="header_btn btn-info">Log In</div>
-                <div id="headBtn" class="head_btn" style="background-image: url(/static/img/head_sample.jpg);"></div>
+                <!-- <div id="loginBtn" class="header_btn btn-info">Log In</div> -->
+                <div id="register" class="header_blk_btn hide">Sign Up</div>
+                <div id="loginBtn" class="header_blk_btn hide">Log In</div>
+                <div id="headBtn" class="head_btn" style="background-image: url(/static/img/head_sample.jpg);">
+                    <div class="head_menu">
+                        <div id="logOut">log Out</div>
+                    </div>
+                </div>
             </div>
             <!-- /.navbar-collapse -->
         </div>
         <!-- /.container-fluid -->
     </nav>
-
     <svg width="1500px" height="257px" class="plane_print">
         <path class="cover" fill="none" stroke="#ffffff" stroke-width="1" stroke-linecap="square" stroke-dasharray="5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,2000" d="M0.568,255.942c0,0,299-45,215-129 c-19.879-19.879-20-55,72-56c24.94-0.271,169-2,169-2h737.507c0,0,2.607,0,20.493,0c25.011,0,40,4,54-13s8-42-5-50 c-29.304-18.033-73,11-45,54s279,76,279,76" />
         </path>
     </svg>
-    <div class="flying_plane icon-airplane"></div>
+    <div class="flying_plane_blk">
+        
+        <div class="flying_plane icon-airplane"></div>
+    </div>
     <!-- Header -->
     <header class="home">
         <div class="container">
@@ -137,27 +145,27 @@
                     <span class="icon-logo_text"></span>
                 </div>
                 <div class="arrow_blk_hideblk arrow_1">
-                    <div class="arrow_blk">                        
+                    <div class="arrow_blk">
                         <span class="icon-logo_arrow"></span>
                     </div>
                 </div>
                 <div class="arrow_blk_hideblk arrow_2">
-                    <div class="arrow_blk">                        
+                    <div class="arrow_blk">
                         <span class="icon-logo_arrow"></span>
                     </div>
                 </div>
                 <div class="arrow_blk_hideblk arrow_3">
-                    <div class="arrow_blk">                        
+                    <div class="arrow_blk">
                         <span class="icon-logo_arrow"></span>
                     </div>
                 </div>
                 <div class="arrow_blk_hideblk arrow_4">
-                    <div class="arrow_blk">                        
+                    <div class="arrow_blk">
                         <span class="icon-logo_arrow"></span>
                     </div>
                 </div>
-                
-                <p class="subtitle">Paint Your Trip, Find local tours around the world</p>
+                <p class="subtitle">Paint Your Trip
+                    <br>Find local tours around the world</p>
                 <!-- <div class="intro-heading">Paint your life in</div> -->
                 <!-- <a href="#services" class="page-scroll btn btn-xl">Tell Me More</a> -->
                 <div class="headerbg_logo">
@@ -187,34 +195,58 @@
                 </div>
             </div>
             <div class="city_blk">
+                <!-- Paris -->
                 <div class="home_city type_1">
-                    <a class="portfolio-link" data-lat="24.1477358" data-lng="120.6736482" data-place="Taichung" style="background-image: url(/static/img/kyoto-86202_1920.jpg);">
+                    <a href="" class="portfolio-link" data-lat="48.856614" data-lng="2.3522219" data-place="Paris" style="background-image: url(/static/img/paris_new.jpg);">
+                        <span class="name left">Paris</span>
                     </a>
                 </div>
+                <!-- London -->
                 <div class="home_city type_1">
-                    <a href="" class="portfolio-link" data-lat="14.5401107" data-lng="-74.96763650000003" data-place="Caribbean" style="background-image: url(/static/img/landscape-1644439.jpg);">
+                    <a href="" class="portfolio-link" data-lat="51.5073509" data-lng="-0.1277583" data-place="London" style="background-image: url(/static/img/london_new.jpg);">
+                        <span class="name left">London</span>
                     </a>
                 </div>
+                <!-- newyork -->
                 <div class="home_city type_1">
-                    <a href="" class="portfolio-link" data-lat="39.904211" data-lng="116.40739499999995" data-place="Beijing" style="background-image: url(/static/img/gold-temple-420675_1920.jpg);">
+                    <a href="" class="portfolio-link" data-lat="40.7127837" data-lng="-74.0059413" data-place="New York" style="background-image: url(/static/img/newyork_new.jpg);">
+                        <span class="name right">New York</span>
                     </a>
                 </div>
+                <!-- tokyo -->
                 <div class="home_city type_1">
-                    <a href="" class="portfolio-link" data-lat="39.904211" data-lng="116.40739499999995" data-place="Beijing" style="background-image: url(/static/img/lanterns-1043416_1920.jpg);">
+                    <a href="" class="portfolio-link" data-lat="35.6894875" data-lng="139.6917064" data-place="tokyo" style="background-image: url(/static/img/tokyo_new.jpg);">
+                        <span class="name right">Tokyo</span>
                     </a>
                 </div>
                 <div class="home_city type_2">
-                    <a href="" class="portfolio-link" data-lat="48.856614" data-lng="2.3522219000000177" data-place="Paris" style="background-image: url(/static/img/eiffel-tower-1156146_1280.jpg);">
-                        <span class="name right">Paris , France</span>
+                    <a href="" class="portfolio-link" data-lat="35.0212466" data-lng="135.7555968" data-place="Kyoto" style="background-image: url(/static/img/Kyoto_new.jpg);">
+                        <span class="name right">Kyoto</span>
                     </a>
                 </div>
                 <div class="home_city type_2">
-                    <a href="" class="portfolio-link" data-lat="40.7127837" data-lng="-74.00594130000002" data-place="New York" style="background-image: url(/static/img/statue-of-liberty-1210001_1920.jpg);">
-                        <span class="name left">New York City</span>
+                    <a href="" class="portfolio-link" data-lat="22.2783151" data-lng="114.174695" data-place="Hong Kong" style="background-image: url(/static/img/hongkong_new.jpg);">
+                        <span class="name right">Hong Kong</span>
                     </a>
                 </div>
                 <div class="home_city type_1">
-                    <a href="" class="portfolio-link" data-lat="25.0329636" data-lng="121.56542680000007" data-place="Taipei" style="background-image: url(/static/img/Taipei.jpg);">
+                    <a href="" class="portfolio-link" data-lat="1.3553794" data-lng="103.8677444" data-place="Singapore" style="background-image: url(/static/img/singapore_new.jpg);">
+                        <span class="name right">Singapore</span>
+                    </a>
+                </div>
+                <div class="home_city type_1">
+                    <a href="" class="portfolio-link" data-lat="25.0329636" data-lng="121.5654268" data-place="Taipei" style="background-image: url(/static/img/taipei_new.jpg);">
+                        <span class="name left">Taipei</span>
+                    </a>
+                </div>
+                <div class="home_city type_1">
+                    <a href="" class="portfolio-link" data-lat="41.9027835" data-lng="12.4963655" data-place="Rome" style="background-image: url(/static/img/rome_new.jpg);">
+                        <span class="name left">Rome</span>
+                    </a>
+                </div>
+                <div class="home_city type_1">
+                    <a href="" class="portfolio-link" data-lat="52.5200066" data-lng="13.404954" data-place="Berlin" style="background-image: url(/static/img/berlin_new.jpg);">
+                        <span class="name right">Berlin</span>
                     </a>
                 </div>
             </div>
@@ -273,11 +305,11 @@
         <div class="container">
             <div class="row">
                 <div class="col-lg-12 text-center">
-                    <h2 class="section-heading">FFT Selection</h2>
-                    <h3 class="section-subheading text-muted">come to find some tour</h3>
+                    <h2 class="section-heading">FFT Selections</h2>
+                    <h3 class="section-subheading text-muted">Why not give them a try?</h3>
                 </div>
             </div>
-            <div id="tourBlk" class="row tour_blk">
+            <div id="tourBlk" class="row tour_blk home_tour_blk" data-ing="0">
             </div>
             <div class="more_link_btn ripple_blk">
                 <a class="ripple">More Tours</a>
@@ -302,9 +334,9 @@
     <footer>
         <div class="container">
             <ul class="link_blk">
-                <li><a>About</a></li>
-                <li><a>Terms of Use</a></li>
-                <li><a>Our Partner</a></li>
+                <li><a>About Us</a></li>
+                <li><a>Terms & Conditions</a></li>
+                <li><a>Cooperation</a></li>
                 <li><a>Contact Us</a></li>
             </ul>
             <div class="copyright_blk">Copyright © 2016 FindFineTour All rights reserved.</div>

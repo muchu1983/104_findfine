@@ -20,63 +20,28 @@
     <script src="../static/vendor/jquery/dist/jquery.min.js"></script>
     <!-- ripple-button -->
     <link rel="stylesheet" href="../static/vendor/ripple/css/style.css">
-        <script src="../static/vendor/ripple/js/index.js"></script>
+    <script src="../static/vendor/ripple/js/index.js"></script>
     <!-- icon-font -->
     <link rel="stylesheet" href="../static/icon-font/style.css">
     <!-- google font Roboto -->
     <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
     <style type="text/css">
-    /*body {
-        background-color: yellow;
-    }
-    input {
-    float: left;
-    width: 180px;
-    height: 40px;
-    border-radius: 100px;
-    border: solid 1px #ffffff;
-    background-color: transparent;
-    font-family: Roboto;
-    font-size: 14px;
-    line-height: 1;
-    letter-spacing: 1px;
-    color: #ffffff;
-}::-webkit-input-placeholder {
-    color: green;
-}
-input[type=date]{
-    position: relative;
-    width: 500px;
-}
-::-webkit-datetime-edit { padding: 1em; }
-::-webkit-datetime-edit-fields-wrapper { background: green; }
-::-webkit-datetime-edit-text { color: red; padding: 0 0.3em; }
-::-webkit-datetime-edit-month-field { color: blue; }
-::-webkit-datetime-edit-day-field { color: green; }
-::-webkit-datetime-edit-year-field { color: purple; }
-.dada::-webkit-inner-spin-button { display: none; }
-::-webkit-calendar-picker-indicator { 
-    position: absolute;
-    background: orange;
-opacity: 1; }*/
+        body {
+            background-color: #999999;
+        }
     </style>
-    <script type="text/javascript">
-        var testArray = [];
-        testArray[0] = "ddd";
-        testArray[1] = "ddasd";
-        jQuery(document).ready(function($) {
-            console.log(testArray.length);
-        });
-    </script>
 </head>
 <!-- TODO 每個log都可以回首頁 -->
 
 <body>
-<input id="placeID" class="form-control" placeholder="Enter Something" type="text"></input>
-<input class="dada" type="date" name="">
-<input class="dada" type="time" name="">
+    <div id="goo" data-foo="dada"></div>
 
-<p>david1 david2 david3 david4 daivd5</p>
+    <script type="text/javascript">
+        jQuery(document).ready(function($) {
+            $("#goo").data('foo', 'value');
+            console.log($("#goo").data('foo'));
+        });
+    </script>
 </body>
 
 </html>
