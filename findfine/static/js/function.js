@@ -142,6 +142,7 @@ function homeRecomTour(strFilterQueryUrl, startNum, totalDic) {
         // add to wishlist 按鈕點擊
         addToWishlistBtnClick();
 
+        homeRecShow(0);
         // 隔十秒換三張 @Q@ davidturtle
         homeRecAct();
     });
