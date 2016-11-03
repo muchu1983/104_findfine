@@ -25,7 +25,7 @@ class CrawlerForBMG:
     
     #建構子
     def __init__(self):
-        self.strAuthCode = "daz5m3vimo2u8ucz90yimfwpj8lfdszkb2utjvyk"
+        self.strAuthCode = "uds5e527i008wa7k47gyl4srzy3zywbxpw7ei6oe"
         self.dicSubCommandHandler = {
             "bmgapi":self.crawlBMGAPI
         }

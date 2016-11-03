@@ -26,8 +26,9 @@ class LocalDbForJsonImporter:
     #若無重覆，儲存 trip 資料
     def upsertTrip(self, dicTripData=None):
         #轉換 strUpdateTime 為 dtUpdateTime
-        dicTripData["dtUpdateTime"] = datetime.datetime.strptime(dicTripData["strUpdateTime"], "%Y-%m-%d %H:%M:%S")
-        del dicTripData["strUpdateTime"]
+        if "strUpdateTime" in dicTripData.keys():
+            dicTripData["dtUpdateTime"] = datetime.datetime.strptime(dicTripData["strUpdateTime"], "%Y-%m-%d %H:%M:%S")
+            del dicTripData["strUpdateTime"]
         #檢查重覆
         queryCursor = self.mysqlConnection.cursor(buffered=True)
         upsertCursor = self.mysqlConnection.cursor(buffered=True)
