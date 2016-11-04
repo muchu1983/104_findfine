@@ -51,6 +51,7 @@ startproject findfine
 startapp account
 startapp trip
 startapp page
+startapp dashboard
 
 Django 後台 root 帳號/密碼 (透過 manage.py syncdb 設定)
 findfine_web_root/asdfASDF1234
@@ -74,10 +75,12 @@ liangtian@hotmail.com
 768768768
 ===
 BeMyGuest: 完成，但 Auth key 為 demo 版本，且已過期
-https://apidemo.bemyguest.com.sg/client-app
-Username: liangtian@hotmail.com
-Password: a768768a
-X-Authorization: daz5m3vimo2u8ucz90yimfwpj8lfdszkb2utjvyk
+https://apidemo.bemyguest.com.sg/home
+Username_1: liangtian@hotmail.com
+Password_1: a768768a
+Username_2: iamkaraa@gmail.com
+Password_2: 768768
+X-Authorization: daz5m3vimo2u8ucz90yimfwpj8lfdszkb2utjvyk (已過期)
 ===
 City Discovery: 完成
 https://partner.city-discovery.com/affiliate/login.php

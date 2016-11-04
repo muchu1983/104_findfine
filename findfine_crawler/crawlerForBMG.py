@@ -91,7 +91,20 @@ class CrawlerForBMG:
                 lstStrLocation = list(set(lstStrLocation))
                 dicProductJson["strLocation"] = ",".join(lstStrLocation)
                 #intUsdCost
-                dicProductJson["intUsdCost"] = int(dicProductDetailData.get("basePrice", 0)/1.345)
+                fAdultPrice = 0.0
+                dicProductType = dicProductDetailData.get("productTypes", [{}])
+                dicPrices = dicProductType[0].get("prices", {})
+                for strPricesKey in dicPrices.keys():
+                    dicPrice = dicPrices.get(strPricesKey, {})
+                    dicRegular = dicPrice.get("regular", False)
+                    if dicRegular != False:
+                        dicAdult = dicRegular.get("adult", {})
+                        for strAdultKey in dicAdult.keys():
+                            fAdultPrice = dicAdult.get(strAdultKey, 0.0)
+                            if fAdultPrice > 0.0:
+                                break
+                logging.info("%s got price: %f SGD"%(strProductUUID, fAdultPrice))
+                dicProductJson["intUsdCost"] = int(fAdultPrice/1.39)
                 #intReviewStar
                 dicProductJson["intReviewStar"] = int(dicProductDetailData.get("reviewAverageScore", 0))
                 #intReviewVisitor
@@ -99,7 +112,6 @@ class CrawlerForBMG:
                 #strIntroduction
                 dicProductJson["strIntroduction"] = dicProductDetailData.get("description", None)
                 #intDurationHour
-                dicProductType = dicProductDetailData.get("productTypes", [{}])
                 intDays = dicProductType[0].get("durationDays", 0)
                 intHours = dicProductType[0].get("durationHours", 0)
                 if not intDays:
@@ -139,7 +151,7 @@ class CrawlerForBMG:
     def getAllProductRoughData(self):
         lstDicProductRoughData = []
         # 第一頁
-        strPage1Url = "https://apidemo.bemyguest.com.sg/v1/products?currency=SGD"
+        strPage1Url = "https://apidemo.bemyguest.com.sg/v1/products"
         logging.info("get BMG product rough data: %s"%strPage1Url)
         strRespJson = self.sendHttpRequestByUrllib(
             strUrl=strPage1Url,
@@ -152,7 +164,7 @@ class CrawlerForBMG:
         # 下一頁
         strNextPageUrl = dicRespJson.get("meta", {}).get("pagination", {}).get("links", {}).get("next", None)
         while strNextPageUrl:
-            strNextPageUrl = re.sub("currency=[\d]+", "currency=SGD", strNextPageUrl) #強制取得美金資料
+            strNextPageUrl = re.sub("currency=[\d]+", "currency=SGD", strNextPageUrl)
             logging.info("get BMG product rough data: %s"%strNextPageUrl)
             strRespJson = self.sendHttpRequestByUrllib(
                 strUrl=strNextPageUrl,
@@ -170,7 +182,7 @@ class CrawlerForBMG:
     def getProductDetailData(self, strProductUUID=None):
         logging.info("get BMG product detail data: %s"%strProductUUID)
         strRespJson = self.sendHttpRequestByUrllib(
-            strUrl="https://apidemo.bemyguest.com.sg/v1/products/%s?currency=SGD"%strProductUUID, #currency:10=SGD=新加坡幣
+            strUrl="https://apidemo.bemyguest.com.sg/v1/products/%s"%strProductUUID,
             dicHeader={"X-Authorization":self.strAuthCode},
             dicData=None,
             strEncoding="utf-8"
