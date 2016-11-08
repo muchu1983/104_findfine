@@ -1,0 +1,145 @@
+.monthlyStory{
+    position: relative;
+    width: 40%;
+    height: 360px;
+    z-index: 0;
+    border-radius: 5px;
+    background-color: rgba(4, 25, 39, 0.3);
+    overflow: hidden;
+    float: left;
+}
+.monthlyStory>.ms_head{
+    position: absolute;
+    width: 80%;
+    left: 10%;
+    top: 5px;
+    font-size: 20px;
+    text-align: center;
+    color: #ffffff;
+}
+.monthlyStory>.ms_imgurl{
+    position: absolute;
+    width: 80%;
+    left: 10%;
+    top: 30px;
+    font-size: 20px;
+    text-align: left;
+    color: #ffffff;
+}
+.monthlyStory>.ms_imgurl_input{
+    position: absolute;
+    width: 60%;
+    left: 30%;
+    top: 30px;
+    font-size: 20px;
+    text-align: left;
+    color: #000000;
+}
+.monthlyStory>.ms_title{
+    position: absolute;
+    width: 80%;
+    left: 10%;
+    top: 65px;
+    font-size: 20px;
+    text-align: left;
+    color: #ffffff;
+}
+.monthlyStory>.ms_title_input{
+    position: absolute;
+    width: 60%;
+    left: 30%;
+    top: 65px;
+    font-size: 20px;
+    text-align: left;
+    color: #000000;
+}
+.monthlyStory>.ms_content{
+    position: absolute;
+    width: 80%;
+    left: 10%;
+    top: 100px;
+    font-size: 20px;
+    text-align: left;
+    color: #ffffff;
+}
+.monthlyStory>.ms_content_area{
+    position: absolute;
+    width: 60%;
+    height: 70%;
+    left: 30%;
+    top: 100px;
+    font-size: 20px;
+    text-align: left;
+    color: #000000;
+}
+.recommendedTripDiv{
+    position: relative;
+    width: 60%;
+    height: 360px;
+    left: 5px;
+    z-index: 0;
+    border-radius: 5px;
+    background-color: rgba(4, 25, 39, 0.3);
+    overflow: hidden;
+    float: left;
+}
+.dashboardStatusDiv{
+    position: relative;
+    width: 90%;
+    left: 5%;
+    top: 5px;
+    height: 20px;
+    z-index: 0;
+    background-color: rgba(4, 25, 39, 0.3);
+    overflow: hidden;
+    font-size: 16px;
+    text-align: center;
+    color: #ff0000;
+}
+.adminDataDiv{
+    position: relative;
+    width: 90%;
+    left: 5%;
+    top: 5px;
+    height: 40px;
+    z-index: 0;
+    background-color: rgba(4, 25, 39, 0.3);
+    overflow: hidden;
+}
+.adminDataDiv>.admin_password{
+    position: absolute;
+    width: 80%;
+    left: 10%;
+    top: 5px;
+    font-size: 20px;
+    text-align: left;
+    color: #ffffff;
+}
+.adminDataDiv>.admin_password_input{
+    position: absolute;
+    width: 60%;
+    left: 30%;
+    top: 5px;
+    font-size: 20px;
+    text-align: left;
+    color: #000000;
+}
+.saveConfigDiv{
+    position: relative;
+    width: 90%;
+    left: 5%;
+    top: 5px;
+    height: 50px;
+    z-index: 0;
+    background-color: rgba(4, 25, 39, 0.3);
+    overflow: hidden;
+}
+.saveConfigDiv>#saveConfigBtn{
+    position: absolute;
+    width: 60%;
+    left: 20%;
+    top: 5px;
+    font-size: 18px;
+    text-align: center;
+    color: #ff0000;
+}

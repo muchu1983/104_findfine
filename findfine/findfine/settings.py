@@ -47,7 +47,8 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'account',
     'trip',
-    'page'
+    'page',
+    'dashboard'
 ]
 
 MIDDLEWARE_CLASSES = [

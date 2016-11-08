@@ -6,13 +6,30 @@ This file is part of BSD license
 
 <https://opensource.org/licenses/BSD-3-Clause>
 """
+import json
 from django.shortcuts import render
+from dashboard.models import JsonDocument
 
 # Create your views here.
 def showHomePage(request):
+    dicRenderData = {}
     #從 session 取得已登入的 使用者 email
     strUserEmail = request.session.get("logined_user_email", None)
-    return render(request, "home.html", {"strEmail":strUserEmail})
+    dicRenderData.setdefault("strEmail", strUserEmail)
+    #取得後台設定
+    strConfigStatus = ""
+    qsetConfigJson = JsonDocument.objects.filter(strDocumentName="config")
+    if len(qsetConfigJson) == 0:
+        strConfigStatus = "can not find config json document"
+    else:
+        strJsonValue = qsetConfigJson[0].strJsonValue
+        dicConfiguration = json.loads(strJsonValue)
+        strConfigStatus = "got config json document"
+        dicRenderData.setdefault("current_month_img_url", dicConfiguration.get("monthly_stories", {}).get("current", {}).get("image_url", ""))
+        dicRenderData.setdefault("current_month_title", dicConfiguration.get("monthly_stories", {}).get("current", {}).get("title", ""))
+        dicRenderData.setdefault("current_month_content", dicConfiguration.get("monthly_stories", {}).get("current", {}).get("content", ""))
+    dicRenderData.setdefault("config_status", strConfigStatus)
+    return render(request, "home.html", dicRenderData)
     
 def showFindPage(request):
     #從 session 取得已登入的 使用者 email

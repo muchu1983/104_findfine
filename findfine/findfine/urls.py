@@ -26,6 +26,7 @@ from django.contrib import admin
 from account import views as account_views
 from trip import views as trip_views
 from page import views as page_views
+from dashboard import views as dashboard_views
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
@@ -65,5 +66,7 @@ urlpatterns = [
     url(r'^page/wishList$', page_views.showWishListPage),
     url(r'^page/myTrip$', page_views.showMyTourPage),
     url(r'^page/tripEdit$', page_views.showTourEditPage),
-    url(r'^page/tripShare$', page_views.showTourSharePage)
+    url(r'^page/tripShare$', page_views.showTourSharePage),
+    #dashboard app
+    url(r'^dashboard/config$', dashboard_views.configSetting),
 ]

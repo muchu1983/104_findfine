@@ -1,0 +1,43 @@
+<html>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+        <title>FindFineTour</title>
+        <!-- jquery and jquery-ui -->
+        <script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
+        <link rel="stylesheet" type="text/css" href="https://code.jquery.com/ui/1.12.0/themes/blitzer/jquery-ui.css">
+        <script src="https://code.jquery.com/ui/1.12.0/jquery-ui.min.js"></script>
+        <!-- dashboard -->
+        <link rel="stylesheet" type="text/css" href="/static/css/dashboard.css">
+        <script type="text/javascript" src="/static/js/dashboard.js"></script>
+        <!-- django csrf token -->
+        <script type="text/javascript">
+            var strCsrfToken = "{{csrf_token}}";
+        </script>
+    </head>
+    <body>
+        <h2>FFT Dashboard</h2>
+        <div class="monthlyStoriesDiv">
+            <div class="monthlyStory">
+                <span class="ms_head">current monthly story</span>
+                <span class="ms_imgurl">image url:</span>
+                <input class="ms_imgurl_input" id="currentMonthImgUrl" value={{current_month_img_url}}></input>
+                <span class="ms_title">title:</span>
+                <input class="ms_title_input" id="currentMonthTitle" value={{current_month_title}}></input>
+                <span class="ms_content">content:</span>
+                <textarea class="ms_content_area" id="currentMonthContent">{{current_month_content}}</textarea>
+            </div>
+        </div>
+        <div class="recommendedTripDiv">
+        </div>
+        <div class="dashboardStatusDiv">
+            {{config_status}}
+        </div>
+        <div class="adminDataDiv">
+            <span class="admin_password">Admin password:</span>
+            <input class="admin_password_input" id="admin_password" type="password"></input>
+        </div>
+        <div class="saveConfigDiv">
+            <a id="saveConfigBtn" class="ui-button ui-widget ui-corner-all" href="javascript: void(0)">Save Configuration</a>
+        </div>
+    </body>
+</html>
