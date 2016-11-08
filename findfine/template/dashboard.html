@@ -38,6 +38,26 @@
             <div id="tabs-2">
                 <h2>recommended trip</h2>
                 <div class="recommendedTripDiv">
+                    <div class="rt_search">
+                        <span class="rt_search_keyword">keyword:</span>
+                        <input id="keywordInput" class="rt_search_input"></input>
+                        <a id="searchTripBtn" class="ui-button ui-widget ui-corner-all" href="javascript: void(0)">Find</a>
+                    </div>
+                    <table class="tripPickerDiv">
+                        <tr>
+                            <td>
+                                <select id="searchResultSelect" class="picker_select" multiple="multiple" size="10"></select>
+                            </td>
+                            <td>
+                                <input type="button" value="&gt;"></input>
+                                <br>
+                                <input type="button" value="&lt;"></input>
+                            </td>
+                            <td>
+                                <select class="picker_select" multiple="multiple" size="10"></select>
+                            </td>
+                        </tr>
+                    </table>
                 </div>
             </div>
         </div>

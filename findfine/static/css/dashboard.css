@@ -110,6 +110,51 @@
     overflow: hidden;
     float: left;
 }
+.recommendedTripDiv>.rt_search>.rt_search_keyword{
+    position: absolute;
+    width: 20%;
+    left: 10px;
+    top: 10px;
+    font-size: 20px;
+    text-align: left;
+    color: #ffffff;
+}
+.recommendedTripDiv>.rt_search>.rt_search_input{
+    position: absolute;
+    width: 50%;
+    left: 100px;
+    top: 10px;
+    font-size: 20px;
+    text-align: left;
+    color: #000000;
+}
+.recommendedTripDiv>.rt_search>#searchTripBtn{
+    position: absolute;
+    width: 10%;
+    left: 70%;
+    top: 10px;
+    font-size: 16px;
+    text-align: left;
+    color: #000000;
+}
+.recommendedTripDiv>.tripPickerDiv{
+    position: relative;
+    width: 90%;
+    height: 280px;
+    top: 60px;
+    left: 10px;
+    z-index: 0;
+    border-radius: 5px;
+    background-color: rgba(4, 25, 39, 0.3);
+    overflow: hidden;
+}
+.recommendedTripDiv>.tripPickerDiv .picker_select{
+    width: 200px;
+    height: 260px;
+    z-index: 0;
+    border-radius: 5px;
+    overflow: scroll;
+}
 .dashboardStatusDiv{
     position: relative;
     width: 90%;
