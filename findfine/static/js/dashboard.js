@@ -3,6 +3,10 @@
     $(document).ready(initDashboard);
     
     function initDashboard(){
+        //nav tab
+        $("#nav_tabs").tabs();
+        $("#nav_tabs li").removeClass("ui-corner-top");
+        //儲存設定
         $("#saveConfigBtn").click(function(){
             //收集管理資料
             var strAdminPassword = $("#admin_password").val();

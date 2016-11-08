@@ -1,12 +1,39 @@
+.ui-tabs-vertical { 
+    width: 80%;
+}
+.ui-tabs-vertical .ui-tabs-nav {
+    padding: .2em .1em .2em .2em;
+    float: left;
+    width: 12em;
+}
+.ui-tabs-vertical .ui-tabs-nav li {
+    clear: left;
+    width: 100%;
+    border-bottom-width: 1px !important;
+    border-right-width: 0 !important;
+    margin: 0 -1px .2em 0;
+}
+.ui-tabs-vertical .ui-tabs-nav li a {
+    display:block;
+}
+.ui-tabs-vertical .ui-tabs-nav li.ui-tabs-active {
+    padding-bottom: 0;
+    padding-right: .1em;
+    border-right-width: 1px;
+}
+.ui-tabs-vertical .ui-tabs-panel {
+    padding: 1em;
+    float: left;
+    width: 40em;
+}
 .monthlyStory{
     position: relative;
-    width: 40%;
+    width: 100%;
     height: 360px;
     z-index: 0;
     border-radius: 5px;
     background-color: rgba(4, 25, 39, 0.3);
     overflow: hidden;
-    float: left;
 }
 .monthlyStory>.ms_head{
     position: absolute;
@@ -74,7 +101,7 @@
 }
 .recommendedTripDiv{
     position: relative;
-    width: 60%;
+    width: 100%;
     height: 360px;
     left: 5px;
     z-index: 0;
@@ -87,7 +114,7 @@
     position: relative;
     width: 90%;
     left: 5%;
-    top: 5px;
+    top: 0px;
     height: 20px;
     z-index: 0;
     background-color: rgba(4, 25, 39, 0.3);
@@ -100,7 +127,7 @@
     position: relative;
     width: 90%;
     left: 5%;
-    top: 5px;
+    top: 0px;
     height: 40px;
     z-index: 0;
     background-color: rgba(4, 25, 39, 0.3);
@@ -128,7 +155,7 @@
     position: relative;
     width: 90%;
     left: 5%;
-    top: 5px;
+    top: 0px;
     height: 50px;
     z-index: 0;
     background-color: rgba(4, 25, 39, 0.3);
