@@ -51,6 +51,7 @@
             console.log(jsonResp);
             //trip data
             var lstDicTripData = jsonResp["trip"];
+            $("#searchResultSelect").html("");
             for (i = 0; i < lstDicTripData.length; i++) {
                 var dicTripData = lstDicTripData[i];
                 strTripOptionHtml = getTripOptionHtml(dicTripData["strTitle"], dicTripData["intId"]);
