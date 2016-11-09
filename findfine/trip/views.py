@@ -46,8 +46,17 @@ def tripFilter(request=None):
     lstDicTripData = []
     qsetMatchedTrip = Trip.objects.all().filter()
     if strKeyword:
-        queryKeyword = Q(strTitle__iregex="^.*%s.*$"%strKeyword) | Q(strLocation__iregex="^.*%s.*$"%strKeyword)
-        qsetMatchedTrip = qsetMatchedTrip.filter(queryKeyword)
+        #將 strKeyword 以空白或逗號分開為數個 strKeywordPart
+        lstStrKeywordPart = []
+        if " " in strKeyword:
+            lstStrKeywordPart = strKeyword.split(" ")
+        elif "," in strKeyword:
+            lstStrKeywordPart = strKeyword.split(",")
+        else:
+            lstStrKeywordPart = [strKeyword]
+        for strKeywordPart in lstStrKeywordPart:
+            queryKeyword = Q(strTitle__iregex="^.*%s.*$"%strKeywordPart) | Q(strLocation__iregex="^.*%s.*$"%strKeywordPart)
+            qsetMatchedTrip = qsetMatchedTrip.filter(queryKeyword)
     if strStyle:
         qsetMatchedTrip = qsetMatchedTrip.filter(strStyle__iregex="^.*%s.*$"%strStyle)
     if strGuideLanguage:
