@@ -51,6 +51,7 @@ urlpatterns = [
     url(r'^trip/getTripPlanItem$', trip_views.getCustomizedTripPlanItem),
     url(r'^trip/addTripPlanItem$', trip_views.addCustomizedTripPlanItem),
     url(r'^trip/removeTripPlanItem$', trip_views.removeCustomizedTripPlanItem),
+    url(r'^trip/recommended$', trip_views.recommendedTrip),
     #page app
     url(r'^$', page_views.showHomePage),
     url(r'^page/home$', page_views.showHomePage),

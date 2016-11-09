@@ -7,6 +7,7 @@ This file is part of BSD license
 <https://opensource.org/licenses/BSD-3-Clause>
 """
 import datetime
+import json
 from django.utils import timezone
 from django.shortcuts import render
 from django.shortcuts import redirect
@@ -17,6 +18,7 @@ from trip.models import ExRate
 from trip.models import FavoriteTrip
 from trip.models import CustomizedTripPlan
 from trip.models import CustomizedTripPlanItem
+from dashboard.models import JsonDocument
 from account.models import UserAccount
 from itertools import chain
 from geopy.geocoders import GoogleV3
@@ -80,6 +82,35 @@ def tripFilter(request=None):
         }
     }
     return JsonResponse(dicFilterResultJson, safe=False)
+    
+#推薦行程
+def recommendedTrip(request=None):
+    #從 session 取得使用者的幣別匯率資訊
+    strUserCurrency = getUserCurrencyFromSession(request=request)
+    matchedExRate = ExRate.objects.get(strCurrencyName=strUserCurrency)
+    fUsdToUserCurrencyExRate = matchedExRate.fUSDollar
+    dicRecommendedResultJson = {}
+    lstDicTripData = []
+    #取得後台設定
+    strConfigStatus = ""
+    qsetConfigJson = JsonDocument.objects.filter(strDocumentName="config")
+    if len(qsetConfigJson) == 0:
+        strConfigStatus = "can not find config json document"
+    else:
+        strJsonValue = qsetConfigJson[0].strJsonValue
+        dicConfiguration = json.loads(strJsonValue)
+        strConfigStatus = "got config json document"
+        lstStrRecommendedTripId = dicConfiguration.get("lstStrRecommendedTripId", [])
+        for strRecommendedTripId in lstStrRecommendedTripId:
+            intRecommendedTripId = int(strRecommendedTripId.strip())
+            qsetMatchedTrip = Trip.objects.all().filter(id=intRecommendedTripId)
+            for matchedTrip in qsetMatchedTrip:
+                dicTripData = convertTripDataToJsonDic(request=request, matchedTrip=matchedTrip, fUsdToUserCurrencyExRate=fUsdToUserCurrencyExRate)
+                lstDicTripData.append(dicTripData)
+        dicRecommendedResultJson = {
+            "trip":lstDicTripData,
+        }
+    return JsonResponse(dicRecommendedResultJson, safe=False)
     
 #轉換 DB trip data 至 http response Json 物件
 def convertTripDataToJsonDic(request=None, matchedTrip=None, fUsdToUserCurrencyExRate=0.0):

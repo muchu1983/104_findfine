@@ -96,6 +96,29 @@
         });
     };
     
+    //讀取目前的推薦行程
+    function loadRecommended() {
+        //filter api
+        var strKeyword = $("#keywordInput").val();
+        var strFilterQueryUrl = "/trip/filter?";
+        //keyword
+        if (strKeyword != "") {
+            strFilterQueryUrl = strFilterQueryUrl + "&keyword=" + strKeyword;
+        };
+        console.log(strFilterQueryUrl);
+        $.getJSON(strFilterQueryUrl, function(jsonResp) {
+            console.log(jsonResp);
+            //trip data
+            var lstDicTripData = jsonResp["trip"];
+            $("#searchResultSelect").html("");
+            for (i = 0; i < lstDicTripData.length; i++) {
+                var dicTripData = lstDicTripData[i];
+                strTripOptionHtml = getTripOptionHtml(dicTripData["strTitle"], dicTripData["intId"]);
+                $("#searchResultSelect").append(strTripOptionHtml);
+            };
+        });
+    };
+    
     //組成 select option 的 html 字串
     function getTripOptionHtml(strTitle, strIntId){
         var strTripOptionHtml = [
