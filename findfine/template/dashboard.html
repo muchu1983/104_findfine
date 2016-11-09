@@ -19,7 +19,8 @@
         <div id="nav_tabs" class="ui-tabs-vertical ui-helper-clearfix">
             <ul>
                 <li class="ui-corner-left"><a href="#tabs-1">monthly story</a></li>
-                <li class="ui-corner-left"><a href="#tabs-2">recommended trip</a></li>
+                <li class="ui-corner-left"><a href="#tabs-2">recommended tour</a></li>
+                <li class="ui-corner-left"><a href="#tabs-3">analysis report</a></li>
             </ul>
             <div id="tabs-1">
                 <h2>monthly story</h2>
@@ -49,15 +50,21 @@
                                 <select id="searchResultSelect" class="picker_select" multiple="multiple" size="10"></select>
                             </td>
                             <td>
-                                <input type="button" value="&gt;"></input>
+                                <input id="pickBtn" type="button" value="&gt;"></input>
                                 <br>
-                                <input type="button" value="&lt;"></input>
+                                <input id="unpickBtn" type="button" value="&lt;"></input>
                             </td>
                             <td>
-                                <select class="picker_select" multiple="multiple" size="10"></select>
+                                <select id="pickedResultSelect" class="picker_select" multiple="multiple" size="10"></select>
                             </td>
                         </tr>
                     </table>
+                </div>
+            </div>
+            <div id="tabs-3">
+                <h2>analysis report</h2>
+                <div class="analysisReportDiv">
+                    to be continued...
                 </div>
             </div>
         </div>

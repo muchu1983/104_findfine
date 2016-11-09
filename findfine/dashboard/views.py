@@ -34,6 +34,8 @@ def configSetting(request):
         strCurrentMonthImgUrl = request.POST.get("current_month_img_url", "")
         strCurrentMonthTitle = request.POST.get("current_month_title", "")
         strCurrentMonthContent = request.POST.get("current_month_content", "")
+        strRecommendedTripId = request.POST.get("recommended_trip_id", "")
+        lstStrRecommendedTripId = list(set(strRecommendedTripId.strip(",").split(",")))
         if strAdminPassword and strAdminPassword == "a768768a":
             dicConfiguration = {
                 "monthly_stories":{
@@ -43,8 +45,7 @@ def configSetting(request):
                         "image_url":strCurrentMonthImgUrl
                     },
                 },
-                "lstRecommendedTripId":[
-                ],
+                "lstStrRecommendedTripId":lstStrRecommendedTripId,
             }
             strJsonData = json.dumps(dicConfiguration, ensure_ascii=False, indent=4, sort_keys=True)
             JsonDocument.objects.update_or_create(
