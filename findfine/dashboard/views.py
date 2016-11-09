@@ -31,11 +31,16 @@ def configSetting(request):
         return render(request, "dashboard.html", dicRenderData)
     elif request.method == "POST":
         strAdminPassword = request.POST.get("admin_password", None)
+        #每月文章
         strCurrentMonthImgUrl = request.POST.get("current_month_img_url", "")
         strCurrentMonthTitle = request.POST.get("current_month_title", "")
         strCurrentMonthContent = request.POST.get("current_month_content", "")
+        #推薦行程
         strRecommendedTripId = request.POST.get("recommended_trip_id", "")
-        lstStrRecommendedTripId = list(set(strRecommendedTripId.strip(",").split(",")))
+        lstStrRecommendedTripId = []
+        if strRecommendedTripId and strRecommendedTripId != "":
+            lstStrRecommendedTripId = list(set(strRecommendedTripId.strip(",").split(",")))
+        #檢查管理員資料並組合 json document
         if strAdminPassword and strAdminPassword == "a768768a":
             dicConfiguration = {
                 "monthly_stories":{

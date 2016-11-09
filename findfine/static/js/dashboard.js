@@ -4,7 +4,8 @@
     
     //初始化 dashboard
     function initDashboard(){
-        initRecommendedTrip();
+        initRecommendedTripTab();
+        loadCurrentRecommendedTrip();
         //nav tab
         $("#nav_tabs").tabs();
         $("#nav_tabs li").removeClass("ui-corner-top");
@@ -40,7 +41,7 @@
     };
     
     //初始化 推薦行程
-    function initRecommendedTrip(){
+    function initRecommendedTripTab(){
         //搜尋
         $("#searchTripBtn").click(function(){
             searchKeyword();
@@ -97,24 +98,19 @@
     };
     
     //讀取目前的推薦行程
-    function loadRecommended() {
-        //filter api
-        var strKeyword = $("#keywordInput").val();
-        var strFilterQueryUrl = "/trip/filter?";
-        //keyword
-        if (strKeyword != "") {
-            strFilterQueryUrl = strFilterQueryUrl + "&keyword=" + strKeyword;
-        };
-        console.log(strFilterQueryUrl);
-        $.getJSON(strFilterQueryUrl, function(jsonResp) {
+    function loadCurrentRecommendedTrip() {
+        //recommended api
+        var strRecommendedQueryUrl = "/trip/recommended";
+        console.log(strRecommendedQueryUrl);
+        $.getJSON(strRecommendedQueryUrl, function(jsonResp) {
             console.log(jsonResp);
             //trip data
             var lstDicTripData = jsonResp["trip"];
-            $("#searchResultSelect").html("");
+            $("#pickedResultSelect").html("");
             for (i = 0; i < lstDicTripData.length; i++) {
                 var dicTripData = lstDicTripData[i];
                 strTripOptionHtml = getTripOptionHtml(dicTripData["strTitle"], dicTripData["intId"]);
-                $("#searchResultSelect").append(strTripOptionHtml);
+                $("#pickedResultSelect").append(strTripOptionHtml);
             };
         });
     };
