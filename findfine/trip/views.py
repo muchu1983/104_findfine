@@ -32,6 +32,7 @@ def tripFilter(request=None):
     # query 資訊
     intPageIndex = int(request.GET.get("page", "1"))
     strKeyword = request.GET.get("keyword", None)
+    strAttractions = request.GET.get("attractions", None)
     strMinBudget = request.GET.get("min_budget", None)
     strMaxBudget = request.GET.get("max_budget", None)
     strDateFrom = request.GET.get("date_from", None)
@@ -57,6 +58,8 @@ def tripFilter(request=None):
         for strKeywordPart in lstStrKeywordPart:
             queryKeyword = Q(strTitle__iregex="^.*%s.*$"%strKeywordPart) | Q(strLocation__iregex="^.*%s.*$"%strKeywordPart)
             qsetMatchedTrip = qsetMatchedTrip.filter(queryKeyword)
+    if strAttractions:
+        qsetMatchedTrip = qsetMatchedTrip.filter(strAttrations__iregex="^.*%s.*$"%strAttractions)
     if strStyle:
         qsetMatchedTrip = qsetMatchedTrip.filter(strStyle__iregex="^.*%s.*$"%strStyle)
     if strGuideLanguage:
