@@ -18,7 +18,7 @@ from findfine_crawler.utility import Utility as FfUtility
 """
 將 product.json 內容存入 MySQL DB
 """
-class ImporterForCITYDISCOVERY:
+class ImporterForWITHLOCALS:
     #建構子
     def __init__(self):
         self.ffUtil = FfUtility()
@@ -30,7 +30,7 @@ class ImporterForCITYDISCOVERY:
     #取得 importer 使用資訊
     def getUseageMessage(self):
         return (
-            "- CITY-DISCOVERY -\n"
+            "- Withlocals -\n"
             "useage:\n"
             "import - import product.json to database \n"
         )
@@ -47,9 +47,9 @@ class ImporterForCITYDISCOVERY:
     #import product.json to MySQL DB
     def importProductJsonToDb(self, uselessArg1=None):
         #設定 City-Discovery trip 資料的 status 為 out-of-date
-        self.db.setTripDataStatusAsOutOfDate(strSource="City-Discovery")
+        self.db.setTripDataStatusAsOutOfDate(strSource="Withlocals")
         #讀取 json 檔
-        strBasedir = self.filesysUtil.getPackageResourcePath(strPackageName="findfine_crawler.resource.parsed_json", strResourceName="city_discovery")
+        strBasedir = self.filesysUtil.getPackageResourcePath(strPackageName="findfine_crawler.resource.parsed_json", strResourceName="withlocals")
         lstStrProductJsonFilePath = self.ffUtil.getFilePathListWithSuffixes(strBasedir=strBasedir, strSuffixes="_product.json")
         for strProductJsonFilePath in lstStrProductJsonFilePath:
             logging.info("read %s"%strProductJsonFilePath)

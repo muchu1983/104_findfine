@@ -9,16 +9,16 @@ This file is part of BSD license
 import unittest
 import logging
 import json
-from findfine_crawler.importerForCITYDISCOVERY import ImporterForCITYDISCOVERY
+from findfine_crawler.importerForWITHLOCALS import ImporterForWITHLOCALS
 """
-測試 City-Discovery product.json 資料 import 至 DB
+測試 Withlocals product.json 資料 import 至 DB
 """
-class ImporterForCITYDISCOVERYTest(unittest.TestCase):
+class ImporterForWITHLOCALSTest(unittest.TestCase):
 
     #準備
     def setUp(self):
         logging.basicConfig(level=logging.INFO)
-        self.importer = ImporterForCITYDISCOVERY()
+        self.importer = ImporterForWITHLOCALS()
         
     #收尾
     def tearDown(self):
@@ -26,7 +26,7 @@ class ImporterForCITYDISCOVERYTest(unittest.TestCase):
     
     #測試 import product.json to db
     def test_import(self):
-        logging.info("ImporterForCITYDISCOVERYTest.test_import")
+        logging.info("ImporterForWITHLOCALSTest.test_import")
         self.importer.importProductJsonToDb()
     
 #測試開始

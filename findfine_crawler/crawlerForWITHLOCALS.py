@@ -67,13 +67,13 @@ class CrawlerForWITHLOCALS:
             dicProductJson["strSource"] = "Withlocals"
             #strOriginUrl
             dicProductJson["strOriginUrl"] = soupProduct.Deeplinks.Product.string.strip()
-            """
             #strUpdateStatus
             dicProductJson["strUpdateStatus"] = "up-to-date"
             #strUpdateTime
             dicProductJson["strUpdateTime"] = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
             #strImageUrl
-            dicProductJson["strImageUrl"] = soupProduct.bigImage.string.strip()
+            dicProductJson["strImageUrl"] = soupProduct.Images.Img.URL.string.strip()
+            """
             #strTitle
             dicProductJson["strTitle"] = soupProduct.tourName.string.strip()
             #strLocation
