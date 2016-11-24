@@ -8,7 +8,7 @@ This file is part of BSD license
 """
 import unittest
 import logging
-from cameo.utility import Utility
+from findfine_crawler.utility import Utility
 """
 測試 Utility
 """
@@ -23,6 +23,11 @@ class UtilityTest(unittest.TestCase):
     def tearDown(self):
         pass
     
+    #測試 取得 1美元 對 指定幣別 的匯率
+    def test_getUsdExrate(self):
+        self.assertTrue(self.utility.getUsdExrate(strCurrency="TWD") > 0)
+        self.assertTrue(self.utility.getUsdExrate(strCurrency="JPY") > 0)
+        self.assertTrue(self.utility.getUsdExrate(strCurrency="EUR") > 0)
     
 #測試開始
 if __name__ == "__main__":

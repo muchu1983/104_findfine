@@ -73,31 +73,32 @@ class CrawlerForWITHLOCALS:
             dicProductJson["strUpdateTime"] = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
             #strImageUrl
             dicProductJson["strImageUrl"] = soupProduct.Images.Img.URL.string.strip()
-            """
             #strTitle
-            dicProductJson["strTitle"] = soupProduct.tourName.string.strip()
+            dicProductJson["strTitle"] = soupProduct.Details.Title.string.strip()
             #strLocation
-            setStrLocation = {soupProduct.tourCity.string.strip(), soupProduct.tourCountry.string.strip()}
-            if None in setStrLocation:
-                setStrLocation.remove(None)
-            dicProductJson["strLocation"] = ",".join(setStrLocation)
+            lstSoupLocationProperty = soupProduct.Properties.find_all("Property", attrs={"Title": "CF_city"})
+            strLocation = ""
+            if len(lstSoupLocationProperty) > 0:
+                strLocation = lstSoupLocationProperty[0]["Text"]
+            dicProductJson["strLocation"] = strLocation
             #intUsdCost
-            dicProductJson["intUsdCost"] = int(float(soupProduct.minPrice.string.strip()))
+            strEurCost = re.search("([\d\.]+) EUR", soupProduct.Price.DisplayPrice.string.strip()).group(1)
+            fUsdEurExrate = self.ffUtil.getUsdExrate(strCurrency="EUR")
+            dicProductJson["intUsdCost"] = int(float(strEurCost.strip())/fUsdEurExrate)
             #intReviewStar
             dicProductJson["intReviewStar"] = 5
             #intReviewVisitor
             dicProductJson["intReviewVisitor"] = 1
             #strIntroduction
-            dicProductJson["strIntroduction"] = soupProduct.highlights.string.strip()
+            dicProductJson["strIntroduction"] = soupProduct.Details.DescriptionShort.string.strip()
             #intDurationHour
-            dicProductJson["intDurationHour"] = self.convertDurationStringToHourInt(strDurtation=soupProduct.duration.string.strip())
+            dicProductJson["intDurationHour"] = 3
             #strGuideLanguage
             dicProductJson["strGuideLanguage"] = "english"
             #strStyle
-            dicProductJson["strStyle"] = soupProduct.tourType.string.strip()
+            dicProductJson["strStyle"] = None
             #intOption
-            #dicProductJson["intOption"] = -1
-            """
+            dicProductJson["intOption"] = None
             #加入資料至 json
             self.lstDicParsedProductJson.append(dicProductJson)
             #每5000筆寫入一次 json
@@ -129,23 +130,6 @@ class CrawlerForWITHLOCALS:
                 soup = BeautifulSoup(xmlFile.read(), "xml")
             soupProduct = soup.Products.find("Product")
             return soupProduct
-            
-    #轉換 duration 資訊
-    def convertDurationStringToHourInt(self, strDurtation=None):
-        intDefaultDuration = 1
-        if not strDurtation or ("hour" not in strDurtation and "day" not in strDurtation):
-            return intDefaultDuration
-        else:
-            intTotalDurationHour = 0
-            mDurationHour = re.match("([\d]+) hour", strDurtation)
-            mDurationDay = re.match("([\d]+) day", strDurtation)
-            if mDurationHour:
-                intDurationHour = int(float(mDurationHour.group(1)))
-                intTotalDurationHour = intTotalDurationHour + intDurationHour
-            if mDurationDay:
-                intDurationDay = int(float(mDurationDay.group(1)))
-                intTotalDurationHour = intTotalDurationHour + (intDurationDay*24)
-            return intTotalDurationHour
             
     #下載 affilinet_products_5489_775266.xml
     def downloadAffilinetProductsXml(self, uselessArg1=None):

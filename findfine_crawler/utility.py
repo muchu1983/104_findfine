@@ -17,7 +17,7 @@ class Utility:
     
     #建構子
     def __init__(self):
-        pass
+        self.filesysUtil = FileSystemUtility()
     
     #儲存檔案
     def overwriteSaveAs(self, strFilePath=None, unicodeData=None):
@@ -73,4 +73,17 @@ class Utility:
         dtCTime = datetime.datetime.fromtimestamp(fCTimeStamp)
         strCTime = dtCTime.strftime("%Y-%m-%d")
         return strCTime
+        
+    #取得 1美元 對 指定幣別 的匯率
+    def getUsdExrate(self, strCurrency=None):
+        strJsonPackageName = "findfine_crawler.resource.parsed_json.exrate"
+        strJsonFileName = "yahoo_currency.json"
+        strExRateJsonFilePath = self.filesysUtil.getPackageResourcePath(strPackageName=strJsonPackageName, strResourceName=strJsonFileName)
+        lstDicExRateData = self.readObjectFromJsonFile(strJsonFilePath=strExRateJsonFilePath)
+        fUSDollar = 0.0
+        for dicExRateData in lstDicExRateData:
+            if strCurrency == dicExRateData.get("strCurrencyName", None):
+                fUSDollar = dicExRateData.get("fUSDollar", 0.0)
+                break
+        return fUSDollar
         

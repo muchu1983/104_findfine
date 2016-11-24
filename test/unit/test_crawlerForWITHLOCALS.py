@@ -44,16 +44,7 @@ class CrawlerForWITHLOCALSTest(unittest.TestCase):
     def test_crawlAffilinetProductsXml(self):
         logging.info("CrawlerForWITHLOCALSTest.test_crawlAffilinetProductsXml")
         self.crawler.crawlAffilinetProductsXml()
-    """
-    #測試 轉換 duration 資訊
-    def test_convertDurationStringToHourInt(self):
-        logging.info("CrawlerForWITHLOCALSTest.test_convertDurationStringToHourInt")
-        self.assertTrue(self.crawler.convertDurationStringToHourInt(strDurtation="Flexible")>0)
-        self.assertTrue(self.crawler.convertDurationStringToHourInt(strDurtation="2 hours")>0)
-        self.assertTrue(self.crawler.convertDurationStringToHourInt(strDurtation="3 hours 30 minutes")>0)
-        self.assertTrue(self.crawler.convertDurationStringToHourInt(strDurtation="1 day")>0)
-        self.assertTrue(self.crawler.convertDurationStringToHourInt(strDurtation="2 days")>0)
-    """
+    
 #測試開始
 if __name__ == "__main__":
     unittest.main(exit=False)
