@@ -22,6 +22,8 @@ from findfine_crawler.crawlerForVOYAGIN import CrawlerForVOYAGIN
 from findfine_crawler.importerForVOYAGIN import ImporterForVOYAGIN
 from findfine_crawler.crawlerForGYG import CrawlerForGYG
 from findfine_crawler.importerForGYG import ImporterForGYG
+from findfine_crawler.crawlerForWITHLOCALS import CrawlerForWITHLOCALS
+from findfine_crawler.importerForWITHLOCALS import ImporterForWITHLOCALS
 from findfine_crawler.crawlerForExRate import CrawlerForExRate
 from findfine_crawler.importerForExRate import ImporterForExRate
 """
@@ -42,6 +44,7 @@ class FindfineShell:
             "tripbaa":CrawlerForTRIPBAA(),
             "voyagin":CrawlerForVOYAGIN(),
             "gyg":CrawlerForGYG(),
+            "withlocals":CrawlerForWITHLOCALS(),
             "exrate":CrawlerForExRate()
         }
         
@@ -54,6 +57,7 @@ class FindfineShell:
             "tripbaa":ImporterForTRIPBAA(),
             "voyagin":ImporterForVOYAGIN(),
             "gyg":ImporterForGYG(),
+            "withlocals":ImporterForWITHLOCALS(),
             "exrate":ImporterForExRate()
         }
         

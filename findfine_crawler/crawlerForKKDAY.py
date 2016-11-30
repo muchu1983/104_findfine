@@ -181,9 +181,10 @@ class CrawlerForKKDAY:
         strLocation = re.sub("The location：", "", strLocation)
         dicProductJson["strLocation"] = strLocation.strip()
         #intUsdCost
-        strUsdCostText = self.driver.find_element_by_css_selector("div.lowestPrice div.text-right h2.h1").text
-        strUsdCostText = re.sub("[^\d]", "", strUsdCostText.strip())
-        dicProductJson["intUsdCost"] = int(int(strUsdCostText)/31.735)
+        strTwdCostText = self.driver.find_element_by_css_selector("div.lowestPrice div.text-right h2.h1").text
+        strTwdCostText = re.sub("[^\d]", "", strTwdCostText.strip())
+        fUsdTwdExrate = self.ffUtil.getUsdExrate(strCurrency="TWD")
+        dicProductJson["intUsdCost"] = int(int(strTwdCostText)/fUsdTwdExrate)
         #intReviewStar
         elesStarI = self.driver.find_elements_by_css_selector("div.div-star span.h5 i.fa-star.text-primary")
         dicProductJson["intReviewStar"] = len(elesStarI)

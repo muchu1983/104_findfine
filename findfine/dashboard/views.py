@@ -63,3 +63,7 @@ def configSetting(request):
         else:
             strStatus = "admin password error"
         return JsonResponse({"config_status":strStatus, "config_data":dicConfiguration}, safe=False)
+
+#記錄 使用者動態
+def recordVisitorAction(request):
+    return JsonResponse({"record_status":"okay"}, safe=False)

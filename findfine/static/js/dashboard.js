@@ -6,6 +6,7 @@
     function initDashboard(){
         initRecommendedTripTab();
         loadCurrentRecommendedTrip();
+        initAnalysisReportTab();
         //nav tab
         $("#nav_tabs").tabs();
         $("#nav_tabs li").removeClass("ui-corner-top");
@@ -40,7 +41,7 @@
         });
     };
     
-    //初始化 推薦行程
+    //初始化 推薦行程 Tab
     function initRecommendedTripTab(){
         //搜尋
         $("#searchTripBtn").click(function(){
@@ -123,6 +124,17 @@
             "</option>"
         ].join("");
         return strTripOptionHtml;
+    };
+    
+    //初始化 分析報告 Tab
+    function initAnalysisReportTab(){
+        $(".recordable").click(function(){
+            strRecordVisitorActionUrl = "/dashboard/recordVisitorAction";
+            console.log($(this).attr("href"))
+            $.getJSON(strRecordVisitorActionUrl, function(jsonResp) {
+                console.log(jsonResp);
+            });
+        });
     };
     
 })(jQuery);
