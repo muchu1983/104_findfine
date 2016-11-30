@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<!-- TODO 有@記號 需改成連結  hinet 設定網址 不要home-->
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link href="../static/vendor/bootstrap-select/dist/css/bootstrap-select.min.css" rel="stylesheet">
+    <!-- Custom Fonts -->
+    <link href="../static/vendor/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+    <link href='https://fonts.googleapis.com/css?family=Raleway:400,600' rel='stylesheet' type='text/css'>
+    <link href='https://fonts.googleapis.com/css?family=Caudex|Cormorant+Garamond' rel='stylesheet' type='text/css'>
+    <!-- custom CSS -->
+    <link href="../static/css/custom.css" rel="stylesheet">
+    <link href="../static/css/bootstrapCustom.css" rel="stylesheet">
+    <!-- jQuery core-->
+    <script src="../static/vendor/jquery/dist/jquery.min.js"></script>
+    <!-- ripple-button -->
+    <link rel="stylesheet" href="../static/vendor/ripple/css/style.css">
+    <script src="../static/js/test.js"></script>
+    <!-- google font Roboto -->
+    <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
+    <style type="text/css">
+    body {
+        background-color: #999999;
+    }
+    
+    .put_blk {
+        position: relative;
+        width: 300px;
+        background-color: white;
+        float: left;
+    }
+    
+    .put_get_blk {
+        position: relative;
+        width: 100%;
+        height: 100px;
+        border: solid 1px #eeeeee;
+        -webkit-transition: all 0.3s;
+        -moz-transition: all 0.3s;
+        transition: all 0.3s;
+    }
+    
+    .put_get_blk.over {
+        background-color: #eeeeee;
+    }
+    
+    .drag_blk {
+        float: right;
+        width: 300px;
+        background: white;
+        cursor: pointer;
+    }
+    
+    .drag_ele {
+        position: absolute;
+        width: 200px;
+        height: 50px;
+        background-color: white;
+        border: solid 1px #eeeeee;
+    }
+    .drag_ele.backing {
+        -webkit-transition: all 0.3s;
+        -moz-transition: all 0.3s;
+        transition: all 0.3s;
+    }
+    
+    .drag_blk>.drag_ele>.color_blk {
+        width: 20px;
+        height: 20px;
+        display: block;
+        float: left;
+    }
+    </style>
+</head>
+
+<body>
+    <div class="put_blk">
+        <div class="put_get_blk"></div>
+        <div class="put_get_blk"></div>
+        <div class="put_get_blk"></div>
+        <div class="put_get_blk"></div>
+    </div>
+    <div class="drag_blk">
+        <div class="drag_ele">
+            <span class="name">orange</span>
+            <span class="color_blk" style="background-color: orange"></span>
+        </div>
+        <div class="drag_ele" style="top:50px;">
+            <span class="name">red</span>
+            <span class="color_blk" style="background-color: red"></span>
+        </div>
+    </div>
+</body>
+
+</html>

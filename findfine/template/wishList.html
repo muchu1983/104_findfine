@@ -24,6 +24,8 @@
     <link href="/static/css/custom.css" rel="stylesheet">
     <!-- jQuery core-->
     <script src="/static/vendor/jquery/dist/jquery.min.js"></script>
+    <!-- google map api -->
+    <script src="https://maps.googleapis.com/maps/api/js?v=3&sensor=false&signed_in=true&language=en&amp;libraries=places&key=AIzaSyBNW1g69sGY8q_45F0Ob1lMbZn3fWyiL1o"></script>
     <!-- Bootstrap Js -->
     <script src="/static/vendor/bootstrap/dist/js/bootstrap.min.js"></script>
     <!-- Bootstrap SelectPicker Js -->
@@ -51,19 +53,34 @@
 
 <body id="page-top">
     <nav id="mainNav" class="navbar navbar-default navbar-custom navbar-fixed-top">
+        <div class="toolbox_blk">
+        </div>
         <div class="container">
+            <div id="headBtn" class="head_btn" style="background-image: url(/static/img/head_sample.jpg);">
+                <div class="head_menu" id="headMenu">
+                    <img src="/static/img/blk_triangle.png" class="triangle">
+                    <div class="noti_blk">
+                        <div class="noti">這是訊息一</div>
+                        <div class="noti">這是訊息二</div>
+                        <div class="noti">這是訊息三這是訊息三這是訊息三這是訊息三這是訊息三這是訊息三這是訊息三這是訊息三</div>
+                        <div class="noti">這是訊息四</div>
+                    </div>
+                    <div id="logOut" class="logout_btn">log Out</div>
+                </div>
+                <div class="noti_ing"></div>
+            </div>
             <!-- Brand and toggle get grouped for better mobile display -->
             <div class="navbar-header page-scroll">
-                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
-                    <span class="sr-only">Toggle navigation</span> Menu <i class="fa fa-bars"></i>
-                </button>
-                <a class="icon-logo" href="#page-top"></a>
+                <a class="icon-logo" id="logoTop"></a>
                 <div class="mini_searchbar">
                     <span class="icon-magnifier"></span>
-                    <input type="text" name="" placeholder="Where are you going?">
+                    <input type="text" name="" placeholder="Where are you going?" id="topSearch">
                 </div>
             </div>
             <div class="header_btn_blk" id="bs-example-navbar-collapse-1">
+                <div class="toolbox_btn icon-toolbox">
+                    <span class="text">ToolBox</span>
+                </div>
                 <ul class="nav navbar-nav currency_sel_blk">
                     <li class="hidden">
                         <a href="#page-top"></a>
@@ -87,7 +104,7 @@
                 </ul>
                 <div id="wishList" class="header_btn btn-info">
                     <span class="icon_blk">                  
-                            <span class="icon-quill"></span>
+                                <span class="icon-quill"></span>
                     <span class="icon-scroll"></span>
                     <span class="extend_line"></span>
                     </span>
@@ -95,7 +112,7 @@
                 </div>
                 <div id="myPlans" class="header_btn btn-info">
                     <span class="icon_blk">
-                            <span class="icon-airplane"></span>
+                                <span class="icon-airplane"></span>
                     <span class="icon-notebook"></span>
                     <svg class="extend_dotted_line">
                         <g fill="none" stroke="#ffffff" stroke-width="1">
@@ -105,21 +122,59 @@
                     </span>
                     <span class="text">My Plan</span>
                 </div>
-                <!-- <div id="myFriends" class="btn btn-info">my friends</div>
-                    <div id="myMessages" class="btn btn-info">my messages</div> -->
-                <!-- <div id="loginBtn" class="header_btn btn-info">Log In</div> -->
                 <div id="register" class="header_blk_btn hide">Sign Up</div>
                 <div id="loginBtn" class="header_blk_btn hide">Log In</div>
-                <div id="headBtn" class="head_btn" style="background-image: url(/static/img/head_sample.jpg);">
-                    <div class="head_menu">
-                        <div id="logOut">log Out</div>
-                    </div>
-                </div>
+                <div id="padMenuBtn" class="header_menu_btn icon-menu"></div>
+                <div id="mobileMenuBtn" class="header_menu_btn icon-menu"></div>
             </div>
             <!-- /.navbar-collapse -->
         </div>
         <!-- /.container-fluid -->
     </nav>
+    <div class="pad_menu" id="padMenu">
+        <div class="close_btn icon-cancel"></div>
+        <div class="pad_menu_btn" id="padWishlist">
+            <span class="icon icon-wishlist"></span>
+            <span>Wishlist</span>
+        </div>
+        <div class="pad_menu_btn" id="padMyPlan">
+            <span class="icon icon-myplan"></span>
+            <span>My Plan</span>
+        </div>
+    </div>
+    <div class="rename_blk lightbox">
+        <div class="content_blk">
+            <div class="title">Edit Name</div>
+            <input type="text" placeholder="Your Name"></input>
+            <div class="ripple_blk confirm_btn">
+                <button type="button" class="ripple">Confirm</button>
+            </div>
+            <div class="close_btn icon-cancel"></div>
+        </div>
+        <div class="blur_bg"></div>
+    </div>
+    <div class="add_folder_blk lightbox">
+        <div class="content_blk">
+            <div class="title">Create A New Folder</div>
+            <input type="text" placeholder="Folder’s Name"></input>
+            <div class="ripple_blk confirm_btn">
+                <button type="button" class="ripple">Create</button>
+            </div>
+            <div class="close_btn icon-cancel"></div>
+        </div>
+        <div class="blur_bg"></div>
+    </div>
+    <div class="rename_folder_blk lightbox">
+        <div class="content_blk">
+            <div class="title">Rename This Folder</div>
+            <input type="text" placeholder="Folder’s Name"></input>
+            <div class="ripple_blk confirm_btn">
+                <button type="button" class="ripple">Rename</button>
+            </div>
+            <div class="close_btn icon-cancel"></div>
+        </div>
+        <div class="blur_bg"></div>
+    </div>
     <div class="wishlist_top_blk" style="background-image: url(/static/img/sunset_re.jpg);">
         <div class="content_blk">
             <div class="big_head_blk">
@@ -127,9 +182,16 @@
             </div>
             <div class="name_blk">
                 <div class="inner_blk">
-                    <div class="user_name">Tzuyu</div>
-                    <span class="icon-gear"></span>
-                    <ul class="setting_menu"></ul>
+                    <div class="user_name" id="userName">Tzuyu</div>
+                    <span class="icon-gear" id="personelSet"></span>
+                    <ul class="setting_menu">
+                        <li id="editName">Edit name</li>
+                        <li id="newPhoto">
+                            <input type="file" value="Upload New Photo">
+                            <p>Upload New Photo</p>
+                        </li>
+                        <li id="innerLogOut">Log Out</li>
+                    </ul>
                 </div>
             </div>
             <div class="sub_header_blk">
@@ -172,9 +234,25 @@
                 </div>
             </div>
         </div>
+
+        <div class="ing_folder_blk" data-ingfoldEq="0">
+            <div class="back_btn icon-back_arrow"></div>
+            <div class="ing_folder">
+                <p class="ing_back_text">Folders</p>
+                <div class="hori_sepline"></div>
+                <p class="name">Japan</p>
+                <div class="ing_folder_more_blk">
+                    <div class="ing_folder_more_btn icon-more_btn"></div>
+                    <ul class="menu">
+                        <li class="rename_ingfolder_btn">Rename Folder</li>
+                        <li>Remove Folder</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
         <div class="folders">
             <div class="inner_blk">
-                <div class="newfolder">
+                <div class="newfolder" id="addNewFolder">
                     <div class="card">
                         <span class="icon-plus"></span>
                         <p class="text">Create A New Folder</p>
@@ -195,35 +273,36 @@
                         </div>
                     </div>
                     <ul class="menu">
-                        <li>Rename Folder</li>
+                        <li class="rename_folder_btn">Rename Folder</li>
                         <li>Remove Folder</li>
                     </ul>
                 </div>
                 <div class="folder">
                     <div class="card">
                         <div class="pic_blk">
-                            <div class="pic_1" style="background-image: url(/static/img/kyoto-86202_1920.jpg);"></div>
-                            <div class="pic_2" style="background-image: url(/static/img/mickey-mouse-832110_1920.jpg);"></div>
-                            <div class="pic_3" style="background-image: url(/static/img/lanterns-1043416_1920.jpg);"></div>
+                            <div class="empty">
+                                <p class="big_text">Oops ! </p>
+                                <p class="text">This Folder is Empty.</p>
+                            </div>
                         </div>
                         <div class="text_blk">
-                            <div class="folder_name">Japan</div>
+                            <div class="folder_name">@Q@</div>
                             <div class="tour_text">Tour</div>
-                            <div class="tour_qua">53</div>
+                            <div class="tour_qua">0</div>
                             <span class="more_btn icon-more_btn"></span>
                         </div>
                     </div>
                     <ul class="menu">
-                        <li>Rename Folder</li>
+                        <li class="rename_folder_btn">Rename Folder</li>
                         <li>Remove Folder</li>
                     </ul>
                 </div>
             </div>
         </div>
-        <div class="dashed_line"></div>
+        <div class="wish_dashed_line"></div>
     </div>
     <div class="content_blk">
-        <div class="sortedBy sort_blk">
+        <div class="sortedBy sort_blk hide">
             <p class="text">Sort By</p>
             <div class="sort_sel_blk">
                 <div id="sortValBtn" class="left sel">
@@ -251,6 +330,13 @@
                         </li>
                     </ul>
                 </div>
+            </div>
+        </div>
+        <div class="waiting_blk">
+            <div class="waiting">
+                <div class="logo icon-logo"></div>
+                <div class="text">Loading...</div>
+                <div class="shadow"></div>
             </div>
         </div>
         <ul class="wish_blk">

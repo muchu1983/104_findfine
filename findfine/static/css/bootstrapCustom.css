@@ -16,13 +16,6 @@
     padding-right: 0;
 }
 
-.navbar-nav {
-    float: initial;
-    vertical-align: middle;
-    display: inline-block;
-    margin: 0 29px 0 0;
-}
-
 .bootstrap-select.btn-group .dropdown-menu {
     position: absolute;
     top: -3px;

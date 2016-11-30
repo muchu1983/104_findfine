@@ -33,7 +33,8 @@
     <script src="/static/js/custom.js"></script>
     <script src="/static/js/function.js"></script>
     <script src="/static/js/home.js"></script>
-    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBNW1g69sGY8q_45F0Ob1lMbZn3fWyiL1o&signed_in=true&libraries=places&callback=initMap" async defer></script>
+    <!-- <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBNW1g69sGY8q_45F0Ob1lMbZn3fWyiL1o&signed_in=true&libraries=places&callback=initMap" async defer></script> -->
+    <script src="https://maps.googleapis.com/maps/api/js?v=3&sensor=false&amp;libraries=places&key=AIzaSyBNW1g69sGY8q_45F0Ob1lMbZn3fWyiL1o"></script>
     <!-- 低瀏覽器版本相容條件註解 -->
     <!--[if lt IE 9]>
         <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
@@ -58,25 +59,28 @@
 <body id="page-top" class="index">
     <!-- Navigation -->
     <nav id="mainNav" class="navbar navbar-default navbar-custom navbar-fixed-top">
+        <!-- tool可放置於此 -->
+        <div class="toolbox_blk">
+        </div>
         <div class="container">
-            <!-- Brand and toggle get grouped for better mobile display -->
-            <div class="navbar-header page-scroll">
-                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
-                    <span class="sr-only">Toggle navigation</span> Menu <i class="fa fa-bars"></i>
-                </button>
-                <a class="icon-logo" href="#page-top"></a>
-                <div class="mini_searchbar">
-                    <span class="icon-magnifier"></span>
-                    <input id="topSearch" type="text" name="" placeholder="Where are you going?">
-                    <script type="text/javascript">
-                    </script>
+            <div id="headBtn" class="head_btn" style="background-image: url(/static/img/head_sample.jpg);">
+                <div class="head_menu" id="headMenu">
+                    <img src="/static/img/blk_triangle.png" class="triangle">
+                    <div class="noti_blk">
+                        <div class="noti">這是訊息一</div>
+                        <div class="noti">這是訊息二</div>
+                        <div class="noti">這是訊息三這是訊息三這是訊息三這是訊息三這是訊息三這是訊息三這是訊息三這是訊息三</div>
+                        <div class="noti">這是訊息四</div>
+                    </div>
+                    <div id="logOut" class="logout_btn">log Out</div>
                 </div>
+                <div class="noti_ing"></div>
             </div>
-            <div class="header_btn_blk" id="bs-example-navbar-collapse-1">
+            <div class="header_btn_blk adjust" id="bs-example-navbar-collapse-1">
+                <div class="toolbox_btn icon-toolbox">
+                    <span class="text">ToolBox</span>
+                </div>
                 <ul class="nav navbar-nav currency_sel_blk">
-                    <li class="hidden">
-                        <a href="#page-top"></a>
-                    </li>
                     <li>
                         <div class="CurrencyDiv navSelect">
                             <select id="moneySelect" name="" class="bsSelect">
@@ -119,22 +123,33 @@
                 <!-- <div id="loginBtn" class="header_btn btn-info">Log In</div> -->
                 <div id="register" class="header_blk_btn hide">Sign Up</div>
                 <div id="loginBtn" class="header_blk_btn hide">Log In</div>
-                <div id="headBtn" class="head_btn" style="background-image: url(/static/img/head_sample.jpg);">
-                    <div class="head_menu">
-                        <div id="logOut">log Out</div>
-                    </div>
+                <div id="padMenuBtn" class="header_menu_btn icon-menu"></div>
+                <div id="mobileMenuBtn" class="header_menu_btn icon-menu"></div>
+                <div id="noLogHeadBtn" class="head_btn" style="background-image: url(/static/img/head_logout.jpg);">
                 </div>
             </div>
             <!-- /.navbar-collapse -->
         </div>
         <!-- /.container-fluid -->
     </nav>
-    <svg width="1500px" height="257px" class="plane_print">
-        <path class="cover" fill="none" stroke="#ffffff" stroke-width="1" stroke-linecap="square" stroke-dasharray="5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,2000" d="M0.568,255.942c0,0,299-45,215-129 c-19.879-19.879-20-55,72-56c24.94-0.271,169-2,169-2h737.507c0,0,2.607,0,20.493,0c25.011,0,40,4,54-13s8-42-5-50 c-29.304-18.033-73,11-45,54s279,76,279,76" />
-        </path>
-    </svg>
+    <div class="pad_menu" id="padMenu">
+        <div class="close_btn icon-cancel"></div>
+        <div class="pad_menu_btn" id="padWishlist">
+            <span class="icon icon-wishlist"></span>
+            <span>Wishlist</span>
+        </div>
+        <div class="pad_menu_btn" id="padMyPlan">
+            <span class="icon icon-myplan"></span>
+            <span>My Plan</span>
+        </div>
+    </div>
+    <div class="plane_print_blk">
+        <svg class="plane_print">
+            <path class="cover" fill="none" stroke="#ffffff" stroke-width="1" stroke-linecap="square" stroke-dasharray="5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,2000" d="M0.568,255.942c0,0,299-45,215-129 c-19.879-19.879-20-55,72-56c24.94-0.271,169-2,169-2h737.507c0,0,2.607,0,20.493,0c25.011,0,40,4,54-13s8-42-5-50 c-29.304-18.033-73,11-45,54s279,76,279,76" />
+            </path>
+        </svg>
+    </div>
     <div class="flying_plane_blk">
-        
         <div class="flying_plane icon-airplane"></div>
     </div>
     <!-- Header -->
@@ -262,6 +277,27 @@
                     <!--<h3 class="section-subheading text-muted">Lorem ipsum dolor sit amet consectetur.</h3>-->
                 </div>
             </div>
+            <div class="month_blk">
+                <p class="text">Month</p>
+                <div class="month_sel_btn">
+                    <div id="monthSelBtn" class="text" data-ripple-color="#2bb0b9">December</div>
+                    <span class="caret"></span>
+                </div>
+                <ul id="monthDropDown" class="month_dropdown_blk">
+                    <li>Januanry</li>
+                    <li>Febuary</li>
+                    <li>March</li>
+                    <li>April</li>
+                    <li>May</li>
+                    <li>June</li>
+                    <li>July</li>
+                    <li>August</li>
+                    <li>September</li>
+                    <li>October</li>
+                    <li>November</li>
+                    <li>December</li>
+                </ul>
+            </div>
             <a href="" class="content_blk">
                 <div class="image" style="background-image: url({{current_month_img_url}});">
                 </div>
@@ -284,31 +320,10 @@
                 </div>
             </a>
             -->
-            <div class="month_blk">
-                <p class="text">Month</p>
-                <div class="month_sel_btn">
-                    <div id="monthSelBtn" class="text" data-ripple-color="#2bb0b9">December</div>
-                    <span class="caret"></span>
-                </div>
-                <ul id="monthDropDown" class="month_dropdown_blk">
-                    <li>Januanry</li>
-                    <li>Febuary</li>
-                    <li>March</li>
-                    <li>April</li>
-                    <li>May</li>
-                    <li>June</li>
-                    <li>July</li>
-                    <li>August</li>
-                    <li>September</li>
-                    <li>October</li>
-                    <li>November</li>
-                    <li>December</li>
-                </ul>
-            </div>
-            <div class="switch_blk">
+            <!-- <div class="switch_blk">
                 <a class="btn left icon-switchLeft"></a>
                 <a class="btn right icon-switchRight"></a>
-            </div>
+            </div> -->
         </div>
         <div class="bgimg_blk" style="background-image: url(/static/img/sea-1614608.jpg);"></div>
     </section>
@@ -323,7 +338,7 @@
             </div>
             <div id="tourBlk" class="row tour_blk home_tour_blk" data-ing="0">
             </div>
-            <div class="more_link_btn ripple_blk">
+            <div class="more_link_btn ripple_blk" id="moreBtn">
                 <a class="ripple">More Tours</a>
             </div>
         </div>

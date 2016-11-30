@@ -1,78 +1,243 @@
 <html>
-    <head>
-        <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-        <title>FindFineTour</title>
-        <!-- jquery and jquery-ui -->
-        <script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
-        <link rel="stylesheet" type="text/css" href="https://code.jquery.com/ui/1.12.0/themes/blitzer/jquery-ui.css">
-        <script src="https://code.jquery.com/ui/1.12.0/jquery-ui.min.js"></script>
-        <!-- register -->
-        <link rel="stylesheet" type="text/css" href="/static/css/register.css">
-        <script type="text/javascript" src="/static/js/register.js"></script>
-        <!-- django csrf token -->
-        <script type="text/javascript">
-            var strCsrfToken = "{{csrf_token}}";
-        </script>
-    </head>
-    <body>
-        <h2>Register Page</h2>
-        <div class="registerStatusDiv">
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <title>FindFineTour</title>
+    <!-- favicon -->
+    <link rel="shortcut icon" type="image/png" href="/static/img/favicon.png">
+    <!-- Bootstrap Core CSS -->
+    <link href="/static/vendor/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/static/vendor/bootstrap-select/dist/css/bootstrap-select.min.css" rel="stylesheet">
+    <!-- custom CSS -->
+    <link href="/static/css/custom.css" rel="stylesheet">
+    <!-- jQuery core-->
+    <script src="/static/vendor/jquery/dist/jquery.min.js"></script>
+    <!-- google map api -->
+    <script src="https://maps.googleapis.com/maps/api/js?v=3&sensor=false&signed_in=true&amp;libraries=places&key=AIzaSyBNW1g69sGY8q_45F0Ob1lMbZn3fWyiL1o"></script>
+    <!-- custom JavaScript -->
+    <script src="/static/js/function.js"></script>
+    <script src="/static/js/register.js"></script>
+    <!-- ripple-button -->
+    <link rel="stylesheet" href="/static/vendor/ripple/css/style.css">
+    <!-- django csrf token -->
+    <script type="text/javascript">
+    var strCsrfToken = "{{csrf_token}}";
+    </script>
+    <!-- icon-font -->
+    <link rel="stylesheet" href="/static/icon-font/style.css">
+    <!-- google font Roboto -->
+    <link href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700,900" rel="stylesheet">
+    <!-- Bootstrap Core CSS -->
+    <link href="/static/vendor/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/static/vendor/bootstrap-select/dist/css/bootstrap-select.min.css" rel="stylesheet">
+    <!-- Bootstrap Js -->
+    <script src="/static/vendor/bootstrap/dist/js/bootstrap.min.js"></script>
+    <!-- Bootstrap SelectPicker Js -->
+    <script src="/static/vendor/bootstrap-select/dist/js/bootstrap-select.min.js"></script>
+</head>
+
+<body id="page-top">
+    <!-- Navigation -->
+    <nav id="mainNav" class="navbar navbar-default navbar-custom navbar-fixed-top nobg">
+        <div class="container">
+            <!-- Brand and toggle get grouped for better mobile display -->
+            <div class="navbar-header page-scroll">
+                <a class="icon-logo" id="logoTop"></a>
+                <div class="mini_searchbar">
+                    <span class="icon-magnifier"></span>
+                    <input id="topSearch" type="text" name="" placeholder="Where are you going?">
+                    <script type="text/javascript">
+                    </script>
+                </div>
+            </div>
+            <div class="header_btn_blk" id="bs-example-navbar-collapse-1">
+                <div id="noLogHeadBtn" class="head_btn" style="background-image: url(/static/img/head_logout.jpg);">
+                    <div class="head_menu">
+                        <div id="logOut">log Out</div>
+                    </div>
+                </div>
+                <div id="headBtn" class="head_btn" style="background-image: url(/static/img/head_sample.jpg);">
+                    <div class="head_menu">
+                        <div id="logOut">log Out</div>
+                    </div>
+                </div>
+                <div id="loginBtn" class="header_blk_btn register_page">Log In</div>
+            </div>
+            <!-- /.navbar-collapse -->
+        </div>
+        <!-- /.container-fluid -->
+    </nav>
+    <div class="login_blk">
+        <p class="title">USER REGISTER</p>
+        <div class="halfprint_plan">
+            <span class="icon-half_footprint"></span>
+            <span class="icon-airplane"></span>
+        </div>
+        <div class="inner_blk">
+            <div class="input_blk">
+                <div class="name">Email</div>
+                <input id="user_email" placeholder="Account"></input>
+            </div>
+            <div class="input_blk">
+                <div class="name">Password</div>
+                <input id="user_password" type="password" placeholder="Password"></input>
+            </div>
+            <div class="input_blk">
+                <div class="name">Confirm Password</div>
+                <input id="user_confirm" type="password" placeholder="Confirm Password"></input>
+            </div>
+            <div class="input_blk">
+                <div class="name">Title</div>
+                <div class="single_sel_btn" id="titleBlk">
+                    <span class="value" id="user_title">title</span>
+                    <i class="icon-dropdown_icon"></i>
+                    <ul class="menu">
+                        <div class="clear_btn">clear</div>
+                        <li>Mr.</li>
+                        <li>Miss</li>
+                        <li>Mz.</li>
+                        <li>Mrs.</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="input_blk">
+                <div class="name">Family Name</div>
+                <input id="user_family_name" placeholder="Family Name"></input>
+            </div>
+            <div class="input_blk">
+                <div class="name">Given Name</div>
+                <input id="user_given_name" placeholder="Given Name"></input>
+            </div>
+            <div class="input_blk">
+                <div class="name">Gender</div>
+                <div class="single_sel_btn" id="genedrBlk">
+                    <span class="value" id="user_gender">gender</span>
+                    <i class="icon-dropdown_icon"></i>
+                    <ul class="menu">
+                        <div class="clear_btn">clear</div>
+                        <li>Male</li>
+                        <li>Female</li>
+                        <li>Third Gender</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="input_blk inline">
+                <div class="name">Birthday</div>
+                <div class="single_sel_btn small" id="yearBlk">
+                    <span class="value" id="birth_year">year</span>
+                    <i class="icon-dropdown_icon"></i>
+                    <ul class="menu">
+                        <div class="clear_btn">clear</div>
+                    </ul>
+                </div>
+                <div class="single_sel_btn small" id="monthBlk">
+                    <span class="value" id="birth_month">month</span>
+                    <i class="icon-dropdown_icon"></i>
+                    <ul class="menu">
+                        <div class="clear_btn">clear</div>
+                    </ul>
+                </div>
+                <div class="single_sel_btn small" id="dayBlk">
+                    <span class="value" id="birth_day">day</span>
+                    <i class="icon-dropdown_icon"></i>
+                    <ul class="menu">
+                        <div class="clear_btn">clear</div>
+                    </ul>
+                </div>
+            </div>
+            <div class="input_blk">
+                <div class="name">Country</div>
+                <input id="user_nationality" placeholder="Country"></input>
+            </div>
+            <div class="input_blk">
+                <div class="name">Contact Number</div>
+                <input id="user_contact_number" placeholder="Contact Number"></input>
+            </div>
+            <!-- <div class="remember_btn">
+                <span class="checkbox">
+                    <span class="icon-tick"></span>
+                </span>
+                <p>Remember</p>
+                <a class="forget_text">forget your password ?</a>
+            </div> -->
+            <a id="registreBtn" class="click_btn">Register</a>
+            <div class="registerStatusDiv">
+            </div>
+        </div>
+    </div>
+    <footer class="bottom">
+        <div class="container">
+            <ul class="link_blk">
+                <li><a>About Us</a></li>
+                <li><a>Terms & Conditions</a></li>
+                <li><a>Cooperation</a></li>
+                <li><a>Contact Us</a></li>
+            </ul>
+            <div class="copyright_blk">Copyright © 2016 FindFineTour. <span class="sec">All rights reserved.</span></div>
+        </div>
+    </footer>
+    <!-- <h2>Register Page</h2>
+    <div class="registerStatusDiv">
+    </div>
+    <div>
+        <div>
+            <span>Email:</span>
+            <input id="user_email"></input>
         </div>
         <div>
-            <div>
-                <span>Email:</span>
-                <input id="user_email"></input>
-            </div>
-            <div>
-                <span>Password:</span>
-                <input id="user_password"></input>
-            </div>
-            <div>
-                <span>Confirm:</span>
-                <input id="user_confirm"></input>
-            </div>
-            <div>
-                <span>Title:</span>
-                <input type="radio" name="user_title" id="user_title_mr" value="Mr.">
-                <label for="user_title_mr">Mr.</label>
-                <input type="radio" name="user_title" id="user_title_miss" value="Miss">
-                <label for="user_title_miss">Miss</label>
-                <input type="radio" name="user_title" id="user_title_mz" value="Mz.">
-                <label for="user_title_mz">Mz.</label>
-                <input type="radio" name="user_title" id="user_title_mrs" value="Mrs.">
-                <label for="user_title_mrs">Mrs.</label>
-            </div>
-            <div>
-                <span>Family Name:</span>
-                <input id="user_family_name"></input>
-            </div>
-            <div>
-                <span>Given Name:</span>
-                <input id="user_given_name"></input>
-            </div>
-            <div>
-                <span>Gender:</span>
-                <input type="radio" name="user_gender" id="user_gender_male" value="male">
-                <label for="user_gender_male">male</label>
-                <input type="radio" name="user_gender" id="user_gender_female" value="female">
-                <label for="user_gender_female">female</label>
-            </div>
-            <div>
-                <span>Birthday:</span>
-                <input id="user_birthday"></input>
-            </div>
-            <div>
-                <span>Nationality:</span>
-                <input id="user_nationality"></input>
-            </div>
-            <div>
-                <span>ContactNumber:</span>
-                <input id="user_contact_number"></input>
-            </div>
-            <div>
-                <a id="registreBtn" class="ui-button ui-widget ui-corner-all" href="javascript: void(0)">Send Register Data</a>
-            </div>
+            <span>Password:</span>
+            <input id="user_password"></input>
         </div>
-        
-    </body>
+        <div>
+            <span>Confirm:</span>
+            <input id="user_confirm"></input>
+        </div>
+        <div>
+            <span>Title:</span>
+            <input type="radio" name="user_title" id="user_title_mr" value="Mr.">
+            <label for="user_title_mr">Mr.</label>
+            <input type="radio" name="user_title" id="user_title_miss" value="Miss">
+            <label for="user_title_miss">Miss</label>
+            <input type="radio" name="user_title" id="user_title_mz" value="Mz.">
+            <label for="user_title_mz">Mz.</label>
+            <input type="radio" name="user_title" id="user_title_mrs" value="Mrs.">
+            <label for="user_title_mrs">Mrs.</label>
+        </div>
+        <div>
+            <span>Family Name:</span>
+            <input id="user_family_name"></input>
+        </div>
+        <div>
+            <span>Given Name:</span>
+            <input id="user_given_name"></input>
+        </div>
+        <div>
+            <span>Gender:</span>
+            <input type="radio" name="user_gender" id="user_gender_male" value="male">
+            <label for="user_gender_male">male</label>
+            <input type="radio" name="user_gender" id="user_gender_female" value="female">
+            <label for="user_gender_female">female</label>
+        </div>
+        <div>
+            <span>Birthday:</span>
+            <input id="user_birthday"></input>
+        </div>
+        <div>
+            <span>Nationality:</span>
+            <input id="user_nationality"></input>
+        </div>
+        <div>
+            <span>ContactNumber:</span>
+            <input id="user_contact_number"></input>
+        </div>
+        <div>
+            <a id="registreBtn" class="ui-button ui-widget ui-corner-all" href="javascript: void(0)">Send Register Data</a>
+        </div>
+    </div> -->
+</body>
+
 </html>

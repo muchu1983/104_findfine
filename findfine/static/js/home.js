@@ -1,7 +1,22 @@
 //初始化autocomplate place_chenged event
-tour.sendData = {};
+
 
 function initMap() {
+
+    tour.sendData = {};
+
+    homeRecommedTourGet();
+
+    // pad menu按鈕點擊
+    padMenuAct();
+
+    // mobile menu按鈕點擊
+    mobileMenuClick();
+
+    // toolbox點擊
+    toolboxClick()
+
+    // 首頁搜尋區塊自動完成
     var input = (document.getElementById('autocomplete'));
     var autocomplete = new google.maps.places.Autocomplete(input);
     autocomplete.addListener('place_changed', function() {
@@ -18,49 +33,14 @@ function initMap() {
         };
     });
 
-    var headInput = (document.getElementById('topSearch'));
-    var headAutocomplete = new google.maps.places.Autocomplete(headInput);
-    headAutocomplete.addListener('place_changed', function() {
-        var place = headAutocomplete.getPlace();
-        if (!place.geometry) {
-            //未獲得地點資訊
-            return;
-        }
-        tour.sendData = {
-            keyword: document.getElementById('topSearch').value,
-            lat: place.geometry.location.lat(),
-            lng: place.geometry.location.lng()
-        };
-    });
-
-    //登入按鈕
-    $("#loginBtn").click(function() {
-        if ($("#loginBtn").html() == "Log In") {
-            window.location = "/account/login";
-        }
-    });
-    //申請按鈕
-    $("#register").click(function() {
-        if ($("#register").html() == "Sign Up") {
-            window.location = "/account/register";
-        }
-    });
-    // 選單搜尋
-    $('#topSearch').keypress(function (e) {
-     var key = e.which;
-     if(key == 13)  // the enter key code
-      {
-        console.log("ada");
-      }
-    });  
-
     // $('#wishList').hide();
-    $('#myFriends').hide();
     // $('#myPlans').hide();
+    $('#myFriends').hide();
     $('#myMessages').hide();
     $('#logOut').hide();
     $('#register').hide();
     $('#loginBtn').hide();
+    $('#noLogHeadBtn').hide();
 
     //strEmail 如已登入 不顯示login button 並顯示會員帳號
     if (strEmail == "None") {
@@ -78,35 +58,64 @@ function initMap() {
         // $('#myMessages').show();
     }
 
-    $("#wishList").click(function() {
-        window.location = "/page/wishList";
+    //登入按鈕
+    $("#loginBtn").click(function() {
+        if ($("#loginBtn").html() == "Log In") {
+            window.location = "/account/login";
+        }
     });
 
+    //申請按鈕
+    $("#register").click(function() {
+        if ($("#register").html() == "Sign Up") {
+            window.location = "/account/register";
+        }
+    });
+
+    // 登出按鈕點擊
     $("#logOut").click(function() {
         if ($("#logOut").html() == "Log Out") {
             window.location = "/account/logout";
         }
     });
 
+
+
+    // wishList按鈕點擊 @Q@ davidturtle
+    $("#wishList").click(function() {
+        window.location = "/page/wishList";
+    });
+
+    // pad版wishList按鈕點擊 @Q@ davidturtle
+    $("#padWishlist").click(function() {
+        window.location = "/page/wishList";
+    });
+
+    // myPlans按鈕點擊 @Q@ davidturtle
     $("#myPlans").click(function() {
         window.location = "/page/myTrip";
     });
-}
 
-$(function() {
+    // pad版myPlans按鈕點擊 @Q@ davidturtle
+    $("#padMyPlan").click(function() {
+        window.location = "/page/myTrip";
+    });
+
+    // moretour按鈕點擊 @Q@ davidturtle
+    $("#moreBtn").click(function(event) {
+        window.location = "/page/find";
+
+    });
     $('#btnFindTrip').on('click', function() {
         //暫時改丟靜態頁,之後改後端接
         //若無googlemap資訊 將值帶到下一頁
         if (typeof tour.sendData.keyword == 'undefined') {
             var input = ($('#autocomplete')).val();
-            location.href = '/page/find?keyword=' + input + '&lat=' + tour.sendData.lat + '&lng=' + tour.sendData.lng;
+            location.href = '/page/find?keyword=' + input + '&lat=' + tour.sendData.lat + '&lng=' + c.sendData.lng;
         } else {
             location.href = '/page/find?keyword=' + tour.sendData.keyword + '&lat=' + tour.sendData.lat + '&lng=' + tour.sendData.lng;
         }
     });
-
-    // 選單搜尋 ENTER @Q@ davidturtle
-    headerSearch();
 
     //圖片展示區塊
     $('.portfolio-link').on('click', function(e) {
@@ -114,7 +123,8 @@ $(function() {
         var url = '/page/find?keyword=' + $(this).data('place') + '&lat=' + $(this).data('lat') + '&lng=' + $(this).data('lng');
         location.href = url;
     });
-});
+
+}
 
 (function($) {
 
@@ -122,7 +132,7 @@ $(function() {
 
     function initHome() {
 
-        initCurrencySelect();
+        homeInitCurrencySelect();
         //登入按鈕
         $("#loginBtn").click(function() {
             window.location = "/account/login";
@@ -151,15 +161,17 @@ $(function() {
         addToWishlistBtnClick();
         // 推薦TOUR設定
         // 設定搜尋參數 @Q@davidturtle @TODO 後台功能增加後須改寫
-        var recomTourSearchCon = "/trip/filter?1=1&keyword=Taichung&page=1";
-        homeRecomTour(recomTourSearchCon);
+        homeRecomTour();
 
-        $(".head_btn")  .click(function(event) {
-            $(this).children('.head_menu').toggleClass('active');
-        });
+        // 頭像點擊
+        headBtnClick();
+
+        // 通知止滑
+        notiBlkPrevent();
+
+        initMap();
     };
 
-    
+
 
 })(jQuery);
- 

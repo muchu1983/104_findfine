@@ -1,35 +1,380 @@
 <html>
-    <head>
-        <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-        <title>FindFineTour</title>
-        <!-- jquery and jquery-ui -->
-        <script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
-        <link rel="stylesheet" type="text/css" href="https://code.jquery.com/ui/1.12.0/themes/blitzer/jquery-ui.css">
-        <script src="https://code.jquery.com/ui/1.12.0/jquery-ui.min.js"></script>
-        <!-- login -->
-        <link rel="stylesheet" type="text/css" href="/static/css/login.css">
-        <script type="text/javascript" src="/static/js/login.js"></script>
-        <!-- django csrf token -->
-        <script type="text/javascript">
-        </script>
-    </head>
-    <body>
-        <div class="loginbar">
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <title>FindFineTour</title>
+    <!-- favicon -->
+    <link rel="shortcut icon" type="image/png" href="/static/img/favicon.png">
+    <!-- Bootstrap Core CSS -->
+    <link href="/static/vendor/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/static/vendor/bootstrap-select/dist/css/bootstrap-select.min.css" rel="stylesheet">
+    <link href="/static/css/bootstrapCustom.css" rel="stylesheet">
+    <!-- Bootstrap daterangepicker -->
+    <link href="/static/vendor/bootstrap-daterangepicker/daterangepicker.css" rel="stylesheet">
+    <!-- Custom Fonts -->
+    <link href="/static/vendor/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+    <link href='https://fonts.googleapis.com/css?family=Raleway:400,600' rel='stylesheet' type='text/css'>
+    <link href='https://fonts.googleapis.com/css?family=Caudex|Cormorant+Garamond' rel='stylesheet' type='text/css'>
+    <!-- custom CSS -->
+    <link href="/static/css/custom.css" rel="stylesheet">
+    <!-- jQuery core-->
+    <script src="/static/vendor/jquery/dist/jquery.min.js"></script>
+    <!-- google map api -->
+    <script src="https://maps.googleapis.com/maps/api/js?v=3&sensor=false&signed_in=true&language=en&amp;libraries=places&key=AIzaSyBNW1g69sGY8q_45F0Ob1lMbZn3fWyiL1o"></script>
+    <!-- Bootstrap Js -->
+    <script src="/static/vendor/bootstrap/dist/js/bootstrap.min.js"></script>
+    <!-- Bootstrap SelectPicker Js -->
+    <script src="/static/vendor/bootstrap-select/dist/js/bootstrap-select.min.js"></script>
+    <!-- moment -->
+    <script src="/static/vendor/moment/min/moment.min.js"></script>
+    <!-- Bootstrap DateRange Js -->
+    <script src="/static/vendor/bootstrap-daterangepicker/daterangepicker.js"></script>
+    <!-- custom JavaScript -->
+    <script src="/static/js/function.js"></script>
+    <script type="text/javascript" src="/static/js/myfriends.js"></script>
+    <!-- 低瀏覽器版本相容條件註解 -->
+    <!--[if lt IE 9]>
+                    <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+                    <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+                <![endif]-->
+    <!-- icon-font -->
+    <link rel="stylesheet" href="/static/icon-font/style.css">
+    <!-- google font Roboto -->
+    <link href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700,900" rel="stylesheet">
+    <!-- ripple-button -->
+    <link rel="stylesheet" href="/static/vendor/ripple/css/style.css">
+    <script src="/static/vendor/ripple/js/index.js"></script>
+</head>
+
+<body id="page-top">
+    <nav id="mainNav" class="navbar navbar-default navbar-custom navbar-fixed-top">
+        <div class="toolbox_blk">
+        </div>
+        <div class="container">
+            <div id="headBtn" class="head_btn" style="background-image: url(/static/img/head_sample.jpg);">
+                <div class="head_menu" id="headMenu">
+                    <img src="/static/img/blk_triangle.png" class="triangle">
+                    <div class="noti_blk">
+                        <div class="noti">這是訊息一</div>
+                        <div class="noti">這是訊息二</div>
+                        <div class="noti">這是訊息三這是訊息三這是訊息三這是訊息三這是訊息三這是訊息三這是訊息三這是訊息三</div>
+                        <div class="noti">這是訊息四</div>
+                    </div>
+                    <div id="logOut" class="logout_btn">log Out</div>
+                </div>
+                <div class="noti_ing"></div>
+            </div>
+            <!-- Brand and toggle get grouped for better mobile display -->
+            <div class="navbar-header page-scroll">
+                <a class="icon-logo" id="logoTop"></a>
+                <div class="mini_searchbar">
+                    <span class="icon-magnifier"></span>
+                    <input type="text" name="" placeholder="Where are you going?" id="topSearch">
+                </div>
+            </div>
+            <div class="header_btn_blk" id="bs-example-navbar-collapse-1">
+                <div class="toolbox_btn icon-toolbox">
+                    <span class="text">ToolBox</span>
+                </div>
+                <ul class="nav navbar-nav currency_sel_blk">
+                    <li class="hidden">
+                        <a href="#page-top"></a>
+                    </li>
+                    <li>
+                        <div class="CurrencyDiv navSelect">
+                            <select id="moneySelect" name="" class="bsSelect">
+                                <option value="USD" data-content='USD'></option>
+                                <option value="EUR" data-content='EUR'></option>
+                                <option value="CNY" data-content='CNY'></option>
+                                <option value="GBP" data-content='GBP'></option>
+                                <option value="JPY" data-content='JPY'></option>
+                                <option value="AUD" data-content='AUD'></option>
+                                <option value="NZD" data-content='NZD'></option>
+                                <option value="SGD" data-content='SGD'></option>
+                                <option value="HKD" data-content='HKD'></option>
+                                <option value="TWD" data-content='TWD'></option>
+                            </select>
+                        </div>
+                    </li>
+                </ul>
+                <div id="wishList" class="header_btn btn-info">
+                    <span class="icon_blk">                  
+                                <span class="icon-quill"></span>
+                    <span class="icon-scroll"></span>
+                    <span class="extend_line"></span>
+                    </span>
+                    <span class="text">Wishlist</span>
+                </div>
+                <div id="myPlans" class="header_btn btn-info">
+                    <span class="icon_blk">
+                                <span class="icon-airplane"></span>
+                    <span class="icon-notebook"></span>
+                    <svg class="extend_dotted_line">
+                        <g fill="none" stroke="#ffffff" stroke-width="1">
+                            <path stroke-dasharray="5,5" d="M0 0 80 0" />
+                        </g>
+                    </svg>
+                    </span>
+                    <span class="text">My Plan</span>
+                </div>
+                <div id="register" class="header_blk_btn hide">Sign Up</div>
+                <div id="loginBtn" class="header_blk_btn hide">Log In</div>
+                <div id="padMenuBtn" class="header_menu_btn icon-menu"></div>
+                <div id="mobileMenuBtn" class="header_menu_btn icon-menu"></div>
+            </div>
+            <!-- /.navbar-collapse -->
+        </div>
+        <!-- /.container-fluid -->
+    </nav>
+
+    <div class="pad_menu" id="padMenu">
+        <div class="close_btn icon-cancel"></div>
+        <div class="pad_menu_btn" id="padWishlist">
+            <span class="icon icon-wishlist"></span>
+            <span>Wishlist</span>
+        </div>
+        <div class="pad_menu_btn" id="padMyPlan">
+            <span class="icon icon-myplan"></span>
+            <span>My Plan</span>
+        </div>
+    </div>
+    <div class="rename_blk lightbox">
+        <div class="content_blk">
+            <div class="title">Edit Name</div>
+            <input type="text" placeholder="Your Name"></input>
+            <div class="ripple_blk confirm_btn">
+                <button type="button" class="ripple">Confirm</button>
+            </div>
+            <div class="close_btn icon-cancel"></div>
+        </div>
+        <div class="blur_bg"></div>
+    </div>
+    <div class="unfriend_blk lightbox">
+            <div class="content_blk">
+                <div class="text">Unfriend Successful</div>
+                <div class="btn_blk">
+                    <div class="confirm_btn" id="confirm">Confirm</div>
+                    <div class="confirm_btn" id="recover">Recover</div>
+                </div>
+            </div>
+            <div class="blur_bg"></div>
+        </div>
+    <div class="wishlist_top_blk" style="background-image: url(/static/img/sunset_re.jpg);">
+        <div class="content_blk">
+            <div class="big_head_blk">
+                <div class="big_head" style="background-image: url(/static/img/head_sample.jpg);"></div>
+            </div>
+            <div class="name_blk">
+                <div class="inner_blk">
+                    <div class="user_name" id="userName">Tzuyu</div>
+                    <span class="icon-gear" id="personelSet"></span>
+                    <ul class="setting_menu">
+                        <li id="editName">Edit name</li>
+                        <li id="newPhoto">
+                            <input type="file" value="Upload New Photo">
+                            <p>Upload New Photo</p>
+                        </li>
+                        <li id="innerLogOut">Log Out</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="sub_header_blk">
+                <div class="inner_blk">
+                    <div class="plans" id="plansSel">
+                        <div class="number">7</div>
+                        <div class="text">Plans</div>
+                        <div class="acting_line"></div>
+                    </div>
+                    <div class="wishes" id="wishesSel">
+                        <div class="number">43</div>
+                        <div class="text">Wishes</div>
+                        <div class="acting_line"></div>
+                    </div>
+                    <div class="friends active">
+                        <div class="number">132</div>
+                        <div class="text">Friends</div>
+                        <div class="acting_line"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="mainblk_bg_cover"></div>
+    </div>
+    <div class="plan_folder_blk">
+        <div class="blk_title">MY FRIENDS</div>
+        <div class="sub_text_line">
+            <div class="inner_blk">
+                <div>
+                    <span class="text">Discover tours, a slogan placed Here!</span>
+                </div>
+            </div>
+        </div>
+        <div class="invite_blk">
+            <p class="title">invited friends by email !</p>
+            <div class="input_blk">
+                <span class="icon-mail"></span>
+                <input type="text" placeholder="example@mail.com">
+                <div class="ripple_blk search_btn">
+                    <button id="btnFindFriends" type="button" class="ripple">Invite</button>
+                </div>
+            </div>
+        </div>
+        <div class="social_blk">
+            <div class="dash_sepline"></div>
+            <p class="title">invited your friends from facebook !</p>
+            <div class="social_friends">
+                <div class="friend">
+                    <div class="photo" style="background-image: url(/static/img/friend_1.jpg);"></div>
+                    <div class="name">Taipei gold woo</div>
+                    <div class="icon-plus"></div>
+                    <div class="back_bg"></div>
+                </div>
+                <div class="friend">
+                    <div class="photo" style="background-image: url(/static/img/friend_1.jpg);"></div>
+                    <div class="name">Taipei gold woo</div>
+                    <div class="icon-plus"></div>
+                    <div class="back_bg"></div>
+                </div>
+                <div class="friend">
+                    <div class="photo" style="background-image: url(/static/img/friend_1.jpg);"></div>
+                    <div class="name">Taipei gold woo</div>
+                    <div class="icon-plus"></div>
+                    <div class="back_bg"></div>
+                </div>
+                <div class="friend">
+                    <div class="photo" style="background-image: url(/static/img/friend_1.jpg);"></div>
+                    <div class="name">Taipei gold woo</div>
+                    <div class="icon-plus"></div>
+                    <div class="back_bg"></div>
+                </div>
+                <div class="friend">
+                    <div class="photo" style="background-image: url(/static/img/friend_1.jpg);"></div>
+                    <div class="name">Taipei gold woo</div>
+                    <div class="icon-plus"></div>
+                    <div class="back_bg"></div>
+                </div>
+                <div class="friend">
+                    <div class="photo" style="background-image: url(/static/img/friend_1.jpg);"></div>
+                    <div class="name">Taipei gold woo</div>
+                    <div class="icon-plus"></div>
+                    <div class="back_bg"></div>
+                </div>
+                <div class="friend">
+                    <div class="photo" style="background-image: url(/static/img/friend_1.jpg);"></div>
+                    <div class="name">Taipei gold woo</div>
+                    <div class="icon-plus"></div>
+                    <div class="back_bg"></div>
+                </div>
+            </div>
+
+            <div class="dash_sepline"></div>
+        </div>
+        <div class="friends_blk">
+            <div class="friend">
+                <div class="inner_blk">
+                    <div class="photo" style="background-image: url(/static/img/friend_1.jpg);"></div>
+                    <div class="name">Taipei gold woo</div>
+                    <div class="place">Taiwan, Taipei</div>
+                    <div class="setting_blk">
+                        <span class="set_btn icon-more_btn"></span>
+                        <ul class="menu">
+                            <li class="un_btn">Unfriend</li>
+                            <li>option2</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="friend">
+                <div class="inner_blk">
+                    <div class="photo" style="background-image: url(/static/img/friend_2.jpg);"></div>
+                    <div class="name">tri LL</div>
+                    <div class="place">USA</div>
+                    <div class="setting_blk">
+                        <span class="set_btn icon-more_btn"></span>
+                        <ul class="menu">
+                            <li class="un_btn">Unfriend</li>
+                            <li>option2</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="friend">
+                <div class="inner_blk">
+                    <div class="photo" style="background-image: url(/static/img/friend_3.jpg);"></div>
+                    <div class="name">Taxi Li</div>
+                    <div class="place">Taiwan, Taipei</div>
+                    <div class="setting_blk">
+                        <span class="set_btn icon-more_btn"></span>
+                        <ul class="menu">
+                            <li class="un_btn">Unfriend</li>
+                            <li>option2</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="friend">
+                <div class="inner_blk">
+                    <div class="photo" style="background-image: url(/static/img/friend_4.jpg);"></div>
+                    <div class="name">Hilory</div>
+                    <div class="place">USA</div>
+                    <div class="setting_blk">
+                        <span class="set_btn icon-more_btn"></span>
+                        <ul class="menu">
+                            <li class="un_btn">Unfriend</li>
+                            <li>option2</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="friend">
+                <div class="inner_blk">
+                    <div class="photo" style="background-image: url(/static/img/friend_5.jpg);"></div>
+                    <div class="name">Gary Ho</div>
+                    <div class="place">Taiwan, Taipei</div>
+                    <div class="setting_blk">
+                        <span class="set_btn icon-more_btn"></span>
+                        <ul class="menu">
+                            <li class="un_btn">Unfriend</li>
+                            <li>option2</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <div class="container">
+            <ul class="link_blk">
+                <li><a>About Us</a></li>
+                <li><a>Terms & Conditions</a></li>
+                <li><a>Cooperation</a></li>
+                <li><a>Contact Us</a></li>
+            </ul>
+            <div class="copyright_blk">Copyright © 2016 FindFineTour All rights reserved.</div>
+        </div>
+    </footer>
+    <!-- <div class="loginbar">
         至頂訊息
-        </div>
-        <div class="nav">
+    </div>
+    <div class="nav">
         我的好友
-        </div>
-        <div class="left">
-            <div class="leftup">
+    </div>
+    <div class="left">
+        <div class="leftup">
             加入好友
-            </div>
-            <div class="leftdown">
+        </div>
+        <div class="leftdown">
             刪除好友
-            </div>
         </div>
-        <div class="right">
+    </div>
+    <div class="right">
         朋友清單
-        </div>
-    </body>
+    </div> -->
+</body>
+
 </html>

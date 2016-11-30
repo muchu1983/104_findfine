@@ -30,25 +30,56 @@ function initFind() {
         }
     });
 
+    $("#register").click(function() {
+        window.location = "/account/register"
+    });
+
+    $('#noLogHeadBtn').click(function(event) {
+        window.location = "/account/login";
+    });
+
+    $('#logoTop').click(function(event) {
+        window.location = "/";
+    });
+
     // 選單搜尋 ENTER @Q@ davidturtle
-    headerSearch();
 
     //搜尋按鈕
     $("#btnSearch").click(function() {
-        $("#current_page").html("1");
+
+        // $("#current_page").html("1");
+        $("#current_page").val("1");
         var sortCondition = [];
         sortCondition[0] = $("#sortValBtn .sort_val").html();
         sortCondition[1] = $("#sortWayBtn .sort_val").html();
+        $('html,body').animate({
+            scrollTop: $("#findContent").offset().top
+        }, 600);
+        search(sortCondition);
+
+    });
+    $("#padBtnSearch").click(function() {
+
+        // $("#current_page").html("1");
+        $("#current_page").val("1");
+        var sortCondition = [];
+        sortCondition[0] = $("#sortValBtn .sort_val").html();
+        sortCondition[1] = $("#sortWayBtn .sort_val").html();
+        $('html,body').animate({
+            scrollTop: $("#findContent").offset().top
+        }, 600);
         search(sortCondition);
 
     });
 
+    // @TODO 登入狀況判斷完成後修改此處
     // $('#wishList').hide();
-    $('#myFriends').hide();
+    // $('#myFriends').hide();
     // $('#myPlans').hide();
-    $('#myMessages').hide();
-    $('#logOut').hide();
+    // $('#myMessages').hide();
+    // // $('#logOut').hide();
     $('#loginBtn').hide();
+    $('#noLogHeadBtn').hide();
 
     //strEmail 如已登入 不顯示login button 並顯示會員帳號
     if (strEmail == "None") {} else {
@@ -105,47 +136,167 @@ function initFind() {
     // 單選按鈕點擊 @Q@ davidturtle
     singleSelClick("select");
 
+    // toolbox點擊
+    toolboxClick()
+
+
+    initTopSearch();
+
     //頁面按鈕點擊效果 RE@Q@ davidturtle
     $("#prev_page_link").click(function() {
-        $("#current_page").html(parseInt($("#current_page").html()) - 1);
+        // $("#current_page").html(parseInt($("#current_page").html()) - 1);
+        $("#current_page").val(parseInt($("#current_page").val()) - 1);
         search('');
     });
     $("#next_page_link").click(function() {
-        $("#current_page").html(parseInt($("#current_page").html()) + 1);
+        $("#current_page").val(parseInt($("#current_page").val()) + 1);
+        // $("#current_page").val(parseInt($("#current_page").val()) + 1);
         search('');
     });
     $("#first_page_link").click(function() {
-        $("#current_page").html("1");
+        $("#current_page").val("1");
+        // $("#current_page").val("1");
         search('');
     });
     $("#final_page_link").click(function() {
-        $("#current_page").html($("#final_page_link").html());
+        $("#current_page").val($("#final_page_link").html());
+        // $("#current_page").val($("#final_page_link").html());
         search('');
     });
+    $("#startFrom").datepicker();
+    $("#to").datepicker();
 
+    pageNumberType("current_page");
+
+    var urlVal = getUrlValue(),
+        sendLat = urlVal['lat'],
+        sendLng = urlVal['lng'];
+    initMap(sendLat, sendLng);
+
+    $(window).resize(function(event) {
+        $("#page-top .find .intro-text .searchContent").removeClass('active');
+    });
+
+
+    // pad menu按鈕點擊
+    padMenuAct();
+
+
+    // mobile menu按鈕點擊
+    mobileMenuClick();
+
+    // find區止滑
+    findBlkPrevent();
+    // 頭像點擊
+    headBtnClick();
+    // 通知止滑
+    notiBlkPrevent();
 };
 
 //hmoe頁面傳值至find頁面 googleMap呈現
 function initMap(sendLat, sendLng) {
+    var styles = [{
+        "featureType": "administrative.land_parcel",
+        "stylers": [{
+            "visibility": "off"
+        }]
+    }, {
+        "featureType": "administrative.neighborhood",
+        "stylers": [{
+            "visibility": "off"
+        }]
+    }, {
+        "featureType": "poi",
+        "elementType": "labels.text",
+        "stylers": [{
+            "visibility": "off"
+        }]
+    }, {
+        "featureType": "poi.business",
+        "stylers": [{
+            "visibility": "off"
+        }]
+    }, {
+        "featureType": "road",
+        "elementType": "labels",
+        "stylers": [{
+            "visibility": "off"
+        }]
+    }, {
+        "featureType": "road",
+        "elementType": "labels.icon",
+        "stylers": [{
+            "visibility": "off"
+        }]
+    }, {
+        "featureType": "transit",
+        "stylers": [{
+            "visibility": "off"
+        }]
+    }, {
+        "featureType": "water",
+        "elementType": "labels.text",
+        "stylers": [{
+            "visibility": "off"
+        }]
+    }];
+
+    var locaVal = {
+        lat: Number(sendLat),
+        lng: Number(sendLng)
+    };
+
+
+    var styledMap = new google.maps.StyledMapType(styles, { name: "Styled Map" });
+
     var map = new google.maps.Map(document.getElementById('map'), {
-        center: {
-            lat: Number(tour.QueryString().lat),
-            lng: Number(tour.QueryString().lng)
-        },
+        center: locaVal,
         zoom: 13,
         // 滑鼠滾輪滾動不影響地圖縮放
         scrollwheel: false,
         navigationControl: false,
         mapTypeControl: false,
         scaleControl: false,
+        disableDefaultUI: true,
+        mapTypeControlOptions: {
+            mapTypeIds: [google.maps.MapTypeId.ROADMAP, 'map_style']
+        }
     });
+
+    map.mapTypes.set('map_style', styledMap);
+    map.setMapTypeId('map_style');
+
     var input = /** @type {!HTMLInputElement} */ (
         document.getElementById('placeID'));
 
-    var types = document.getElementById('type-selector');
+    // var types = document.getElementById('type-selector');
     //map.controls[google.maps.ControlPosition.TOP_LEFT].push(input);
     //map.controls[google.maps.ControlPosition.TOP_LEFT].push(types);
 
+
+
+    var centerLat = locaVal['lat'],
+        centerLng = locaVal['lng'],
+        radius = 500,
+        types = ['food'].join("|"),
+        nearGetUrl = "https://maps.googleapis.com/maps/api/place/nearbysearch/json?language=en&location=" + centerLat + "," + centerLng + "&radius=" + radius + "&types=" + types + "&key=AIzaSyBNW1g69sGY8q_45F0Ob1lMbZn3fWyiL1o";
+    $.getJSON(nearGetUrl, function(jsonResp) {
+        var nearStops = jsonResp.results;
+        for (var i = 0; i < nearStops.length; i++) {
+            var customTxt = [
+                "<div class=\"mapLabel\" onclick=\"labelClickSearch(\'mapLb" + i + "\')\" id=\"mapLb" + i + "\">",
+                "<p>" + nearStops[i].name + "</p>",
+                "<span class=\"labelTale\"></span>",
+                "</div>",
+            ].join("");
+
+            var tarLat = nearStops[i].geometry.location.lat;
+            var tarLng = nearStops[i].geometry.location.lng;
+
+            var tarPosi = new google.maps.LatLng(tarLat, tarLng);
+            txt = new TxtOverlay(tarPosi, customTxt, "mapLabel_blk", map);
+        }
+    });
     var autocomplete = new google.maps.places.Autocomplete(input);
     autocomplete.bindTo('bounds', map);
 
@@ -153,7 +304,10 @@ function initMap(sendLat, sendLng) {
     var marker = new google.maps.Marker({
         map: map,
         // anchorPoint: new google.maps.Point(0, -29)
-        position: map.center
+        position: map.center,
+        optimized: false,
+        zIndex: 1000,
+        icon: '../static/img/map_icon.png',
     });
 
     autocomplete.addListener('place_changed', function() {
@@ -163,44 +317,93 @@ function initMap(sendLat, sendLng) {
         if (!place.geometry) {
             window.alert("Autocomplete's returned place contains no geometry");
             return;
+        } else {
+            console.log(place);
+            map.setCenter(place.geometry.location);
+            var newLocate = map.getCenter(),
+                newLat = newLocate.lat(),
+                newLng = newLocate.lng();
+
+            // console.log(map.getCenter(place.geometry.location));
+            initMap(newLat, newLng);
         }
+        // marker.setIcon( /** @type {google.maps.Icon} */ ({
+        //     url: place.icon,
+        //     size: new google.maps.Size(71, 71),
+        //     origin: new google.maps.Point(0, 0),
+        //     anchor: new google.maps.Point(17, 34),
+        //     scaledSize: new google.maps.Size(35, 35)
+        // }));
+        // marker.setPosition(place.geometry.location);
+        // marker.setVisible(true);
+        // console.log(marker);
 
         // If the place has a geometry, then present it on a map.
-        if (place.geometry.viewport) {
-            map.fitBounds(place.geometry.viewport);
-        } else {
-            map.setCenter(place.geometry.location);
-            map.setZoom(17); // Why 17? Because it looks good.
-        }
-        marker.setIcon( /** @type {google.maps.Icon} */ ({
-            url: place.icon,
-            size: new google.maps.Size(71, 71),
-            origin: new google.maps.Point(0, 0),
-            anchor: new google.maps.Point(17, 34),
-            scaledSize: new google.maps.Size(35, 35)
-        }));
-        marker.setPosition(place.geometry.location);
-        marker.setVisible(true);
+        // if (place.geometry.viewport) {
+        //     map.fitBounds(place.geometry.viewport);
+        // } else {
+        //     map.setCenter(place.geometry.location);
+        //     map.setZoom(17); // Why 17? Because it looks good.
+        // }
+        // marker.setIcon( /** @type {google.maps.Icon} */ ({
+        //     url: place.icon,
+        //     size: new google.maps.Size(71, 71),
+        //     origin: new google.maps.Point(0, 0),
+        //     anchor: new google.maps.Point(17, 34),
+        //     scaledSize: new google.maps.Size(35, 35)
+        // }));
+        // marker.setPosition(place.geometry.location);
+        // marker.setVisible(true);
 
-        var address = '';
-        if (place.address_components) {
-            address = [
-                (place.address_components[0] && place.address_components[0].short_name || ''),
-                (place.address_components[1] && place.address_components[1].short_name || ''),
-                (place.address_components[2] && place.address_components[2].short_name || '')
-            ].join(' ');
-        }
+        // var address = '';
+        // if (place.address_components) {
+        //     address = [
+        //         (place.address_components[0] && place.address_components[0].short_name || ''),
+        //         (place.address_components[1] && place.address_components[1].short_name || ''),
+        //         (place.address_components[2] && place.address_components[2].short_name || '')
+        //     ].join(' ');
+        // }
 
-        infowindow.setContent('<div><strong>' + place.name + '</strong><br>' + address);
-        //infowindow.open(map, marker);
+        // infowindow.setContent('<div><strong>' + place.name + '</strong><br>' + address);
+        // //infowindow.open(map, marker);
+        // var centerLat = locaVal['lat'],
+        //     centerLng = locaVal['lng'],
+        //     radius = 500,
+        //     types = ['food'].join("|"),
+        //     nearGetUrl = "https://maps.googleapis.com/maps/api/place/nearbysearch/json?language=en&location=" + centerLat + "," + centerLng + "&radius=" + radius + "&types=" + types + "&key=AIzaSyBNW1g69sGY8q_45F0Ob1lMbZn3fWyiL1o";
+        // $.getJSON(nearGetUrl, function(jsonResp) {
+        //     var nearStops = jsonResp.results;
+        //     for (var i = 0; i < nearStops.length; i++) {
+        //         console.log(i);
+        //         var customTxt = [
+        //             "<div class=\"mapLabel\" onclick=\"labelClickSearch(\'mapLb"+i+"\')\" id=\"mapLb"+i+"\">",
+        //             "<p>" + nearStops[i].name + "</p>",
+        //             "<span class=\"labelTale\"></span>",
+        //             "</div>",
+        //         ].join("");
+
+        //         var tarLat = nearStops[i].geometry.location.lat;
+        //         var tarLng = nearStops[i].geometry.location.lng;
+
+        //         var tarPosi = new google.maps.LatLng(tarLat, tarLng);
+        //         txt = new TxtOverlay(tarPosi, customTxt, "mapLabel_blk", map);
+        //     }
+        // });
     });
+
+
+
 }
 
 //home頁面到find頁面 or 按下search鍵 會執行的動作 可傳入排序條件
 function search(condition) {
 
+    $(".waiting_blk").show();
+    $("#TripDataBlk").hide();
+    $(".page_link_blk").hide();
     //主搜尋
     //地點
+    var keywordVal = $("#keyword").val();
     var place = $("#placeID").val();
     //預算下限
     var budgetDown = $("#budgetDownID").val();
@@ -228,9 +431,7 @@ function search(condition) {
         return $(this).val();
     }).get();
     //可立即參與
-    var availability = $('input:checkbox:checked[name="availability"]').map(function() {
-        return $(this).val();
-    }).get();
+    var availability = $("#availability").html();
     //萬用搜尋
     var attrations = $("#attrations").val();
 
@@ -337,9 +538,12 @@ function search(condition) {
         }
     };
     //attrations
-    if (attrations != "") {
-        strFilterQueryUrl = strFilterQueryUrl + "&keyword=" + attrations;
-    };
+    // if (attrations != "") {
+    //     strFilterQueryUrl = strFilterQueryUrl + "&keyword=" + attrations;
+    // };
+    // if(keywordVal != "" && keywordVal != "undefined"){
+    //     strFilterQueryUrl = strFilterQueryUrl + "&keyword=" + keywordVal;
+    // }
 
     //排序條件 RE@Q@ davidturtle
     if (condition != "" && condition[0] != "" && condition[1] != "" && condition[0] != "undefined" && condition[1] != "undefined") {
@@ -365,8 +569,8 @@ function search(condition) {
     }
 
     //page
-    console.log("page index: " + $("#current_page").html());
-    strFilterQueryUrl = strFilterQueryUrl + "&page=" + $("#current_page").html();
+    console.log("page index: " + $("#current_page").val());
+    strFilterQueryUrl = strFilterQueryUrl + "&page=" + $("#current_page").val();
 
     //alert(" 254:strFilterQueryUrl:"+strFilterQueryUrl);
     console.log(strFilterQueryUrl);
@@ -396,6 +600,14 @@ function search(condition) {
 
         // ripple按鈕啟動 @Q@ davidturtle
         initRippleBtn();
+
+        // 等待動畫
+        $("body").removeClass('waiting_body');
+        $(".waiting_fullblk").hide(500);
+        $(".waiting_blk").hide();
+        $("#TripDataBlk").show();
+
+        $(".page_link_blk").show();
     });
 };
 
@@ -512,7 +724,7 @@ function pageReload(pageDataArray) {
     var preLinkVal = "<i class=\"icon-switchLeft\"></i><span>Previous</span>";
     var nextLinkVal = "<span>Next</span><i class=\"icon-switchRight\"></i>";
 
-    $("#current_page").html(pageDataArray["current_page"]);
+    $("#current_page").val(pageDataArray["current_page"]);
 
     if (pageDataArray["current_page"] - 1 < 1) {
         $("#prev_page_link").html("");
@@ -532,4 +744,109 @@ function pageReload(pageDataArray) {
         $("#final_page_link").html(pageDataArray["total_page"]);
         $("#final_page_dot").html("...");
     }
+}
+
+
+function TxtOverlay(pos, txt, cls, map) {
+
+    // Now initialize all properties.
+    this.pos = pos;
+    this.txt_ = txt;
+    this.cls_ = cls;
+    this.map_ = map;
+
+    // We define a property to hold the image's
+    // div. We'll actually create this div
+    // upon receipt of the add() method so we'll
+    // leave it null for now.
+    this.div_ = null;
+
+    // Explicitly call setMap() on this overlay
+    this.setMap(map);
+}
+TxtOverlay.prototype = new google.maps.OverlayView();
+
+
+
+TxtOverlay.prototype.onAdd = function() {
+
+    // Note: an overlay's receipt of onAdd() indicates that
+    // the map's panes are now available for attaching
+    // the overlay to the map via the DOM.
+
+    // Create the DIV and set some basic attributes.
+    var div = document.createElement('DIV');
+    div.className = this.cls_;
+
+    div.innerHTML = this.txt_;
+
+    // Set the overlay's div_ property to this DIV
+    this.div_ = div;
+    var overlayProjection = this.getProjection();
+    var position = overlayProjection.fromLatLngToDivPixel(this.pos);
+    div.style.left = position.x + 'px';
+    div.style.top = position.y + 'px';
+    // We add an overlay to a map via one of the map's panes.
+
+    var panes = this.getPanes();
+    panes.floatPane.appendChild(div);
+}
+TxtOverlay.prototype.draw = function() {
+
+
+        var overlayProjection = this.getProjection();
+
+        // Retrieve the southwest and northeast coordinates of this overlay
+        // in latlngs and convert them to pixels coordinates.
+        // We'll use these coordinates to resize the DIV.
+        var position = overlayProjection.fromLatLngToDivPixel(this.pos);
+
+
+        var div = this.div_;
+        div.style.left = position.x + 'px';
+        div.style.top = position.y + 'px';
+
+
+
+    }
+    //Optional: helper methods for removing and toggling the text overlay.  
+TxtOverlay.prototype.onRemove = function() {
+    this.div_.parentNode.removeChild(this.div_);
+    this.div_ = null;
+}
+TxtOverlay.prototype.hide = function() {
+    if (this.div_) {
+        this.div_.style.visibility = "hidden";
+    }
+}
+
+TxtOverlay.prototype.show = function() {
+    if (this.div_) {
+        this.div_.style.visibility = "visible";
+    }
+}
+
+TxtOverlay.prototype.toggle = function() {
+    if (this.div_) {
+        if (this.div_.style.visibility == "hidden") {
+            this.show();
+        } else {
+            this.hide();
+        }
+    }
+}
+
+TxtOverlay.prototype.toggleDOM = function() {
+    if (this.getMap()) {
+        this.setMap(null);
+    } else {
+        this.setMap(this.map_);
+    }
+}
+
+function labelClickSearch(tarId) {
+    console.log(tarId);
+    var tarVal = $("#" + tarId).children('p').html();
+    $("#keyword").html(tarVal);
+    search('');
 }

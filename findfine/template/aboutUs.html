@@ -1,10 +1,208 @@
 <html>
-    <head>
-        <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-        <title>aboutUs</title>
-    </head>
-    <body style="margin: auto auto; height: 70%;width: 70%;">
-    <H1>About Us</H1>
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <title>FindFineTour</title>
+    <!-- favicon -->
+    <link rel="shortcut icon" type="image/png" href="/static/img/favicon.png">
+    <!-- Bootstrap Core CSS -->
+    <link href="/static/vendor/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/static/vendor/bootstrap-select/dist/css/bootstrap-select.min.css" rel="stylesheet">
+    <!-- Custom Fonts -->
+    <link href="/static/vendor/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+    <link href='https://fonts.googleapis.com/css?family=Raleway:400,600' rel='stylesheet' type='text/css'>
+    <link href='https://fonts.googleapis.com/css?family=Caudex|Cormorant+Garamond' rel='stylesheet' type='text/css'>
+    <!-- custom CSS -->
+    <link href="/static/css/custom.css" rel="stylesheet">
+    <link href="/static/css/bootstrapCustom.css" rel="stylesheet">
+    <!-- jQuery core-->
+    <script src="/static/vendor/jquery/dist/jquery.min.js"></script>
+    <!-- google map api -->
+    <script src="https://maps.googleapis.com/maps/api/js?v=3&sensor=false&signed_in=true&language=en&amp;libraries=places&signed_in=false&key=AIzaSyBNW1g69sGY8q_45F0Ob1lMbZn3fWyiL1o"></script>
+    <!-- Bootstrap Js -->
+    <script src="/static/vendor/bootstrap/dist/js/bootstrap.min.js"></script>
+    <!-- Bootstrap SelectPicker Js -->
+    <script src="/static/vendor/bootstrap-select/dist/js/bootstrap-select.min.js"></script>
+    <!-- velocity animation -->
+    <script src="/static/vendor/velocity/velocity.min.js"></script>
+    <!-- custom JavaScript -->
+    <script src="/static/js/function.js"></script>
+    <script src="/static/js/static.js"></script>
+    <!-- 低瀏覽器版本相容條件註解 -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+    <!-- icon-font -->
+    <link rel="stylesheet" href="/static/icon-font/style.css">
+    <!-- google font Roboto -->
+    <link href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700,900" rel="stylesheet">
+</head>
+
+<body id="page-top">
+    <nav id="mainNav" class="navbar navbar-default navbar-custom navbar-fixed-top blue_nav">
+        <!-- tool可放置於此 -->
+        <div class="toolbox_blk">
+        </div>
+        <div class="container">
+            <!-- Brand and toggle get grouped for better mobile display -->
+            <div class="navbar-header page-scroll find">
+                <a class="icon-logo" id="logoTop"></a>
+                <div class="mini_searchbar">
+                    <span class="icon-magnifier"></span>
+                    <input type="text" name="" placeholder="Where are you going?" id="topSearch" class="blue_bg">
+                </div>
+            </div>
+            <div id="headBtn" class="head_btn" style="background-image: url(/static/img/head_sample.jpg);">
+                <div class="head_menu" id="headMenu">
+                    <img src="/static/img/blk_triangle.png" class="triangle">
+                    <div class="noti_blk">
+                        <div class="noti">這是訊息一</div>
+                        <div class="noti">這是訊息二</div>
+                        <div class="noti">這是訊息三這是訊息三這是訊息三這是訊息三這是訊息三這是訊息三這是訊息三這是訊息三</div>
+                        <div class="noti">這是訊息四</div>
+                    </div>
+                    <div id="logOut" class="logout_btn">log Out</div>
+                </div>
+                <div class="noti_ing"></div>
+            </div>
+            <div class="header_btn_blk adjust" id="bs-example-navbar-collapse-1">
+                <div class="toolbox_btn icon-toolbox">
+                    <span class="text">ToolBox</span>
+                </div>
+                <ul class="nav navbar-nav currency_sel_blk">
+                    <li class="hidden">
+                        <a href="#page-top"></a>
+                    </li>
+                    <li>
+                        <div class="CurrencyDiv navSelect">
+                            <select id="moneySelect" name="" class="bsSelect">
+                                <option value="USD" data-content='USD'></option>
+                                <option value="EUR" data-content='EUR'></option>
+                                <option value="CNY" data-content='CNY'></option>
+                                <option value="GBP" data-content='GBP'></option>
+                                <option value="JPY" data-content='JPY'></option>
+                                <option value="AUD" data-content='AUD'></option>
+                                <option value="NZD" data-content='NZD'></option>
+                                <option value="SGD" data-content='SGD'></option>
+                                <option value="HKD" data-content='HKD'></option>
+                                <option value="TWD" data-content='TWD'></option>
+                            </select>
+                        </div>
+                    </li>
+                </ul>
+                <div id="wishList" class="header_btn btn-info">
+                    <span class="icon_blk">                  
+                        <span class="icon-quill"></span>
+                    <span class="icon-scroll"></span>
+                    <span class="extend_line"></span>
+                    </span>
+                    <span class="text">Wishlist</span>
+                </div>
+                <div id="myPlans" class="header_btn btn-info">
+                    <span class="icon_blk">
+                        <span class="icon-airplane"></span>
+                    <span class="icon-notebook"></span>
+                    <svg class="extend_dotted_line">
+                        <g fill="none" stroke="#ffffff" stroke-width="1">
+                            <path stroke-dasharray="5,5" d="M0 0 80 0" />
+                        </g>
+                    </svg>
+                    </span>
+                    <span class="text">My Plan</span>
+                </div>
+                <!-- <div id="myFriends" class="btn btn-info">my friends</div>
+                <div id="myMessages" class="btn btn-info">my messages</div> -->
+                <!-- <div id="loginBtn" class="header_btn btn-info">Log In</div> -->
+                <div id="register" class="header_blk_btn hide">Sign Up</div>
+                <div id="loginBtn" class="header_blk_btn hide">Log In</div>
+                <div id="padMenuBtn" class="header_menu_btn icon-menu"></div>
+                <div id="mobileMenuBtn" class="header_menu_btn icon-menu"></div>
+                <div id="noLogHeadBtn" class="head_btn" style="background-image: url(/static/img/head_logout.jpg);">
+                </div>
+            </div>
+            <!-- /.navbar-collapse -->
+        </div>
+        <!-- /.container-fluid -->
+    </nav>
+
+    <div class="pad_menu" id="padMenu">
+        <div class="close_btn icon-cancel"></div>
+        <div class="pad_menu_btn" id="padWishlist">
+            <span class="icon icon-wishlist"></span>
+            <span>Wishlist</span>
+        </div>
+        <div class="pad_menu_btn" id="padMyPlan">
+            <span class="icon icon-myplan"></span>
+            <span>My Plan</span>
+        </div>
+    </div>
+    <div class="static_content_blk">
+        <div class="page_title">ABOUT US</div>
+        <div class="main_pic_blk">
+        </div>
+        <div class="title">Title Here</div>
+        <div class="text">
+            Tom and Karaa have been friends for years, and are the co-founder of FindFine Tour. They both love backpack traveling; enjoy the process of planning the schedule, exploring the culture, making every trip a magical event.
+            Tom and Karaa have been friends for years, and are the co-founder of FindFine Tour. They both love backpack traveling; enjoy the process of planning the schedule, exploring the culture, making every trip a magical event.
+        </div>
+        <div class="title">Title Here</div>
+        <div class="team_blk">
+            <div class="inner_blk">
+                <div class="member">
+                    <div class="photo" style="background-image: url('/static/img/photo_sample.jpg');"></div>
+                    <div class="name">YoYo Hsu</div>
+                    <div class="position">Engineer</div>
+                </div>
+                <div class="member">
+                    <div class="photo" style="background-image: url('/static/img/photo_sample.jpg');"></div>
+                    <div class="name">YoYo Hsu</div>
+                    <div class="position">Engineer</div>
+                </div>
+                <div class="member">
+                    <div class="photo" style="background-image: url('/static/img/photo_sample.jpg');"></div>
+                    <div class="name">YoYo Hsu</div>
+                    <div class="position">Engineer</div>
+                </div>
+                <div class="member">
+                    <div class="photo" style="background-image: url('/static/img/photo_sample.jpg');"></div>
+                    <div class="name">YoYo Hsu</div>
+                    <div class="position">Engineer</div>
+                </div>
+                <div class="member">
+                    <div class="photo" style="background-image: url('/static/img/photo_sample.jpg');"></div>
+                    <div class="name">YoYo Hsu</div>
+                    <div class="position">Engineer</div>
+                </div>
+                <div class="member">
+                    <div class="photo" style="background-image: url('/static/img/photo_sample.jpg');"></div>
+                    <div class="name">YoYo Hsu</div>
+                    <div class="position">Engineer</div>
+                </div>
+            </div>
+        </div>
+        <div class="gray_back_blk" style="background-image: url(/static/img/grey_sandbag.png);">
+            <div class="title">Our Partners</div>
+            <div class="content"></div>
+        </div>
+    </div>
+
+    <footer>
+        <div class="container">
+            <ul class="link_blk">
+                <li><a>About Us</a></li>
+                <li><a>Terms & Conditions</a></li>
+                <li><a>Cooperation</a></li>
+                <li><a>Contact Us</a></li>
+            </ul>
+            <div class="copyright_blk">Copyright © 2016 FindFineTour All rights reserved.</div>
+        </div>
+    </footer>
+    <!-- <H1>About Us</H1>
     <span>
     Tom and Karaa have been friends for years, and are the co-founder of FindFine Tour.  They both love backpack traveling; enjoy the process of planning the schedule, exploring the culture, making every trip a magical event.
 
@@ -13,6 +211,7 @@
     Karaa loves to explore the city, prefers to stay at a location for a period of time, joining the local cooking and dining courses, spends the whole wondering around the river, with wine and cheese in her hands, finding her little secret spots in every city, blending in with the locals, slowly savors every corner of the city.  She has been teaching after gotten her master degree of education in England, but threw herself into travel industry after believing the combined travel plans is the way to travel in the future.  Booking travel tickets and accommodation has become rather common; planning the schedule is the most difficult and time assuming part. 
 
     Therefore, the two best friends co-founded FindFine Tour in June, 2016, dedicated in promoting destination travel plans, letting all the travel lovers to have more choices, collecting the information more easily, to paint the trip by themselves, making each trip a unique experience, to save to time in planning, and to make every trip a much easier plan!
-    </span>
-    </body>
+    </span> -->
+</body>
+
 </html>

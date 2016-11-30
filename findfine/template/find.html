@@ -24,6 +24,8 @@
     <link href="/static/css/custom.css" rel="stylesheet">
     <!-- jQuery core-->
     <script src="/static/vendor/jquery/dist/jquery.min.js"></script>
+    <!-- google map api -->
+    <script src="https://maps.googleapis.com/maps/api/js?v=3&sensor=false&signed_in=true&language=en&amp;libraries=places&signed_in=false&key=AIzaSyBNW1g69sGY8q_45F0Ob1lMbZn3fWyiL1o"></script>
     <!-- Bootstrap Js -->
     <script src="/static/vendor/bootstrap/dist/js/bootstrap.min.js"></script>
     <!-- Bootstrap SelectPicker Js -->
@@ -32,14 +34,15 @@
     <script src="/static/vendor/moment/min/moment.min.js"></script>
     <!-- Bootstrap DateRange Js -->
     <script src="/static/vendor/bootstrap-daterangepicker/daterangepicker.js"></script>
-    <!-- velocity animation -->
-    <!-- <script sr/static/vendor/velocity/velocity.min.js"></script> -->
+    <!-- date picker -->
+    <link rel="stylesheet" href="/static/vendor/jquery-ui-1.12.1.custom/jquery-ui.min.css">
+    <script src="/static/vendor/jquery-ui-1.12.1.custom/jquery-ui.min.js"></script>
     <!-- custom JavaScript -->
     <script src="/static/js/custom.js"></script>
     <script src="/static/js/function.js"></script>
     <script src="/static/js/find.js"></script>
-    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBNW1g69sGY8q_45F0Ob1lMbZn3fWyiL1o&language=en&signed_in=true&libraries=places&callback=initMap" async defer></script>
-    </script>
+    <!-- <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBNW1g69sGY8q_45F0Ob1lMbZn3fWyiL1o&language=en&signed_in=true&libraries=places&callback=initMap" async defer></script> -->
+    <!-- google map api -->
     <script type="text/javascript">
     var strKeywordFromHome = "{{keyword}}";
     var strEmail = "{{strEmail}}";
@@ -59,22 +62,66 @@
     <link href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700,900" rel="stylesheet">
 </head>
 
-<body id="page-top">
+<body id="page-top" class="waiting_body">
+    <div class="add_to_folder_blk" id="addToFolderBlk">
+        <div class="photo" style="background-image: url(/static/img/Beijing2.jpg);"></div>
+        <div class="info">
+            <div class="text">Choose A Folder</div>
+            <div class="multi_sel_btn picker">
+                <span class="value" id="foldsPickBtn">multiple choice</span>
+                <i class="icon-expand"></i>
+                <ul class="menu">
+                    <div class="clear_btn">clear all</div>
+                    <li>
+                        <span>favorite</span>
+                        <i class="icon-checkmark"></i>
+                    </li>
+                    <li>
+                        <span>japan</span>
+                        <i class="icon-checkmark"></i>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <!-- <div class="waiting_fullblk">
+        <div class="waiting">
+            <div class="logo icon-logo"></div>
+            <div class="text">Loading...</div>
+            <div class="shadow"></div>
+        </div>
+    </div> -->
     <!-- Navigation -->
     <nav id="mainNav" class="navbar navbar-default navbar-custom navbar-fixed-top">
+        <!-- tool可放置於此 -->
+        <div class="toolbox_blk">
+        </div>
         <div class="container">
             <!-- Brand and toggle get grouped for better mobile display -->
-            <div class="navbar-header page-scroll">
-                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
-                    <span class="sr-only">Toggle navigation</span> Menu <i class="fa fa-bars"></i>
-                </button>
-                <a class="icon-logo" href="#page-top"></a>
+            <div class="navbar-header page-scroll find">
+                <a class="icon-logo" id="logoTop"></a>
                 <div class="mini_searchbar">
                     <span class="icon-magnifier"></span>
-                    <input type="text" name="" placeholder="Where are you going?">
+                    <input type="text" name="" placeholder="Where are you going?" id="topSearch" class="blue_bg">
                 </div>
             </div>
-            <div class="header_btn_blk" id="bs-example-navbar-collapse-1">
+            <div id="headBtn" class="head_btn" style="background-image: url(/static/img/head_sample.jpg);">
+                <div class="head_menu" id="headMenu">
+                    <img src="/static/img/blk_triangle.png" class="triangle">
+                    <div class="noti_blk">
+                        <div class="noti">這是訊息一</div>
+                        <div class="noti">這是訊息二</div>
+                        <div class="noti">這是訊息三這是訊息三這是訊息三這是訊息三這是訊息三這是訊息三這是訊息三這是訊息三</div>
+                        <div class="noti">這是訊息四</div>
+                    </div>
+                    <div id="logOut" class="logout_btn">log Out</div>
+                </div>
+                <div class="noti_ing"></div>
+            </div>
+            <div class="header_btn_blk adjust" id="bs-example-navbar-collapse-1">
+                <div class="toolbox_btn icon-toolbox">
+                    <span class="text">ToolBox</span>
+                </div>
                 <ul class="nav navbar-nav currency_sel_blk">
                     <li class="hidden">
                         <a href="#page-top"></a>
@@ -121,21 +168,35 @@
                 <!-- <div id="loginBtn" class="header_btn btn-info">Log In</div> -->
                 <div id="register" class="header_blk_btn hide">Sign Up</div>
                 <div id="loginBtn" class="header_blk_btn hide">Log In</div>
-                <div id="headBtn" class="head_btn" style="background-image: url(/static/img/head_sample.jpg);">
-                    <div class="head_menu">
-                        <div id="logOut">log Out</div>
-                    </div>
+                <div id="padMenuBtn" class="header_menu_btn icon-menu"></div>
+                <div id="mobileMenuBtn" class="header_menu_btn icon-menu"></div>
+                <div id="noLogHeadBtn" class="head_btn" style="background-image: url(/static/img/head_logout.jpg);">
                 </div>
             </div>
             <!-- /.navbar-collapse -->
         </div>
         <!-- /.container-fluid -->
     </nav>
-    <svg width="1500px" height="257px" class="plane_print">
-        <path class="cover" fill="none" stroke="#ffffff" stroke-width="1" stroke-linecap="square" stroke-dasharray="5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,2000" d="M0.568,255.942c0,0,299-45,215-129 c-19.879-19.879-20-55,72-56c24.94-0.271,169-2,169-2h737.507c0,0,2.607,0,20.493,0c25.011,0,40,4,54-13s8-42-5-50 c-29.304-18.033-73,11-45,54s279,76,279,76" />
-        </path>
-    </svg>
-    <div class="flying_plane icon-airplane"></div>
+    <div class="pad_menu" id="padMenu">
+        <div class="close_btn icon-cancel"></div>
+        <div class="pad_menu_btn" id="padWishlist">
+            <span class="icon icon-wishlist"></span>
+            <span>Wishlist</span>
+        </div>
+        <div class="pad_menu_btn" id="padMyPlan">
+            <span class="icon icon-myplan"></span>
+            <span>My Plan</span>
+        </div>
+    </div>
+    <div class="plane_print_blk">
+        <svg class="plane_print">
+            <path class="cover" fill="none" stroke="#ffffff" stroke-width="1" stroke-linecap="square" stroke-dasharray="5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,2000" d="M0.568,255.942c0,0,299-45,215-129 c-19.879-19.879-20-55,72-56c24.94-0.271,169-2,169-2h737.507c0,0,2.607,0,20.493,0c25.011,0,40,4,54-13s8-42-5-50 c-29.304-18.033-73,11-45,54s279,76,279,76" />
+            </path>
+        </svg>
+    </div>
+    <div class="flying_plane_blk">
+        <div class="flying_plane icon-airplane"></div>
+    </div>
     <header class="find">
         <div class="container">
             <div class="intro-text">
@@ -163,9 +224,9 @@
                         <div class="col-xs-12 date_blk">
                             <div class="form-group">
                                 <div class="date_sel_blk sel_blk_270">
-                                    <input id="startFrom" type="date" name="">
+                                    <input id="startFrom" type="text" placeholder="from">
                                     <div class="sepline"></div>
-                                    <input id="to" type="date" name="">
+                                    <input id="to" type="text" placeholder="to">
                                 </div>
                             </div>
                         </div>
@@ -329,7 +390,8 @@
                             </div> -->
                         </div>
                         <div class="col-xs-12 guild_blk">
-                            <label class="title">Guide</label>
+                            <label class="title">Guide
+                                <br>Language</label>
                             <div class="multi_sel_btn">
                                 <span class="value" id="guideLanguage">multiple choice</span>
                                 <i class="icon-dropdown_icon"></i>
@@ -414,11 +476,12 @@
                         </div>
                         <div class="col-xs-12 attra_blk">
                             <div class="form-group">
-                                <label class="title" for="">Attrations</label>
-                                <input id="attrations" class="form-control pad20left" placeholder="Attrations" type="text"></input>
+                                <label class="title" for="">Attractions</label>
+                                <input id="attrations" class="form-control sel_blk_180" placeholder="Attractions" type="text"></input>
                             </div>
                         </div>
-                        <div class="col-xs-12 find_btn">
+                        <div id="keyword"></div>
+                        <div class="col-xs-12 find_btn full">
                             <div class="form-group">
                                 <label for=""></label>
                                 <div class="blue_ripple_blk link_btn ripple_blk">
@@ -427,23 +490,13 @@
                             </div>
                         </div>
                     </div>
-                    <!-- <div class="col-xs-12">
-                            <div class="collapse pull-right" id="moreInfo">
-                                <div class="card card-block">
-                                    <div class="row">
-                                    </div>
-                                </div>
+                    <div class="find_btn pad">
+                        <div class="form-group">
+                            <div class="blue_ripple_blk link_btn ripple_blk">
+                                <a id="padBtnSearch" class="ripple">Find Tours</a>
                             </div>
                         </div>
-                        <div class="col-xs-12">
-                            <div class="form-group">
-                                <label for=""></label>
-                                <div class="blue_ripple_blk link_btn ripple_blk">
-                                    <a id="btnSearch" class="ripple">Find Tours</a>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="clearfix"></div> -->
+                    </div>
                 </div>
                 <!-- 範圍要大 知道附近靠哪裡 -->
                 <div id="mapDiv" class="col-xs-12 col-md-6">
@@ -487,8 +540,15 @@
                             </div>
                         </div>
                     </div>
+                    <div class="waiting_blk">
+                        <div class="waiting">
+                            <div class="logo icon-logo"></div>
+                            <div class="text">Loading...</div>
+                            <div class="shadow"></div>
+                        </div>
+                    </div>
                     <!--TODO 排版有跑掉 js 有需要改寫 加介紹-->
-                    <ul class="lstTripData row tour_blk">
+                    <ul class="lstTripData row tour_blk" id="TripDataBlk">
                     </ul>
                 </div>
             </div>
@@ -499,14 +559,15 @@
                 </a>
                 <a href="javascript:void(0)" id="first_page_link">1</a>
                 <span class="dot_sep" id="first_page_dot">...</span>
-                <span href="javascript:void(0)" id="current_page">1</span>
+                <input type="text" id="current_page" value="1"></input>
                 <span class="dot_sep" id="final_page_dot">...</span>
                 <a href="javascript:void(0)" id="final_page_link">56</a>
                 <a href="javascript:void(0)" id="next_page_link" class="long">
                     <span>Next</span>
                     <i class="icon-switchRight"></i>
                 </a>
-                <span class="icon-page_blk_back"></span>
+                <div class="icon-page_blk_back"></div>
+                <div class="icon-mobile_page_blk_back"></div>
             </div>
         </div>
     </div>

@@ -1,47 +1,53 @@
 <!DOCTYPE html>
-<html lang="en">
-<!-- TODO 有@記號 需改成連結  hinet 設定網址 不要home-->
+<html>
 
 <head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="">
-    <meta name="author" content="">
-    <link href="../static/vendor/bootstrap-select/dist/css/bootstrap-select.min.css" rel="stylesheet">
-    <!-- Custom Fonts -->
-    <link href="../static/vendor/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
-    <link href='https://fonts.googleapis.com/css?family=Raleway:400,600' rel='stylesheet' type='text/css'>
-    <link href='https://fonts.googleapis.com/css?family=Caudex|Cormorant+Garamond' rel='stylesheet' type='text/css'>
-    <!-- custom CSS -->
-    <link href="../static/css/custom.css" rel="stylesheet">
-    <link href="../static/css/bootstrapCustom.css" rel="stylesheet">
+    <title>Simple Map</title>
     <!-- jQuery core-->
     <script src="../static/vendor/jquery/dist/jquery.min.js"></script>
-    <!-- ripple-button -->
-    <link rel="stylesheet" href="../static/vendor/ripple/css/style.css">
-    <script src="../static/vendor/ripple/js/index.js"></script>
-    <!-- icon-font -->
-    <link rel="stylesheet" href="../static/icon-font/style.css">
-    <!-- google font Roboto -->
-    <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
-    <style type="text/css">
-        body {
-            background-color: #999999;
-        }
+    <meta name="viewport" content="initial-scale=1.0">
+    <meta charset="utf-8">
+    <!-- google map api -->
+    <script src="https://maps.googleapis.com/maps/api/js?v=3&sensor=false&signed_in=true&language=en&amp;libraries=places&key=AIzaSyBNW1g69sGY8q_45F0Ob1lMbZn3fWyiL1o"></script>
+    <style>
+    html,
+    body {
+        height: 100%;
+        margin: 0;
+        padding: 0;
+    }
+    
+    #map {
+        height: 100%;
+    }
     </style>
+    <script type="text/javascript">
+    jQuery(document).ready(function($) {
+        $("#kqkq").click(function(event) {
+            console.log($(this)[0].outerHTML);
+        });
+        geocodeAddress();
+    });
+
+    function geocodeAddress() {
+        var geocoder = new google.maps.Geocoder();
+        var address = "Taipei City, Taiwan";
+        geocoder.geocode({
+            'address': address
+        }, function(results, status) {
+            if (status === google.maps.GeocoderStatus.OK) {
+                console.log(results);
+            } else {
+                alert('Geocode was not successful for the following reason: ' + status);
+            }
+        });
+    }
+    </script>
 </head>
-<!-- TODO 每個log都可以回首頁 -->
 
 <body>
-    <div id="goo" data-foo="dada"></div>
-
-    <script type="text/javascript">
-        jQuery(document).ready(function($) {
-            $("#goo").data('foo', 'value');
-            console.log($("#goo").data('foo'));
-        });
-    </script>
+    <div id="map"></div>
+    <p id="kqkq">dasdasdadasd</p>
 </body>
 
 </html>

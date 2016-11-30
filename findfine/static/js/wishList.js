@@ -1,17 +1,71 @@
 $(document).ready(initWishList);
 
 function initWishList() {
+
+
+    $("#wishList").click(function() {
+        window.location = "/page/wishList";
+    });
+
+    $("#myPlans").click(function() {
+        window.location = "/page/myTrip";
+    });
+
+    $('#logoTop').click(function(event) {
+        window.location = "/";
+    });
+
+    $('#plansSel').click(function(event) {
+        window.location = "/page/myTrip";
+    });
+    
+    $('#friendsSel').click(function(event) {
+        window.location = "/page/myFriends";
+    });
+
+    // 個人設定點選 @TODO 點擊後要將資料傳到後端 @Q@ davidturtle 
+    personelSetClick("#personelSet", ".setting_menu", "#editName", "#userName", ".rename_blk");
+
     // 幣值設定
     initCurrencySelect();
 
     // folder 設定點選
     folderMoreClick();
+    renameFolderClick();
+    folderClick();
 
-    // 虛線產生
-    dashLineGenerate(1000, 6, 2, 6, "#2bb0b9", $(".dashed_line"));
+    // ING folder 點選
+    ingFolderClick();
 
+    // pad menu按鈕點擊
+    padMenuAct();
+    
+    // mobile menu按鈕點擊
+    mobileMenuClick();
+
+    // toolbox點擊
+    toolboxClick()
+
+    // 頭像點擊
+    headBtnClick();
+
+    // 通知止滑
+    notiBlkPrevent();
+
+    // 新增分類點選
+    addNewFolderClick();
+    // // 虛線產生
+    // dashLineGenerate(1000, 6, 2, 6, "#2bb0b9", $(".dashed_line"));
+
+    initTopSearch();
+
+    $(".wish_blk").html("");
+    $(".wish_blk").hide();
+    $(".waiting_blk").show();
+
+    // addToFolderClick();
     $.getJSON("/trip/getFavoriteTrip", function(jsonResp) {
-        $(".wish_blk").html("");
+
         var strUserCurrency = $("#moneySelect").val();
         $("div.userCurrencySpan").html(strUserCurrency);
         //trip data
@@ -22,10 +76,13 @@ function initWishList() {
             var strTripDataHtml = getTripDataHtml(strUserCurrency, dicTripData["strTitle"], dicTripData["intUserCurrencyCost"], dicTripData["strIntroduction"], dicTripData["strLocation"], dicTripData["intDurationHour"], dicTripData["strOriginUrl"], dicTripData["strImageUrl"], dicTripData["intReviewStar"], dicTripData["intReviewVisitor"], dicTripData["intId"]);
             $(".wish_blk").append(strTripDataHtml);
 
-            
+
             // 加入資料夾點擊 @Q@ davidturtle @TODO假的 需要連上真實資料
-            addToFolderClick();
         };
+
+        addToFolderClick();
+        $(".waiting_blk").hide();
+        $(".wish_blk").show();
 
     });
 
@@ -68,17 +125,18 @@ function initWishList() {
             "</div>",
             "<div class=\"footprint_blk\">",
             "<span class=\"icon-tourdash footprint\"></span>",
-            "</div>",
+            "</div>",            
+            "<a target=\"_blank\" href=" + strOriginUrl + " class=\"read_more_btn\">Read More</a>",
             "<div class=\"folder_sel_btn\">",
             "<div class=\"text\">Choose Folders</div>",
             "<i class=\"icon-dropdown_icon\"></i>",
+            "</div>",
+            "<div class=\"darken_bg\"></div>",
+            "</div>",
             "<ul class=\"menu\">",
             // @TODO 下面這串是假的 需要再連上真實資料
             "<li><span>favorite</span><i class=\"icon-checkmark\"></i></li><li><span>japan</span><i class=\"icon-checkmark\"></i></li><li><span>with parents</span><i class=\"icon-checkmark\"></i></li>",
             "</ul>",
-            "</div>",
-            "<div class=\"darken_bg\"></div>",
-            "</div>",
             "</div>"
         ].join("");
         // var strTripDataHtml = [
@@ -98,39 +156,3 @@ function initWishList() {
         return strTripDataHtml;
     };
 };
-
-
-
-
-
-function addPlan(intId) {
-    //若無plan 導頁至 myPlan
-    //若有plan 下拉選單展示myPlan 選其一後 導頁至 editPlan
-}
-
-function folderMoreClick() {
-    $(".folder>.card>.text_blk>.more_btn").click(function(event) {
-        $(this).parent().parent().parent().children('.menu').addClass('active');
-    });
-    $(window).click(function() {
-        if (!event.target.matches(".folder>.card>.text_blk>.more_btn")) {
-            $(".folder>.menu").removeClass('active');
-        }
-    });
-}
-
-// 加入資料夾點擊 @Q@ davidturtle @TODO假的 需要連上真實資料
-function addToFolderClick() {
-    $(".folder_sel_btn").click(function(event) {
-        $(this).children('.menu').addClass('active');
-    });
-    $(".folder_sel_btn .menu li").click(function(event) {
-        $(this).toggleClass('active');
-    });
-
-    $(window).click(function() {
-        if (!event.target.matches(".folder_sel_btn") && !event.target.matches(".folder_sel_btn *")) {
-            $(".folder_sel_btn > .menu").removeClass('active');
-        }
-    });
-}
