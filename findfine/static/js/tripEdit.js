@@ -1053,6 +1053,7 @@ function extendDrag() {
 
     $(".edit_blk>.inner_blk>.date_blk>.put_blk>.inner_blk>.puts>.put.infoin>.cancel_btn").click(function(event) {
         tourCancel($(this).parent());
+        tourBlkReNew();
     });
     $(".put.infoin").mousedown(function(event) {
         if (!event.target.matches(".drag_line") && !event.target.matches(".drag_line *") && !event.target.matches(".cancel_btn") && !event.target.matches(".cancel_btn *")) {
