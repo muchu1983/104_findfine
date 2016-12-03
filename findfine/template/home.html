@@ -1,7 +1,20 @@
+<!-- TODO 有@記號 需改成連結  hinet 設定網址 不要home-->
+<!-- 
+@TODO 
+- FOOTER各靜態頁要再補上需要的資料
+- FOOTER靜態頁名稱調整
+- FOOTER靜態連結
+- 頭像點擊會出現動態欄位與登出按鈕，隱藏動態欄位就會剩下登出鍵
+- 頭像有通知小紅點，設定"active"的CLASS就會顯示
+- 上面工具箱點擊後會出現工具欄位，需要的工具補充在裡面
+- KARRA還是覺得搜尋BAR太低
+- 登入時是目前的畫面
+- 登出時隱藏#wishList、#myPlans、#headBtn、#padWishlist、#padMyPlan
+- 登出時顯示#register、#loginBtn、#noLogHeadBtn、#padRegister、#padLoginBtn
+- 登入登出完成後選單<nav>複製到各頁(不含login與register)
+-->
 <!DOCTYPE html>
 <html lang="en">
-<!-- TODO 有@記號 需改成連結  hinet 設定網址 不要home-->
-
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -51,8 +64,6 @@
     <link rel="stylesheet" href="/static/icon-font/style.css">
     <!-- google font Roboto -->
     <link href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700,900" rel="stylesheet">
-    <!-- 暫時隱藏一些東西的CSS -->
-    <link href="/static/css/temperary.css" rel="stylesheet">
 </head>
 <!-- TODO 每個log都可以回首頁 -->
 
@@ -121,11 +132,11 @@
                 <!-- <div id="myFriends" class="btn btn-info">my friends</div>
                 <div id="myMessages" class="btn btn-info">my messages</div> -->
                 <!-- <div id="loginBtn" class="header_btn btn-info">Log In</div> -->
-                <div id="register" class="header_blk_btn hide">Sign Up</div>
-                <div id="loginBtn" class="header_blk_btn hide">Log In</div>
+                <div id="register" class="header_blk_btn">Sign Up</div>
+                <div id="loginBtn" class="header_blk_btn">Log In</div>
                 <div id="padMenuBtn" class="header_menu_btn icon-menu"></div>
                 <div id="mobileMenuBtn" class="header_menu_btn icon-menu"></div>
-                <div id="noLogHeadBtn" class="head_btn" style="background-image: url(/static/img/head_logout.jpg);">
+                <div id="noLogHeadBtn" class="head_btn nolog" style="background-image: url(/static/img/head_logout.jpg);">
                 </div>
             </div>
             <!-- /.navbar-collapse -->
@@ -142,6 +153,8 @@
             <span class="icon icon-myplan"></span>
             <span>My Plan</span>
         </div>
+        <div id="padRegister" class="header_blk_btn">Sign Up</div>
+        <div id="padLoginBtn" class="header_blk_btn">Log In</div>
     </div>
     <div class="plane_print_blk">
         <svg class="plane_print">
@@ -328,7 +341,6 @@
         <div class="bgimg_blk" style="background-image: url(/static/img/sea-1614608.jpg);"></div>
     </section>
     <section id="tour">
-        <!-- TODO 目前資料都是假的 要更新成可以上線 -->
         <div class="container">
             <div class="row">
                 <div class="col-lg-12 text-center">
@@ -337,6 +349,13 @@
                 </div>
             </div>
             <div id="tourBlk" class="row tour_blk home_tour_blk" data-ing="0">
+            </div>
+            <div class="waiting_blk">
+                <div class="waiting">
+                    <div class="logo icon-logo"></div>
+                    <div class="text">Loading...</div>
+                    <div class="shadow"></div>
+                </div>
             </div>
             <div class="more_link_btn ripple_blk" id="moreBtn">
                 <a class="ripple">More Tours</a>
@@ -361,10 +380,10 @@
     <footer>
         <div class="container">
             <ul class="link_blk">
-                <li><a>About Us</a></li>
+                <li><a href="/page/aboutUs">About Us</a></li>
                 <li><a>Terms & Conditions</a></li>
                 <li><a>Cooperation</a></li>
-                <li><a>Contact Us</a></li>
+                <li><a href="/page/contactUs">Contact Us</a></li>
             </ul>
             <div class="copyright_blk">Copyright © 2016 FindFineTour All rights reserved.</div>
         </div>

@@ -1,3 +1,4 @@
+html { overflow-x:hidden; }
 body {
     overflow-x: hidden;
     /*font-family: 'Raleway', "Helvetica Neue", Helvetica, Arial, sans-serif;*/
@@ -1499,17 +1500,38 @@ body {
 }
 
 .header_blk_btn#loginBtn {
-    margin-left: 192px;
+    position: absolute;
     background: transparent;
     color: #ffffff;
+    right: 200px;
 }
 
 .header_blk_btn#loginBtn.register_page {}
 
 .header_blk_btn#register {
+    position: absolute;
     background: #ffffff;
     color: #2bb0b9;
     font-weight: 600;
+    right: 85px;
+}
+
+.header_blk_btn#padRegister {
+    position: absolute;
+    top: 47px;
+    left: 75px;
+    display: none;
+}
+
+.header_blk_btn#padLoginBtn {
+    position: absolute;
+    top: 117px;
+    left: 75px;
+    display: none;
+}
+
+.header_menu_btn#padMenuBtn {
+    right: 58px;
 }
 
 #page-top .bsSelect .btn {
@@ -1555,7 +1577,9 @@ body {
 }
 
 .header_btn_blk {
+    position: absolute;
     float: right;
+    width: 1000px;
 }
 
 
@@ -1721,6 +1745,11 @@ body {
     animation-timing-function: ease;
 }
 
+.head_btn.nolog {
+    position: absolute;
+    right: 0;
+}
+
 .head_btn {
     position: relative;
     display: inline-block;
@@ -1745,7 +1774,6 @@ body {
 .head_btn > .head_menu {
     position: absolute;
     top: 50px;
-    height: 300px;
     width: 220px;
     background-color: #ffffff;
     border: solid 1px #009688;
@@ -1765,7 +1793,6 @@ body {
 }
 
 .head_btn > .head_menu>.logout_btn {
-    position: absolute;
     width: 100%;
     height: 50px;
     font-family: Roboto;
@@ -1779,7 +1806,6 @@ body {
     line-height: 50px;
     left: 0;
     bottom: 0;
-    border-top: 1px solid #228e9c;
     transition: all 0.3s;
     -moz-transition: all 0.3s;
     -webkit-transition: all 0.3s;
@@ -1798,6 +1824,7 @@ body {
     border-top-left-radius: 7px;
     border-top-right-radius: 7px;
     overflow-y: scroll;
+    border-bottom: 1px solid #228e9c;
 }
 
 .head_btn > .head_menu>.noti_blk::-webkit-scrollbar-track {
@@ -1854,6 +1881,11 @@ body {
     border-radius: 10px;
     background-color: #ee112c;
     border: solid 2px #ffffff;
+    display: none;
+}
+
+.head_btn > .noti_ing.active {
+    display: block;
 }
 
 .mini_searchbar {
@@ -3125,7 +3157,7 @@ input:-moz-placeholder {
     text-align: center;
     padding-left: 0;
     float: left;
-    cursor: default;
+    cursor: pointer;
     -webkit-transition: all 0s;
     -moz-transition: all 0s;
     transition: all 0s;
@@ -3326,6 +3358,7 @@ input:-moz-placeholder {
     margin: auto;
     width: 200px;
     margin-top: 9px;
+    display: none;
 }
 
 .find_btn.pad>.form-group>.blue_ripple_blk {
@@ -5222,6 +5255,42 @@ input:-moz-placeholder {
 .plan_set_blk>.inner_blk>.friends_blk>.friends {
     display: inline-block;
     vertical-align: middle;
+    display: none;
+}
+
+.plan_set_blk>.inner_blk>.friends_blk>.friends>.friend {
+    position: relative;
+    width: 55px;
+    height: 55px;
+    border-radius: 30px;
+    display: inline-block;
+    vertical-align: top;
+    margin: 0 7.5px;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    background-size: cover;
+    -o-background-size: cover;
+    background-position: center center;
+    cursor: pointer;
+}
+
+.plan_set_blk>.inner_blk>.friends_blk>.friends>.friend>.icon-cancel {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    border-radius: 30px;
+    background-color: #000000;
+    color: #ffffff;
+    font-size: 20px;
+    line-height: 50px;
+    transition: all 0.2s;
+    -moz-transition: all 0.2s;
+    -webkit-transition: all 0.2s;
+    opacity: 0;
+}
+
+.plan_set_blk>.inner_blk>.friends_blk>.friends>.friend:hover>.icon-cancel {
+    opacity: 0.5;
 }
 
 .plan_set_blk>.inner_blk>.friends_blk>.add_friends {
@@ -5233,6 +5302,7 @@ input:-moz-placeholder {
     border-radius: 30px;
     background-color: #d8d8d8;
     border: solid 1px #ffffff;
+    margin: 0 7.5px;
     display: none;
 }
 
@@ -5266,8 +5336,7 @@ input:-moz-placeholder {
     -moz-background-size: cover;
     background-size: cover;
     -o-background-size: cover;
-    background-repeat: ndisplay: block;
-    o-repeat;
+    background-repeat: no-repeat;
 }
 
 .plan_set_blk>.inner_blk>.checklist_blk>.info {
@@ -5537,6 +5606,23 @@ input:-moz-placeholder {
     padding: 19px 10px 19px 19px;
 }
 
+.edit_blk>.inner_blk>.date_blk>.put_blk>.not_set_yet {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    background-color: #9b9b9b;
+    border-radius: 20px;
+    z-index: 500;
+    font-family: Roboto;
+    font-size: 20px;
+    line-height: 600px;
+    letter-spacing: 1px;
+    color: #ffffff;
+    cursor: pointer;
+}
+
 .edit_blk>.inner_blk>.date_blk>.put_blk>.inner_blk {
     height: 613px;
     overflow-y: scroll;
@@ -5731,6 +5817,10 @@ input:-moz-placeholder {
     z-index: 1;
 }
 
+.edit_blk>.inner_blk>.date_blk>.put_blk>.inner_blk>.puts>.put.duration.long {
+    background-color: #D0011B !important;
+}
+
 .edit_blk>.inner_blk>.date_blk>.put_blk>.inner_blk>.puts>.put.duration>.transit_way {
     font-size: 18px;
     line-height: 100%;
@@ -5850,6 +5940,10 @@ input:-moz-placeholder {
     cursor: n-resize;
     display: none;
     z-index: 5;
+}
+
+.edit_blk>.inner_blk>.date_blk>.put_blk>.inner_blk>.puts>.put.infoin.open {
+    z-index: 50;
 }
 
 .edit_blk>.inner_blk>.date_blk>.put_blk>.inner_blk>.puts>.put.infoin.open>.drag_line {
@@ -6217,7 +6311,8 @@ input:-moz-placeholder {
     color: #228e9c;
     line-height: 40px;
 }
-.note_picker{
+
+.note_picker {
     position: absolute;
     top: -500px;
     width: 190px;
@@ -6232,6 +6327,7 @@ input:-moz-placeholder {
     -moz-box-shadow: 0 1px 4px 0 rgba(0, 0, 0, 0.5);
     -webkit-box-shadow: 0 1px 4px 0 rgba(0, 0, 0, 0.5);
 }
+
 .picking_blk {
     position: absolute;
     top: -500px;
@@ -7378,7 +7474,7 @@ input:-moz-placeholder {
 .tour_detail_blk {
     position: absolute;
     left: 50%;
-    margin-left: -240px;
+    margin-left: -220px;
     top: -2000px;
     z-index: 500;
     width: 240px;
@@ -7406,10 +7502,10 @@ input:-moz-placeholder {
     position: absolute;
     z-index: -1;
     left: 50%;
-    top: -50px;
-    margin-left: -150px;
-    width: 310px;
-    height: 400px;
+    top: -20px;
+    margin-left: -165px;
+    width: 370px;
+    height: 380px;
 }
 
 .tour_detail_blk>.title {
@@ -7854,6 +7950,7 @@ input:-moz-placeholder {
     transition: all 0.3s;
     -moz-transition: all 0.3s;
     -webkit-transition: all 0.3s;
+    display: none;
 }
 
 .pad_menu.active {
@@ -8082,7 +8179,7 @@ input:-moz-placeholder {
 .static_content_blk>.gray_back_blk>.content {
     background-size: 60px;
     width: 100%;
-    height: 280px;
+    height: 260px;
 }
 
 .cancel_btn.icon-cancel {
@@ -8158,7 +8255,17 @@ input:-moz-placeholder {
     padding-left: 24px;
 }
 
+
 @media (max-width: 1050px) {
+    .pad_menu{
+        display: block;
+    }
+    .find_btn.pad{
+        display: block;
+    }
+    .header_btn_blk {
+        width: 100%;
+    }
     .static_content_blk>.main_pic_blk {
         height: 300px;
     }
@@ -9537,6 +9644,17 @@ input:-moz-placeholder {
         padding-left: 15px;
         width: 200px;
     }
+    .header_blk_btn#register {
+        right: 0;
+        top: 194px;
+    }
+    .header_blk_btn#loginBtn {
+        right: 0;
+        top: 258px;
+    }
+    .pad_menu{
+        display: none;
+    }
 }
 
 
@@ -9545,4 +9663,26 @@ input:-moz-placeholder {
 #team,
 #keyword {
     display: none;
+}
+
+#testBtn {
+    position: fixed;
+    top: 50%;
+    right: 0;
+    width: 50px;
+    height: 50px;
+    background-color: orange;
+    z-index: 999999;
+    cursor: pointer;
+}
+
+#testBtn2 {
+    position: fixed;
+    top: 55%;
+    right: 0;
+    width: 50px;
+    height: 50px;
+    background-color: red;
+    z-index: 999999;
+    cursor: pointer;
 }

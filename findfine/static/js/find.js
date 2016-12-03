@@ -1,8 +1,5 @@
 //本網頁讀取完成後 執行
 $(document).ready(initFind);
-
-
-
 function initFind() {
     initCurrencySelect();
     var keyword = tour.QueryString().keyword;
@@ -21,55 +18,6 @@ function initFind() {
         $toggleCollapse.html(' less');
     }).on('hide.bs.collapse', function() {
         $toggleCollapse.html(' more');
-    });
-
-    //登入按鈕
-    $("#loginBtn").click(function() {
-        if ($("#loginBtn").html() == "Log In") {
-            window.location = "/account/login";
-        }
-    });
-
-    $("#register").click(function() {
-        window.location = "/account/register"
-    });
-
-    $('#noLogHeadBtn').click(function(event) {
-        window.location = "/account/login";
-    });
-
-    $('#logoTop').click(function(event) {
-        window.location = "/";
-    });
-
-    // 選單搜尋 ENTER @Q@ davidturtle
-
-    //搜尋按鈕
-    $("#btnSearch").click(function() {
-
-        // $("#current_page").html("1");
-        $("#current_page").val("1");
-        var sortCondition = [];
-        sortCondition[0] = $("#sortValBtn .sort_val").html();
-        sortCondition[1] = $("#sortWayBtn .sort_val").html();
-        $('html,body').animate({
-            scrollTop: $("#findContent").offset().top
-        }, 600);
-        search(sortCondition);
-
-    });
-    $("#padBtnSearch").click(function() {
-
-        // $("#current_page").html("1");
-        $("#current_page").val("1");
-        var sortCondition = [];
-        sortCondition[0] = $("#sortValBtn .sort_val").html();
-        sortCondition[1] = $("#sortWayBtn .sort_val").html();
-        $('html,body').animate({
-            scrollTop: $("#findContent").offset().top
-        }, 600);
-        search(sortCondition);
-
     });
 
     // @TODO 登入狀況判斷完成後修改此處
@@ -92,16 +40,71 @@ function initFind() {
         // $('#loginBtn').hide();
     }
 
+    //登入按鈕
+    $("#loginBtn").click(function() {
+        if ($("#loginBtn").html() == "Log In") {
+            window.location = "/account/login";
+        }
+    });
+
+    // 註冊按鈕 點擊
+    $("#register").click(function() {
+        window.location = "/account/register"
+    });
+
+    // 未登入頭像 點擊
+    $('#noLogHeadBtn').click(function(event) {
+        window.location = "/account/login";
+    });
+
+    // LOGO 點擊
+    $('#logoTop').click(function(event) {
+        window.location = "/";
+    });
+
+    //搜尋按鈕 點擊
+    $("#btnSearch").click(function() {
+
+        // $("#current_page").html("1");
+        $("#current_page").val("1");
+        var sortCondition = [];
+        sortCondition[0] = $("#sortValBtn .sort_val").html();
+        sortCondition[1] = $("#sortWayBtn .sort_val").html();
+        $('html,body').animate({
+            scrollTop: $("#findContent").offset().top
+        }, 600);
+        search(sortCondition);
+
+    });
+
+    // PAD搜尋按鈕 點擊
+    $("#padBtnSearch").click(function() {
+
+        // $("#current_page").html("1");
+        $("#current_page").val("1");
+        var sortCondition = [];
+        sortCondition[0] = $("#sortValBtn .sort_val").html();
+        sortCondition[1] = $("#sortWayBtn .sort_val").html();
+        $('html,body').animate({
+            scrollTop: $("#findContent").offset().top
+        }, 600);
+        search(sortCondition);
+
+    });
+
+    // wishList 按鈕 點擊
     $("#wishList").click(function() {
         window.location = "/page/wishList";
     });
 
+    // logOut 按鈕 點擊
     $("#logOut").click(function() {
         if ($("#logOut").html() == "Log Out") {
             window.location = "/account/logout";
         }
     });
 
+    // myPlans 按鈕 點擊
     $("#myPlans").click(function() {
         window.location = "/page/myTrip";
     });
@@ -112,7 +115,6 @@ function initFind() {
     initSortCondition[0] = "Rating";
     initSortCondition[1] = "Decending";
     search(initSortCondition);
-
 
     // 搜尋區顯示更多/更少選項 @Q@davidturtle
     moreFilterClick();
@@ -139,34 +141,60 @@ function initFind() {
     // toolbox點擊
     toolboxClick()
 
-
+    // 選單搜尋初始化
     initTopSearch();
 
+    // pad menu按鈕點擊
+    padMenuAct();
+
+    // mobile menu按鈕點擊
+    mobileMenuClick();
+
+    // find區止滑
+    findBlkPrevent();
+
+    // 頭像點擊
+    headBtnClick();
+    
+    // 通知止滑
+    notiBlkPrevent();
+
+    // 日期選擇初始化
+    $("#startFrom").datepicker();
+    $("#to").datepicker();
+
+    // 頁碼輸入功能
+    pageNumberType("current_page");
+
     //頁面按鈕點擊效果 RE@Q@ davidturtle
+
+    // 前一頁
     $("#prev_page_link").click(function() {
         // $("#current_page").html(parseInt($("#current_page").html()) - 1);
         $("#current_page").val(parseInt($("#current_page").val()) - 1);
         search('');
     });
+
+    // 下一頁
     $("#next_page_link").click(function() {
         $("#current_page").val(parseInt($("#current_page").val()) + 1);
         // $("#current_page").val(parseInt($("#current_page").val()) + 1);
         search('');
     });
+
+    // 第一頁
     $("#first_page_link").click(function() {
         $("#current_page").val("1");
         // $("#current_page").val("1");
         search('');
     });
+
+    // 最後一頁
     $("#final_page_link").click(function() {
         $("#current_page").val($("#final_page_link").html());
         // $("#current_page").val($("#final_page_link").html());
         search('');
     });
-    $("#startFrom").datepicker();
-    $("#to").datepicker();
-
-    pageNumberType("current_page");
 
     var urlVal = getUrlValue(),
         sendLat = urlVal['lat'],
@@ -176,21 +204,6 @@ function initFind() {
     $(window).resize(function(event) {
         $("#page-top .find .intro-text .searchContent").removeClass('active');
     });
-
-
-    // pad menu按鈕點擊
-    padMenuAct();
-
-
-    // mobile menu按鈕點擊
-    mobileMenuClick();
-
-    // find區止滑
-    findBlkPrevent();
-    // 頭像點擊
-    headBtnClick();
-    // 通知止滑
-    notiBlkPrevent();
 };
 
 //hmoe頁面傳值至find頁面 googleMap呈現
@@ -269,34 +282,36 @@ function initMap(sendLat, sendLng) {
     var input = /** @type {!HTMLInputElement} */ (
         document.getElementById('placeID'));
 
-    // var types = document.getElementById('type-selector');
-    //map.controls[google.maps.ControlPosition.TOP_LEFT].push(input);
-    //map.controls[google.maps.ControlPosition.TOP_LEFT].push(types);
+    // 附近景點參數
+    var request = {
+        location: locaVal,
+        // 半徑範圍
+        radius: '500',
+        // 搜尋類型，可多種
+        // 類型列表連結 https://developers.google.com/places/supported_types?hl=zh-tw
+        types: ['food']
+    };
 
+    service = new google.maps.places.PlacesService(map);
+    service.nearbySearch(request, callback);
 
+    function callback(results, status) {
+        if (status == google.maps.places.PlacesServiceStatus.OK) {
+            var nearStops = results;
+            for (var i = 0; i < nearStops.length; i++) {
+                var customTxt = [
+                    "<div class=\"mapLabel\" onclick=\"labelClickSearch(\'mapLb" + i + "\')\" id=\"mapLb" + i + "\">",
+                    "<p>" + nearStops[i].name + "</p>",
+                    "<span class=\"labelTale\"></span>",
+                    "</div>",
+                ].join("");
 
-    var centerLat = locaVal['lat'],
-        centerLng = locaVal['lng'],
-        radius = 500,
-        types = ['food'].join("|"),
-        nearGetUrl = "https://maps.googleapis.com/maps/api/place/nearbysearch/json?language=en&location=" + centerLat + "," + centerLng + "&radius=" + radius + "&types=" + types + "&key=AIzaSyBNW1g69sGY8q_45F0Ob1lMbZn3fWyiL1o";
-    $.getJSON(nearGetUrl, function(jsonResp) {
-        var nearStops = jsonResp.results;
-        for (var i = 0; i < nearStops.length; i++) {
-            var customTxt = [
-                "<div class=\"mapLabel\" onclick=\"labelClickSearch(\'mapLb" + i + "\')\" id=\"mapLb" + i + "\">",
-                "<p>" + nearStops[i].name + "</p>",
-                "<span class=\"labelTale\"></span>",
-                "</div>",
-            ].join("");
+                var tarLatLng = nearStops[i].geometry.location;
+                txt = new TxtOverlay(tarLatLng, customTxt, "mapLabel_blk", map);
 
-            var tarLat = nearStops[i].geometry.location.lat;
-            var tarLng = nearStops[i].geometry.location.lng;
-
-            var tarPosi = new google.maps.LatLng(tarLat, tarLng);
-            txt = new TxtOverlay(tarPosi, customTxt, "mapLabel_blk", map);
+            }
         }
-    });
+    }
     var autocomplete = new google.maps.places.Autocomplete(input);
     autocomplete.bindTo('bounds', map);
 
@@ -318,7 +333,6 @@ function initMap(sendLat, sendLng) {
             window.alert("Autocomplete's returned place contains no geometry");
             return;
         } else {
-            console.log(place);
             map.setCenter(place.geometry.location);
             var newLocate = map.getCenter(),
                 newLat = newLocate.lat(),
@@ -327,72 +341,7 @@ function initMap(sendLat, sendLng) {
             // console.log(map.getCenter(place.geometry.location));
             initMap(newLat, newLng);
         }
-        // marker.setIcon( /** @type {google.maps.Icon} */ ({
-        //     url: place.icon,
-        //     size: new google.maps.Size(71, 71),
-        //     origin: new google.maps.Point(0, 0),
-        //     anchor: new google.maps.Point(17, 34),
-        //     scaledSize: new google.maps.Size(35, 35)
-        // }));
-        // marker.setPosition(place.geometry.location);
-        // marker.setVisible(true);
-        // console.log(marker);
-
-        // If the place has a geometry, then present it on a map.
-        // if (place.geometry.viewport) {
-        //     map.fitBounds(place.geometry.viewport);
-        // } else {
-        //     map.setCenter(place.geometry.location);
-        //     map.setZoom(17); // Why 17? Because it looks good.
-        // }
-        // marker.setIcon( /** @type {google.maps.Icon} */ ({
-        //     url: place.icon,
-        //     size: new google.maps.Size(71, 71),
-        //     origin: new google.maps.Point(0, 0),
-        //     anchor: new google.maps.Point(17, 34),
-        //     scaledSize: new google.maps.Size(35, 35)
-        // }));
-        // marker.setPosition(place.geometry.location);
-        // marker.setVisible(true);
-
-        // var address = '';
-        // if (place.address_components) {
-        //     address = [
-        //         (place.address_components[0] && place.address_components[0].short_name || ''),
-        //         (place.address_components[1] && place.address_components[1].short_name || ''),
-        //         (place.address_components[2] && place.address_components[2].short_name || '')
-        //     ].join(' ');
-        // }
-
-        // infowindow.setContent('<div><strong>' + place.name + '</strong><br>' + address);
-        // //infowindow.open(map, marker);
-        // var centerLat = locaVal['lat'],
-        //     centerLng = locaVal['lng'],
-        //     radius = 500,
-        //     types = ['food'].join("|"),
-        //     nearGetUrl = "https://maps.googleapis.com/maps/api/place/nearbysearch/json?language=en&location=" + centerLat + "," + centerLng + "&radius=" + radius + "&types=" + types + "&key=AIzaSyBNW1g69sGY8q_45F0Ob1lMbZn3fWyiL1o";
-        // $.getJSON(nearGetUrl, function(jsonResp) {
-        //     var nearStops = jsonResp.results;
-        //     for (var i = 0; i < nearStops.length; i++) {
-        //         console.log(i);
-        //         var customTxt = [
-        //             "<div class=\"mapLabel\" onclick=\"labelClickSearch(\'mapLb"+i+"\')\" id=\"mapLb"+i+"\">",
-        //             "<p>" + nearStops[i].name + "</p>",
-        //             "<span class=\"labelTale\"></span>",
-        //             "</div>",
-        //         ].join("");
-
-        //         var tarLat = nearStops[i].geometry.location.lat;
-        //         var tarLng = nearStops[i].geometry.location.lng;
-
-        //         var tarPosi = new google.maps.LatLng(tarLat, tarLng);
-        //         txt = new TxtOverlay(tarPosi, customTxt, "mapLabel_blk", map);
-        //     }
-        // });
     });
-
-
-
 }
 
 //home頁面到find頁面 or 按下search鍵 會執行的動作 可傳入排序條件
@@ -611,7 +560,6 @@ function search(condition) {
     });
 };
 
-
 //幣別功能
 function initCurrencySelect() {
     //設定目前幣別
@@ -665,6 +613,7 @@ function moreFilterClick() {
         }
     });
 }
+
 // 排序區域點擊效果 @Q@ davidturtle
 function sortBlkClick() {
 
@@ -746,7 +695,7 @@ function pageReload(pageDataArray) {
     }
 }
 
-
+// 地圖中的附近地區 @Q@ davidturtle
 function TxtOverlay(pos, txt, cls, map) {
 
     // Now initialize all properties.
@@ -765,9 +714,6 @@ function TxtOverlay(pos, txt, cls, map) {
     this.setMap(map);
 }
 TxtOverlay.prototype = new google.maps.OverlayView();
-
-
-
 TxtOverlay.prototype.onAdd = function() {
 
     // Note: an overlay's receipt of onAdd() indicates that
@@ -844,6 +790,7 @@ TxtOverlay.prototype.toggleDOM = function() {
     }
 }
 
+// 附近景點點擊 @Q@ davidturtle
 function labelClickSearch(tarId) {
     console.log(tarId);
     var tarVal = $("#" + tarId).children('p').html();

@@ -3,27 +3,6 @@
 
     function initMyTrip() {
 
-
-        $("#wishList").click(function() {
-            window.location = "/page/wishList";
-        });
-
-        $("#myPlans").click(function() {
-            window.location = "/page/myTrip";
-        });
-
-        $('#logoTop').click(function(event) {
-            window.location = "/";
-        });
-
-        $('#wishesSel').click(function(event) {
-            window.location = "/page/wishList";
-        });
-
-        $('#friendsSel').click(function(event) {
-            window.location = "/page/myFriends";
-        });
-
         // 幣值設定
         initCurrencySelect();
 
@@ -46,6 +25,26 @@
         // 個人設定點選 @TODO 點擊後要將資料傳到後端 @Q@ davidturtle 
         personelSetClick("#personelSet", ".setting_menu", "#editName", "#userName", ".rename_blk");
 
+        $("#wishList").click(function() {
+            window.location = "/page/wishList";
+        });
+
+        $("#myPlans").click(function() {
+            window.location = "/page/myTrip";
+        });
+
+        $('#logoTop').click(function(event) {
+            window.location = "/";
+        });
+
+        $('#wishesSel').click(function(event) {
+            window.location = "/page/wishList";
+        });
+
+        $('#friendsSel').click(function(event) {
+            window.location = "/page/myFriends";
+        });
+
 
         //取得plan清單  /trip/getTripPlan
         var strGetTripPlanUrl = "/trip/getTripPlan";
@@ -58,7 +57,7 @@
             };
         });
 
-
+        
         function getPlanDataHtml(strName, intId) {
             var strTripDataHtml = [
                 "<li id=" + intId + ">",
