@@ -21,8 +21,8 @@ function initMap() {
         };
     });
 
-    // $('#wishList').hide();
-    // $('#myPlans').hide();
+    $('#wishList').hide();
+    $('#myPlans').hide();
     $('#myFriends').hide();
     $('#myMessages').hide();
     $('#logOut').hide();
@@ -32,8 +32,8 @@ function initMap() {
     //strEmail 如已登入 不顯示login button 並顯示會員帳號
     if (strEmail == "None") {
         // 暫時隱藏 為測試方便使用
-        // $('#register').show();
-        // $('#loginBtn').show();
+        $('#register').show();
+        $('#loginBtn').show();
     } else {
         $('#wishList').show();
         $('#myPlans').show();
@@ -41,8 +41,8 @@ function initMap() {
         $('#register').hide();
         $('#loginBtn').hide();
         // $('#loginBtn').html(strEmail);
-        // $('#myFriends').show();
-        // $('#myMessages').show();
+        $('#myFriends').show();
+        $('#myMessages').show();
     }
 }
 
@@ -115,9 +115,7 @@ function initMap() {
 
         // 登出按鈕點擊
         $("#logOut").click(function() {
-            if ($("#logOut").html() == "Log Out") {
-                window.location = "/account/logout";
-            }
+            window.location = "/account/logout";
         });
 
         // wishList按鈕點擊 @Q@ davidturtle
