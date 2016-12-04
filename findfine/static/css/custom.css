@@ -6626,7 +6626,13 @@ input:-moz-placeholder {
     margin-top: 26px;
 }
 
-.login_blk>.inner_blk >.loginStatusDiv {}
+.login_blk>.inner_blk >.loginStatusDiv {
+    color: #c62929;
+    font-family: Roboto;
+    font-size: 16px;
+    font-weight: 400;
+    padding-top: 18px;
+}
 
 .login_blk>.inner_blk >.regiser_blk {
     margin-top: 55px;
@@ -8036,10 +8042,12 @@ input:-moz-placeholder {
     opacity: 1;
 }
 
-#registerStatusDiv {
-    margin-top: 20px;
-    font-size: 18px;
-    color: red;
+.registerStatusDiv {
+    color: #c62929;
+    font-family: Roboto;
+    font-size: 16px;
+    font-weight: 400;
+    padding-top: 18px;
 }
 
 
