@@ -3,25 +3,6 @@ $(document).ready(initWishList);
 function initWishList() {
 
 
-    $("#wishList").click(function() {
-        window.location = "/page/wishList";
-    });
-
-    $("#myPlans").click(function() {
-        window.location = "/page/myTrip";
-    });
-
-    $('#logoTop').click(function(event) {
-        window.location = "/";
-    });
-
-    $('#plansSel').click(function(event) {
-        window.location = "/page/myTrip";
-    });
-    
-    $('#friendsSel').click(function(event) {
-        window.location = "/page/myFriends";
-    });
 
     // 個人設定點選 @TODO 點擊後要將資料傳到後端 @Q@ davidturtle 
     personelSetClick("#personelSet", ".setting_menu", "#editName", "#userName", ".rename_blk");
@@ -54,10 +35,29 @@ function initWishList() {
 
     // 新增分類點選
     addNewFolderClick();
-    // // 虛線產生
-    // dashLineGenerate(1000, 6, 2, 6, "#2bb0b9", $(".dashed_line"));
 
+    // 選單搜尋 初始化
     initTopSearch();
+
+    $("#wishList").click(function() {
+        window.location = "/page/wishList";
+    });
+
+    $("#myPlans").click(function() {
+        window.location = "/page/myTrip";
+    });
+
+    $('#logoTop').click(function(event) {
+        window.location = "/";
+    });
+
+    $('#plansSel').click(function(event) {
+        window.location = "/page/myTrip";
+    });
+    
+    $('#friendsSel').click(function(event) {
+        window.location = "/page/myFriends";
+    });
 
     $(".wish_blk").html("");
     $(".wish_blk").hide();

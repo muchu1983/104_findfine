@@ -31,16 +31,19 @@
         //     dateFormat: "yy-mm-dd"
         // });
         $("#registreBtn").click(function() {
+            
+            alert("registreBtn");
             //收集註冊資料
             var strUserEmail = $("#user_email").val();
             var strUserPassword = $("#user_password").val();
-            var strUserTitle = $("#user_title").val();
+            var strUserTitle = $("#user_title").text();//Josh
             var strUserFamilyName = $("#user_family_name").val();
             var strUserGivenName = $("#user_given_name").val();
-            var strUserGender = $("#user_gender").val();
-            var strUserBirthday = $("#user_birthday").val();
+            var strUserGender = $("#user_gender").text();//Josh
+            var strUserBirthday = $("#birth_year").text()+"-"+$("#birth_month").text()+"-"+$("#birth_day").text();//Josh
             var strUserNationality = $("#user_nationality").val();
             var strUserContactNumber = $("#user_contact_number").val();
+            
             var dicRegisterData = {
                 "user_email": strUserEmail,
                 "user_password": strUserPassword,

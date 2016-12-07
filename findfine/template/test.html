@@ -5,10 +5,11 @@
     <title>Simple Map</title>
     <!-- jQuery core-->
     <script src="../static/vendor/jquery/dist/jquery.min.js"></script>
+    <!-- google map api -->
+    <script src="https://maps.googleapis.com/maps/api/js?v=3&sensor=false&signed_in=true&language=en&amp;libraries=places&signed_in=false&key=AIzaSyBNW1g69sGY8q_45F0Ob1lMbZn3fWyiL1o"></script>
     <meta name="viewport" content="initial-scale=1.0">
     <meta charset="utf-8">
     <!-- google map api -->
-    <script src="https://maps.googleapis.com/maps/api/js?v=3&sensor=false&signed_in=true&language=en&amp;libraries=places&key=AIzaSyBNW1g69sGY8q_45F0Ob1lMbZn3fWyiL1o"></script>
     <style>
     html,
     body {
@@ -23,25 +24,28 @@
     </style>
     <script type="text/javascript">
     jQuery(document).ready(function($) {
-        $("#kqkq").click(function(event) {
-            console.log($(this)[0].outerHTML);
+        var nearGetUrl = "https://maps.googleapis.com/maps/api/place/nearbysearch/json?language=en&location=25.0329636,121.5654268&radius=500&types=food&key=AIzaSyBNW1g69sGY8q_45F0Ob1lMbZn3fWyiL1o";
+        // $.getJSON(nearGetUrl, function(jsonResp) {
+        //     console.log(jsonResp);
+        // });
+        $.ajax({
+            url: nearGetUrl,
+            type: 'GET',
+            dataType: 'jsonp',
+            cache: false,
+        })
+        .done(function(jsonResp) {
+            console.log(jsonResp);
+        })
+        .fail(function() {
+            console.log("error");
+        })
+        .always(function() {
+            console.log("complete");
         });
-        geocodeAddress();
-    });
+        
 
-    function geocodeAddress() {
-        var geocoder = new google.maps.Geocoder();
-        var address = "Taipei City, Taiwan";
-        geocoder.geocode({
-            'address': address
-        }, function(results, status) {
-            if (status === google.maps.GeocoderStatus.OK) {
-                console.log(results);
-            } else {
-                alert('Geocode was not successful for the following reason: ' + status);
-            }
-        });
-    }
+    });
     </script>
 </head>
 

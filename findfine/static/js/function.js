@@ -1,4 +1,4 @@
-// 飛機飛呀飛 @Q@davidturtle
+// 飛機飛呀飛
 function planeFly(sec) {
     var ms = document.querySelectorAll('.flying_plane');
     var defaultTiming = {
@@ -43,6 +43,7 @@ function addFavoriteTrip(intId) {
     //alert(" initFind() 後");
 }
 
+// 從 WISHLIST 移除
 function removeFavoriteTrip(intId) {
     var strAddFavoriteTripUrl = "/trip/removeFavoriteTrip?intTripId=" + intId;
     $.getJSON(strAddFavoriteTripUrl, function(jsonResp) {
@@ -58,7 +59,7 @@ function removeFavoriteTrip(intId) {
     //window.location.reload();
 }
 
-// 加至wishlist按鈕點擊 @Q@davidturtle
+// 加至wishlist按鈕點擊
 function addToWishlistBtnClick() {
     $(".add_wish_btn").click(function(event) {
         var timer,
@@ -90,7 +91,7 @@ function addToWishlistBtnClick() {
     });
 }
 
-// 選單隨畫面下移改變為down樣式 @Q@davidturtle
+// 選單隨畫面下移改變為down樣
 function topNavDown(distance) {
     $(window).scroll(function() {
         var top_position = $(window).scrollTop();
@@ -103,238 +104,12 @@ function topNavDown(distance) {
     });
 }
 
-// 取得目標EQ值 @Q@davidturtle
+// 取得目標EQ值
 function getEqVal(element) {
     var index = element.index();
 
     return index;
 }
-
-// 月份選單點擊效果 @Q@davidturtle
-function homeMonthStoryMenuClick() {
-    $(window).click(function() {
-        if (!event.target.matches("#monthSelBtn")) {
-            if ($("#monthDropDown").hasClass('active')) {
-
-                $("#monthDropDown").removeClass('active');
-            }
-        }
-    });
-    $("#monthSelBtn").click(function(event) {
-        /* Act on the event */
-        if ($("#monthDropDown").hasClass('active')) {
-
-            $("#monthDropDown").removeClass('active');
-        } else {
-            $("#monthDropDown").addClass('active');
-        }
-    });
-}
-
-// 首頁月份選單項目點擊 @Q@davidturtle
-// @TODO 實際抓出STORY資料
-function homeMonthStoryMenuLiClick() {
-    $("#monthDropDown li").click(function(event) {
-        var tarEq = getEqVal($(this));
-        $("#monthSelBtn").html($(this).html());
-    });
-}
-
-
-// 首頁建議旅程抓取 RE@Q@davidturtle
-function homeRecomTour() {
-    var strFilterQueryUrl = "/trip/recommended";
-    $.getJSON(strFilterQueryUrl, function(jsonResp) {
-        var strUserCurrency = $("#moneySelect").val();
-        //trip data
-        var lstDicTripData = jsonResp["trip"];
-        console.log(lstDicTripData);
-        $("#tourBlk").html("");
-        for (i = 0; i < lstDicTripData.length; i++) {
-            var dicTripData = lstDicTripData[i];
-            var strTripDataHtml = getHomeTripDataHtml(strUserCurrency, dicTripData["strTitle"], dicTripData["intUserCurrencyCost"], dicTripData["strIntroduction"], dicTripData["strLocation"], dicTripData["intDurationHour"], dicTripData["strOriginUrl"], dicTripData["strImageUrl"], dicTripData["intReviewStar"], dicTripData["intReviewVisitor"], dicTripData["intId"], dicTripData["isFavoriteTrip"]);
-            $("#tourBlk").append(strTripDataHtml);
-        };
-
-        // add to wishlist 按鈕點擊
-        addToWishlistBtnClick();
-
-        homeRecShow(0);
-        // 隔十秒換三張 
-        // homeRecAct(lstDicTripData.length);
-        var jsDetectWidth = $(window).width();
-        var ingNumber;
-
-        if (jsDetectWidth > 1049) {
-            var myLoop = setInterval(function() {
-
-                homeRecHide(ingNumber);
-                ingNumber = parseInt($("#tourBlk").attr('data-ing'));
-                ingNumber = ingNumber + 3;
-                if (ingNumber >= lstDicTripData.length) {
-                    ingNumber = 0;
-                }
-                $("#tourBlk").attr('data-ing', ingNumber);
-                homeRecShow(ingNumber);
-            }, 7000);
-        } else if (jsDetectWidth > 767) {
-            var myLoop = setInterval(function() {
-
-                homeRecHide(ingNumber);
-                ingNumber = parseInt($("#tourBlk").attr('data-ing'));
-                ingNumber = ingNumber + 2;
-                if (ingNumber >= lstDicTripData.length) {
-                    ingNumber = 0;
-                }
-                $("#tourBlk").attr('data-ing', ingNumber);
-                homeRecShow(ingNumber);
-            }, 7000);
-        } else {
-            var myLoop = setInterval(function() {
-
-                homeRecHide(ingNumber);
-                ingNumber = parseInt($("#tourBlk").attr('data-ing'));
-                ingNumber = ingNumber + 1;
-                if (ingNumber >= lstDicTripData.length) {
-                    ingNumber = 0;
-                }
-                $("#tourBlk").attr('data-ing', ingNumber);
-                homeRecShow(ingNumber);
-            }, 7000);
-        }
-        $(window).resize(function(event) {
-            jsDetectWidth = $(window).width();
-            $("#tourBlk").attr('data-ing', 0);
-            clearInterval(myLoop);
-            homeRecShow(0);
-            // 隔十秒換三張 
-            // homeRecAct(lstDicTripData.length);
-            if (jsDetectWidth > 1049) {
-                myLoop = setInterval(function() {
-
-                    homeRecHide(ingNumber);
-                    ingNumber = parseInt($("#tourBlk").attr('data-ing'));
-                    ingNumber = ingNumber + 3;
-                    if (ingNumber >= lstDicTripData.length) {
-                        ingNumber = 0;
-                    }
-                    $("#tourBlk").attr('data-ing', ingNumber);
-                    homeRecShow(ingNumber);
-                }, 7000);
-            } else if (jsDetectWidth > 767) {
-                myLoop = setInterval(function() {
-
-                    homeRecHide(ingNumber);
-                    ingNumber = parseInt($("#tourBlk").attr('data-ing'));
-                    ingNumber = ingNumber + 2;
-                    if (ingNumber >= lstDicTripData.length) {
-                        ingNumber = 0;
-                    }
-                    $("#tourBlk").attr('data-ing', ingNumber);
-                    homeRecShow(ingNumber);
-                }, 7000);
-            } else {
-                myLoop = setInterval(function() {
-
-                    homeRecHide(ingNumber);
-                    ingNumber = parseInt($("#tourBlk").attr('data-ing'));
-                    ingNumber = ingNumber + 1;
-                    if (ingNumber >= lstDicTripData.length) {
-                        ingNumber = 0;
-                    }
-                    $("#tourBlk").attr('data-ing', ingNumber);
-                    homeRecShow(ingNumber);
-                }, 7000);
-            }
-        });
-    });
-}
-
-// 首頁建議旅程抓取 RE@Q@davidturtle
-// function homeRecomTour(strFilterQueryUrl, startNum, totalDic) {
-//     // $("#tourBlk").html("");
-//     $.getJSON(strFilterQueryUrl, function(jsonResp) {
-//         //console.log(jsonResp);
-//         var strUserCurrency = $("#moneySelect").val();
-//         //trip data
-//         var lstDicTripData = jsonResp["trip"];
-//         console.log(lstDicTripData);
-//         for (i = 0; i < lstDicTripData.length; i++) {
-//             var dicTripData = lstDicTripData[i];
-//             var strTripDataHtml = getHomeTripDataHtml(strUserCurrency, dicTripData["strTitle"], dicTripData["intUserCurrencyCost"], dicTripData["strIntroduction"], dicTripData["strLocation"], dicTripData["intDurationHour"], dicTripData["strOriginUrl"], dicTripData["strImageUrl"], dicTripData["intReviewStar"], dicTripData["intReviewVisitor"], dicTripData["intId"], dicTripData["isFavoriteTrip"]);
-//             $("#tourBlk").append(strTripDataHtml);
-//         };
-
-//         // add to wishlist 按鈕點擊
-//         addToWishlistBtnClick();
-
-//         homeRecShow(0);
-//         // 隔十秒換三張 
-//         homeRecAct();
-//     });
-// }
-
-//組出單組查詢結果出來的html字串
-function getHomeTripDataHtml(strUserCurrency, strTitle, intUserCurrencyCost, strIntroduction, strLocation, intDurationHour, strOriginUrl, strImageUrl, intReviewStar, intReviewVisitor, intId, isFavoriteTrip) {
-
-    var reviewStar = "";
-    fillstarQan = intReviewStar;
-    emptystarQan = 5 - intReviewStar;
-    for (var fillstarCount = 0; fillstarCount < fillstarQan; fillstarCount++) {
-        reviewStar += "<span class='icon-star_fill'></span>";
-    }
-    for (var emptystarCount = 0; emptystarCount < emptystarQan; emptystarCount++) {
-        reviewStar += "<span class='icon-star_empty'></span>";
-    }
-    // @Q@設定文字擷取字數
-    var strIntroduction = strIntroduction.substr(0, 75);
-    var strTitle = strTitle.substr(0, 50);
-
-    var favoriteTrip;
-
-    if (isFavoriteTrip.toString() == "true") {
-        favoriteTrip = " active";
-        // favoriteTrip = "<div class=\"favorite\">♥</div>";
-    }
-    if (isFavoriteTrip.toString() == "false") {
-        favoriteTrip = "";
-    }
-    var strTripDataHtml = [
-        "<div class=\"tour hometour\">",
-        "<div class=\"card active\" style=\"background-image:url(" + strImageUrl + ");\">",
-        "<div class=\"name\">",
-        "<p>" + strTitle + "...</p>",
-        "</div>",
-        "<p class=\"place\">" + strLocation + "</p>",
-        "<p class=\"duration\">" + intDurationHour + "<span>HR</span></p>",
-        "<div class=\"price\">",
-        "<span class=\"country\">" + strUserCurrency + "</span> $",
-        "<span class=\"number\">" + intUserCurrencyCost + "</span>",
-        "</div>",
-        "<div class=\"star\">" + reviewStar + "</div>",
-        "<div class=\"compeople\">- " + intReviewVisitor + " voted -</div>",
-
-        "<div class=\"trimtext\">" + strIntroduction + "...</div>",
-        "<div class=\"readmore_btn\">",
-        "<a target=\"_blank\" href=" + strOriginUrl + " data-ripple-color=\"#2bb0b9\">Read More</a>",
-        "</div>",
-        "<div class=\"footprint_blk\">",
-        "<span class=\"icon-tourdash footprint\"></span>",
-        "</div>",
-        "<div class=\"add_wish_btn" + favoriteTrip + "\" data-id=\"" + intId + "\">",
-        "<p class=\"oriword\">Add To WishList</p>",
-        "<span class=\"icon-wishlist\"></span>",
-        "<p class=\"actword\">My Wishlist</p>",
-        "<span class=\"icon-quill\"></span>",
-        "<span class=\"extend_line\"></span>",
-        "</div>",
-        "<div class=\"darken_bg\"></div>",
-        "</div>",
-        "</div>"
-    ].join("");
-
-    return strTripDataHtml;
-};
 
 //組出單組查詢結果出來的html字串
 function getTripDataHtml(strUserCurrency, strTitle, intUserCurrencyCost, strIntroduction, strLocation, intDurationHour, strOriginUrl, strImageUrl, intReviewStar, intReviewVisitor, intId, isFavoriteTrip) {
@@ -368,7 +143,7 @@ function getTripDataHtml(strUserCurrency, strTitle, intUserCurrencyCost, strIntr
         "<p>" + strTitle + "...</p>",
         "</div>",
         "<p class=\"place\">" + strLocation + "</p>",
-        "<p class=\"duration\">" + intDurationHour + "<span>HR</span></p>",
+        "<p class=\"duration\">" + intDurationHour + "<span>HRs</span></p>",
         "<div class=\"price\">",
         "<span class=\"country\">" + strUserCurrency + "</span> $",
         "<span class=\"number\">" + intUserCurrencyCost + "</span>",
@@ -397,6 +172,7 @@ function getTripDataHtml(strUserCurrency, strTitle, intUserCurrencyCost, strIntr
 
     return strTripDataHtml;
 };
+
 // ripple按鈕效果啟動 
 function initRippleBtn() {
     $('.ripple').on('click', function(event) {
@@ -428,7 +204,6 @@ function initRippleBtn() {
     });
 }
 
-
 // 多選單選項點擊 
 function multiSelClick(oriText) {
     $(".multi_sel_btn>.menu>li").click(function(event) {
@@ -446,14 +221,11 @@ function multiSelClick(oriText) {
         multiSelValSet($(this).parent('.menu').parent('.multi_sel_btn'), oriText);
         $(this).parent('.menu').removeClass('active');
     });
-
-
     $(window).click(function() {
         if (!event.target.matches(".multi_sel_btn") && !event.target.matches(".multi_sel_btn *")) {
             $(".multi_sel_btn > .menu").removeClass('active');
         }
     });
-
 }
 
 // 多選單選項點擊後內容調整 
@@ -501,7 +273,6 @@ function plusBtnClcik(oriText) {
             valBlk.html(valBlkVal);
         }
     });
-
 }
 
 // 單選按鈕點擊 
@@ -511,7 +282,6 @@ function singleSelClick(oriText) {
         $(".single_sel_btn>.menu>li").removeClass('active');
         $(this).addClass('active');
         $(this).parent().parent().children('.value').html($(this).html());
-        console.log($(this).html());
         $(this).parent('.menu').removeClass('active');
     });
     $(".single_sel_btn>.menu>.clear_btn").click(function(event) {
@@ -532,6 +302,7 @@ function singleSelClick(oriText) {
     });
 
 }
+
 //幣別
 function initCurrencySelect() {
     //設定目前幣別
@@ -554,6 +325,7 @@ function initCurrencySelect() {
     });
 
 };
+
 //幣別
 function homeInitCurrencySelect() {
     //設定目前幣別
@@ -599,8 +371,8 @@ function headerSearch(tour) {
     }
 }
 
-// 首頁推薦旅程動態 
-
+// 首頁推薦旅程動態
+// 出現
 function homeRecShow(ingNum) {
 
     var jsDetectWidth = $(window).width();
@@ -627,7 +399,6 @@ function homeRecShow(ingNum) {
                 'left': i % 2 * 50 + "%",
                 'display': 'block',
             });
-            console.log(i);
             $(".home_tour_blk .hometour").eq(i).delay(i % 2 * 200).queue(function(next) {
                 $(this).addClass('active');
                 next();
@@ -642,7 +413,6 @@ function homeRecShow(ingNum) {
                 'left': "initial",
                 'display': 'block',
             });
-            console.log(i);
             $(".home_tour_blk .hometour").eq(i).delay(200).queue(function(next) {
                 $(this).addClass('active');
                 next();
@@ -653,6 +423,7 @@ function homeRecShow(ingNum) {
 
 }
 
+// 隱藏
 function homeRecHide(ingNum) {
     var jsDetectWidth = $(window).width();
     if (jsDetectWidth > 991) {
@@ -699,10 +470,6 @@ function homeRecHide(ingNum) {
 
 }
 
-// homeRecShow
-
-// 首頁推薦旅程動態
-
 // 客製單選按鈕點擊 
 function cusSingleSelClick(tar, oriText) {
     $(tar + ">.menu>li").off();
@@ -733,9 +500,7 @@ function cusSingleSelClick(tar, oriText) {
             $(tar + " > .menu").removeClass('active');
         }
     });
-
 }
-
 
 //首頁推薦tour資料抓取
 function homeRecommedTourGet() {
@@ -810,6 +575,7 @@ function personelSetClick(setBtn, menu, nameBtn, nameBlk, inputBlk) {
     });
 }
 
+// MORE 按鈕 點擊
 function folderMoreClick() {
     $(".folder>.card>.text_blk>.more_btn").click(function(event) {
         $(".folder_blk > .folders > .inner_blk > .folder > .menu").removeClass('active');
@@ -839,6 +605,7 @@ function addToFolderClick() {
         }
     });
 }
+
 // 新增分類點選
 function addNewFolderClick() {
     $("#addNewFolder").click(function(event) {
@@ -934,9 +701,7 @@ function renameFolderClick() {
     $(".rename_folder_blk>.content_blk>.confirm_btn").click(function(event) {
         var tar = $(".rename_folder_blk>.content_blk>input");
         var tarEq = $(".ing_folder_blk").attr('data-ingfoldEq');
-        console.log(tarEq);
         if (tar.val() != "" && tar.val() != null) {
-            console.log(tarEq);
             $(".folder").eq(tarEq).children('.card').children('.text_blk').children('.folder_name').html(tar.val());
             $(".ing_folder_blk>.ing_folder>.name").html(tar.val());
             $(".rename_folder_blk").hide();
@@ -994,50 +759,7 @@ function folderClick() {
     });
 }
 
-// 新增欲完成事項
-function addNewTask() {
-    $("#newTask").keypress(function(event) {
-        var key = event.which;
-        if (key == 13 && $(this).val() != "") {
-            var tarBlk = $(".plan_set_blk>.inner_blk>.checklist_blk>.info>.checklists");
-            var tarVal = newChecklist($(this).val());
-            tarBlk.append(tarVal);
-            $(this).val("");
-            checkboxClick();
-            checkListCancel();
-        }
-    });
-}
-
-function newChecklist(val) {
-    var emptyUrl = "/static/img/addfriend_s.png";
-    var x = [
-        "<div class=\"checklist\">",
-        "<span class=\"checkbox icon-tick\"></span>",
-        "<input type=\"text\" class=\"content\" value=\"" + val + "\">",
-        "<span class=\"date_set\"></span>",
-        "<span class=\"assign\"></span>",
-        "<span class=\"cancel icon-cancel\"></span>",
-        "<span class=\"friend\" style=\"background-image: url(" + emptyUrl + ");\"></span>",
-        "</div>",
-    ].join("");
-    return x;
-}
-
-function checkboxClick() {
-    $(".plan_set_blk>.inner_blk>.checklist_blk>.info>.checklists>.checklist>.checkbox").off();
-    $(".plan_set_blk>.inner_blk>.checklist_blk>.info>.checklists>.checklist>.checkbox").click(function(event) {
-        $(this).toggleClass('done');
-    });
-}
-
-function checkListCancel() {
-    $(".plan_set_blk>.inner_blk>.checklist_blk>.info>.checklists>.checklist>.cancel").off();
-    $(".plan_set_blk>.inner_blk>.checklist_blk>.info>.checklists>.checklist>.cancel").click(function(event) {
-        $(this).parent('.checklist').remove();
-    });
-}
-
+// 切拉欄位狀態切換
 function shortScrollToggle(tar, maxHeight) {
     var totalH = 0,
         tarOb = document.getElementById(tar);
@@ -1056,9 +778,23 @@ function shortScrollToggle(tar, maxHeight) {
     });
 }
 
+// 編輯詳情
 function editDetailShow() {
+    $(".infoin.put").mouseover(function() {
+        detailRefresh($(this));
+
+        $(".infoin.put").removeClass('open');
+        $(this).addClass('open');
+    });
+    $("body").mousemove(function(event) {
+        if (!event.target.matches("#tourDetailBlk") && !event.target.matches("#tourDetailBlk *") && !event.target.matches(".infoin.put") && !event.target.matches(".infoin.put *") && !event.target.matches(".pac-container") && !event.target.matches(".pac-container *")) {
+            $("#tourDetailBlk").hide();
+            $(".infoin.put").removeClass('open');
+        }
+    });
 }
 
+// 詳情更新
 function detailRefresh(tarInfo) {
     var tarOb = $("#tourDetailBlk");
     tarTop = tarInfo.offset().top,
@@ -1118,15 +854,12 @@ function initTopSearch() {
         var key = e.which;
         var tarPlace = $(this).val();
         if (key == 13) {
-
-            console.log(tour);
             headerSearch(tour);
         }
     });
-
-
 }
 
+// 抓取網址
 function getUrlValue() {
     var sPageURL = decodeURIComponent(window.location.search.substring(1)),
         sURLVariables = sPageURL.split('&'),
@@ -1141,9 +874,7 @@ function getUrlValue() {
     return x;
 }
 
-
-
-
+// 建立地圖標示
 function createMarker(place) {
     var placeLoc = place.geometry.location;
     var marker = new google.maps.Marker({
@@ -1157,15 +888,7 @@ function createMarker(place) {
     });
 }
 
-function getNearStop(center, radius, typesArray) {
-
-
-}
-
-function refreshPlanIng() {
-
-}
-
+// PAD 選單 初始化
 function padMenuAct() {
     $("#padMenuBtn").click(function(event) {
         $("#padMenu").addClass('active');
@@ -1176,6 +899,7 @@ function padMenuAct() {
     });
 }
 
+// 朋友移除
 function friendRemoveClick() {
     $(".friend>.inner_blk>.setting_blk>.menu>.un_btn").click(function(event) {
         var tar = $(this).parent().parent().parent().parent();
@@ -1194,6 +918,7 @@ function friendRemoveClick() {
     });
 }
 
+// MOBILE 選單 點擊
 function mobileMenuClick() {
     $("#mobileMenuBtn").click(function(event) {
         $("#mainNav").toggleClass('active');
@@ -1201,6 +926,7 @@ function mobileMenuClick() {
     });
 }
 
+// TOOLBOX 點擊
 function toolboxClick() {
     $(".toolbox_btn").click(function(event) {
         $(".toolbox_blk").toggleClass('active');
@@ -1212,6 +938,7 @@ function toolboxClick() {
     });
 }
 
+// 頭像點擊
 function headBtnClick() {
     $("#headBtn").click(function(event) {
         $(this).children('.head_menu').toggleClass('active');
@@ -1225,6 +952,7 @@ function headBtnClick() {
     });
 }
 
+// 通知止滑
 function notiBlkPrevent() {
     $('.noti_blk').on('mousewheel DOMMouseScroll', function(e) {
         var e0 = e.originalEvent,
@@ -1235,6 +963,7 @@ function notiBlkPrevent() {
     });
 }
 
+// 搜尋欄位止滑
 function findBlkPrevent() {
     $('#page-top .find .intro-text .searchContent .row').on('mousewheel DOMMouseScroll', function(e) {
         var e0 = e.originalEvent,
@@ -1254,4 +983,39 @@ function scrollPrevent(tarBlk) {
         this.scrollTop += (delta < 0 ? 1 : -1) * 30;
         e.preventDefault();
     });
+}
+
+// DATE轉換
+function parseDate(str) {
+    var mdy = str.split('/');
+    return new Date(mdy[2], mdy[0] - 1, mdy[1]);
+}
+
+// DATE轉換
+function daydiff(first, second) {
+    return Math.round((second - first) / (1000 * 60 * 60 * 24));
+}
+
+// 靜態地圖產生
+function staticMapUrlGenerate(lat, lng, zoomScale) {
+    var tarUrl = "https://maps.googleapis.com/maps/api/staticmap?key=AIzaSyC2tc4aDgzf5dJHMouGgbFT7cbvDBV5zP4&center=" + lat + "," + lng + "&zoom=" + zoomScale + "&format=png&maptype=roadmap&style=element:geometry%7Ccolor:0xebe3cd&style=element:labels%7Cvisibility:off&style=element:labels.text.fill%7Ccolor:0x523735&style=element:labels.text.stroke%7Ccolor:0xf5f1e6&style=feature:administrative%7Celement:geometry.stroke%7Ccolor:0xc9b2a6&style=feature:administrative.land_parcel%7Cvisibility:off&style=feature:administrative.land_parcel%7Celement:geometry.stroke%7Ccolor:0xdcd2be&style=feature:administrative.land_parcel%7Celement:labels.text.fill%7Ccolor:0xae9e90&style=feature:administrative.neighborhood%7Cvisibility:off&style=feature:landscape.natural%7Celement:geometry%7Ccolor:0xdfd2ae&style=feature:poi%7Celement:geometry%7Ccolor:0xdfd2ae&style=feature:poi%7Celement:labels.text.fill%7Ccolor:0x93817c&style=feature:poi.park%7Celement:geometry.fill%7Ccolor:0xa5b076&style=feature:poi.park%7Celement:labels.text.fill%7Ccolor:0x447530&style=feature:road%7Celement:geometry%7Ccolor:0xf5f1e6&style=feature:road.arterial%7Celement:geometry%7Ccolor:0xfdfcf8&style=feature:road.highway%7Celement:geometry%7Ccolor:0xf8c967&style=feature:road.highway%7Celement:geometry.stroke%7Ccolor:0xe9bc62&style=feature:road.highway.controlled_access%7Celement:geometry%7Ccolor:0xe98d58&style=feature:road.highway.controlled_access%7Celement:geometry.stroke%7Ccolor:0xdb8555&style=feature:road.local%7Celement:labels.text.fill%7Ccolor:0x806b63&style=feature:transit.line%7Celement:geometry%7Ccolor:0xdfd2ae&style=feature:transit.line%7Celement:labels.text.fill%7Ccolor:0x8f7d77&style=feature:transit.line%7Celement:labels.text.stroke%7Ccolor:0xebe3cd&style=feature:transit.station%7Celement:geometry%7Ccolor:0xdfd2ae&style=feature:water%7Celement:geometry.fill%7Ccolor:0xb9d3c2&style=feature:water%7Celement:labels.text.fill%7Ccolor:0x92998d&size=700x700";
+    return tarUrl;
+}
+
+// DATE格式轉換
+function dateToFullYear(date){
+    var dateArray = date.split('/');
+    var dateFullYear = [parseInt(dateArray[2]),parseInt(dateArray[0]),parseInt(dateArray[1])].join('.');
+    return dateFullYear;
+}
+
+// 得到下一天的DATE格式
+function getNextFullYear(fullYearDate, toDays){
+    var date = new Date();
+    var parts = fullYearDate.split('.');
+    date.setFullYear(parts[0], parts[1]-1, parts[2]); // year, month (0-based), day
+    date.setTime(date.getTime() + toDays*86400000);
+
+    var nextFullYear = date.getFullYear() +"."+ (date.getMonth() + 1) +"."+ date.getDate();
+    return nextFullYear;
 }
