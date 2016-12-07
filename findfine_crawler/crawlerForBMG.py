@@ -67,7 +67,7 @@ class CrawlerForBMG:
                 #strSource
                 dicProductJson["strSource"] = "BeMyGuest"
                 #strOriginUrl
-                dicProductJson["strOriginUrl"] = dicProductDetailData.get("url", None)
+                dicProductJson["strOriginUrl"] = dicProductDetailData.get("url", None) + u"?partner_id=findfinetour"
                 #strUpdateStatus
                 dicProductJson["strUpdateStatus"] = "up-to-date"
                 #strUpdateTime
