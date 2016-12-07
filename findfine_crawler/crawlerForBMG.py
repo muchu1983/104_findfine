@@ -67,7 +67,7 @@ class CrawlerForBMG:
                 #strSource
                 dicProductJson["strSource"] = "BeMyGuest"
                 #strOriginUrl
-                dicProductJson["strOriginUrl"] = dicProductDetailData.get("url", None) + u"?partner_id=findfinetour"
+                dicProductJson["strOriginUrl"] = dicProductDetailData.get("url", None) + u"?partner_id=findfinetour&currency=USD"
                 #strUpdateStatus
                 dicProductJson["strUpdateStatus"] = "up-to-date"
                 #strUpdateTime
@@ -103,8 +103,9 @@ class CrawlerForBMG:
                             fAdultPrice = dicAdult.get(strAdultKey, 0.0)
                             if fAdultPrice > 0.0:
                                 break
-                logging.info("%s got price: %f SGD"%(strProductUUID, fAdultPrice))
-                dicProductJson["intUsdCost"] = int(fAdultPrice/1.39)
+                logging.info("%s got price: %f USD"%(strProductUUID, fAdultPrice))
+                #dicProductJson["intUsdCost"] = int(fAdultPrice/1.39)
+                dicProductJson["intUsdCost"] = fAdultPrice
                 #intReviewStar
                 dicProductJson["intReviewStar"] = int(dicProductDetailData.get("reviewAverageScore", 0))
                 #intReviewVisitor
@@ -164,7 +165,7 @@ class CrawlerForBMG:
         # 下一頁
         strNextPageUrl = dicRespJson.get("meta", {}).get("pagination", {}).get("links", {}).get("next", None)
         while strNextPageUrl:
-            strNextPageUrl = re.sub("currency=[\d]+", "currency=SGD", strNextPageUrl)
+            strNextPageUrl = re.sub("currency=[\d]+", "currency=USD", strNextPageUrl)
             logging.info("get BMG product rough data: %s"%strNextPageUrl)
             strRespJson = self.sendHttpRequestByUrllib(
                 strUrl=strNextPageUrl,
@@ -182,7 +183,7 @@ class CrawlerForBMG:
     def getProductDetailData(self, strProductUUID=None):
         logging.info("get BMG product detail data: %s"%strProductUUID)
         strRespJson = self.sendHttpRequestByUrllib(
-            strUrl="https://apidemo.bemyguest.com.sg/v1/products/%s"%strProductUUID,
+            strUrl="https://apidemo.bemyguest.com.sg/v1/products/%s?currency=USD"%strProductUUID,
             dicHeader={"X-Authorization":self.strAuthCode},
             dicData=None,
             strEncoding="utf-8"

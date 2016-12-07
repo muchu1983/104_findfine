@@ -80,7 +80,10 @@ Username_1: liangtian@hotmail.com
 Password_1: a768768a
 Username_2: iamkaraa@gmail.com
 Password_2: 768768
+demo key:
+X-Authorization: uds5e527i008wa7k47gyl4srzy3zywbxpw7ei6oe
 X-Authorization: daz5m3vimo2u8ucz90yimfwpj8lfdszkb2utjvyk (已過期)
+live key: 尚未提供
 ===
 City Discovery: 完成
 https://partner.city-discovery.com/affiliate/login.php
