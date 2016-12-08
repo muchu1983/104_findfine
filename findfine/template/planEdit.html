@@ -1,0 +1,470 @@
+<!-- 
+@TODO 
+- 更改使用者名稱連結API
+- log out 按鈕效果完成(選單一個、大頭像旁邊的齒輪內也有一個)
+- 上傳照片替換掉原本照片的功能與連結API
+- 檔案名稱改為editPlan
+- JSON資料傳回API
+- 背景地圖產生(function.js內的staticMapUrlGenerate方法，輸入第一個tour的座標與zoom的參數可產生靜態GOOGLE地圖)
+- 增加朋友到PLAN的功能
+- 指派CHECKLIST給朋友的功能
+- 完成後測試按鈕testBtn、testBtn2移除
+- 完成的NAV移入
+- 完成的FOOTER移入
+
+-->
+<html>
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <title>FindFineTour</title>
+    <!-- favicon -->
+    <link rel="shortcut icon" type="image/png" href="/static/img/favicon.png">
+    <!-- Bootstrap Core CSS -->
+    <link href="/static/vendor/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/static/vendor/bootstrap-select/dist/css/bootstrap-select.min.css" rel="stylesheet">
+    <link href="/static/css/bootstrapCustom.css" rel="stylesheet">
+    <!-- Bootstrap daterangepicker -->
+    <link href="/static/vendor/bootstrap-daterangepicker/daterangepicker.css" rel="stylesheet">
+    <!-- Custom Fonts -->
+    <link href="/static/vendor/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+    <link href='https://fonts.googleapis.com/css?family=Raleway:400,600' rel='stylesheet' type='text/css'>
+    <link href='https://fonts.googleapis.com/css?family=Caudex|Cormorant+Garamond' rel='stylesheet' type='text/css'>
+    <!-- custom CSS -->
+    <link href="/static/css/custom.css" rel="stylesheet">
+    <!-- jQuery core-->
+    <script src="/static/vendor/jquery/dist/jquery.min.js"></script>
+    <!-- google map api -->
+    <script src="https://maps.googleapis.com/maps/api/js?v=3&sensor=false&signed_in=true&language=en&amp;libraries=places,geometry&key=AIzaSyBSAaVNdD1oxCAJ1h6AjBIQ7dD6jim7OWo"></script>
+    <!-- date picker -->
+    <link rel="stylesheet" href="/static/vendor/jquery-ui-1.12.1.custom/jquery-ui.min.css">
+    <script src="/static/vendor/jquery-ui-1.12.1.custom/jquery-ui.min.js"></script>
+    <!-- Bootstrap Js -->
+    <script src="/static/vendor/bootstrap/dist/js/bootstrap.min.js"></script>
+    <!-- Bootstrap SelectPicker Js -->
+    <script src="/static/vendor/bootstrap-select/dist/js/bootstrap-select.min.js"></script>
+    <!-- moment -->
+    <script src="/static/vendor/moment/min/moment.min.js"></script>
+    <!-- Bootstrap DateRange Js -->
+    <script src="/static/vendor/bootstrap-daterangepicker/daterangepicker.js"></script>
+    <!-- custom JavaScript -->
+    <script src="/static/js/function.js"></script>
+    <script type="text/javascript" src="/static/js/tripEdit.js"></script>
+    <!-- 低瀏覽器版本相容條件註解 -->
+    <!--[if lt IE 9]>
+                        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+                        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+                    <![endif]-->
+    <!-- ripple-button -->
+    <link rel="stylesheet" href="/static/vendor/ripple/css/style.css">
+    <script src="/static/vendor/ripple/js/index.js"></script>
+    <!-- icon-font -->
+    <link rel="stylesheet" href="/static/icon-font/style.css">
+    <!-- google font Roboto -->
+    <link href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700,900" rel="stylesheet">
+</head>
+
+<body id="page-top">
+    <div id="testBtn">
+        <p class="p1"></p>
+        <p class="p2"></p>
+    </div>
+    <div id="testBtn2">
+        <p class="p1"></p>
+        <p class="p2"></p>
+    </div>
+    <div class="picking_blk" id="picker" data-obj="" data-hr="" data-id="" data-link="" data-price="" data-coshr="" data-note="" data-locate="" data-lat="" data-lng="" data-startmoment="">
+        <p class="name"></p>
+        <p class="place"></p>
+        <div class="darken_bg"></div>
+    </div>
+    <nav id="mainNav" class="navbar navbar-default navbar-custom navbar-fixed-top">
+        <div class="container">
+            <!-- Brand and toggle get grouped for better mobile display -->
+            <div class="navbar-header page-scroll">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                    <span class="sr-only">Toggle navigation</span> Menu <i class="fa fa-bars"></i>
+                </button>
+                <a class="icon-logo" id="logoTop"></a>
+                <div class="mini_searchbar">
+                    <span class="icon-magnifier"></span>
+                    <input type="text" name="" placeholder="Where are you going?" id="topSearch">
+                </div>
+            </div>
+            <div class="header_btn_blk" id="bs-example-navbar-collapse-1">
+                <ul class="nav navbar-nav currency_sel_blk">
+                    <li class="hidden">
+                        <a href="#page-top"></a>
+                    </li>
+                    <li>
+                        <div class="CurrencyDiv navSelect">
+                            <select id="moneySelect" name="" class="bsSelect">
+                                <option value="USD" data-content='USD'></option>
+                                <option value="EUR" data-content='EUR'></option>
+                                <option value="CNY" data-content='CNY'></option>
+                                <option value="GBP" data-content='GBP'></option>
+                                <option value="JPY" data-content='JPY'></option>
+                                <option value="AUD" data-content='AUD'></option>
+                                <option value="NZD" data-content='NZD'></option>
+                                <option value="SGD" data-content='SGD'></option>
+                                <option value="HKD" data-content='HKD'></option>
+                                <option value="TWD" data-content='TWD'></option>
+                            </select>
+                        </div>
+                    </li>
+                </ul>
+                <div id="wishList" class="header_btn btn-info">
+                    <span class="icon_blk">                  
+                                <span class="icon-quill"></span>
+                    <span class="icon-scroll"></span>
+                    <span class="extend_line"></span>
+                    </span>
+                    <span class="text">Wishlist</span>
+                </div>
+                <div id="myPlans" class="header_btn btn-info">
+                    <span class="icon_blk">
+                                <span class="icon-airplane"></span>
+                    <span class="icon-notebook"></span>
+                    <svg class="extend_dotted_line">
+                        <g fill="none" stroke="#ffffff" stroke-width="1">
+                            <path stroke-dasharray="5,5" d="M0 0 80 0" />
+                        </g>
+                    </svg>
+                    </span>
+                    <span class="text">My Plan</span>
+                </div>
+                <div id="register" class="header_blk_btn hide">Sign Up</div>
+                <div id="loginBtn" class="header_blk_btn hide">Log In</div>
+                <div id="headBtn" class="head_btn" style="background-image: url(/static/img/head_sample.jpg);">
+                    <div class="head_menu">
+                        <div id="logOut">log Out</div>
+                    </div>
+                </div>
+            </div>
+            <!-- /.navbar-collapse -->
+        </div>
+        <!-- /.container-fluid -->
+    </nav>
+    <div class="rename_blk lightbox">
+        <div class="content_blk">
+            <div class="title">Edit Name</div>
+            <input type="text" placeholder="Your Name"></input>
+            <div class="ripple_blk confirm_btn">
+                <button type="button" class="ripple">Confirm</button>
+            </div>
+            <div class="close_btn icon-cancel"></div>
+        </div>
+        <div class="blur_bg"></div>
+    </div>
+    <div class="rename_plan_blk lightbox">
+        <div class="content_blk">
+            <div class="title">Edit Plan Name</div>
+            <input type="text" placeholder="NEW PLAN"></input>
+            <div class="ripple_blk confirm_btn">
+                <button type="button" class="ripple">Confirm</button>
+            </div>
+            <div class="close_btn icon-cancel"></div>
+        </div>
+        <div class="blur_bg"></div>
+    </div>
+    <div class="tour_detail_blk" id="tourDetailBlk">
+        <p class="title">Temple Tokyo Day Tour</p>
+        <p class="place">Shin-Tien</p>
+        <div class="hr">
+            <span class="icon-time"></span>
+            <span class="text"><span class="number">1.5</span> hours</span>
+        </div>
+        <div class="price">
+            <span class="icon-prize"></span>
+            <span class="text">NTD $ 1,000</span>
+        </div>
+        <a class="read_more_btn">Read More</a>
+        <div class="note_blk">
+            <span class="icon-pen"></span>
+            <textarea class="note" id="noteArea"></textarea>
+        </div>
+        <div class="address_blk">
+            <span class="icon-address"></span>
+            <input class="address_type" id="tourAddressType">
+        </div>
+        <span class="tale"></span>
+        <div class="detect_blk"></div>
+    </div>
+    <div class="add_note_blk" id="addNoteBlk" data-ingnoteeq="">
+        <div class="title">Note</div>
+        <div class="note_blk">
+            <span class="icon-pen"></span>
+            <textarea class="note" id="addNoteArea"></textarea>
+        </div>
+        <span class="tale"></span>
+        <div class="detect_blk"></div>
+    </div>
+    <div class="note_picker" id="notePicker" data-coshr="" data-ingEq="" data-startmoment="">
+    </div>
+    <div class="wishlist_top_blk" style="background-image: url(/static/img/sunset_re.jpg);">
+        <div class="content_blk">
+            <div class="big_head_blk">
+                <div class="big_head" style="background-image: url(/static/img/head_sample.jpg);"></div>
+            </div>
+            <div class="name_blk" `>
+                <div class="inner_blk">
+                    <div class="user_name" id="userName">Tzuyu</div>
+                    <span class="icon-gear" id="personelSet"></span>
+                    <ul class="setting_menu">
+                        <li id="editName">Edit name</li>
+                        <li id="newPhoto">
+                            <input type="file" value="Upload New Photo">
+                            <p>Upload New Photo</p>
+                        </li>
+                        <li id="innerLogOut">Log Out</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="sub_header_blk">
+                <div class="inner_blk">
+                    <div class="plans active">
+                        <div class="number">7</div>
+                        <div class="text">Plans</div>
+                        <div class="acting_line"></div>
+                    </div>
+                    <div class="wishes" id="wishesSel">
+                        <div class="number">43</div>
+                        <div class="text">Wishes</div>
+                        <div class="acting_line"></div>
+                    </div>
+                    <div class="friends" id="friendsSel">
+                        <div class="number">132</div>
+                        <div class="text">Friends</div>
+                        <div class="acting_line"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="mainblk_bg_cover"></div>
+    </div>
+    <!-- AIzaSyC2tc4aDgzf5dJHMouGgbFT7cbvDBV5zP4 static-->
+    <div class="plan_set_blk" style="background-image: url('https://maps.googleapis.com/maps/api/staticmap?key=AIzaSyC2tc4aDgzf5dJHMouGgbFT7cbvDBV5zP4&center=-33.90235090494336,151.15987052917475&zoom=12&format=png&maptype=roadmap&style=element:geometry%7Ccolor:0xebe3cd&style=element:labels%7Cvisibility:off&style=element:labels.text.fill%7Ccolor:0x523735&style=element:labels.text.stroke%7Ccolor:0xf5f1e6&style=feature:administrative%7Celement:geometry.stroke%7Ccolor:0xc9b2a6&style=feature:administrative.land_parcel%7Cvisibility:off&style=feature:administrative.land_parcel%7Celement:geometry.stroke%7Ccolor:0xdcd2be&style=feature:administrative.land_parcel%7Celement:labels.text.fill%7Ccolor:0xae9e90&style=feature:administrative.neighborhood%7Cvisibility:off&style=feature:landscape.natural%7Celement:geometry%7Ccolor:0xdfd2ae&style=feature:poi%7Celement:geometry%7Ccolor:0xdfd2ae&style=feature:poi%7Celement:labels.text.fill%7Ccolor:0x93817c&style=feature:poi.park%7Celement:geometry.fill%7Ccolor:0xa5b076&style=feature:poi.park%7Celement:labels.text.fill%7Ccolor:0x447530&style=feature:road%7Celement:geometry%7Ccolor:0xf5f1e6&style=feature:road.arterial%7Celement:geometry%7Ccolor:0xfdfcf8&style=feature:road.highway%7Celement:geometry%7Ccolor:0xf8c967&style=feature:road.highway%7Celement:geometry.stroke%7Ccolor:0xe9bc62&style=feature:road.highway.controlled_access%7Celement:geometry%7Ccolor:0xe98d58&style=feature:road.highway.controlled_access%7Celement:geometry.stroke%7Ccolor:0xdb8555&style=feature:road.local%7Celement:labels.text.fill%7Ccolor:0x806b63&style=feature:transit.line%7Celement:geometry%7Ccolor:0xdfd2ae&style=feature:transit.line%7Celement:labels.text.fill%7Ccolor:0x8f7d77&style=feature:transit.line%7Celement:labels.text.stroke%7Ccolor:0xebe3cd&style=feature:transit.station%7Celement:geometry%7Ccolor:0xdfd2ae&style=feature:water%7Celement:geometry.fill%7Ccolor:0xb9d3c2&style=feature:water%7Celement:labels.text.fill%7Ccolor:0x92998d&size=700x700');">
+        <div class="inner_blk">
+            <div class="back_btn">
+                <span class="icon-back_arrow"></span>
+                <span class="text" id="backAllPlanBtn">ALL Plans</span>
+            </div>
+            <div class="name_blk">
+                <span class="text" id="planName">NEW PLAN</span>
+                <span class="icon-pen" id="planNameEditBtn"></span>
+            </div>
+            <div class="col-xs-12 date_blk">
+                <div class="form-group">
+                    <div class="date_sel_blk sel_blk_270">
+                        <input class="blue_holder " id="startDate" type="text" placeholder="from">
+                        <div class="sepline"></div>
+                        <input class="blue_holder" id="toDate" type="text" placeholder="to">
+                    </div>
+                </div>
+            </div>
+            <!-- 暫時先隱藏 -->
+            <div class="friends_blk edit">
+                <div class="nofriend">
+                    <span class="icon-addfriends"></span>
+                </div>
+                <div class="nofriend_text">Add Travel Pals</div>
+                <div class="friends">
+                    <div class="friend" style="background-image: url('/static/img/friend_1.jpg');">
+                        <div class="icon-cancel"></div>
+                    </div>
+                    <div class="friend" style="background-image: url('/static/img/friend_2.jpg');">
+                        <div class="icon-cancel"></div>
+                    </div>
+                    <div class="friend" style="background-image: url('/static/img/friend_3.jpg');">
+                        <div class="icon-cancel"></div>
+                    </div>
+                </div>
+                <div class="add_friends">
+                    <span class="icon-plus"></span>
+                </div>
+            </div>
+            <div class="checklist_blk">
+                <div class="map" style="background-image: url('https://maps.googleapis.com/maps/api/staticmap?key=AIzaSyC2tc4aDgzf5dJHMouGgbFT7cbvDBV5zP4&center=-33.90235090494336,151.15987052917475&zoom=12&format=png&maptype=roadmap&style=element:geometry%7Ccolor:0xebe3cd&style=element:labels%7Cvisibility:off&style=element:labels.text.fill%7Ccolor:0x523735&style=element:labels.text.stroke%7Ccolor:0xf5f1e6&style=feature:administrative%7Celement:geometry.stroke%7Ccolor:0xc9b2a6&style=feature:administrative.land_parcel%7Cvisibility:off&style=feature:administrative.land_parcel%7Celement:geometry.stroke%7Ccolor:0xdcd2be&style=feature:administrative.land_parcel%7Celement:labels.text.fill%7Ccolor:0xae9e90&style=feature:administrative.neighborhood%7Cvisibility:off&style=feature:landscape.natural%7Celement:geometry%7Ccolor:0xdfd2ae&style=feature:poi%7Celement:geometry%7Ccolor:0xdfd2ae&style=feature:poi%7Celement:labels.text.fill%7Ccolor:0x93817c&style=feature:poi.park%7Celement:geometry.fill%7Ccolor:0xa5b076&style=feature:poi.park%7Celement:labels.text.fill%7Ccolor:0x447530&style=feature:road%7Celement:geometry%7Ccolor:0xf5f1e6&style=feature:road.arterial%7Celement:geometry%7Ccolor:0xfdfcf8&style=feature:road.highway%7Celement:geometry%7Ccolor:0xf8c967&style=feature:road.highway%7Celement:geometry.stroke%7Ccolor:0xe9bc62&style=feature:road.highway.controlled_access%7Celement:geometry%7Ccolor:0xe98d58&style=feature:road.highway.controlled_access%7Celement:geometry.stroke%7Ccolor:0xdb8555&style=feature:road.local%7Celement:labels.text.fill%7Ccolor:0x806b63&style=feature:transit.line%7Celement:geometry%7Ccolor:0xdfd2ae&style=feature:transit.line%7Celement:labels.text.fill%7Ccolor:0x8f7d77&style=feature:transit.line%7Celement:labels.text.stroke%7Ccolor:0xebe3cd&style=feature:transit.station%7Celement:geometry%7Ccolor:0xdfd2ae&style=feature:water%7Celement:geometry.fill%7Ccolor:0xb9d3c2&style=feature:water%7Celement:labels.text.fill%7Ccolor:0x92998d&size=700x700');"></div>
+                <div class="info">
+                    <div class="title">Check list</div>
+                    <div class="accomplish">
+                        <span class="undone">
+                            <span class="number">19</span>
+                        <span>undone</span>
+                        </span>
+                        <span class="done">
+                            <span>/</span>
+                        <span class="number">3</span>
+                        <span>done</span>
+                        </span>
+                    </div>
+                    <div class="checklists short" id="checkLists">
+                        <div class="checklist">
+                            <span class="checkbox icon-tick"></span>
+                            <input type="text" class="content" value="訂飯店">
+                            <!-- <span>訂飯店</span> -->
+                            <span class="date_set"></span>
+                            <span class="assign"></span>
+                            <span class="cancel icon-cancel"></span>
+                            <span class="friend" style="background-image: url('/static/img/addfriend_s.png');"></span>
+                        </div>
+                    </div>
+                    <div class="new_check_blk">
+                        <span class="icon-plus"></span>
+                        <input id="newTask" class="typing" type="text" placeholder="create a task">
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="bg_cover"></div>
+    </div>
+    <div class="edit_blk" style="background-image: url(/static/img/grey_sandbag.png);">
+        <div class="inner_blk">
+            <div class="date_blk">
+                <div class="date_show_blk" id="dateShowBlk">
+                    <div class="day">
+                        <span>DAY </span>
+                        <span class="number">1</span>
+                    </div>
+                    <div class="date">2016.10.08</div>
+                    <span class="switch_btn left icon-switchLeft"></span>
+                    <span class="switch_btn right icon-switchRight"></span>
+                </div>
+                <div class="put_blk" id="momentPutBlk">
+                    <div class="inner_blk">
+                        <div class="moment_blk">
+                        </div>
+                        <div class="puts">
+                        </div>
+                    </div>
+                    <div class="not_set_yet">Please Set Date First</div>
+                </div>
+            </div>
+            <div class="tour_blk" id="tourBlk">
+                <div class="top_blk">
+                    <div class="title">Drag Tours Into Plan</div>
+                    <div class="sub_title">Find tours in your wishlist. Plan easily!</div>
+                    <div class="search_blk">
+                        <span class="icon-magnifier"></span>
+                        <input type="text" class="content" id="wishListSearch" placeholder="Search from my wishlist">
+                    </div>
+                </div>
+                <!-- <div class="sortedBy sort_blk">
+                    <div class="sort_fold_blk sort_sel_blk">
+                        <div class="left sel">
+                            <span class="click sort_val">Rating</span>
+                            <span class="click icon-dropdown_icon"></span>
+                            <ul class="left_drop drop">
+                                <li class="active">Rating</li>
+                                <li>Budget</li>
+                                <li>Duration</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="sort_sel_blk">
+                        <div id="sortValBtn" class="left sel">
+                            <span class="click sort_val">Rating</span>
+                            <span class="click icon-dropdown_icon"></span>
+                            <ul class="left_drop drop">
+                                <li class="active">Rating</li>
+                                <li>Budget</li>
+                                <li>Duration</li>
+                            </ul>
+                        </div>
+                        <div class="sepline"></div>
+                        <div id="sortWayBtn" class="right sel">
+                            <span class="click sort_val">Decending</span>
+                            <span class="click icon-dropdown_icon"></span>
+                            <span class="click icon-diagram_up reverse"></span>
+                            <ul class="right_drop drop">
+                                <li class="active">
+                                    <i class="icon-diagram_up"></i>
+                                    <span class="content">Ascending</span>
+                                </li>
+                                <li>
+                                    <i class="icon-diagram_down"></i>
+                                    <span class="content">Decending</span>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div> -->
+                <div class="tours" id="toursBlk">
+                    <div class="tour_pick_blk">
+                        <div class="tour_pick" data-id="1234" data-hr="5" data-coshr="5" data-link="http://google.com">
+                            <div class="card" style="background-image: url('/static/img/Paris.jpg');">
+                                <div class="name">
+                                    <p>4G SIM Card with Calls (T...</p>
+                                </div>
+                                <p class="place">Taichung</p>
+                                <p class="duration">168<span>HR</span></p>
+                                <div class="footprint_blk"><span class="icon-tourdash footprint"></span></div>
+                                <div class="price"><span class="country">CNY</span> $<span class="number">101</span></div>
+                                <a class="read_more_btn" href="http://google.com">Read More</a>
+                                <div class="darken_bg"></div>
+                            </div>
+                        </div>
+                        <div class="tour_pick" data-id="1235" data-hr="4" data-coshr="4" data-link="http://yahoo.com">
+                            <div class="card" style="background-image: url('/static/img/berlin_new.jpg');">
+                                <div class="name">
+                                    <p>Tour2</p>
+                                </div>
+                                <p class="place">Taipei</p>
+                                <p class="duration">4<span>HR</span></p>
+                                <div class="footprint_blk"><span class="icon-tourdash footprint"></span></div>
+                                <div class="price"><span class="country">CNY</span> $<span class="number">701</span></div>
+                                <a class="read_more_btn" href="http://yahoo.com">Read More</a>
+                                <div class="darken_bg"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="map_blk back" id="mapBlk">
+                <div class="transit_info" id="transitInfo">
+                    <div class="back_btn_blk" id="backToTourBtn"><span class="icon-back_arrow"></span>back</div>
+                    <div class="transit_way_blk">
+                        <div class="transit_btn icon-transit active"></div>
+                        <div class="transit_btn icon-driving"></div>
+                        <div class="transit_btn icon-walking"></div>
+                    </div>
+                    <div class="routes" id="routesBlk">
+                    </div>
+                </div>
+                <div id="map"></div>
+            </div>
+        </div>
+        <div class="bg_white_cover"></div>
+    </div>
+    <footer>
+        <div class="container">
+            <ul class="link_blk">
+                <li><a>About</a></li>
+                <li><a>Terms of Use</a></li>
+                <li><a>Our Partner</a></li>
+                <li><a>Contact Us</a></li>
+            </ul>
+            <div class="copyright_blk">Copyright © 2016 FindFineTour All rights reserved.</div>
+        </div>
+    </footer>
+    <!-- <div class="loginbar">
+        置頂訊息
+    </div>
+    <div class="nav">
+        my trip edit
+    </div>
+    <div class="left">
+        <div id='calendar'></div>
+        <div style='clear:both'></div>
+    </div>
+    <div class="right">
+        <div>wish list</div>
+        <ul></ul>
+    </div> -->
+</body>
+
+</html>
