@@ -54,6 +54,8 @@ class FavoriteTrip(models.Model):
     fkUserAccount = models.ForeignKey(UserAccount, null=False, on_delete=models.CASCADE)
     #行程 ForeignKey
     fkTrip = models.ForeignKey(Trip, null=False, on_delete=models.CASCADE)
+    #設定 (json 格式)
+    strJsonSetting = models.TextField(null=True)
     
 #使用者自訂 行程規劃
 class CustomizedTripPlan(models.Model):

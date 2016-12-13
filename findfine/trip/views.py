@@ -180,10 +180,30 @@ def addFavoriteTrip(request=None):
     if strUserEmail:
         objUserAccount = UserAccount.objects.get(strEmail=strUserEmail)
         intTripId = int(request.GET.get("intTripId", None))
+        strAddFolderName = request.GET.get("add_folder", "default_folder")
+        strRemoveFolderName = request.GET.get("remove_folder", None)
         objTrip = Trip.objects.get(id=intTripId)
+        #先查詢 先前的設定
+        lstStrPriorFolderName = []
+        qsetMatchedFavoriteTrip = FavoriteTrip.objects.filter(fkUserAccount=objUserAccount, fkTrip=objTrip)
+        for matchedFavoriteTrip in qsetMatchedFavoriteTrip:
+            if matchedFavoriteTrip.strJsonSetting:
+                dicPriorSetting = json.loads(matchedFavoriteTrip.strJsonSetting)
+                lstStrPriorFolderName = dicPriorSetting.get("lstStrFolderName", [])
+        #加入新的 folder，並去除重複的項目
+        lstStrFolderName = list(set(lstStrPriorFolderName.append(strAddFolderName)))
+        #移除不需要的 folder
+        if strRemoveFolderName and strRemoveFolderName in lstStrFolderName:
+            lstStrFolderName.remove(strRemoveFolderName)
+        #新的設定
+        dicSetting = {
+            "lstStrFolderName":lstStrFolderName
+        }
+        #upsert
         FavoriteTrip.objects.update_or_create(
             fkTrip = objTrip,
-            fkUserAccount = objUserAccount
+            fkUserAccount = objUserAccount,
+            strJsonSetting = json.dumps(dicSetting, ensure_ascii=False, indent=4, sort_keys=True)
         )
         return JsonResponse({"add_favorite_trip_status":"ok"}, safe=False)
     else:
@@ -204,8 +224,16 @@ def getFavoriteTrip(request=None):
         lstDicTripData = []
         for matchedFavoriteTrip in qsetMatchedFavoriteTrip:
             matchedTrip = matchedFavoriteTrip.fkTrip
-            dicTripData = convertTripDataToJsonDic(request=request, matchedTrip=matchedTrip, fUsdToUserCurrencyExRate=fUsdToUserCurrencyExRate)
-            lstDicTripData.append(dicTripData)
+            #過瀘資料夾
+            strFolderName = request.GET.get("folder", "default_folder")
+            dicSetting = {}
+            if matchedFavoriteTrip.strJsonSetting:
+                dicSetting = json.loads(matchedFavoriteTrip.strJsonSetting)
+                lstStrFolderName = dicSetting.get("lstStrFolderName", ["default_folder"])
+                if strFolderName in lstStrFolderName:
+                    dicTripData = convertTripDataToJsonDic(request=request, matchedTrip=matchedTrip, fUsdToUserCurrencyExRate=fUsdToUserCurrencyExRate)
+                    dicTripData["lstStrFolderName"] = lstStrFolderName
+                    lstDicTripData.append(dicTripData)
         dicResultJson = {
             "trip":lstDicTripData,
             "meta":{}
