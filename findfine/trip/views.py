@@ -191,7 +191,9 @@ def addFavoriteTrip(request=None):
                 dicPriorSetting = json.loads(matchedFavoriteTrip.strJsonSetting)
                 lstStrPriorFolderName = dicPriorSetting.get("lstStrFolderName", [])
         #加入新的 folder，並去除重複的項目
-        lstStrFolderName = list(set(lstStrPriorFolderName.append(strAddFolderName)))
+        lstStrPriorFolderName.append("default_folder")
+        lstStrPriorFolderName.append(strAddFolderName)
+        lstStrFolderName = list(set(lstStrPriorFolderName))
         #移除不需要的 folder
         if strRemoveFolderName and strRemoveFolderName in lstStrFolderName:
             lstStrFolderName.remove(strRemoveFolderName)
