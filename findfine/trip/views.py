@@ -205,7 +205,9 @@ def addFavoriteTrip(request=None):
         FavoriteTrip.objects.update_or_create(
             fkTrip = objTrip,
             fkUserAccount = objUserAccount,
-            strJsonSetting = json.dumps(dicSetting, ensure_ascii=False, indent=4, sort_keys=True)
+            defaults = {
+                "strJsonSetting": json.dumps(dicSetting, ensure_ascii=False, indent=4, sort_keys=True)
+            }
         )
         return JsonResponse({"add_favorite_trip_status":"ok"}, safe=False)
     else:
