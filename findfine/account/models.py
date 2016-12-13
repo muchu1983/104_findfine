@@ -37,6 +37,8 @@ class UserAccount(models.Model):
     strContactNumber = models.CharField(max_length=255, null=True)
     #圖片 URL
     strThumbnailUrl = models.CharField(max_length=255, null=True)
+    #個人設定 (json 格式)
+    strJsonSetting = models.TextField(null=True)
     
 #使用者圖像
 class Thumbnail(models.Model):

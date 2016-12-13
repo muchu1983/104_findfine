@@ -38,6 +38,9 @@ urlpatterns = [
     url(r'^account/sendEmailVerification$', account_views.sendEmailVerification),
     url(r'^account/verifyEmail$', account_views.verifyEmail),
     url(r'^account/logout$', account_views.userLogout),
+    url(r'^account/getFavoriteTripFolder$', account_views.getFavoriteTripFolder),
+    url(r'^account/addFavoriteTripFolder$', account_views.addFavoriteTripFolder),
+    url(r'^account/removeFavoriteTripFolder$', account_views.removeFavoriteTripFolder),
     #trip app
     url(r'^trip/filter$', trip_views.tripFilter),
     url(r'^trip/userCurrency$', trip_views.userCurrency),

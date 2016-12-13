@@ -244,3 +244,87 @@ def userLogout(request):
     else:
         strStatus = u"logout failed (not logined yet)"
     return JsonResponse({"logout_status":strStatus}, safe=False)
+    
+#取得所有 我的最愛資料夾 (至少會有 default_folder 一個)
+def getFavoriteTripFolder(request):
+    #從 session 取得已登入的 使用者 email
+    strUserEmail = request.session.get("logined_user_email", None)
+    if strUserEmail:
+        objUserAccount = UserAccount.objects.get(strEmail=strUserEmail)
+        lstStrFavoriteTripFolder = ["default_folder"]
+        if objUserAccount.strJsonSetting is not None:
+            dicSetting = json.loads(objUserAccount.strJsonSetting)
+            lstStrFavoriteTripFolder = dicSetting.get("lstStrFavoriteTripFolder", ["default_folder"])
+        return JsonResponse({"lstStrFavoriteTripFolder":lstStrFavoriteTripFolder}, safe=False)
+    else:
+        #尚未登入 導回登入頁
+        return redirect("/account/login")
+
+#新增 我的最愛資料夾
+def addFavoriteTripFolder(request):
+    #從 session 取得已登入的 使用者 email
+    strUserEmail = request.session.get("logined_user_email", None)
+    if strUserEmail:
+        objUserAccount = UserAccount.objects.get(strEmail=strUserEmail)
+        strFolderName = request.GET.get("folder", None)
+        lstStrFavoriteTripFolder = ["default_folder"]
+        #檢查原始個人設定
+        if objUserAccount.strJsonSetting:
+            dicSetting = json.loads(objUserAccount.strJsonSetting)
+            lstStrFavoriteTripFolder = dicSetting.get("lstStrFavoriteTripFolder", ["default_folder"])
+            #加入新 folder
+            if strFolderName and (strFolderName not in lstStrFavoriteTripFolder):
+                lstStrFavoriteTripFolder.append(strFolderName)
+            #預防性加入 default_folder
+            lstStrFavoriteTripFolder.append("default_folder")
+        else:
+            #無原始設定，設定為 ["default_folder", strFolderName]
+            if strFolderName:
+                lstStrFavoriteTripFolder.append(strFolderName)
+        #去除重複的 folder 
+        lstStrFavoriteTripFolder = list(set(lstStrFavoriteTripFolder))
+        #組合 setting
+        dicNewJsonSetting = {
+            "lstStrFavoriteTripFolder": lstStrFavoriteTripFolder
+        }
+        #save
+        objUserAccount.strJsonSetting = json.dumps(dicNewJsonSetting, ensure_ascii=False, indent=4, sort_keys=True)
+        objUserAccount.save()
+        return JsonResponse({"lstStrFavoriteTripFolder":lstStrFavoriteTripFolder}, safe=False)
+    else:
+        #尚未登入 導回登入頁
+        return redirect("/account/login")
+
+#移除 我的最愛資料夾
+def removeFavoriteTripFolder(request):
+    #從 session 取得已登入的 使用者 email
+    strUserEmail = request.session.get("logined_user_email", None)
+    if strUserEmail:
+        objUserAccount = UserAccount.objects.get(strEmail=strUserEmail)
+        strFolderName = request.GET.get("folder", None)
+        lstStrFavoriteTripFolder = ["default_folder"]
+        #檢查原始個人設定
+        if objUserAccount.strJsonSetting:
+            dicSetting = json.loads(objUserAccount.strJsonSetting)
+            lstStrFavoriteTripFolder = dicSetting.get("lstStrFavoriteTripFolder", ["default_folder"])
+            #移除 folder
+            if strFolderName and (strFolderName in lstStrFavoriteTripFolder):
+                lstStrFavoriteTripFolder.remove(strFolderName)
+            #預防性加入 default_folder
+            lstStrFavoriteTripFolder.append("default_folder")
+        else:
+            #無原始設定，設定為 ["default_folder"]
+            pass
+        #去除重複的 folder 
+        lstStrFavoriteTripFolder = list(set(lstStrFavoriteTripFolder))
+        #組合 setting
+        dicNewJsonSetting = {
+            "lstStrFavoriteTripFolder": lstStrFavoriteTripFolder
+        }
+        #save
+        objUserAccount.strJsonSetting = json.dumps(dicNewJsonSetting, ensure_ascii=False, indent=4, sort_keys=True)
+        objUserAccount.save()
+        return JsonResponse({"lstStrFavoriteTripFolder":lstStrFavoriteTripFolder}, safe=False)
+    else:
+        #尚未登入 導回登入頁
+        return redirect("/account/login")
