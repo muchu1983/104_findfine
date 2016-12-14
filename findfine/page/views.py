@@ -86,15 +86,27 @@ def showMyMessagePage(request):
     return render(request, "myMessage.html", {})
     
 def showWishListPage(request):
-    return render(request, "wishList.html", {})
+    dicRenderData = {}
+    #從 session 取得已登入的 使用者 email
+    strUserEmail = request.session.get("logined_user_email", None)
+    dicRenderData.setdefault("strEmail", strUserEmail)
+    return render(request, "wishList.html", dicRenderData)
     
 def showMyTourPage(request):
     #tour means collection of trips , tour 代表許多 trip 的集合
-    return render(request, "myTrip.html", {})
+    dicRenderData = {}
+    #從 session 取得已登入的 使用者 email
+    strUserEmail = request.session.get("logined_user_email", None)
+    dicRenderData.setdefault("strEmail", strUserEmail)
+    return render(request, "myTrip.html", dicRenderData)
     
 def showTourEditPage(request):
     #tour means collection of trips , tour 代表許多 trip 的集合
-    return render(request, "tripEdit.html", {})
+    dicRenderData = {}
+    #從 session 取得已登入的 使用者 email
+    strUserEmail = request.session.get("logined_user_email", None)
+    dicRenderData.setdefault("strEmail", strUserEmail)
+    return render(request, "tripEdit.html", dicRenderData)
     
 def showTourSharePage(request):
     #tour means collection of trips , tour 代表許多 trip 的集合
