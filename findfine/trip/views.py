@@ -303,8 +303,11 @@ def getCustomizedTripPlan(request=None):
         lstDicPlanData = []
         for matchedPlan in qsetMatchedPlan:
             dicPlanData = {
-                "intId":matchedPlan.id,
-                "strName":matchedPlan.strName
+                "intId": matchedPlan.id,
+                "strName": matchedPlan.strName,
+                "strImageUrl": matchedPlan.strImageUrl,
+                "strDatetimeFrom": matchedPlan.dtDatetimeFrom.strftime("%Y-%m-%d-%H-%M"),
+                "strDatetimeTo": matchedPlan.dtDatetimeTo.strftime("%Y-%m-%d-%H-%M")
             }
             lstDicPlanData.append(dicPlanData)
         dicResultJson = {
@@ -321,11 +324,32 @@ def addCustomizedTripPlan(request=None):
     #從 session 取得已登入的 使用者 email
     strUserEmail = request.session.get("logined_user_email", None)
     if strUserEmail:
+        currentTimezone = timezone.get_current_timezone()
+        #plan 名稱
         strPlanName = request.GET.get("strPlanName", "My New Plan")
+        #封面 url
+        strImageUrl = request.GET.get("strImageUrl", "")
+        #設定 開始時間 與 結束時間
+        strDatetimeFrom = request.GET.get("strDatetimeFrom", None)
+        strDatetimeTo = request.GET.get("strDatetimeTo", None)
+        dtDatetimeFrom = None
+        dtDatetimeTo = None
+        if strDatetimeFrom:
+            dtDatetimeFrom = datetime.datetime.strptime(strDatetimeFrom, "%Y-%m-%d-%H-%M")
+        if strDatetimeTo:
+            dtDatetimeTo = datetime.datetime.strptime(strDatetimeTo, "%Y-%m-%d-%H-%M")
+        #可更新欄位內容
+        dicUpdateData = {
+            "strImageUrl": strImageUrl,
+            "dtDatetimeFrom": currentTimezone.localize(dtDatetimeFrom) if dtDatetimeFrom else None,
+            "dtDatetimeTo": currentTimezone.localize(dtDatetimeTo) if dtDatetimeTo else None,
+        }
         objUserAccount = UserAccount.objects.get(strEmail=strUserEmail)
+        #upsert
         CustomizedTripPlan.objects.update_or_create(
             fkUserAccount = objUserAccount,
-            strName = strPlanName
+            strName = strPlanName,
+            defaults = dicUpdateData
         )
         return JsonResponse({"add_customized_trip_plan_status":"ok"}, safe=False)
     else:

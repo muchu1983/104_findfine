@@ -63,6 +63,12 @@ class CustomizedTripPlan(models.Model):
     fkUserAccount = models.ForeignKey(UserAccount, null=False, on_delete=models.CASCADE)
     #行程規劃名稱
     strName = models.CharField(max_length=255, null=True)
+    #封面圖
+    strImageUrl = models.TextField(null=True)
+    #完整行程規劃 開始日期
+    dtDatetimeFrom = models.DateTimeField(null=True)
+    #完整行程規劃 結束日期
+    dtDatetimeTo = models.DateTimeField(null=True)
     
 #使用者自訂 行程規劃項目
 class CustomizedTripPlanItem(models.Model):
