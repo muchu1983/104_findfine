@@ -89,6 +89,9 @@
                 </div>
                 <div class="noti_ing"></div>
             </div>
+
+            <div id="noLogHeadBtn" class="head_btn nolog" style="background-image: url(/static/img/head_logout.jpg);">
+            </div>
             <div class="header_btn_blk adjust" id="bs-example-navbar-collapse-1">
                 <div class="toolbox_btn icon-toolbox">
                     <span class="text">ToolBox</span>
@@ -111,35 +114,35 @@
                         </div>
                     </li>
                 </ul>
-                <div id="wishList" class="header_btn btn-info">
-                    <span class="icon_blk">                  
-                        <span class="icon-quill"></span>
-                    <span class="icon-scroll"></span>
-                    <span class="extend_line"></span>
-                    </span>
-                    <span class="text">Wishlist</span>
+                <div class="login_btns">                    
+                    <div id="wishList" class="header_btn btn-info">
+                        <span class="icon_blk">                  
+                            <span class="icon-quill"></span>
+                        <span class="icon-scroll"></span>
+                        <span class="extend_line"></span>
+                        </span>
+                        <span class="text">Wishlist</span>
+                    </div>
+                    <div id="myPlans" class="header_btn btn-info">
+                        <span class="icon_blk">
+                            <span class="icon-airplane"></span>
+                        <span class="icon-notebook"></span>
+                        <svg class="extend_dotted_line">
+                            <g fill="none" stroke="#ffffff" stroke-width="1">
+                                <path stroke-dasharray="5,5" d="M0 0 80 0" />
+                            </g>
+                        </svg>
+                        </span>
+                        <span class="text">My Plan</span>
+                    </div>
                 </div>
-                <div id="myPlans" class="header_btn btn-info">
-                    <span class="icon_blk">
-                        <span class="icon-airplane"></span>
-                    <span class="icon-notebook"></span>
-                    <svg class="extend_dotted_line">
-                        <g fill="none" stroke="#ffffff" stroke-width="1">
-                            <path stroke-dasharray="5,5" d="M0 0 80 0" />
-                        </g>
-                    </svg>
-                    </span>
-                    <span class="text">My Plan</span>
+                <div class="logout_btns">
+                    
+                    <div id="register" class="header_blk_btn">Sign Up</div>
+                    <div id="loginBtn" class="header_blk_btn">Log In</div>
                 </div>
-                <!-- <div id="myFriends" class="btn btn-info">my friends</div>
-                <div id="myMessages" class="btn btn-info">my messages</div> -->
-                <!-- <div id="loginBtn" class="header_btn btn-info">Log In</div> -->
-                <div id="register" class="header_blk_btn">Sign Up</div>
-                <div id="loginBtn" class="header_blk_btn">Log In</div>
                 <div id="padMenuBtn" class="header_menu_btn icon-menu"></div>
                 <div id="mobileMenuBtn" class="header_menu_btn icon-menu"></div>
-                <div id="noLogHeadBtn" class="head_btn nolog" style="background-image: url(/static/img/head_logout.jpg);">
-                </div>
             </div>
             <!-- /.navbar-collapse -->
         </div>
@@ -147,16 +150,20 @@
     </nav>
     <div class="pad_menu" id="padMenu">
         <div class="close_btn icon-cancel"></div>
-        <div class="pad_menu_btn" id="padWishlist">
-            <span class="icon icon-wishlist"></span>
-            <span>Wishlist</span>
+        <div class="login_btns">            
+            <div class="pad_menu_btn" id="padWishlist">
+                <span class="icon icon-wishlist"></span>
+                <span>Wishlist</span>
+            </div>
+            <div class="pad_menu_btn" id="padMyPlan">
+                <span class="icon icon-myplan"></span>
+                <span>My Plan</span>
+            </div>
         </div>
-        <div class="pad_menu_btn" id="padMyPlan">
-            <span class="icon icon-myplan"></span>
-            <span>My Plan</span>
+        <div class="logout_btns">            
+            <div id="padRegister" class="header_blk_btn">Sign Up</div>
+            <div id="padLoginBtn" class="header_blk_btn">Log In</div>
         </div>
-        <div id="padRegister" class="header_blk_btn">Sign Up</div>
-        <div id="padLoginBtn" class="header_blk_btn">Log In</div>
     </div>
     <div class="plane_print_blk">
         <svg class="plane_print">
@@ -383,7 +390,7 @@
         <div class="container">
             <ul class="link_blk">
                 <li><a href="/page/aboutUs">About Us</a></li>
-                <li><a>Terms & Conditions</a></li>
+                <li><a href="/page/termsOfUse.html">Terms & Conditions</a></li>
                 <li><a>Cooperation</a></li>
                 <li><a href="/page/contactUs">Contact Us</a></li>
             </ul>

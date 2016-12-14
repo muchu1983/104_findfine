@@ -588,6 +588,56 @@ function folderMoreClick() {
     });
 }
 
+// Wishlist MORE 按鈕 點擊
+function wishMoreClick() {
+    $(".wish>.more_blk>.more_btn").click(function(event) {
+        $(".wish>.more_blk>.more_btn").removeClass('active');
+        $(this).parent().children('.more_menu').addClass('active');
+    });
+    $(window).click(function() {
+        if (!event.target.matches(".wish>.more_blk>.more_btn")) {
+            $(".wish>.more_blk>.more_menu").removeClass('active');
+        }
+    });
+}
+
+function wishFolderRenew(tarWish) {
+    var tarId = parseInt(tarWish.attr('data-id'));
+    var tarLi = tarWish.children('.menu').children('li');
+    var folders = [];
+    for (var i = 0; tarLi.eq(i).length > 0; i++) {
+        if (tarLi.eq(i).hasClass('active')) {
+            folders.push(tarLi.eq(i).children('span').html());
+        }
+    }
+
+
+    console.log(folders);
+
+    // 刪除wish
+}
+
+function wishAddFolder(wishId, folderName) {
+    var wishAddFolderUrl = "/trip/addFavoriteTrip?intTripId=" + wishId + "&add_folder=" + folderName;
+
+    $.getJSON(wishAddFolderUrl, function(jsonResp) {
+
+        console.log("add access");
+
+    });
+}
+
+function wishRemoveFolder(wishId, folderName) {
+    var wishRemoveFolderUrl = "/trip/addFavoriteTrip?intTripId=" + wishId + "&remove_folder=" + folderName;
+
+    $.getJSON(wishRemoveFolderUrl, function(jsonResp) {
+
+        console.log("remove access");
+
+    });
+
+}
+
 // 加入資料夾點擊  @TODO假的 需要連上真實資料
 function addToFolderClick() {
     $(".folder_sel_btn").click(function(event) {
@@ -597,6 +647,15 @@ function addToFolderClick() {
     });
     $(".wish>.menu>li").click(function(event) {
         $(this).toggleClass('active');
+        var wishId = $(this).parent().parent().attr('data-id');
+        var folderName = $(this).children('span').html();
+        if ($(this).hasClass('active')) {
+            wishAddFolder(wishId, folderName);
+        } else {
+            wishRemoveFolder(wishId, folderName);
+        }
+
+
     });
 
     $(window).click(function() {
@@ -621,21 +680,108 @@ function addNewFolderClick() {
         var tar = $(".add_folder_blk>.content_blk>input");
         if (tar.val() != "" && tar.val() != null) {
             $(".add_folder_blk").hide();
-            var pic1Url = "",
-                pic2Url = "",
-                pic3Url = "",
-                folderName = "",
-                tourNum = 0,
-                folderContainer = $(".folders>.inner_blk");
-            newFoldCon = FolderHtml(pic1Url, pic2Url, pic3Url, folderName, tourNum);
-            folderContainer.append(newFoldCon);
-            tar.val("");
+
+            $("body").addClass('waiting_body');
+            $(".waiting_fullblk").show();
+            var addNewFolderUrl = "/account/addFavoriteTripFolder?folder=" + tar.val();
+            $.getJSON(addNewFolderUrl, function(jsonResp) {
+
+                wishPageRenew();
+
+                tar.val("");
+            });
+        }
+    });
+}
+
+function wishPageRenew(wishFolderPick) {
+    // 舊資料清空
+    $(".folder").replaceWith("");
+    $(".wish_blk > .wish").replaceWith("");
+    // 取得資料夾
+    var getFoldersUrl = "/account/getFavoriteTripFolder";
+    $.getJSON(getFoldersUrl, function(jsonResp) {
+        var folders = jsonResp.lstStrFavoriteTripFolder;
+
+        var folderJson = [];
+        var folderJsonNum = 0;
+
+        for (var i = 0; i < folders.length; i++) {
+            if (folders[i] != "default_folder") {
+                folderJson[folderJsonNum] = [];
+                folderJson[folderJsonNum].name = folders[i];
+                folderJsonNum++;
+            }
+        }
+
+        // 取得wishList
+        if (wishFolderPick != undefined) {
+            var getWishlistsUrl = "/trip/getFavoriteTrip?folder=" + wishFolderPick;
+        } else {
+            var getWishlistsUrl = "/trip/getFavoriteTrip"
+        }
+        $.getJSON(getWishlistsUrl, function(jsonResp) {
+
+            var strUserCurrency = $("#moneySelect").val();
+
+            // $("div.userCurrencySpan").html(strUserCurrency);
+            //trip data
+            var lstDicTripData = jsonResp["trip"];
+
+            folderJson = renewFolders(folderJson, lstDicTripData);
+            // 放入folders資料
+            for (var i = 0; i < folderJson.length; i++) {
+                var WishFolderCon = getWishFolderCon(folderJson[i]);
+                $("#foldersBlk").append(WishFolderCon);
+            }
+
+            // 放入wishlist資料
+            for (i = 0; i < lstDicTripData.length; i++) {
+                var dicTripData = lstDicTripData[i];
+
+                var WishFolderMenuCon = getWishFolderMenuCon(dicTripData, folderJson);
+
+                var menuCon = "";
+                var folderBtnCon = "";
+
+                if (folderJson.length != 0) {
+                    menuCon = "<ul class=\"menu\">" + WishFolderMenuCon + "</ul>";
+                    folderBtnCon = "<div class=\"folder_sel_btn\"><div class=\"text\">Choose Folders</div><i class=\"icon-dropdown_icon\"></i></div>";
+                }
+
+                var strTripDataHtml = getWishHtml(strUserCurrency, dicTripData["strTitle"], dicTripData["intUserCurrencyCost"], dicTripData["strIntroduction"], dicTripData["strLocation"], dicTripData["intDurationHour"], dicTripData["strOriginUrl"], dicTripData["strImageUrl"], dicTripData["intReviewStar"], dicTripData["intReviewVisitor"], dicTripData["intId"], menuCon, folderBtnCon, dicTripData["intId"]);
+                $(".wish_blk").append(strTripDataHtml);
+
+
+                // 加入資料夾點擊 @Q@ davidturtle @TODO假的 需要連上真實資料
+            };
+
 
             // folder 設定點選
             folderMoreClick();
             renameFolderClick();
             folderClick();
-        }
+
+            // ING folder 點選
+            ingFolderClick();
+
+            addToFolderClick();
+
+            removeFolderClick();
+
+            removeWishBtnClick();
+
+            // Wishlist MORE 按鈕 點擊
+            wishMoreClick();
+
+            // 選單止滑
+            scrollPrevent(".wish>.menu")
+
+            // 等待動畫
+            $("body").removeClass('waiting_body');
+            $(".waiting_fullblk").hide();
+
+        });
     });
 }
 
@@ -676,12 +822,56 @@ function FolderHtml(pic1Url, pic2Url, pic3Url, folderName, tourNum) {
         "</div>",
         "<ul class=\"menu\">",
         "<li class=\"rename_folder_btn\">Rename Folder</li>",
-        "<li>Remove Folder</li>",
+        "<li class=\"remove_folder_btn\">Remove Folder</li>",
         "</ul>",
         "</div>",
     ].join("");
 
     return newFolderCon;
+}
+
+// 移除FOLDER點選
+function removeFolderClick() {
+    $(".remove_folder_btn").click(function(event) {
+
+        $("body").addClass('waiting_body');
+        $(".waiting_fullblk").show();
+
+        var folderName = $(this).parent().parent().children('.card').children('.text_blk').children('.folder_name').html();
+
+        var removeFolderUrl = "/account/removeFavoriteTripFolder?folder=" + folderName;
+        $.getJSON(removeFolderUrl, function(jsonResp) {
+
+            wishPageRenew();
+        });
+    });
+}
+
+function removeWish(wishId, folderPick) {
+
+    $("body").addClass('waiting_body');
+    $(".waiting_fullblk").show();
+
+    var removeWishUrl = "/trip/removeFavoriteTrip?intTripId=" + wishId;
+
+    $.getJSON(removeWishUrl, function(jsonResp) {
+        if (folderPick != undefined) {
+            wishPageRenew(folderPick);
+        } else {
+            wishPageRenew();
+        }
+    });
+}
+
+function removeWishBtnClick() {
+    $(".wish>.more_blk>.more_menu>li.remove_btn").click(function(event) {
+        var wishId = $(this).parent().parent().parent().attr('data-id');
+        if ($("#ingFolderName").html() != "") {
+            removeWish(wishId, folderPick);
+        } else {
+            removeWish(wishId);
+        }
+    });
 }
 
 // 分類重新命名點選 @TODO 目前先用EQ來紀錄欲設定之資料夾，還要補上改變猴連結資料庫
@@ -711,12 +901,44 @@ function renameFolderClick() {
     });
 }
 
+//組出單組查詢結果出來的html字串
+function getWishHtml(strUserCurrency, strTitle, intUserCurrencyCost, strIntroduction, strLocation, intDurationHour, strOriginUrl, strImageUrl, intReviewStar, intReviewVisitor, intId, menuCon, folderBtnCon, intId) {
+
+    var strIntroduction = strIntroduction.substr(0, 135);
+
+    var strTripDataHtml = [
+        "<div class=\"wish\" data-id=\"" + intId + "\">",
+        "<div class=\"card active\" style=\"background-image:url(" + strImageUrl + ");\">",
+        "<div class=\"name\">",
+        "<p>" + strTitle + "</p>",
+        "</div>",
+        "<p class=\"place\">" + strLocation + "</p>",
+        "<p class=\"duration\">" + intDurationHour + "<span>HR</span></p>",
+        "<div class=\"price\">",
+        "<span class=\"country\">" + strUserCurrency + "</span> $",
+        "<span class=\"number\">" + intUserCurrencyCost + "</span>",
+        "</div>",
+        "<div class=\"footprint_blk\">",
+        "<span class=\"icon-tourdash footprint\"></span>",
+        "</div>",
+        "<a target=\"_blank\" href=" + strOriginUrl + " class=\"read_more_btn\">Read More</a>",
+        folderBtnCon,
+        "<div class=\"darken_bg darken\"></div>",
+        "</div>",
+        menuCon,
+        "<div class=\"more_blk\"><div class=\"more_btn icon-more_btn\"></div><ul class=\"more_menu\"><li class=\"remove_btn\">Remove Tour</li></ul></div>",
+        "</div>"
+    ].join("");
+
+    return strTripDataHtml;
+};
+
 // 目前分類點擊
 function ingFolderClick() {
 
     var actBtn = ".ing_folder_more_btn",
         menu = ".ing_folder_more_blk>.menu";
-
+    $(actBtn).off();
     $(actBtn).click(function(event) {
         $(this).parent(".ing_folder_more_blk").children('.menu').addClass('active');
     });
@@ -726,27 +948,46 @@ function ingFolderClick() {
             $(menu).removeClass('active');
         }
     });
+
+    $(".rename_ingfolder_btn").off();
     $(".rename_ingfolder_btn").click(function(event) {
         $(".rename_folder_blk").show();
     });
 
+
+    $(".ing_folder_blk>.back_btn").off();
     $(".ing_folder_blk>.back_btn").click(function(event) {
+
+        $("body").addClass('waiting_body');
+        $(".waiting_fullblk").show();
         $(".ing_folder_blk").hide();
         $(".folders").show();
         $(".folder_blk>.dashed_line").show();
+        $("#ingFolderName").html("");
+        wishPageRenew();
     });
+
+    $(".ing_folder_blk>.ing_folder>.ing_back_text").off();
     $(".ing_folder_blk>.ing_folder>.ing_back_text").click(function(event) {
+
+        $("body").addClass('waiting_body');
+        $(".waiting_fullblk").show();
         $(".ing_folder_blk").hide();
         $(".folders").show();
         $(".folder_blk>.dashed_line").show();
+        $("#ingFolderName").html("");
+        wishPageRenew();
     });
 }
 
-// 分類資料夾點擊 @TODO 後端資料建立後要抓後端分類內的TOUR
+// 分類資料夾點擊
 function folderClick() {
     $(".folder>.card").off();
     $(".folder>.card").click(function(event) {
         if (!event.target.matches(".folder>.card>.text_blk>.more_btn")) {
+
+            $("body").addClass('waiting_body');
+            $(".waiting_fullblk").show();
 
             var tarName = $(this).children('.text_blk').children('.folder_name').html(),
                 tarEq = $(this).parent().index('.folder');
@@ -755,8 +996,12 @@ function folderClick() {
             $(".folders").hide();
             $(".folder_blk>.dashed_line").hide();
             $(".ing_folder_blk").show();
+            $("#ingFolderName").html(tarName);
+
+            wishPageRenew(tarName);
         }
     });
+
 }
 
 // 切拉欄位狀態切換
@@ -1003,19 +1248,165 @@ function staticMapUrlGenerate(lat, lng, zoomScale) {
 }
 
 // DATE格式轉換
-function dateToFullYear(date){
+function dateToFullYear(date) {
     var dateArray = date.split('/');
-    var dateFullYear = [parseInt(dateArray[2]),parseInt(dateArray[0]),parseInt(dateArray[1])].join('.');
+    var dateFullYear = [parseInt(dateArray[2]), parseInt(dateArray[0]), parseInt(dateArray[1])].join('.');
     return dateFullYear;
 }
 
 // 得到下一天的DATE格式
-function getNextFullYear(fullYearDate, toDays){
+function getNextFullYear(fullYearDate, toDays) {
     var date = new Date();
     var parts = fullYearDate.split('.');
-    date.setFullYear(parts[0], parts[1]-1, parts[2]); // year, month (0-based), day
-    date.setTime(date.getTime() + toDays*86400000);
+    date.setFullYear(parts[0], parts[1] - 1, parts[2]); // year, month (0-based), day
+    date.setTime(date.getTime() + toDays * 86400000);
 
-    var nextFullYear = date.getFullYear() +"."+ (date.getMonth() + 1) +"."+ date.getDate();
+    var nextFullYear = date.getFullYear() + "." + (date.getMonth() + 1) + "." + date.getDate();
     return nextFullYear;
+}
+
+function logoutToHome(LogoutBtnName) {
+    var strFilterQueryUrl = "/account/logout";
+
+    $(LogoutBtnName).click(function(event) {
+        $.getJSON(strFilterQueryUrl, function(jsonResp) {
+            window.location = "/";
+        });
+    });
+}
+
+function getWishFolderMenuCon(wish, folderArray) {
+    var x = "";
+    var wishFloders = wish.lstStrFolderName;
+    if (folderArray.length != 0) {
+
+    }
+    for (var i = 0; i < folderArray.length; i++) {
+        var activeCon = "";
+        for (var j = 0; j < wishFloders.length; j++) {
+            if (folderArray[i].name == wishFloders[j]) {
+                activeCon = "active";
+            }
+        }
+        x += "<li class=\"" + activeCon + "\"><span>" + folderArray[i].name + "</span><i class=\"icon-checkmark\"></i></li>";
+    }
+
+
+
+    // for (var i = 0; i < wishArray.lstStrFolderName.length; i++) {
+    //     if (wishArray.lstStrFolderName[i] != "default_folder") {            
+    //         x += "<li><span>" + wishArray.lstStrFolderName[i] + "</span><i class=\"icon-checkmark\"></i></li>";
+    //     }
+    // }
+    return x;
+}
+
+function renewFolders(folderArray, wishArray) {
+
+    for (var k = 0; k < folderArray.length; k++) {
+
+        folderArray[k].tourQum = 0;
+        folderArray[k].picUrls = [];
+        var tarName = folderArray[k].name;
+        for (var i = 0; i < wishArray.length; i++) {
+            for (var j = 0; j < wishArray[i].lstStrFolderName.length; j++) {
+                if (wishArray[i].lstStrFolderName[j] == tarName) {
+
+                    // 取得TOUR數量
+
+                    // 取得前三圖片連結
+                    folderArray[k].picUrls[folderArray[k].tourQum] = wishArray[i].strImageUrl;
+                    folderArray[k].tourQum++;
+                }
+            }
+        }
+    }
+    return folderArray;
+}
+
+function getWishFolderCon(folder) {
+
+    var picBlkCon = "";
+    if (folder.tourQum == 0) {
+        picBlkCon = '<div class="empty"><p class="big_text">Oops ! </p><p class="text">This Folder is Empty.</p></div>';
+    } else {
+        var picBlkConPic1 = '<div class="pic_1" style="background-image: url(' + folder.picUrls[0] + ');"></div>';
+        if (folder.picUrls[1] != undefined) {
+            var picBlkConPic2 = '<div class="pic_2" style="background-image: url(' + folder.picUrls[1] + ');"></div>';
+        } else {
+            var picBlkConPic2 = '<div class="pic_2"></div>';
+        }
+        if (folder.picUrls[2] != undefined) {
+            var picBlkConPic3 = '<div class="pic_3" style="background-image: url(' + folder.picUrls[2] + ');"></div>';
+        } else {
+            var picBlkConPic3 = '<div class="pic_3"></div>';
+        }
+
+        picBlkCon = picBlkConPic1 + picBlkConPic2 + picBlkConPic3;
+    }
+    var x = [
+        '<div class="folder">',
+        '<div class="card">',
+        '<div class="pic_blk">',
+        picBlkCon,
+        '</div>',
+        '<div class="text_blk">',
+        '<div class="folder_name">',
+        folder.name,
+        '</div>',
+        '<div class="tour_text">Tour</div>',
+        '<div class="tour_qua">',
+        folder.tourQum,
+        '</div>',
+        '<span class="more_btn icon-more_btn"></span>',
+        '</div>',
+        '</div>',
+        '<ul class="menu"><li class="rename_folder_btn">Rename Folder</li><li class="remove_folder_btn">Remove Folder</li></ul>',
+        '</div>',
+    ].join("");
+    return x;
+}
+
+function getPlanCon(planId, imgUrl, planName, tourQum, timeFrom, timeTo) {
+    var x = [
+        '<div class="plan" data-id="' + planId + '">',
+        '<div class="card">',
+        '<div class="map_blk" style="background-image: url(' + imgUrl + ');"></div>',
+        '<div class="name">' + planName + '</div>',
+        '<div class="info_blk">',
+        '<div class="info tour">',
+        '<div class="title">Tour</div>',
+        '<div class="content">' + tourQum + '</div>',
+        '</div>',
+        '<div class="info date">',
+        '<div class="title">Date</div>',
+        '<div class="content">',
+        '<span class="time_from">' + timeFrom + '<span>-',
+        '<span class="time_to">' + timeTo + '</span></div>',
+        '</div>',
+        '<div class="info pals"><div class="title">Pals</div><div class="content friend">6</div></div><div class="friends_blk"><div class="friend_1"></div><div class="friend_2"></div><div class="friend_3"></div></div>',
+        '</div>',
+        '<span class="bg icon-plan_bg"></span>',
+        '<span class="bg_2 icon-plan_bg_page"></span>',
+        '</div>',
+        '<div class="more_blk"><div class="more_btn icon-more_btn"></div><ul class="more_menu"><li class="remove_btn">Remove Plan</li></ul></div>',
+        '</div>',
+    ].join("");
+    return x;
+}
+
+
+
+function planListRefresh(){
+
+    $(".plan").replaceWith("");
+
+    var getPlanListUrl = "/trip/getTripPlan"
+    $.getJSON(getPlanListUrl, function(jsonResp) {
+        // console.log(jsonResp.plan);
+        var planA = jsonResp.plan;
+        for (var i = 0; i < planA.length; i++) {
+            var tarPlanCon = getPlanCon(planA[i].intId, imgUrl, planName, tourQum, timeFrom, timeTo);
+        }
+    });
 }

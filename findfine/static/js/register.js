@@ -4,7 +4,7 @@
 
     function initRegister() {
 
-        $('#loginBtn').show();
+        $(".waiting_fullblk").hide();
         $("#headBtn").hide();
         birthLiSet();
         $('#loginBtn').click(function(event) {
@@ -31,8 +31,11 @@
         //     dateFormat: "yy-mm-dd"
         // });
         $("#registreBtn").click(function() {
+
+            $(".waiting_fullblk").show();
+            $("body").addClass('waiting_body');
             
-            alert("registreBtn");
+            // alert("registreBtn");
             //收集註冊資料
             var strUserEmail = $("#user_email").val();
             var strUserPassword = $("#user_password").val();
@@ -58,9 +61,14 @@
             };
             //送出註冊資料
             $.post("/account/register", dicRegisterData, function(jsonResp) {
-                console.log(jsonResp)
+                $(".waiting_fullblk").hide();
+
+                $("body").removeClass('waiting_body');
+                console.log(jsonResp);
                 $("div.registerStatusDiv").html(jsonResp["register_status"])
+                alert(jsonResp["register_status"]);
                 if (jsonResp["register_status"] == "register success.") {
+                    alert("Please Login with your new account");
                     window.location = "/account/login"
                 }
             }, "json");

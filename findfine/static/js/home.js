@@ -21,19 +21,22 @@ function initMap() {
         };
     });
 
-    $('#wishList').hide();
-    $('#myPlans').hide();
     $('#myFriends').hide();
     $('#myMessages').hide();
     $('#logOut').hide();
-    $('#register').hide();
-    $('#loginBtn').hide();
     $('#noLogHeadBtn').hide();
+    $("#headBtn").hide();
+    $(".login_btns").hide();
+    $(".logout_btns").hide();
     //strEmail 如已登入 不顯示login button 並顯示會員帳號
     if (strEmail == "None") {
         // 暫時隱藏 為測試方便使用
         $('#register').show();
         $('#loginBtn').show();
+        $('#noLogHeadBtn').show();
+        $("#padRegister").show();
+        $("#padLoginBtn").show();
+        $(".logout_btns").show();
     } else {
         $('#wishList').show();
         $('#myPlans').show();
@@ -43,6 +46,10 @@ function initMap() {
         // $('#loginBtn').html(strEmail);
         $('#myFriends').show();
         $('#myMessages').show();
+        $("#headBtn").show();
+        $("#padWishlist").show();
+        $("#padMyPlan").show();
+        $(".login_btns").show();
     }
 }
 
@@ -99,6 +106,9 @@ function initMap() {
 
         initMap();
 
+        // 登出動作
+        logoutToHome("#logOut");
+
         //登入按鈕
         $("#loginBtn").click(function() {
             if ($("#loginBtn").html() == "Log In") {
@@ -113,10 +123,11 @@ function initMap() {
             }
         });
 
-        // 登出按鈕點擊
-        $("#logOut").click(function() {
-            window.location = "/account/logout";
-        });
+        // // 登出按鈕點擊
+        // $("#logOut").click(function() {
+
+        //     window.location = "/account/logout";
+        // });
 
         // wishList按鈕點擊 @Q@ davidturtle
         $("#wishList").click(function() {
@@ -130,12 +141,12 @@ function initMap() {
 
         // myPlans按鈕點擊 @Q@ davidturtle
         $("#myPlans").click(function() {
-            window.location = "/page/myTrip";
+            window.location = "/page/myPlan";
         });
 
         // pad版myPlans按鈕點擊 @Q@ davidturtle
         $("#padMyPlan").click(function() {
-            window.location = "/page/myTrip";
+            window.location = "/page/myPlan";
         });
 
         // moretour按鈕點擊 @Q@ davidturtle
@@ -163,6 +174,11 @@ function initMap() {
 
         //登入按鈕        
         $("#loginBtn").click(function() {
+            window.location = "/account/login";
+        });
+
+        //未登入頭像按鈕        
+        $("#noLogHeadBtn").click(function() {
             window.location = "/account/login";
         });
     };

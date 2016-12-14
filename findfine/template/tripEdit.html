@@ -13,7 +13,7 @@
 - 完成的FOOTER移入
 
 -->
-<html>
+<html class="show_all">
 
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
@@ -69,14 +69,14 @@
 </head>
 
 <body id="page-top">
-    <div id="testBtn">
+    <!-- <div id="testBtn">
         <p class="p1"></p>
         <p class="p2"></p>
     </div>
     <div id="testBtn2">
         <p class="p1"></p>
         <p class="p2"></p>
-    </div>
+    </div> -->
     <div class="picking_blk" id="picker" data-obj="" data-hr="" data-id="" data-link="" data-price="" data-coshr="" data-note="" data-locate="" data-lat="" data-lng="" data-startmoment="">
         <p class="name"></p>
         <p class="place"></p>
@@ -86,9 +86,6 @@
         <div class="container">
             <!-- Brand and toggle get grouped for better mobile display -->
             <div class="navbar-header page-scroll">
-                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
-                    <span class="sr-only">Toggle navigation</span> Menu <i class="fa fa-bars"></i>
-                </button>
                 <a class="icon-logo" id="logoTop"></a>
                 <div class="mini_searchbar">
                     <span class="icon-magnifier"></span>
@@ -149,6 +146,14 @@
         </div>
         <!-- /.container-fluid -->
     </nav>
+    
+    <div class="waiting_fullblk">
+        <div class="waiting">
+            <div class="logo icon-logo"></div>
+            <div class="text">Loading...</div>
+            <div class="shadow"></div>
+        </div>
+    </div>
     <div class="rename_blk lightbox">
         <div class="content_blk">
             <div class="title">Edit Name</div>
@@ -353,46 +358,17 @@
                         <input type="text" class="content" id="wishListSearch" placeholder="Search from my wishlist">
                     </div>
                 </div>
-                <!-- <div class="sortedBy sort_blk">
+                <div class="sortedBy sort_blk" id="folderSel">
                     <div class="sort_fold_blk sort_sel_blk">
                         <div class="left sel">
-                            <span class="click sort_val">Rating</span>
+                            <span class="click sort_val" id="folderPickVal">All</span>
                             <span class="click icon-dropdown_icon"></span>
                             <ul class="left_drop drop">
-                                <li class="active">Rating</li>
-                                <li>Budget</li>
-                                <li>Duration</li>
+                                <li class="active">All</li>
                             </ul>
                         </div>
                     </div>
-                    <div class="sort_sel_blk">
-                        <div id="sortValBtn" class="left sel">
-                            <span class="click sort_val">Rating</span>
-                            <span class="click icon-dropdown_icon"></span>
-                            <ul class="left_drop drop">
-                                <li class="active">Rating</li>
-                                <li>Budget</li>
-                                <li>Duration</li>
-                            </ul>
-                        </div>
-                        <div class="sepline"></div>
-                        <div id="sortWayBtn" class="right sel">
-                            <span class="click sort_val">Decending</span>
-                            <span class="click icon-dropdown_icon"></span>
-                            <span class="click icon-diagram_up reverse"></span>
-                            <ul class="right_drop drop">
-                                <li class="active">
-                                    <i class="icon-diagram_up"></i>
-                                    <span class="content">Ascending</span>
-                                </li>
-                                <li>
-                                    <i class="icon-diagram_down"></i>
-                                    <span class="content">Decending</span>
-                                </li>
-                            </ul>
-                        </div>
-                    </div>
-                </div> -->
+                </div>
                 <div class="tours" id="toursBlk">
                     <div class="tour_pick_blk">
                         <div class="tour_pick" data-id="1234" data-hr="5" data-coshr="5" data-link="http://google.com">

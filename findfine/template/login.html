@@ -20,6 +20,7 @@
     <link href="/static/vendor/bootstrap-select/dist/css/bootstrap-select.min.css" rel="stylesheet">
     <!-- custom CSS -->
     <link href="/static/css/custom.css" rel="stylesheet">
+    <link href="/static/css/bootstrapCustom.css" rel="stylesheet">
     <!-- jQuery core-->
     <script src="/static/vendor/jquery/dist/jquery.min.js"></script>
     <!-- google map api -->
@@ -37,8 +38,6 @@
     <link rel="stylesheet" href="/static/icon-font/style.css">
     <!-- google font Roboto -->
     <link href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700,900" rel="stylesheet">
-    <!-- Bootstrap Core CSS -->
-    <link href="/static/vendor/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="/static/vendor/bootstrap-select/dist/css/bootstrap-select.min.css" rel="stylesheet">
     <!-- Bootstrap Js -->
     <script src="/static/vendor/bootstrap/dist/js/bootstrap.min.js"></script>
@@ -60,27 +59,35 @@
                     </script>
                 </div>
             </div>
+
+            <div id="noLogHeadBtn" class="head_btn" style="background-image: url(/static/img/head_logout.jpg);">
+                <div class="head_menu">
+                    <div id="logOut">log Out</div>
+                </div>
+            </div>
             <div class="header_btn_blk" id="bs-example-navbar-collapse-1">
                 <!-- <div id="myFriends" class="btn btn-info">my friends</div>
                 <div id="myMessages" class="btn btn-info">my messages</div> -->
                 <!-- <div id="loginBtn" class="header_btn btn-info">Log In</div> -->
-                <div id="noLogHeadBtn" class="head_btn" style="background-image: url(/static/img/head_logout.jpg);">
-                    <div class="head_menu">
-                        <div id="logOut">log Out</div>
-                    </div>
-                </div>
                 <div id="headBtn" class="head_btn" style="background-image: url(/static/img/head_sample.jpg);">
                     <div class="head_menu">
                         <div id="logOut">log Out</div>
                     </div>
                 </div>
 
-                <div id="register" class="header_blk_btn">Sign Up</div>
+                <div id="register" class="header_blk_btn top show">Sign Up</div>
             </div>
             <!-- /.navbar-collapse -->
         </div>
         <!-- /.container-fluid -->
     </nav>
+    <div class="waiting_fullblk">
+        <div class="waiting">
+            <div class="logo icon-logo"></div>
+            <div class="text">Loading...</div>
+            <div class="shadow"></div>
+        </div>
+    </div>
     <div class="login_blk">
         <p class="title">USER LOGIN</p>
         <div class="halfprint_plan">
@@ -103,7 +110,7 @@
                 </span>
                 <a class="forget_text">forget your password ?</a>
             </div>
-            <a id="loginBtn" class="click_btn">Login</a>
+            <a id="loginBtn" class="click_btn top">Login</a>
             <a class="google_btn" href="https://accounts.google.com/o/oauth2/v2/auth?scope={{strGoogleOauthScope}}&state={{strGoogleOauthState}}&redirect_uri={{strGoogleOauthRedirectUri}}&response_type=code&client_id={{strGoogleOauthClientId}}&approval_prompt=force ">
                 <span class="icon-google-plus"></span>
                 <p class="text">Log In with Google</p>
