@@ -183,6 +183,10 @@ var planIng = {
         // 時間區域設定 @Q@ davidturtle
         timeBlkSet();
 
+        folderSelInit();
+
+        planEditWishRefresh();
+
         // PLAN 初始化
         oriPlanSet(planIng, planIng.ingDay);
 
@@ -237,6 +241,7 @@ var planIng = {
         scrollPrevent(".plan_set_blk>.inner_blk>.checklist_blk>.info>.checklists");
         scrollPrevent("#tourDetailBlk");
         scrollPrevent("#addNoteArea");
+        scrollPrevent("#toursBlk");
 
         // 新增筆記 按鈕 初始化
         addNoteAct();
@@ -261,52 +266,52 @@ var planIng = {
 
 
         //組出單組查詢結果出來的html字串
-        function getTripDataHtml(strUserCurrency, strTitle, intUserCurrencyCost, strIntroduction, strLocation, intDurationHour, strOriginUrl, strImageUrl, intReviewStar, intReviewVisitor, intId) {
-            var reviewStar;
-            if (intReviewStar == 0) {
-                reviewStar = '☆☆☆☆☆';
-            }
-            if (intReviewStar == 1) {
-                reviewStar = '★☆☆☆☆';
-            }
-            if (intReviewStar == 2) {
-                reviewStar = '★★☆☆☆';
-            }
-            if (intReviewStar == 3) {
-                reviewStar = '★★★☆☆';
-            }
-            if (intReviewStar == 4) {
-                reviewStar = '★★★★☆';
-            }
-            if (intReviewStar == 5) {
-                reviewStar = '★★★★★';
-            }
+        // function getTripDataHtml(strUserCurrency, strTitle, intUserCurrencyCost, strIntroduction, strLocation, intDurationHour, strOriginUrl, strImageUrl, intReviewStar, intReviewVisitor, intId) {
+        //     var reviewStar;
+        //     if (intReviewStar == 0) {
+        //         reviewStar = '☆☆☆☆☆';
+        //     }
+        //     if (intReviewStar == 1) {
+        //         reviewStar = '★☆☆☆☆';
+        //     }
+        //     if (intReviewStar == 2) {
+        //         reviewStar = '★★☆☆☆';
+        //     }
+        //     if (intReviewStar == 3) {
+        //         reviewStar = '★★★☆☆';
+        //     }
+        //     if (intReviewStar == 4) {
+        //         reviewStar = '★★★★☆';
+        //     }
+        //     if (intReviewStar == 5) {
+        //         reviewStar = '★★★★★';
+        //     }
 
-            var strHidden = "||" + strUserCurrency + "||" + strTitle + "||" + intUserCurrencyCost + "||" + strIntroduction + "||" + strLocation + "||" + intDurationHour + "||" + strOriginUrl + "||" + strImageUrl + "||" + intReviewStar + "||" + intReviewVisitor + "||" + intId + "||";
+        //     var strHidden = "||" + strUserCurrency + "||" + strTitle + "||" + intUserCurrencyCost + "||" + strIntroduction + "||" + strLocation + "||" + intDurationHour + "||" + strOriginUrl + "||" + strImageUrl + "||" + intReviewStar + "||" + intReviewVisitor + "||" + intId + "||";
 
-            var strTripDataHtml = [
-                "<li id=" + intId + " style=\"list-style-type:none;\">",
-                "<div class='fc-event'>",
-                "<p><img src=\"" + strImageUrl + "\"/><p>",
-                "<p><span style=\"color:orange\">" + strTitle + "</span></p>",
-                "<p><a href=" + strOriginUrl + " target=\"_blank\"> read more</a><p>",
-                "<p><span> Duration:" + intDurationHour + "</span></p>",
-                "<p><span> strUserCurrency:" + strUserCurrency + "</span></p>",
-                "<p><span> intUserCurrencyCost:" + intUserCurrencyCost + "</span></p>",
-                "<p><span> strLocation:" + strLocation + "</span></p>",
-                "<p><span> strOriginUrl:" + strOriginUrl + "</span></p>",
-                "<p><span> Duration:" + intDurationHour + "</span></p>",
-                "<p><span style=\"color:red\">Stars:" + reviewStar + "</span></p>",
-                "<p><span>review:" + intReviewVisitor + "</span></p>",
-                "<p><input type='hidden' value='hidden:" + strHidden + "'><p>",
-                "</div>",
-                "</li>"
-            ].join("");
-            return strTripDataHtml;
-        };
+        //     var strTripDataHtml = [
+        //         "<li id=" + intId + " style=\"list-style-type:none;\">",
+        //         "<div class='fc-event'>",
+        //         "<p><img src=\"" + strImageUrl + "\"/><p>",
+        //         "<p><span style=\"color:orange\">" + strTitle + "</span></p>",
+        //         "<p><a href=" + strOriginUrl + " target=\"_blank\"> read more</a><p>",
+        //         "<p><span> Duration:" + intDurationHour + "</span></p>",
+        //         "<p><span> strUserCurrency:" + strUserCurrency + "</span></p>",
+        //         "<p><span> intUserCurrencyCost:" + intUserCurrencyCost + "</span></p>",
+        //         "<p><span> strLocation:" + strLocation + "</span></p>",
+        //         "<p><span> strOriginUrl:" + strOriginUrl + "</span></p>",
+        //         "<p><span> Duration:" + intDurationHour + "</span></p>",
+        //         "<p><span style=\"color:red\">Stars:" + reviewStar + "</span></p>",
+        //         "<p><span>review:" + intReviewVisitor + "</span></p>",
+        //         "<p><input type='hidden' value='hidden:" + strHidden + "'><p>",
+        //         "</div>",
+        //         "</li>"
+        //     ].join("");
+        //     return strTripDataHtml;
+        // };
 
         $("#backAllPlanBtn").click(function(event) {
-            window.location = "/page/myTrip";
+            window.location = "/page/myPlan";
         });
         $("#wishList").click(function() {
             window.location = "/page/wishList";
@@ -2356,12 +2361,140 @@ function jsonEditRenew() {
     }
 }
 
-// 測試按鈕
-jQuery(document).ready(function($) {
-    $("#testBtn").click(function(event) {
-        console.log(dateToFullYear("12/25/2015"));
+
+
+function getTourPickCon(tourId, duration, link, imgUrl, tourName, place, currency, price) {
+    var x = [
+        '<div class="tour_pick" data-id="' + tourId + '" data-hr="' + duration + '" data-coshr="' + duration + '" data-link="' + link + '">',
+        '<div class="card" style="background-image: url(' + imgUrl + ');">',
+        '<div class="name">',
+        '<p>' + tourName + '</p>',
+        '</div>',
+        '<p class="place">' + place + '</p>',
+        '<p class="duration">' + duration + '<span>HRs</span></p>',
+        '<div class="footprint_blk"><span class="icon-tourdash footprint"></span></div>',
+        '<div class="price"><span class="country">' + currency + '</span> $<span class="number">' + price + '</span></div>',
+        '<a target="_blank" class="read_more_btn" href="' + link + '">Read More</a>',
+        '<div class="darken_bg"></div>',
+        '</div>',
+        '</div>',
+    ].join("");
+    return x;
+}
+
+// Wish篩選區域點擊
+function folderSelClick() {
+    var tarBtn = "#folderSel>.sort_sel_blk>.sel";
+    var tarLi = "#folderSel>.sort_sel_blk > .sel> .drop.left_drop>li";
+    $(tarBtn).click(function(event) {
+        $(this).children('.drop').addClass('active');
     });
-    $("#testBtn2").click(function(event) {
-        console.log(planIng);
+    $(window).click(function() {
+        if (!event.target.matches("#folderSel>.sort_sel_blk>.sel") && !event.target.matches("#folderSel>.sort_sel_blk>.sel>.sort_val")) {
+            $(tarBtn).children('.drop').removeClass('active');
+        }
     });
-});
+    $(tarLi).click(function(event) {
+        $(tarLi).removeClass('active');
+        $(this).addClass('active');
+        $("#folderPickVal").html($(this).html());
+
+        if ($("#folderPickVal").html()!="All") {
+            planEditWishRefresh($("#folderPickVal").html());
+        }else{
+            planEditWishRefresh();
+        }
+    });
+}
+
+function folderSelInit() {
+    var getFolderUrl = "/account/getFavoriteTripFolder";
+    $.getJSON(getFolderUrl, function(jsonResp) {
+        var foldersA = jsonResp.lstStrFavoriteTripFolder;
+        tarBlk = "#folderSel>.sort_sel_blk > .sel> .drop.left_drop";
+
+        for (var i = 0; i < foldersA.length; i++) {
+            if (foldersA[i] != "default_folder") {
+                var tarCon = '<li>' + foldersA[i] + '</li>';
+                $(tarBlk).append(tarCon);
+            }
+        }
+
+        folderSelClick();
+    });
+}
+
+// MORE 按鈕 點擊
+function folderMoreClick() {
+    $(".folder>.card>.text_blk>.more_btn").click(function(event) {
+        $(".folder_blk > .folders > .inner_blk > .folder > .menu").removeClass('active');
+        $(this).parent().parent().parent().children('.menu').addClass('active');
+    });
+    $(window).click(function() {
+        if (!event.target.matches(".folder>.card>.text_blk>.more_btn")) {
+            $(".folder>.menu").removeClass('active');
+        }
+    });
+}
+
+function planEditWishRefresh(folderPick) {
+
+    $("body").addClass('waiting_body');
+    $(".waiting_fullblk").show();
+    $(".tour_pick").replaceWith("");
+
+    // @TODO 刪除網址findfinetour
+    if (folderPick != undefined) {
+        var getWishUrl = "/trip/getFavoriteTrip?folder=" + folderPick;
+    } else {
+        var getWishUrl = "/trip/getFavoriteTrip";
+    }
+
+    $.getJSON(getWishUrl, function(jsonResp) {
+
+        var tripA = jsonResp.trip;
+        var currency = $("#moneySelect").find(":selected").val();
+        for (var i = 0; i < tripA.length; i++) {
+            var tripPutCon = getTourPickCon(tripA[i].intId, tripA[i].intDurationHour, tripA[i].strOriginUrl, tripA[i].strImageUrl, tripA[i].strTitle, tripA[i].strLocation, currency, tripA[i].intUserCurrencyCost);
+            $("#toursBlk>.tour_pick_blk").append(tripPutCon);
+        }
+
+        extendDrag();
+
+        $("body").removeClass('waiting_body');
+        $(".waiting_fullblk").hide();
+    });
+}
+
+
+//幣別
+function initCurrencySelect() {
+    //設定目前幣別
+    var strUserCurrencyUrl = "/trip/userCurrency";
+    $.getJSON(strUserCurrencyUrl, function(jsonResp) {
+        strUserCurrency = jsonResp["strUserCurrency"];
+        $("#moneySelect").val(strUserCurrency);
+        $("#moneySelect").selectpicker("refresh")
+        console.log("init user currency selection: " + strUserCurrency);
+    });
+    //切換目前幣別
+    $("#moneySelect").change(function() {
+        var strSelectedCurrencyVal = $("#moneySelect").find(":selected").val();
+        var strChangeUserCurrencyUrl = strUserCurrencyUrl + "?user_currency=" + strSelectedCurrencyVal;
+
+        $("body").addClass('waiting_body');
+        $(".waiting_fullblk").show();
+
+        $.getJSON(strChangeUserCurrencyUrl, function(jsonResp) {
+            strUserCurrency = jsonResp["strUserCurrency"];
+            console.log("switch user currency to: " + strUserCurrency);
+
+            var folderPickVal = $("#folderPickVal").html();
+            if (folderPickVal == "All") {
+                planEditWishRefresh();
+            } else if (folderPickVal != "All") {
+                planEditWishRefresh(folderPickVal);
+            }
+        });
+    });
+};

@@ -1,5 +1,6 @@
 //本網頁讀取完成後 執行
 $(document).ready(initFind);
+
 function initFind() {
     initCurrencySelect();
     var keyword = tour.QueryString().keyword;
@@ -21,23 +22,35 @@ function initFind() {
     });
 
     // @TODO 登入狀況判斷完成後修改此處
-    // $('#wishList').hide();
-    // $('#myFriends').hide();
-    // $('#myPlans').hide();
-    // $('#myMessages').hide();
-    // // $('#logOut').hide();
-    $('#loginBtn').hide();
+    $('#myFriends').hide();
+    $('#myMessages').hide();
+    $('#logOut').hide();
     $('#noLogHeadBtn').hide();
-
+    $("#headBtn").hide();
+    $(".login_btns").hide();
+    $(".logout_btns").hide();
     //strEmail 如已登入 不顯示login button 並顯示會員帳號
-    if (strEmail == "None") {} else {
-        // $('#loginBtn').html(strEmail);
+    if (strEmail == "None") {
+        // 暫時隱藏 為測試方便使用
+        $('#register').show();
+        $('#loginBtn').show();
+        $('#noLogHeadBtn').show();
+        $("#padRegister").show();
+        $("#padLoginBtn").show();
+        $(".logout_btns").show();
+    } else {
         $('#wishList').show();
-        // $('#myFriends').show();
         $('#myPlans').show();
-        // $('#myMessages').show();
-        // $('#logOut').show();
-        // $('#loginBtn').hide();
+        $('#logOut').show();
+        $('#register').hide();
+        $('#loginBtn').hide();
+        // $('#loginBtn').html(strEmail);
+        $('#myFriends').show();
+        $('#myMessages').show();
+        $("#headBtn").show();
+        $("#padWishlist").show();
+        $("#padMyPlan").show();
+        $(".login_btns").show();
     }
 
     //登入按鈕
@@ -155,7 +168,7 @@ function initFind() {
 
     // 頭像點擊
     headBtnClick();
-    
+
     // 通知止滑
     notiBlkPrevent();
 

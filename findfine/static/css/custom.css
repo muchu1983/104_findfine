@@ -1,4 +1,11 @@
-html { overflow-x:hidden; }
+html {
+    overflow-x: hidden;
+}
+
+html.show_all {
+    overflow-x: initial;
+}
+
 body {
     overflow-x: hidden;
     /*font-family: 'Raleway', "Helvetica Neue", Helvetica, Arial, sans-serif;*/
@@ -1746,7 +1753,7 @@ body {
 }
 
 .head_btn.nolog {
-    position: absolute;
+    position: relative;
     right: 0;
 }
 
@@ -3650,6 +3657,7 @@ input:-moz-placeholder {
     padding-left: 37px;
     height: 45px;
     line-height: 44px;
+    cursor: pointer;
 }
 
 .sort_sel_blk > .sel> .drop li i {
@@ -4448,6 +4456,7 @@ input:-moz-placeholder {
     height: 100%;
     top: 0;
     left: 0;
+    background-color: #d8d8d8;
 }
 
 .folder_blk > .folders > .inner_blk > .folder > .card>.pic_blk>.pic_2 {
@@ -4456,6 +4465,7 @@ input:-moz-placeholder {
     height: 126px;
     top: 0;
     right: 0;
+    background-color: #d8d8d8;
 }
 
 .folder_blk > .folders > .inner_blk > .folder > .card>.pic_blk>.pic_3 {
@@ -4464,6 +4474,7 @@ input:-moz-placeholder {
     height: 106px;
     top: 129px;
     right: 0;
+    background-color: #d8d8d8;
 }
 
 .folder_blk > .folders > .inner_blk > .folder > .card>.text_blk {
@@ -4748,12 +4759,23 @@ input:-moz-placeholder {
     top: 1px;
 }
 
-.wish>.menu {
+.wish>.more_blk {}
+
+.wish>.more_blk>.more_btn {
     position: absolute;
-    top: 330px;
-    left: 50%;
-    width: 224px;
-    margin-left: -112px;
+    top: 11px;
+    right: 12px;
+    padding: 12px 19px;
+    font-size: 20px;
+    color: #ffffff;
+    cursor: pointer;
+}
+
+.wish>.more_blk>.more_menu {
+    position: absolute;
+    top: 16px;
+    right: 16px;
+    width: 182px;
     border: solid 1px #2bb0b9;
     border-radius: 20px;
     background-color: #ffffff;
@@ -4761,6 +4783,61 @@ input:-moz-placeholder {
     overflow: hidden;
     z-index: 500;
     color: #2bb0b9;
+    -webkit-box-shadow: 0 0 6px 0 rgba(0, 0, 0, 0.4);
+    -moz-box-shadow: 0 0 6px 0 rgba(0, 0, 0, 0.4);
+    box-shadow: 0 0 6px 0 rgba(0, 0, 0, 0.4);
+    display: none;
+}
+
+.wish>.more_blk>.more_menu.active {
+    display: block;
+}
+
+.wish>.more_blk>.more_menu>li {
+    position: relative;
+    list-style: none;
+    height: 36px;
+    line-height: 36px;
+    font-weight: 400;
+    cursor: pointer;
+    letter-spacing: 1px;
+    background-color: #ffffff;
+    -webkit-transition: all 0.3s;
+    -moz-transition: all 0.3s;
+    transition: all 0.3s;
+}
+
+.wish>.more_blk>.more_menu>li:hover {
+    background-color: #f4f4f4;
+}
+
+.wish>.menu {
+    position: absolute;
+    top: 330px;
+    left: 50%;
+    width: 224px;
+    height: 120px;
+    margin-left: -112px;
+    border: solid 1px #2bb0b9;
+    border-radius: 20px;
+    background-color: #ffffff;
+    padding-left: 0;
+    overflow: hidden;
+    overflow-y: scroll;
+    z-index: 500;
+    color: #2bb0b9;
+    display: none;
+}
+
+.wish>.menu::-webkit-scrollbar-track {
+    display: none;
+}
+
+.wish>.menu::-webkit-scrollbar {
+    display: none;
+}
+
+.wish>.menu::-webkit-scrollbar-thumb {
     display: none;
 }
 
@@ -4810,6 +4887,10 @@ input:-moz-placeholder {
     background-color: #000000;
     opacity: 0.3;
     z-index: -1;
+}
+
+.darken_bg.darken {
+    opacity: 0.7;
 }
 
 .hometour {
@@ -5012,7 +5093,8 @@ input:-moz-placeholder {
 
 .plan > .card >.name {
     position: absolute;
-    width: 100%;
+    width: 80%;
+    left: 10%;
     top: 235px;
     font-family: Roboto;
     font-size: 20px;
@@ -5109,6 +5191,58 @@ input:-moz-placeholder {
     width: 30px;
     height: 30px;
     background-color: #dddddd;
+}
+
+.plan > .more_blk {}
+
+.plan > .more_blk>.more_btn {
+    position: absolute;
+    top: 233px;
+    right: 12px;
+    padding: 12px 19px;
+    font-size: 18px;
+    cursor: pointer;
+    color: rgba(0, 0, 0, 0.87);
+}
+
+.plan > .more_blk>.more_menu {
+    position: absolute;
+    top: 242px;
+    right: 16px;
+    width: 182px;
+    border: solid 1px #2bb0b9;
+    border-radius: 20px;
+    background-color: #ffffff;
+    padding-left: 0;
+    overflow: hidden;
+    z-index: 500;
+    color: #2bb0b9;
+    -webkit-box-shadow: 0 0 6px 0 rgba(0, 0, 0, 0.4);
+    -moz-box-shadow: 0 0 6px 0 rgba(0, 0, 0, 0.4);
+    box-shadow: 0 0 6px 0 rgba(0, 0, 0, 0.4);
+    display: none;
+}
+
+.plan > .more_blk>.more_menu.active {
+    display: block;
+}
+
+.plan > .more_blk>.more_menu>li {
+    position: relative;
+    list-style: none;
+    height: 36px;
+    line-height: 36px;
+    font-weight: 400;
+    cursor: pointer;
+    letter-spacing: 1px;
+    background-color: #ffffff;
+    -webkit-transition: all 0.3s;
+    -moz-transition: all 0.3s;
+    transition: all 0.3s;
+}
+
+.plan > .more_blk>.more_menu>li:hover {
+    background-color: #f4f4f4;
 }
 
 .plan_set_blk {
@@ -6150,6 +6284,12 @@ input:-moz-placeholder {
 
 .sort_fold_blk.sort_sel_blk>.sel {
     width: 178px;
+}
+
+.sort_fold_blk.sort_sel_blk>.sel>.sort_val {
+    width: 103px;
+    display: block;
+    overflow: hidden;
 }
 
 .edit_blk>.inner_blk>.tour_blk>.tours {
@@ -7972,7 +8112,7 @@ input:-moz-placeholder {
     cursor: pointer;
 }
 
-.pad_menu>.pad_menu_btn {
+.pad_menu>.login_btns>.pad_menu_btn {
     font-family: Roboto;
     font-size: 16px;
     font-weight: 400;
@@ -7986,7 +8126,7 @@ input:-moz-placeholder {
     cursor: pointer;
 }
 
-.pad_menu>.pad_menu_btn>.icon {
+.pad_menu>.login_btns>.pad_menu_btn>.icon {
     font-size: 52px;
     position: relative;
     top: 15px;
@@ -8064,7 +8204,7 @@ input:-moz-placeholder {
     background-color: #ffffff;
     font-family: Roboto;
     font-size: 18px;
-    font-weight: 500;
+    font-weight: 900;
     letter-spacing: 1.4px;
     text-align: center;
     color: #228e9c;
@@ -8084,7 +8224,7 @@ input:-moz-placeholder {
     height: 80px;
     font-family: Roboto;
     font-size: 18px;
-    font-weight: 500;
+    font-weight: 700;
     letter-spacing: 1.4px;
     text-align: center;
     color: #228e9c;
@@ -8100,9 +8240,15 @@ input:-moz-placeholder {
     font-weight: 500;
     line-height: 1.39;
     letter-spacing: 1.4px;
-    text-align: justify;
+    text-align: left;
     color: #228e9c;
-    margin-bottom: 20px;
+    margin-bottom: 40px;
+}
+
+.static_content_blk>.text>.inner_text_blk {
+    display: inline-block;
+    vertical-align: top;
+    width: 660px;
 }
 
 .static_content_blk>.text.contact {
@@ -8263,12 +8409,38 @@ input:-moz-placeholder {
     padding-left: 24px;
 }
 
+#ingFolderName {
+    display: none;
+}
+
+#folderSel>.sort_sel_blk > .sel> .drop.left_drop {
+    height: 150px;
+    overflow-y: scroll;
+    cursor: default;
+}
+
+#folderSel>.sort_sel_blk > .sel> .drop.left_drop::-webkit-scrollbar-track {
+    display: none;
+}
+
+#folderSel>.sort_sel_blk > .sel> .drop.left_drop.short::-webkit-scrollbar-track {
+    display: none;
+}
+
+#folderSel>.sort_sel_blk > .sel> .drop.left_drop::-webkit-scrollbar {
+    width: 9px;
+    display: none;
+}
+
+#folderSel>.sort_sel_blk > .sel> .drop.left_drop::-webkit-scrollbar-thumb {
+    display: none;
+}
 
 @media (max-width: 1050px) {
-    .pad_menu{
+    .pad_menu {
         display: block;
     }
-    .find_btn.pad{
+    .find_btn.pad {
         display: block;
     }
     .header_btn_blk {
@@ -8290,7 +8462,7 @@ input:-moz-placeholder {
     }
     #wishList,
     #myPlans {
-        display: none !important;
+        display: none;
     }
     .container {
         width: 100%;
@@ -8827,6 +8999,18 @@ input:-moz-placeholder {
         width: 620px;
         left: -17px;
     }
+    .header_blk_btn#register {
+        display: none !important;
+    }
+    .header_blk_btn#loginBtn {
+        display: none !important;
+    }
+    .header_blk_btn#register.show {
+        display: block !important;
+    }
+    .header_blk_btn#loginBtn.show {
+        display: block !important;
+    }
 }
 
 @media (max-width: 768px) {
@@ -8962,7 +9146,7 @@ input:-moz-placeholder {
     }
     #wishList,
     #myPlans {
-        display: block !important;
+        display: block;
     }
     .plane_print_blk {
         margin-left: 0;
@@ -9654,14 +9838,26 @@ input:-moz-placeholder {
     }
     .header_blk_btn#register {
         right: 0;
-        top: 194px;
+        top: 137px;
     }
     .header_blk_btn#loginBtn {
         right: 0;
-        top: 258px;
+        top: 195px;
     }
-    .pad_menu{
+    .header_blk_btn#register.top {
+        top: 10px;
+    }
+    .header_blk_btn#loginBtn.top {
+        top: 10px;
+    }
+    .pad_menu {
         display: none;
+    }
+    .header_blk_btn#register {
+        display: block !important;
+    }
+    .header_blk_btn#loginBtn {
+        display: block !important;
     }
 }
 
@@ -9693,4 +9889,19 @@ input:-moz-placeholder {
     background-color: red;
     z-index: 999999;
     cursor: pointer;
+}
+
+
+/*朋友功能隱藏*/
+
+#friendsSel {
+    display: none;
+}
+
+.plan > .card >.info_blk>.info.pals {
+    display: none;
+}
+
+.plan > .card >.info_blk>.friends_blk {
+    display: none;
 }

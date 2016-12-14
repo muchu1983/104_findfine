@@ -71,12 +71,12 @@
             <div id="headBtn" class="head_btn" style="background-image: url(/static/img/head_sample.jpg);">
                 <div class="head_menu" id="headMenu">
                     <img src="/static/img/blk_triangle.png" class="triangle">
-                    <div class="noti_blk">
+                    <!-- <div class="noti_blk">
                         <div class="noti">這是訊息一</div>
                         <div class="noti">這是訊息二</div>
                         <div class="noti">這是訊息三這是訊息三這是訊息三這是訊息三這是訊息三這是訊息三這是訊息三這是訊息三</div>
                         <div class="noti">這是訊息四</div>
-                    </div>
+                    </div> -->
                     <div id="logOut" class="logout_btn">log Out</div>
                 </div>
                 <div class="noti_ing"></div>
@@ -145,13 +145,15 @@
     </nav>
     <div class="pad_menu" id="padMenu">
         <div class="close_btn icon-cancel"></div>
-        <div class="pad_menu_btn" id="padWishlist">
-            <span class="icon icon-wishlist"></span>
-            <span>Wishlist</span>
-        </div>
-        <div class="pad_menu_btn" id="padMyPlan">
-            <span class="icon icon-myplan"></span>
-            <span>My Plan</span>
+        <div class="login_btns">
+            <div class="pad_menu_btn" id="padWishlist">
+                <span class="icon icon-wishlist"></span>
+                <span>Wishlist</span>
+            </div>
+            <div class="pad_menu_btn" id="padMyPlan">
+                <span class="icon icon-myplan"></span>
+                <span>My Plan</span>
+            </div>
         </div>
     </div>
     <div class="rename_blk lightbox">
@@ -231,15 +233,15 @@
                         </div>
                         <div class="name">Tokyo 5 days</div>
                         <div class="info_blk">
-                            <div class="info">
+                            <div class="info tour">
                                 <div class="title">Tour</div>
                                 <div class="content">34</div>
                             </div>
-                            <div class="info">
+                            <div class="info date">
                                 <div class="title">Date</div>
-                                <div class="content">2016.09.01-<span class="mobile_line">2016.09-05</span></div>
+                                <div class="content"><span class="time_from">2016.09.01<span>-<span class="time_to">2016.09-05</span></div>
                             </div>
-                            <div class="info">
+                            <div class="info pals">
                                 <div class="title">Pals</div>
                                 <div class="content friend">6</div>
                             </div>
@@ -251,6 +253,12 @@
                         </div>
                         <span class="bg icon-plan_bg"></span>
                         <span class="bg_2 icon-plan_bg_page"></span>
+                    </div>
+                    <div class="more_blk">
+                        <div class="more_btn icon-more_btn"></div>
+                        <ul class="more_menu">
+                            <li class="remove_btn">Remove Plan</li>
+                        </ul>
                     </div>
                 </div>
                 <div class="plan">
@@ -321,10 +329,10 @@
     <footer>
         <div class="container">
             <ul class="link_blk">
-                <li><a>About</a></li>
-                <li><a>Terms of Use</a></li>
-                <li><a>Our Partner</a></li>
-                <li><a>Contact Us</a></li>
+                <li><a href="/page/aboutUs">About Us</a></li>
+                <li><a href="/page/termsOfUse.html">Terms & Conditions</a></li>
+                <li><a>Cooperation</a></li>
+                <li><a href="/page/contactUs">Contact Us</a></li>
             </ul>
             <div class="copyright_blk">Copyright © 2016 FindFineTour All rights reserved.</div>
         </div>

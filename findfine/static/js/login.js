@@ -4,7 +4,7 @@
 
     function initLogin() {
 
-
+        $(".waiting_fullblk").hide();
         $('#register').show();
         $("#headBtn").hide();
         $("#registerBtn").click(function() {
@@ -31,6 +31,10 @@
         });
         initTopSearch();
         $("#loginBtn").click(function() {
+
+            $(".waiting_fullblk").show();            
+            $("body").addClass('waiting_body');
+
             //收集登入資料
             var strUserEmail = $("#user_email").val();
             var strUserPassword = $("#user_password").val();
@@ -41,10 +45,18 @@
             };
             //送出登入資料
             $.post("/account/login", dicLoginData, function(jsonResp) {
+
+
                 console.log(jsonResp)
                 $("div.loginStatusDiv").html(jsonResp["login_status"])
                 if (jsonResp["login_status"] == "login success.") {
-                    window.location = "/account/userinfo"
+                    window.location = "/"
+                }else{
+
+                    alert(jsonResp["login_status"]);
+                    
+                    $(".waiting_fullblk").hide();            
+                    $("body").removeClass('waiting_body');
                 }
             }, "json");
         });
