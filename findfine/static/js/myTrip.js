@@ -30,6 +30,8 @@
 
         planListRefresh();
 
+        addNewPlanClick();
+
         $("#wishList").click(function() {
             window.location = "/page/wishList";
         });
@@ -54,14 +56,14 @@
     };
 })(jQuery);
 
-function deletePlan(intId) {
-    alert("deletePlan");
-    var strRemoveTripPlanUrl = "/trip/removeTripPlan?intPlanId=" + intId;
-    $.getJSON(strRemoveTripPlanUrl, function(jsonResp) {});
-    $('#' + intId + '').remove();
-}
+// function deletePlan(intId) {
+//     alert("deletePlan");
+//     var strRemoveTripPlanUrl = "/trip/removeTripPlan?intPlanId=" + intId;
+//     $.getJSON(strRemoveTripPlanUrl, function(jsonResp) {});
+//     $('#' + intId + '').remove();
+// }
 
-function editPlan(intId) {
-    alert("editPlan");
-    window.location = "/page/tripEdit?intPlanId=" + intId;
-}
+// function editPlan(intId) {
+//     alert("editPlan");
+//     window.location = "/page/tripEdit?intPlanId=" + intId;
+// }

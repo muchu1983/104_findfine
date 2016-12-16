@@ -24,28 +24,23 @@
     </style>
     <script type="text/javascript">
     jQuery(document).ready(function($) {
-        var nearGetUrl = "https://maps.googleapis.com/maps/api/place/nearbysearch/json?language=en&location=25.0329636,121.5654268&radius=500&types=food&key=AIzaSyBNW1g69sGY8q_45F0Ob1lMbZn3fWyiL1o";
-        // $.getJSON(nearGetUrl, function(jsonResp) {
+        // var tarUrl = "http://localhost:8000/trip/getTripPlanItem?intPlanId=13";
+        // $.getJSON(tarUrl, function(jsonResp) {
+
         //     console.log(jsonResp);
         // });
-        $.ajax({
-            url: nearGetUrl,
-            type: 'GET',
-            dataType: 'jsonp',
-            cache: false,
-        })
-        .done(function(jsonResp) {
-            console.log(jsonResp);
-        })
-        .fail(function() {
-            console.log("error");
-        })
-        .always(function() {
-            console.log("complete");
-        });
-        
+        var x = parseInt("07");
+        console.log(x);
 
     });
+
+    function oriDateToDashed(tarDate) {
+        var year = tarDate.getFullYear();
+        var month = tarDate.getMonth() + 1;
+        var day = tarDate.getDate();
+        var dasdDate = year + "-" + month + "-" + day + "-00-00";
+        return dasdDate;
+    }
     </script>
 </head>
 

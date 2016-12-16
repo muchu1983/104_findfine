@@ -143,6 +143,17 @@
         </div>
         <!-- /.container-fluid -->
     </nav>
+    <div class="add_plan_blk lightbox">
+        <div class="content_blk">
+            <div class="title">Create A New Plan</div>
+            <input type="text" placeholder="Plan’s Name">
+            <div class="ripple_blk confirm_btn">
+                <button type="button" class="ripple">Create</button>
+            </div>
+            <div class="close_btn icon-cancel"></div>
+        </div>
+        <div class="blur_bg"></div>
+    </div>
     <div class="pad_menu" id="padMenu">
         <div class="close_btn icon-cancel"></div>
         <div class="login_btns">
@@ -208,6 +219,13 @@
         </div>
         <div class="mainblk_bg_cover"></div>
     </div>
+    <div class="waiting_fullblk">
+        <div class="waiting">
+            <div class="logo icon-logo"></div>
+            <div class="text">Loading...</div>
+            <div class="shadow"></div>
+        </div>
+    </div>
     <div class="plan_folder_blk">
         <div class="blk_title">MY PLAN</div>
         <div class="sub_text_line">
@@ -218,8 +236,8 @@
             </div>
         </div>
         <div class="plans">
-            <div class="inner_blk">
-                <div class="newplan">
+            <div class="inner_blk" id="planBlk">
+                <div class="newplan" id="addNewPlan">
                     <div class="card">
                         <span class="icon-plus"></span>
                         <p class="text">Create A New Plan</p>

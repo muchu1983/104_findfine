@@ -50,6 +50,7 @@ textarea {
 
 .waiting_fullblk {
     position: fixed;
+    top: 0;
     width: 100%;
     height: 100%;
     background-color: #ffffff;
@@ -5089,6 +5090,10 @@ input:-moz-placeholder {
     border-top-left-radius: 20px;
     border-top-right-radius: 20px;
     background-color: rgba(0, 0, 0, 0.4);
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    background-size: cover;
+    -o-background-size: cover;
 }
 
 .plan > .card >.name {
@@ -9014,6 +9019,14 @@ input:-moz-placeholder {
 }
 
 @media (max-width: 768px) {
+    .plan > .more_blk>.more_btn {
+        top: 138px;
+        right: 7px;
+        font-size: 14px;
+    }
+    .plan > .more_blk>.more_menu {
+        top: 141px;
+    }
     #page-top .navbar-custom {
         height: 45px;
     }

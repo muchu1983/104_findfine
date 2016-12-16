@@ -665,6 +665,40 @@ function addToFolderClick() {
     });
 }
 
+// 新增PLAN點選
+function addNewPlanClick() {
+    $("#addNewPlan").click(function(event) {
+        $(".add_plan_blk").show();
+    });
+    $(".add_plan_blk>.blur_bg").click(function(event) {
+        $(".add_plan_blk").hide();
+    });
+    $(".add_plan_blk>.content_blk>.close_btn").click(function(event) {
+        $(".add_plan_blk").hide();
+    });
+    $(".add_plan_blk>.content_blk>.confirm_btn").click(function(event) {
+        var tar = $(".add_plan_blk>.content_blk>input");
+        if (tar.val() != "" && tar.val() != null) {
+
+            $(".add_plan_blk").hide();
+
+            $("body").addClass('waiting_body');
+            $(".waiting_fullblk").show();
+
+            var planDate = new Date();
+            planDate = oriDateToDashed(planDate);
+            var imgUrl = "/static/img/empty_plan.png";
+            var addNewPlanUrl = "/trip/addTripPlan?strPlanName=" + tar.val() + "&strImageUrl=" + imgUrl + "&strDatetimeFrom=" + planDate + "&strDatetimeTo=" + planDate;
+            $.getJSON(addNewPlanUrl, function(jsonResp) {
+
+                planListRefresh();
+
+                tar.val("");
+            });
+        }
+    });
+}
+
 // 新增分類點選
 function addNewFolderClick() {
     $("#addNewFolder").click(function(event) {
@@ -1230,6 +1264,21 @@ function scrollPrevent(tarBlk) {
     });
 }
 
+// 初始DATE轉換
+function oriDateToDashed(tarDate) {
+    var year = tarDate.getFullYear();
+    var month = tarDate.getMonth() + 1;
+    var day = tarDate.getDate();
+    var dasdDate = year + "-" + month + "-" + day + "-00-00";
+    return dasdDate;
+}
+
+// DATE轉換
+function parseDateX(str) {
+    var mdy = str.split('/');
+    return new Date(mdy[2], mdy[0] - 1, mdy[1]);
+}
+
 // DATE轉換
 function parseDate(str) {
     var mdy = str.split('/');
@@ -1252,6 +1301,25 @@ function dateToFullYear(date) {
     var dateArray = date.split('/');
     var dateFullYear = [parseInt(dateArray[2]), parseInt(dateArray[0]), parseInt(dateArray[1])].join('.');
     return dateFullYear;
+}
+
+// DATE 轉換為.格式
+function dateToDot(date) {
+    var dotA = date.split("-");
+    var dot = dotA[0] + "." + dotA[1] + "." + dotA[2];
+    return dot;
+}
+
+function dateDashToSlash(date) {
+    var slashArr = date.split("-");
+    var slash = slashArr[1] + "/" + slashArr[2] + "/" + slashArr[0];
+    return slash;
+}
+
+function dateSlashToDash(date) {
+    var dashArr = date.split("/");
+    var dash = dashArr[2] + "-" + dashArr[0] + "-" + dashArr[1]+"-00-00";
+    return dash;
 }
 
 // 得到下一天的DATE格式
@@ -1395,18 +1463,150 @@ function getPlanCon(planId, imgUrl, planName, tourQum, timeFrom, timeTo) {
     return x;
 }
 
-
-
-function planListRefresh(){
+function planListRefresh() {
+    console.log("planListRefresh");
 
     $(".plan").replaceWith("");
+    $(".waiting_fullblk").show();
+    $("body").addClass('waiting_body');
 
     var getPlanListUrl = "/trip/getTripPlan"
     $.getJSON(getPlanListUrl, function(jsonResp) {
         // console.log(jsonResp.plan);
         var planA = jsonResp.plan;
+        if (planA.length == 0) {
+            $(".waiting_fullblk").hide();
+            $("body").removeClass('waiting_body');
+        }
         for (var i = 0; i < planA.length; i++) {
-            var tarPlanCon = getPlanCon(planA[i].intId, imgUrl, planName, tourQum, timeFrom, timeTo);
+            var tarPlan = planA[i];
+            if (i == planA.length - 1) {
+                putPlanCon(tarPlan, 1);
+            } else {
+
+                putPlanCon(tarPlan);
+            }
         }
     });
+}
+
+function putPlanCon(tarPlan, stop) {
+    var tourQum = 0;
+    var getPlanItemUrl = "/trip/getTripPlanItem?intPlanId=" + tarPlan.intId;
+    $.getJSON(getPlanItemUrl, function(jsonResp) {
+
+        var tourQum = jsonResp.plan_item.length;
+        var dateFrom = dateToDot(tarPlan.strDatetimeFrom);
+        var dateTo = dateToDot(tarPlan.strDatetimeTo);
+        var tarPlanCon = getPlanCon(tarPlan.intId, tarPlan.strImageUrl, tarPlan.strName, tourQum, dateFrom, dateTo);
+        $("#planBlk").append(tarPlanCon);
+        if (stop == 1) {
+            $(".waiting_fullblk").hide();
+            $("body").removeClass('waiting_body');
+            planMoreClick();
+            removePlanClick();
+            planClick();
+        }
+    });
+}
+
+// 移除FOLDER點選
+function removePlanClick() {
+    $(".remove_btn").off();
+    $(".remove_btn").click(function(event) {
+
+        $("body").addClass('waiting_body');
+        $(".waiting_fullblk").show();
+
+        var folderName = $(this).parent().parent().children('.card').children('.text_blk').children('.folder_name').html();
+
+        var planId = $(this).parent().parent().parent().attr('data-id');
+
+        var removePlanUrl = "/trip/removeTripPlan?intPlanId=" + planId;
+        $.getJSON(removePlanUrl, function(jsonResp) {
+            console.log("plan remove success");
+            planListRefresh();
+        });
+    });
+}
+
+// MORE 按鈕 點擊
+function planMoreClick() {
+    $(".plan > .more_blk>.more_btn").off();
+    $(".plan > .more_blk>.more_btn").click(function(event) {
+        $(".plan > .more_blk>.more_menu").removeClass('active');
+        $(this).parent().children('.more_menu').addClass('active');
+    });
+    $(window).click(function() {
+        if (!event.target.matches(".plan > .more_blk>.more_btn")) {
+            $(".plan > .more_blk>.more_menu").removeClass('active');
+        }
+    });
+}
+
+// 分類資料夾點擊
+function planClick() {
+    $(".plan").off();
+    $(".plan").click(function(event) {
+        if (!event.target.matches(".plan>.more_blk>.more_btn")) {
+            var tarPlanId = $(this).attr('data-id');
+            window.location = "/page/tripEdit?ingPlanId=" + tarPlanId;
+        }
+    });
+
+}
+
+// 取得進行中plan ID
+function getIngPlanIdFromUrl() {
+    var x = window.location.href.split("?");
+    var paraGet = x[1].split("=");
+    if (paraGet[0] == "ingPlanId") {
+        var ingId = paraGet[1];
+        return ingId;
+    }
+}
+
+// DATE 轉換
+function dateMomentToDash(moment, planIng) {
+    var dayStartSlash = dateToFullYear(planIng.startDay);
+    var dayMove = planIng.ingDay;
+    var tarDayDot = getNextFullYear(dayStartSlash, dayMove);
+    var tarDayDash = dateDotToDash(tarDayDot);
+    var tarDatArr = tarDayDash.split("/");
+    var tarMoment = "";
+    if (moment % 1 == 0) {
+        if (moment >= 10) {
+            tarMoment = moment + "-" + "00";
+        } else {
+            tarMoment = "0" + moment + "-" + "00";
+        }
+    } else {
+        if (moment >= 10) {
+            tarMoment = Math.floor(moment) + "-" + "30";
+        } else {
+            tarMoment = "0" + Math.floor(moment) + "-" + "30";
+        }
+
+    }
+    tarDateDash = tarDatArr[0]+"-"+tarDatArr[1]+"-"+tarDatArr[2]+"-"+tarMoment;
+    return tarDateDash;
+}
+
+function dateDotToDash(date){
+    var dateArr = date.split(".");
+    var tarDate = dateArr[0]+"/"+dateArr[1]+"/"+dateArr[2];
+    return tarDate;
+}
+
+function dateDashToMoment(dateDash){
+    var dateArr = dateDash.split("-");
+    var momentA = parseInt(dateArr[3]);
+
+    if (dateArr[4] == "30") {
+        var momentB = ".5";
+    }else if (dateArr[4] == "00"){
+        var momentB = "";
+    }
+    var moment = parseFloat(momentA + momentB);
+    return moment;
 }
