@@ -25,6 +25,9 @@
             planIng.planId = tarPlan.intId;
             planIng.startDay = dateDashToSlash(tarPlan.strDatetimeFrom);
             planIng.endDay = dateDashToSlash(tarPlan.strDatetimeTo);
+            var backImgUrl = planArr.strImageUrl;
+            $(".plan_set_blk>.inner_blk>.checklist_blk>.map").css('background-image', backImgUrl);
+            $(".plan_set_blk").css('background-image', backImgUrl);
             var daysBetween = daydiff(parseDate(planIng.startDay), parseDate(planIng.endDay));
             for (var i = 0; i < daysBetween + 1; i++) {
                 planIng.days[i] = [];
