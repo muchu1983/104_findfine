@@ -143,7 +143,12 @@ function getTripDataHtml(strUserCurrency, strTitle, intUserCurrencyCost, strIntr
         "<p>" + strTitle + "...</p>",
         "</div>",
         "<p class=\"place\">" + strLocation + "</p>",
-        "<p class=\"duration\">" + intDurationHour + "<span>HRs</span></p>",
+        if(intDurationHour=="1"){
+            "<p class=\"duration\">" + intDurationHour + "<span>HR</span></p>",
+        }else{
+            "<p class=\"duration\">" + intDurationHour + "<span>HRs</span></p>",
+        }
+        
         "<div class=\"price\">",
         "<span class=\"country\">" + strUserCurrency + "</span> $",
         "<span class=\"number\">" + intUserCurrencyCost + "</span>",
