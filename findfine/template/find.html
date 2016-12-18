@@ -58,7 +58,6 @@ Language、Availability、Attractions的功能完整化
     <script type="text/javascript">
     var strKeywordFromHome = "{{keyword}}";
     var strEmail = "{{strEmail}}";
-    //alert(strEmail);
     </script>
     <!-- 低瀏覽器版本相容條件註解 -->
     <!--[if lt IE 9]>
@@ -122,12 +121,15 @@ Language、Availability、Attractions的功能完整化
                     <span class="icon-magnifier"></span>
                     <input type="text" name="" placeholder="Where are you going?" id="topSearch" class="blue_bg">
                 </div>
+
             </div>
             <div id="headBtn" class="head_btn" style="background-image: url(/static/img/head_sample.jpg);">
                 <div class="head_menu" id="headMenu">
                     <img src="/static/img/blk_triangle.png" class="triangle">
                     <div id="logOut" class="logout_btn">log Out</div>
                 </div>
+                <span>&nbsp;</span>
+                <span id="strEmail" style="font-style:oblique;color:orange"></span>
                 <div class="noti_ing"></div>
             </div>
             <div class="header_btn_blk adjust" id="bs-example-navbar-collapse-1">
@@ -603,3 +605,6 @@ Language、Availability、Attractions的功能完整化
 </body>
 
 </html>
+<script type="text/javascript">
+    $('#strEmail').html("Hi ! "+strEmail);
+</script>

@@ -55,7 +55,6 @@
     <![endif]-->
     <script type="text/javascript">
     var strEmail = "{{strEmail}}";
-    //alert(strEmail);
     </script>
     <!-- ripple-button -->
     <link rel="stylesheet" href="/static/vendor/ripple/css/style.css">
@@ -85,6 +84,9 @@
                     <img src="/static/img/blk_triangle.png" class="triangle">
                     <div id="logOut" class="logout_btn">log Out</div>
                 </div>
+                <span>&nbsp;</span>
+                <span id="strEmail" style="font-style:oblique;color:orange"></span>
+
                 <div class="noti_ing"></div>
             </div>
 
@@ -398,4 +400,7 @@
 </body>
 </html>
 
-
+    
+<script type="text/javascript">
+    $('#strEmail').html("Hi ! "+strEmail);
+</script>

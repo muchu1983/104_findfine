@@ -64,24 +64,29 @@
     <link rel="stylesheet" href="/static/icon-font/style.css">
     <!-- google font Roboto -->
     <link href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700,900" rel="stylesheet">
+    <script type="text/javascript">
+    var strEmail = "{{strEmail}}";
+    </script>
 </head>
 
 <body id="page-top" class="waiting_body">
     <nav id="mainNav" class="navbar navbar-default navbar-custom navbar-fixed-top">
         <div class="toolbox_blk">
+            <div style="height: 50%"></div>
+            <ul class="link_blk">
+                <li style="list-style-type:none;float:left;"><a target="_blank" href="https://www.skyscanner.com.tw/"                                                          title="Skyscanner"    ><img style="width: 25%;height: 30%" src="/static/img/skyscanner.png"     alt="Skyscanner" border="0"></a></li>
+                <li style="list-style-type:none;float:left;"><a target="_blank" href="https://www.hotelscombined.com/"                                                         title="hotelsCombined"><img style="width: 25%;height: 30%" src="/static/img/hotelsCombined.png" alt="hotelsCombined" border="0"></a></li>
+                <li style="list-style-type:none;float:left;"><a target="_blank" href="https://www.agoda.com/partners/partnersearch.aspx?cid=1765710&pcs=1&hl=en&sort=star5To1" title="Agoda"         ><img style="width: 100%;height: 10%" src="/static/img/Agoda.png"          alt="Agoda" border="0"></a></li>
+            </ul>
         </div>
         <div class="container">
             <div id="headBtn" class="head_btn" style="background-image: url(/static/img/head_sample.jpg);">
                 <div class="head_menu" id="headMenu">
                     <img src="/static/img/blk_triangle.png" class="triangle">
-                    <!-- <div class="noti_blk">
-                        <div class="noti">這是訊息一</div>
-                        <div class="noti">這是訊息二</div>
-                        <div class="noti">這是訊息三這是訊息三這是訊息三這是訊息三這是訊息三這是訊息三這是訊息三這是訊息三</div>
-                        <div class="noti">這是訊息四</div>
-                    </div> -->
                     <div id="logOut" class="logout_btn">log Out</div>
                 </div>
+                <span>&nbsp;</span>
+                <span id="strEmail" style="font-style:oblique;color:orange"></span>
                 <div class="noti_ing"></div>
             </div>
             <!-- Brand and toggle get grouped for better mobile display -->
@@ -398,3 +403,6 @@
 </body>
 
 </html>
+<script type="text/javascript">
+    $('#strEmail').html("Hi ! "+strEmail);
+</script>

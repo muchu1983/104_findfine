@@ -2,10 +2,8 @@
 
 function initMap() {
 
-    alert("strEmail:"+strEmail);
-    
-    tour.sendData = {};
 
+    tour.sendData = {};
     // 首頁搜尋區塊自動完成
     var input = (document.getElementById('autocomplete'));
     var autocomplete = new google.maps.places.Autocomplete(input);

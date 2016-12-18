@@ -2,7 +2,6 @@
 $(document).ready(initFind);
 
 function initFind() {
-    alert("strEmail:"+strEmail);
     initCurrencySelect();
     var keyword = tour.QueryString().keyword;
     //js取值

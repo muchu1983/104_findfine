@@ -42,8 +42,8 @@ function initWishList() {
         window.location = "/page/wishList";
     });
 
-    $("#myPlans").click(function() {
-        window.location = "/page/myTrip";
+    $("#myPlans").click(function(event) {
+        window.location = "/page/myPlan";
     });
 
     $('#logoTop').click(function(event) {
