@@ -2,6 +2,8 @@
 
 function initMap() {
 
+    alert("strEmail:"+strEmail);
+    
     tour.sendData = {};
 
     // 首頁搜尋區塊自動完成
@@ -43,7 +45,6 @@ function initMap() {
         $('#logOut').show();
         $('#register').hide();
         $('#loginBtn').hide();
-        // $('#loginBtn').html(strEmail);
         $('#myFriends').show();
         $('#myMessages').show();
         $("#headBtn").show();
@@ -58,6 +59,7 @@ function initMap() {
     $(document).ready(initHome);
 
     function initHome() {
+        
 
         // 抓取推薦行程
         homeRecommedTourGet();

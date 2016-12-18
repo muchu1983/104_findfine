@@ -2,6 +2,7 @@
 $(document).ready(initFind);
 
 function initFind() {
+    alert("strEmail:"+strEmail);
     initCurrencySelect();
     var keyword = tour.QueryString().keyword;
     //js取值
@@ -44,7 +45,6 @@ function initFind() {
         $('#logOut').show();
         $('#register').hide();
         $('#loginBtn').hide();
-        // $('#loginBtn').html(strEmail);
         $('#myFriends').show();
         $('#myMessages').show();
         $("#headBtn").show();
