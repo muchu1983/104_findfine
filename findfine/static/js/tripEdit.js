@@ -88,8 +88,60 @@
         // 個人設定點選 @TODO 點擊後要將資料傳到後端 @Q@ davidturtle 
         personelSetClick("#personelSet", ".setting_menu", "#editName", "#userName", ".rename_blk");
 
+        // 幣值設定
+        initCurrencySelect();
+        
         // 時間區域設定 @Q@ davidturtle
         timeBlkSet();
+        
+
+        // 頁面刷新
+        wishPageRenew();
+
+        // pad menu按鈕點擊
+        padMenuAct();
+
+        // mobile menu按鈕點擊
+        mobileMenuClick();
+
+        // toolbox點擊
+        toolboxClick()
+
+        // 頭像點擊
+        headBtnClick();
+
+        // 通知止滑
+        notiBlkPrevent();
+
+        // 新增分類點選
+        addNewFolderClick();
+
+        // 選單搜尋 初始化
+        initTopSearch();
+
+        // 登出動作
+        logoutToHome("#logOut");
+
+
+        $("#wishList").click(function() {
+            window.location = "/page/wishList";
+        });
+
+        $("#myPlans").click(function(event) {
+            window.location = "/page/myPlan";
+        });
+
+        $('#logoTop').click(function(event) {
+            window.location = "/";
+        });
+
+        $('#plansSel').click(function(event) {
+            window.location = "/page/myPlan";
+        });
+
+        $('#friendsSel').click(function(event) {
+            window.location = "/page/myFriends";
+        });
 
         folderSelInit();
 
