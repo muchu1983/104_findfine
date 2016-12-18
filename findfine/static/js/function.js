@@ -136,6 +136,16 @@ function getTripDataHtml(strUserCurrency, strTitle, intUserCurrencyCost, strIntr
     if (isFavoriteTrip.toString() == "false") {
         favoriteTrip = "";
     }
+    
+    
+    var strIntDurationHour;
+    if(intDurationHour.toString().trim() == "1") {
+        strIntDurationHour = "<p class=\"duration\">" + intDurationHour + "<span>HR</span></p>";
+    }else{
+        strIntDurationHour = "<p class=\"duration\">" + intDurationHour + "<span>HRs</span></p>";
+    }
+    
+    
     var strTripDataHtml = [
         "<div class=\"tour\">",
         "<div class=\"card active\" style=\"background-image:url(" + strImageUrl + ");\">",
@@ -143,7 +153,7 @@ function getTripDataHtml(strUserCurrency, strTitle, intUserCurrencyCost, strIntr
         "<p>" + strTitle + "...</p>",
         "</div>",
         "<p class=\"place\">" + strLocation + "</p>",
-        "<p class=\"duration\">" + intDurationHour + "<span>HRs</span></p>",
+        strIntDurationHour,
         "<div class=\"price\">",
         "<span class=\"country\">" + strUserCurrency + "</span> $",
         "<span class=\"number\">" + intUserCurrencyCost + "</span>",

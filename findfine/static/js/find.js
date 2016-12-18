@@ -431,7 +431,7 @@ function search(condition) {
             if (duration[i] == "3hrs") {
                 strFilterQueryUrl = strFilterQueryUrl + "&min_duration=2&max_duration=3";
             }
-            if (duration[i] == "4~6hr") {
+            if (duration[i] == "4~6hrs") {
                 strFilterQueryUrl = strFilterQueryUrl + "&min_duration=3&max_duration=6";
             }
             if (duration[i] == "1Day") {
