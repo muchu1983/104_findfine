@@ -89,16 +89,24 @@ def showWishListPage(request):
     dicRenderData = {}
     #從 session 取得已登入的 使用者 email
     strUserEmail = request.session.get("logined_user_email", None)
-    dicRenderData.setdefault("strEmail", strUserEmail)
-    return render(request, "wishList.html", dicRenderData)
+    if strUserEmail:
+        dicRenderData.setdefault("strEmail", strUserEmail)
+        return render(request, "wishList.html", dicRenderData)
+    else:
+        #尚未登入 導回登入頁
+        return redirect("/account/login")
     
 def showMyTourPage(request):
     #tour means collection of trips , tour 代表許多 trip 的集合
     dicRenderData = {}
     #從 session 取得已登入的 使用者 email
     strUserEmail = request.session.get("logined_user_email", None)
-    dicRenderData.setdefault("strEmail", strUserEmail)
-    return render(request, "myTrip.html", dicRenderData)
+    if strUserEmail:
+        dicRenderData.setdefault("strEmail", strUserEmail)
+        return render(request, "myTrip.html", dicRenderData)
+    else:
+        #尚未登入 導回登入頁
+        return redirect("/account/login")
     
 def showTourEditPage(request):
     #tour means collection of trips , tour 代表許多 trip 的集合
