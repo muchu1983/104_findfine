@@ -326,12 +326,12 @@ def addCustomizedTripPlan(request=None):
     if strUserEmail:
         currentTimezone = timezone.get_current_timezone()
         #plan 名稱
-        strPlanName = request.GET.get("strPlanName", "My New Plan")
+        strPlanName = request.POST.get("strPlanName", "My New Plan")
         #封面 url
-        strImageUrl = request.GET.get("strImageUrl", "")
+        strImageUrl = request.POST.get("strImageUrl", "")
         #設定 開始時間 與 結束時間
-        strDatetimeFrom = request.GET.get("strDatetimeFrom", None)
-        strDatetimeTo = request.GET.get("strDatetimeTo", None)
+        strDatetimeFrom = request.POST.get("strDatetimeFrom", None)
+        strDatetimeTo = request.POST.get("strDatetimeTo", None)
         dtDatetimeFrom = None
         dtDatetimeTo = None
         if strDatetimeFrom:
