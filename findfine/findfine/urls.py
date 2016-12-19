@@ -71,6 +71,7 @@ urlpatterns = [
     url(r'^page/myPlan$', page_views.showMyTourPage),
     url(r'^page/tripEdit$', page_views.showTourEditPage),
     url(r'^page/tripShare$', page_views.showTourSharePage),
+    url(r'^page/cooperation$', page_views.showCooperationPage),
     #dashboard app
     url(r'^dashboard/config$', dashboard_views.configSetting),
     url(r'^dashboard/recordVisitorAction$', dashboard_views.recordVisitorAction),

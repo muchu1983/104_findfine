@@ -112,3 +112,6 @@ def showTourSharePage(request):
     #tour means collection of trips , tour 代表許多 trip 的集合
     return render(request, "tripShare.html", {})
     
+def showCooperationPage(request):
+    #tour means collection of trips , tour 代表許多 trip 的集合
+    return render(request, "cooperation.html", {})
