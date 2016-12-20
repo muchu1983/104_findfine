@@ -365,7 +365,6 @@ function search(condition) {
     $(".page_link_blk").hide();
     //主搜尋
     //地點
-    var keywordVal = $("#keyword").val();
     var place = $("#placeID").val();
     //預算下限
     var budgetDown = $("#budgetDownID").val();
@@ -398,10 +397,23 @@ function search(condition) {
     var attrations = $("#attrations").val();
 
     var strFilterQueryUrl = "/trip/filter?1=1";
+    
+    //attrations
+    if(attrations != "" && place != ""){
+        strFilterQueryUrl = strFilterQueryUrl + "&keyword=" + attrations+","+place;
+    };
+    
     //place
-    if (place != "") {
+    if (place != "" && attrations == "") {
         strFilterQueryUrl = strFilterQueryUrl + "&keyword=" + place;
     };
+    
+    //attrations
+    if (place == "" && attrations != "") {
+        strFilterQueryUrl = strFilterQueryUrl + "&keyword=" + attrations;
+    };
+    
+    
     //budgetDown
     if (budgetDown != "") {
         strFilterQueryUrl = strFilterQueryUrl + "&min_budget=" + budgetDown;
@@ -499,13 +511,7 @@ function search(condition) {
             }
         }
     };
-    //attrations
-    // if (attrations != "") {
-    //     strFilterQueryUrl = strFilterQueryUrl + "&keyword=" + attrations;
-    // };
-    // if(keywordVal != "" && keywordVal != "undefined"){
-    //     strFilterQueryUrl = strFilterQueryUrl + "&keyword=" + keywordVal;
-    // }
+
 
     //排序條件 RE@Q@ davidturtle
     if (condition != "" && condition[0] != "" && condition[1] != "" && condition[0] != "undefined" && condition[1] != "undefined") {
