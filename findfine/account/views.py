@@ -194,11 +194,21 @@ def sendEmailVerification(request):
             }
         )
         strMsg = (
-            "<a href=\"http://www.findfinetour.com:80/account/verifyEmail?"
-                "strEmail=%s&"
-                "strUUID=%s\">"
-                    "click me"
-            "</a>"%(strUserEmail, strUUID)
+            "<div><img src=\"http://www.findfinetour.com/static/img/logo.png\" width=\"80\"/></div>"
+            "<h2>Dear %s,</h2>"
+            "<div>"
+                "<p>Welcome to FindFineTour, the biggest meta search website for local tour in the world.</p>"
+                "<p>Please click this "
+                    "<a href=\"http://www.findfinetour.com/account/verifyEmail?strEmail=%s&strUUID=%s\">"
+                        "link"
+                    "</a>"
+                " to confirm your registration.</p>"
+                "<p>Start to find more interesting local tours on FindFineTour!</p>"
+                "<p>Let's go for a new trip with your friends/family!</p>"
+                "<p><a href=\"http://www.findfinetour.com\">http://www.findfinetour.com</a></p>"
+                "<p>Your Travel Secretary,</p>"
+                "<p>FindFineTour</p>"
+            "</div>"%(strUserEmail, strUserEmail, strUUID)
         )
         #寄出 email
         emailUtil = EmailUtility()
