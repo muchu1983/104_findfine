@@ -431,13 +431,13 @@ function search(condition) {
                 strFilterQueryUrl = strFilterQueryUrl + "&min_duration=2&max_duration=3";
             }
             if (duration[i] == "4~6hrs") {
-                strFilterQueryUrl = strFilterQueryUrl + "&min_duration=3&max_duration=6";
+                strFilterQueryUrl = strFilterQueryUrl + "&min_duration=4&max_duration=6";
             }
             if (duration[i] == "1Day") {
-                strFilterQueryUrl = strFilterQueryUrl + "&min_duration=12&max_duration=24";
+                strFilterQueryUrl = strFilterQueryUrl + "&min_duration=7&max_duration=24";
             }
             if (duration[i] == "More than 1 Day") {
-                strFilterQueryUrl = strFilterQueryUrl + "&min_duration=24&max_duration=1000";
+                strFilterQueryUrl = strFilterQueryUrl + "&min_duration=25&max_duration=1000";
             }
         }
     };
