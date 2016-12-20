@@ -276,9 +276,9 @@ function initMap(sendLat, sendLng) {
 
     var map = new google.maps.Map(document.getElementById('map'), {
         center: locaVal,
-        zoom: 13,
+        zoom: 16,
         // 滑鼠滾輪滾動不影響地圖縮放
-        scrollwheel: false,
+        //scrollwheel: false,
         navigationControl: false,
         mapTypeControl: false,
         scaleControl: false,
@@ -301,7 +301,8 @@ function initMap(sendLat, sendLng) {
         radius: '500',
         // 搜尋類型，可多種
         // 類型列表連結 https://developers.google.com/places/supported_types?hl=zh-tw
-        types: ['food']
+        // amusement_park/art_gallery/church/department_store/hospital/museum/zoo
+        types: ['amusement_park','art_gallery','church','department_store','hospital','museum','zoo']
     };
 
     service = new google.maps.places.PlacesService(map);
