@@ -29,6 +29,7 @@ function initFind() {
     $("#headBtn").hide();
     $(".login_btns").hide();
     $(".logout_btns").hide();
+    $("#addToFolderBlk").hide();
     //strEmail 如已登入 不顯示login button 並顯示會員帳號
     if (strEmail == "None") {
         // 暫時隱藏 為測試方便使用
@@ -50,6 +51,7 @@ function initFind() {
         $("#padWishlist").show();
         $("#padMyPlan").show();
         $(".login_btns").show();
+        $("#addToFolderBlk").show();
     }
 
     //登入按鈕
@@ -178,6 +180,9 @@ function initFind() {
     // 頁碼輸入功能
     pageNumberType("current_page");
 
+    // 資料夾選擇初始化
+    addWishFolderInit("#addToFolderBlk");
+
     //頁面按鈕點擊效果 RE@Q@ davidturtle
 
     // 前一頁
@@ -302,7 +307,7 @@ function initMap(sendLat, sendLng) {
         // 搜尋類型，可多種
         // 類型列表連結 https://developers.google.com/places/supported_types?hl=zh-tw
         // amusement_park/art_gallery/church/department_store/hospital/museum/zoo
-        types: ['amusement_park','art_gallery','church','department_store','museum','zoo']
+        types: ['amusement_park', 'art_gallery', 'church', 'department_store', 'museum', 'zoo']
     };
 
     service = new google.maps.places.PlacesService(map);
@@ -397,10 +402,10 @@ function search(condition) {
     var attrations = $("#attrations").val();
 
     var strFilterQueryUrl = "/trip/filter?1=1";
-    
+
     //attrations
-    if(attrations != "" && place != ""){
-        strFilterQueryUrl = strFilterQueryUrl + "&keyword=" + attrations+","+place;
+    if (attrations != "" && place != "") {
+        strFilterQueryUrl = strFilterQueryUrl + "&keyword=" + attrations + "," + place;
     };
 
     //place
