@@ -8,17 +8,32 @@ function initMap() {
     var input = (document.getElementById('autocomplete'));
     var autocomplete = new google.maps.places.Autocomplete(input);
     autocomplete.addListener('place_changed', function() {
-
+        
+    var geocoder = new google.maps.Geocoder();
+    
         var place = autocomplete.getPlace();
         if (!place.geometry) {
             //未獲得地點資訊
-            return;
+            //return;
+            var geocoder = new google.maps.Geocoder();
+            geocoder.geocode({
+                'address': document.getElementById('autocomplete').value
+            }, function (results, status) {
+                if (status == google.maps.GeocoderStatus.OK) {
+                    tour.sendData = {
+                    keyword: document.getElementById('autocomplete').value,
+                    lat: results[0].geometry.location.lat(),
+                    lng: results[0].geometry.location.lng()
+                    };
+                }
+            });
+        }else{
+            tour.sendData = {
+                keyword: document.getElementById('autocomplete').value,
+                lat: place.geometry.location.lat(),
+                lng: place.geometry.location.lng()
+            };
         }
-        tour.sendData = {
-            keyword: document.getElementById('autocomplete').value,
-            lat: place.geometry.location.lat(),
-            lng: place.geometry.location.lng()
-        };
     });
 
     $('#myFriends').hide();
@@ -159,7 +174,7 @@ function initMap() {
             //若無googlemap資訊 將值帶到下一頁
             if (typeof tour.sendData.keyword == 'undefined') {
                 var input = ($('#autocomplete')).val();
-                location.href = '/page/find?keyword=' + input + '&lat=' + tour.sendData.lat + '&lng=' + c.sendData.lng;
+                location.href = '/page/find?keyword=' + input + '&lat=' + tour.sendData.lat + '&lng=' + tour.sendData.lng;
             } else {
                 location.href = '/page/find?keyword=' + tour.sendData.keyword + '&lat=' + tour.sendData.lat + '&lng=' + tour.sendData.lng;
             }
