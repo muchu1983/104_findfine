@@ -330,8 +330,8 @@ def addCustomizedTripPlan(request=None):
         #封面 url
         strImageUrl = request.POST.get("strImageUrl", "")
         #設定 開始時間 與 結束時間
-        strDatetimeFrom = request.POST.get("strDatetimeFrom", None)
-        strDatetimeTo = request.POST.get("strDatetimeTo", None)
+        strDatetimeFrom = request.POST.get("strDatetimeFrom", "2015-01-01-00-00")
+        strDatetimeTo = request.POST.get("strDatetimeTo", "2015-01-01-23-59")
         dtDatetimeFrom = None
         dtDatetimeTo = None
         if strDatetimeFrom:
