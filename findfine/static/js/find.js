@@ -302,7 +302,7 @@ function initMap(sendLat, sendLng) {
         // 搜尋類型，可多種
         // 類型列表連結 https://developers.google.com/places/supported_types?hl=zh-tw
         // amusement_park/art_gallery/church/department_store/hospital/museum/zoo
-        types: ['amusement_park','art_gallery','church','department_store','hospital','museum','zoo']
+        types: ['amusement_park','art_gallery','church','department_store','museum','zoo']
     };
 
     service = new google.maps.places.PlacesService(map);
