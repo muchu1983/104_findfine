@@ -302,7 +302,7 @@ function initMap(sendLat, sendLng) {
         // 搜尋類型，可多種
         // 類型列表連結 https://developers.google.com/places/supported_types?hl=zh-tw
         // amusement_park/art_gallery/church/department_store/hospital/museum/zoo
-        types: ['amusement_park','art_gallery','church','department_store','hospital','museum','zoo']
+        types: ['amusement_park','art_gallery','church','department_store','museum','zoo']
     };
 
     service = new google.maps.places.PlacesService(map);
@@ -402,18 +402,17 @@ function search(condition) {
     if(attrations != "" && place != ""){
         strFilterQueryUrl = strFilterQueryUrl + "&keyword=" + attrations+","+place;
     };
-    
+
     //place
     if (place != "" && attrations == "") {
         strFilterQueryUrl = strFilterQueryUrl + "&keyword=" + place;
     };
-    
+
     //attrations
     if (place == "" && attrations != "") {
         strFilterQueryUrl = strFilterQueryUrl + "&keyword=" + attrations;
     };
-    
-    
+
     //budgetDown
     if (budgetDown != "") {
         strFilterQueryUrl = strFilterQueryUrl + "&min_budget=" + budgetDown;
@@ -461,22 +460,34 @@ function search(condition) {
     //style 目前db無資料 js需修改
     if (style != "") {
         for (var i = 0; duration.length > i; i++) {
-            if (style[i] == "Cultural tour") {
+            if (style[i] == "Cultural &Theme") {
                 strFilterQueryUrl = strFilterQueryUrl + "&style=" + style;
             }
-            if (style[i] == "Fashion tour") {
+            if (style[i] == "Eco") {
                 strFilterQueryUrl = strFilterQueryUrl + "&style=" + style;
             }
-            if (style[i] == "Wild life tour") {
+            if (style[i] == "Fashion & Shopping") {
                 strFilterQueryUrl = strFilterQueryUrl + "&style=" + style;
             }
-            if (style[i] == "Sports tour") {
+            if (style[i] == "Food, Wine & Nightlife") {
+                strFilterQueryUrl = strFilterQueryUrl + "&style=" + style;
+            }
+            if (style[i] == "Sightseeing") {
+                strFilterQueryUrl = strFilterQueryUrl + "&style=" + style;
+            }
+            if (style[i] == "Skyline") {
                 strFilterQueryUrl = strFilterQueryUrl + "&style=" + style;
             }
             if (style[i] == "Sports") {
                 strFilterQueryUrl = strFilterQueryUrl + "&style=" + style;
             }
-            if (style[i] == "Eco tour") {
+            if (style[i] == "Tickets & Passes") {
+                strFilterQueryUrl = strFilterQueryUrl + "&style=" + style;
+            }
+            if (style[i] == "Wildlife") {
+                strFilterQueryUrl = strFilterQueryUrl + "&style=" + style;
+            }
+            if (style[i] == "Walking & Biking") {
                 strFilterQueryUrl = strFilterQueryUrl + "&style=" + style;
             }
         }
@@ -531,6 +542,8 @@ function search(condition) {
             strFilterQueryUrl = strFilterQueryUrl + order_text + "intUsdCost";
         } else if (condition[0] == "Rating") {
             strFilterQueryUrl = strFilterQueryUrl + order_text + "intReviewStar";
+        } else if (condition[0] == "Voted") {
+            strFilterQueryUrl = strFilterQueryUrl + order_text + "intReviewVisitor";
         } else {
             console.log("get sortVal error");
         }
