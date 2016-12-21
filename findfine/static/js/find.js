@@ -530,6 +530,8 @@ function search(condition) {
             strFilterQueryUrl = strFilterQueryUrl + order_text + "intUsdCost";
         } else if (condition[0] == "Rating") {
             strFilterQueryUrl = strFilterQueryUrl + order_text + "intReviewStar";
+        } else if (condition[0] == "Voted") {
+            strFilterQueryUrl = strFilterQueryUrl + order_text + "intReviewVisitor";
         } else {
             console.log("get sortVal error");
         }
