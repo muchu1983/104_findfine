@@ -402,18 +402,17 @@ function search(condition) {
     if(attrations != "" && place != ""){
         strFilterQueryUrl = strFilterQueryUrl + "&keyword=" + attrations+","+place;
     };
-    
+
     //place
     if (place != "" && attrations == "") {
         strFilterQueryUrl = strFilterQueryUrl + "&keyword=" + place;
     };
-    
+
     //attrations
     if (place == "" && attrations != "") {
         strFilterQueryUrl = strFilterQueryUrl + "&keyword=" + attrations;
     };
-    
-    
+
     //budgetDown
     if (budgetDown != "") {
         strFilterQueryUrl = strFilterQueryUrl + "&min_budget=" + budgetDown;
