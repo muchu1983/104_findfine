@@ -136,16 +136,16 @@ function getTripDataHtml(strUserCurrency, strTitle, intUserCurrencyCost, strIntr
     if (isFavoriteTrip.toString() == "false") {
         favoriteTrip = "";
     }
-    
-    
+
+
     var strIntDurationHour;
-    if(intDurationHour.toString().trim() == "1") {
+    if (intDurationHour.toString().trim() == "1") {
         strIntDurationHour = "<p class=\"duration\">" + intDurationHour + "<span>HR</span></p>";
-    }else{
+    } else {
         strIntDurationHour = "<p class=\"duration\">" + intDurationHour + "<span>HRs</span></p>";
     }
-    
-    
+
+
     var strTripDataHtml = [
         "<div class=\"tour\">",
         "<div class=\"card active\" style=\"background-image:url(" + strImageUrl + ");\">",
@@ -699,12 +699,50 @@ function addNewPlanClick() {
             planDate = oriDateToDashed(planDate);
             var imgUrl = "/static/img/empty_plan.png";
             var addNewPlanUrl = "/trip/addTripPlan?strPlanName=" + tar.val() + "&strImageUrl=" + imgUrl + "&strDatetimeFrom=" + planDate + "&strDatetimeTo=" + planDate;
-            $.getJSON(addNewPlanUrl, function(jsonResp) {
 
-                planListRefresh();
 
-                tar.val("");
-            });
+            $.post("/trip/addTripPlan", { csrfmiddlewaretoken: strCsrfToken, strPlanName: tar.val(), strImageUrl: imgUrl, strDatetimeFrom: planDate, strDatetimeTo: planDate })
+                .done(function() {
+                    console.log("success");
+                    planListRefresh();
+
+                    tar.val("");
+                })
+                .fail(function() {
+                    console.log("error");
+                })
+                .always(function() {
+                    console.log("complete");
+                });
+
+            // $.ajax({
+            //     url: "/trip/addTripPlan",
+            //     type: 'POST',
+            //     dataType: 'json',
+            //     data: {
+            //         strPlanName: tar.val(),
+            //         strImageUrl: imgUrl,
+            //         strDatetimeFrom: planDate,
+            //         strDatetimeTo: planDate,
+            //     },
+            // })
+            // .done(function() {
+            //     console.log("success");
+
+            // })
+            // .fail(function() {
+            //     console.log("error");
+            // })
+            // .always(function() {
+            //     console.log("complete");
+            // });
+
+            // $.getJSON(addNewPlanUrl, function(jsonResp) {
+
+            //     planListRefresh();
+
+            //     tar.val("");
+            // });
         }
     });
 }
@@ -1328,7 +1366,7 @@ function dateDashToSlash(date) {
 
 function dateSlashToDash(date) {
     var dashArr = date.split("/");
-    var dash = dashArr[2] + "-" + dashArr[0] + "-" + dashArr[1]+"-00-00";
+    var dash = dashArr[2] + "-" + dashArr[0] + "-" + dashArr[1] + "-00-00";
     return dash;
 }
 
@@ -1598,23 +1636,23 @@ function dateMomentToDash(moment, planIng) {
         }
 
     }
-    tarDateDash = tarDatArr[0]+"-"+tarDatArr[1]+"-"+tarDatArr[2]+"-"+tarMoment;
+    tarDateDash = tarDatArr[0] + "-" + tarDatArr[1] + "-" + tarDatArr[2] + "-" + tarMoment;
     return tarDateDash;
 }
 
-function dateDotToDash(date){
+function dateDotToDash(date) {
     var dateArr = date.split(".");
-    var tarDate = dateArr[0]+"/"+dateArr[1]+"/"+dateArr[2];
+    var tarDate = dateArr[0] + "/" + dateArr[1] + "/" + dateArr[2];
     return tarDate;
 }
 
-function dateDashToMoment(dateDash){
+function dateDashToMoment(dateDash) {
     var dateArr = dateDash.split("-");
     var momentA = parseInt(dateArr[3]);
 
     if (dateArr[4] == "30") {
         var momentB = ".5";
-    }else if (dateArr[4] == "00"){
+    } else if (dateArr[4] == "00") {
         var momentB = "";
     }
     var moment = parseFloat(momentA + momentB);
