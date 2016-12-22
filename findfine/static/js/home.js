@@ -354,6 +354,10 @@ function getHomeTripDataHtml(strUserCurrency, strTitle, intUserCurrencyCost, str
     if (isFavoriteTrip.toString() == "false") {
         favoriteTrip = "";
     }
+    var hrText = "HR";
+    if (intDurationHour > 1) {
+        hrText = "HRs"
+    }
     var strTripDataHtml = [
         "<div class=\"tour hometour\">",
         "<div class=\"card active\" style=\"background-image:url(" + strImageUrl + ");\">",
@@ -361,7 +365,7 @@ function getHomeTripDataHtml(strUserCurrency, strTitle, intUserCurrencyCost, str
         "<p>" + strTitle + "...</p>",
         "</div>",
         "<p class=\"place\">" + strLocation + "</p>",
-        "<p class=\"duration\">" + intDurationHour + "<span>HR</span></p>",
+        "<p class=\"duration\">" + intDurationHour + "<span>"+hrText+"</span></p>",
         "<div class=\"price\">",
         "<span class=\"country\">" + strUserCurrency + "</span> $",
         "<span class=\"number\">" + intUserCurrencyCost + "</span>",

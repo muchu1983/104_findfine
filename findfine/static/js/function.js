@@ -968,6 +968,23 @@ function removeFolderClick() {
             wishPageRenew();
         });
     });
+    $("#innerRemoveBtn").click(function(event) {
+
+        $("body").addClass('waiting_body');
+        $(".waiting_fullblk").show();
+
+        var folderName = $("#ingFolderName").html();
+
+        var removeFolderUrl = "/account/removeFavoriteTripFolder?folder=" + folderName;
+        $.getJSON(removeFolderUrl, function(jsonResp) {
+
+            $(".ing_folder_blk").hide();
+            $(".folders").show();
+            $(".folder_blk>.dashed_line").show();
+            $("#ingFolderName").html("");
+            wishPageRenew();
+        });
+    });
 }
 
 function removeWish(wishId, folderPick) {
@@ -1030,7 +1047,10 @@ function renameFolderClick() {
 function getWishHtml(strUserCurrency, strTitle, intUserCurrencyCost, strIntroduction, strLocation, intDurationHour, strOriginUrl, strImageUrl, intReviewStar, intReviewVisitor, intId, menuCon, folderBtnCon, intId) {
 
     var strIntroduction = strIntroduction.substr(0, 135);
-
+    var hrText = "HR";
+    if (intDurationHour > 1) {
+        hrText = "HRs";
+    }
     var strTripDataHtml = [
         "<div class=\"wish\" data-id=\"" + intId + "\">",
         "<div class=\"card active\" style=\"background-image:url(" + strImageUrl + ");\">",
@@ -1038,7 +1058,7 @@ function getWishHtml(strUserCurrency, strTitle, intUserCurrencyCost, strIntroduc
         "<p>" + strTitle + "</p>",
         "</div>",
         "<p class=\"place\">" + strLocation + "</p>",
-        "<p class=\"duration\">" + intDurationHour + "<span>HR</span></p>",
+        "<p class=\"duration\">" + intDurationHour + "<span>"+hrText+"</span></p>",
         "<div class=\"price\">",
         "<span class=\"country\">" + strUserCurrency + "</span> $",
         "<span class=\"number\">" + intUserCurrencyCost + "</span>",

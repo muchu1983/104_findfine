@@ -370,6 +370,7 @@ function search(condition) {
     $(".waiting_blk").show();
     $("#TripDataBlk").hide();
     $(".page_link_blk").hide();
+    $(".no_find_blk").hide();
     //主搜尋
     //地點
     var place = $("#placeID").val();
@@ -563,22 +564,30 @@ function search(condition) {
     //alert(" 254:strFilterQueryUrl:"+strFilterQueryUrl);
     console.log(strFilterQueryUrl);
     $.getJSON(strFilterQueryUrl, function(jsonResp) {
-        //console.log(jsonResp);
         $("div.findResultDiv ul.lstTripData").html("");
         var strUserCurrency = $("#moneySelect").val();
         $("div.userCurrencySpan").html("(" + strUserCurrency + ")");
         //trip data
         var lstDicTripData = jsonResp["trip"];
+        console.log(lstDicTripData);
 
         for (i = 0; i < lstDicTripData.length; i++) {
             var dicTripData = lstDicTripData[i];
             var strTripDataHtml = getTripDataHtml(strUserCurrency, dicTripData["strTitle"], dicTripData["intUserCurrencyCost"], dicTripData["strIntroduction"], dicTripData["strLocation"], dicTripData["intDurationHour"], dicTripData["strOriginUrl"], dicTripData["strImageUrl"], dicTripData["intReviewStar"], dicTripData["intReviewVisitor"], dicTripData["intId"], dicTripData["isFavoriteTrip"]);
             $("div.findResultDiv ul.lstTripData").append(strTripDataHtml);
         };
+        if (lstDicTripData.length == 0) {
+            $(".no_find_blk").show();
+            $(".page_link_blk").hide();
+        }else{            
+
+            $(".no_find_blk").hide();
+            $(".page_link_blk").show();
+        }
+
 
         //page data
         var dicPageData = jsonResp["page"];
-        console.log(dicPageData);
 
         // 頁碼重整 RE@Q@ davidturtle
         pageReload(dicPageData);
@@ -594,8 +603,6 @@ function search(condition) {
         $(".waiting_fullblk").hide(500);
         $(".waiting_blk").hide();
         $("#TripDataBlk").show();
-
-        $(".page_link_blk").show();
     });
 };
 

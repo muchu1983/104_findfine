@@ -21,7 +21,8 @@
             $("#padLoginBtn").show();
             $(".logout_btns").show();
         } else {
-            $(".login_btns").show();
+            $('#wishList').show();
+            $('#myPlans').show();
             $('#logOut').show();
             $('#register').hide();
             $('#loginBtn').hide();
