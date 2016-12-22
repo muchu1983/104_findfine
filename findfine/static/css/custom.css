@@ -3707,7 +3707,16 @@ input:-moz-placeholder {
 .sort_sel_blk > .sel>.icon-diagram_up.reverse {
     transform: rotate(180deg);
 }
-
+.no_find_blk{
+    font-family: Roboto;
+    font-size: 20px;
+    font-weight: 500;
+    text-align: center;
+    color: #2bb0b9;
+    position: relative;
+    height: 500px;
+    line-height: 200px;
+}
 .page_link_blk {
     position: relative;
     clear: both;
@@ -5253,7 +5262,9 @@ input:-moz-placeholder {
 .plan_set_blk {
     position: relative;
     width: 100%;
-    height: 620px;
+    height: 177px;
+    /*@TODO CHECKLIST與朋友欄位補上後須調整為下面數值*/
+    /*height: 620px;*/
     -webkit-background-size: cover;
     -moz-background-size: cover;
     background-size: cover;
@@ -5992,11 +6003,12 @@ input:-moz-placeholder {
     left: 0;
     width: 90px;
     border-radius: 5px;
-    -webkit-background-size: cover;
+    /*@TODO 調整圖片大小測試*/
+    /*-webkit-background-size: cover;
     -moz-background-size: cover;
     background-size: cover;
     -o-background-size: cover;
-    background-position: center center;
+    background-position: center center;*/
     background-repeat: no-repeat;
 }
 
@@ -8273,15 +8285,17 @@ input:-moz-placeholder {
     margin-left: -25px;
     margin-right: -25px;
     display: block;
+    text-align: center;
 }
 
 .static_content_blk>.team_blk>.inner_blk>.member {
     position: relative;
     width: 33.33333333333%;
-    float: left;
     padding: 0 25px;
     text-align: center;
     margin-bottom: 70px;
+    display: inline-block;
+    vertical-align: top;
 }
 
 .static_content_blk>.team_blk>.inner_blk>.member>.photo {
@@ -9878,7 +9892,11 @@ input:-moz-placeholder {
 /*@TODO 目前暫時隱藏*/
 
 #team,
-#keyword {
+#keyword,
+#strEmail,
+#editName,
+#checkListBlk,
+#planFriendBlk {
     display: none;
 }
 

@@ -29,6 +29,7 @@ function initFind() {
     $("#headBtn").hide();
     $(".login_btns").hide();
     $(".logout_btns").hide();
+    $("#addToFolderBlk").hide();
     //strEmail 如已登入 不顯示login button 並顯示會員帳號
     if (strEmail == "None") {
         // 暫時隱藏 為測試方便使用
@@ -39,8 +40,7 @@ function initFind() {
         $("#padLoginBtn").show();
         $(".logout_btns").show();
     } else {
-        $('#wishList').show();
-        $('#myPlans').show();
+        $(".login_btns").show();
         $('#logOut').show();
         $('#register').hide();
         $('#loginBtn').hide();
@@ -50,6 +50,7 @@ function initFind() {
         $("#padWishlist").show();
         $("#padMyPlan").show();
         $(".login_btns").show();
+        $("#addToFolderBlk").show();
     }
 
     //登入按鈕
@@ -178,6 +179,12 @@ function initFind() {
     // 頁碼輸入功能
     pageNumberType("current_page");
 
+    // 資料夾選擇初始化
+    addWishFolderInit("#addToFolderBlk");
+
+    // 登出動作
+    logoutToHome("#logOut");
+
     //頁面按鈕點擊效果 RE@Q@ davidturtle
 
     // 前一頁
@@ -302,7 +309,7 @@ function initMap(sendLat, sendLng) {
         // 搜尋類型，可多種
         // 類型列表連結 https://developers.google.com/places/supported_types?hl=zh-tw
         // amusement_park/art_gallery/church/department_store/hospital/museum/zoo
-        types: ['amusement_park','art_gallery','church','department_store','museum','zoo']
+        types: ['amusement_park', 'art_gallery', 'church', 'department_store', 'museum', 'zoo']
     };
 
     service = new google.maps.places.PlacesService(map);
@@ -363,6 +370,7 @@ function search(condition) {
     $(".waiting_blk").show();
     $("#TripDataBlk").hide();
     $(".page_link_blk").hide();
+    $(".no_find_blk").hide();
     //主搜尋
     //地點
     var place = $("#placeID").val();
@@ -397,10 +405,10 @@ function search(condition) {
     var attrations = $("#attrations").val();
 
     var strFilterQueryUrl = "/trip/filter?1=1";
-    
+
     //attrations
-    if(attrations != "" && place != ""){
-        strFilterQueryUrl = strFilterQueryUrl + "&keyword=" + attrations+","+place;
+    if (attrations != "" && place != "") {
+        strFilterQueryUrl = strFilterQueryUrl + "&keyword=" + attrations + "," + place;
     };
 
     //place
@@ -556,22 +564,30 @@ function search(condition) {
     //alert(" 254:strFilterQueryUrl:"+strFilterQueryUrl);
     console.log(strFilterQueryUrl);
     $.getJSON(strFilterQueryUrl, function(jsonResp) {
-        //console.log(jsonResp);
         $("div.findResultDiv ul.lstTripData").html("");
         var strUserCurrency = $("#moneySelect").val();
         $("div.userCurrencySpan").html("(" + strUserCurrency + ")");
         //trip data
         var lstDicTripData = jsonResp["trip"];
+        console.log(lstDicTripData);
 
         for (i = 0; i < lstDicTripData.length; i++) {
             var dicTripData = lstDicTripData[i];
             var strTripDataHtml = getTripDataHtml(strUserCurrency, dicTripData["strTitle"], dicTripData["intUserCurrencyCost"], dicTripData["strIntroduction"], dicTripData["strLocation"], dicTripData["intDurationHour"], dicTripData["strOriginUrl"], dicTripData["strImageUrl"], dicTripData["intReviewStar"], dicTripData["intReviewVisitor"], dicTripData["intId"], dicTripData["isFavoriteTrip"]);
             $("div.findResultDiv ul.lstTripData").append(strTripDataHtml);
         };
+        if (lstDicTripData.length == 0) {
+            $(".no_find_blk").show();
+            $(".page_link_blk").hide();
+        }else{            
+
+            $(".no_find_blk").hide();
+            $(".page_link_blk").show();
+        }
+
 
         //page data
         var dicPageData = jsonResp["page"];
-        console.log(dicPageData);
 
         // 頁碼重整 RE@Q@ davidturtle
         pageReload(dicPageData);
@@ -587,8 +603,6 @@ function search(condition) {
         $(".waiting_fullblk").hide(500);
         $(".waiting_blk").hide();
         $("#TripDataBlk").show();
-
-        $(".page_link_blk").show();
     });
 };
 

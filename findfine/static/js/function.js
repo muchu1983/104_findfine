@@ -61,6 +61,7 @@ function removeFavoriteTrip(intId) {
 
 // 加至wishlist按鈕點擊
 function addToWishlistBtnClick() {
+    var ingId = -1;
     $(".add_wish_btn").click(function(event) {
         var timer,
             tarId = $(this).data('id');
@@ -69,22 +70,41 @@ function addToWishlistBtnClick() {
             removeFavoriteTrip(tarId);
             $(this).removeClass('active');
         } else {
-            addFavoriteTrip(tarId);
+            ingId = tarId;
+            addFavoriteTrip(tarId);            
             $(this).addClass('active');
             $("#addToFolderBlk").css({
                 bottom: '10px',
             });
+
+            $("#addToFolderBlk>.info>.multi_sel_btn>.menu>li").off();
+            $("#addToFolderBlk>.info>.multi_sel_btn>.menu>li").click(function(event) {
+                $(this).toggleClass('active');
+
+
+                if ($(this).hasClass('active')) {
+                    var favoUrl = "/trip/addFavoriteTrip?intTripId="+ingId+"&add_folder="+$(this).children('span').html();
+                }else{
+                    var favoUrl = "/trip/addFavoriteTrip?intTripId="+ingId+"&remove_folder="+$(this).children('span').html();
+                }
+                $.getJSON(favoUrl, function(jsonResp) {
+                    console.log("add or remove success");
+                });
+
+            });
             timer = setTimeout(function() {
                 $("#addToFolderBlk").css({
-                    bottom: '-200px',
+                    bottom: '-500px',
                 });
+                ingId = -1;
             }, 5000);
             $("#addToFolderBlk").click(function(event) {
                 clearInterval(timer);
                 timer = setTimeout(function() {
                     $("#addToFolderBlk").css({
-                        bottom: '-200px',
+                        bottom: '<-5></-5>00px',
                     });
+                    ingId = -1;
                 }, 5000);
             });
         }
@@ -136,16 +156,16 @@ function getTripDataHtml(strUserCurrency, strTitle, intUserCurrencyCost, strIntr
     if (isFavoriteTrip.toString() == "false") {
         favoriteTrip = "";
     }
-    
-    
+
+
     var strIntDurationHour;
-    if(intDurationHour.toString().trim() == "1") {
+    if (intDurationHour.toString().trim() == "1") {
         strIntDurationHour = "<p class=\"duration\">" + intDurationHour + "<span>HR</span></p>";
-    }else{
+    } else {
         strIntDurationHour = "<p class=\"duration\">" + intDurationHour + "<span>HRs</span></p>";
     }
-    
-    
+
+
     var strTripDataHtml = [
         "<div class=\"tour\">",
         "<div class=\"card active\" style=\"background-image:url(" + strImageUrl + ");\">",
@@ -620,11 +640,7 @@ function wishFolderRenew(tarWish) {
             folders.push(tarLi.eq(i).children('span').html());
         }
     }
-
-
     console.log(folders);
-
-    // 刪除wish
 }
 
 function wishAddFolder(wishId, folderName) {
@@ -661,11 +677,11 @@ function addToFolderClick() {
         var folderName = $(this).children('span').html();
         if ($(this).hasClass('active')) {
             wishAddFolder(wishId, folderName);
+            folderTourQumRenew(folderName,1);
         } else {
             wishRemoveFolder(wishId, folderName);
+            folderTourQumRenew(folderName,-1);
         }
-
-
     });
 
     $(window).click(function() {
@@ -673,6 +689,31 @@ function addToFolderClick() {
             $(".wish>.menu").removeClass('active');
         }
     });
+}
+
+
+function folderTourQumRenew(folderName,change){
+    var tarFolder = getWishFolderByName(folderName);
+    console.log(tarFolder);
+    var tourQumBlk = tarFolder.children('.card').children('.text_blk').children('.tour_qua');
+    var ingQum = parseInt(tourQumBlk.html());
+    var tarQum = ingQum + change;
+    tourQumBlk.html(tarQum);
+}
+
+function getWishFolderByName(folderName){
+    console.log(folderName);
+    var tarEq = -1;
+    for (var i = 0; $(".folder").eq(i).length>0; i++) {
+        console.log($(".folder").eq(i).children('.card').children('.text_blk').children('.folder_name').html());
+        if ($(".folder").eq(i).children('.card').children('.text_blk').children('.folder_name').html() == folderName) {
+            tarEq = i;
+        }
+    }
+    console.log(tarEq);
+    if (tarEq >= 0) {
+        return $(".folder").eq(tarEq);
+    }
 }
 
 // 新增PLAN點選
@@ -699,12 +740,50 @@ function addNewPlanClick() {
             planDate = oriDateToDashed(planDate);
             var imgUrl = "/static/img/empty_plan.png";
             var addNewPlanUrl = "/trip/addTripPlan?strPlanName=" + tar.val() + "&strImageUrl=" + imgUrl + "&strDatetimeFrom=" + planDate + "&strDatetimeTo=" + planDate;
-            $.getJSON(addNewPlanUrl, function(jsonResp) {
 
-                planListRefresh();
 
-                tar.val("");
-            });
+            $.post("/trip/addTripPlan", { csrfmiddlewaretoken: strCsrfToken, strPlanName: tar.val(), strImageUrl: imgUrl, strDatetimeFrom: planDate, strDatetimeTo: planDate })
+                .done(function() {
+                    console.log("success");
+                    planListRefresh();
+
+                    tar.val("");
+                })
+                .fail(function() {
+                    console.log("error");
+                })
+                .always(function() {
+                    console.log("complete");
+                });
+
+            // $.ajax({
+            //     url: "/trip/addTripPlan",
+            //     type: 'POST',
+            //     dataType: 'json',
+            //     data: {
+            //         strPlanName: tar.val(),
+            //         strImageUrl: imgUrl,
+            //         strDatetimeFrom: planDate,
+            //         strDatetimeTo: planDate,
+            //     },
+            // })
+            // .done(function() {
+            //     console.log("success");
+
+            // })
+            // .fail(function() {
+            //     console.log("error");
+            // })
+            // .always(function() {
+            //     console.log("complete");
+            // });
+
+            // $.getJSON(addNewPlanUrl, function(jsonResp) {
+
+            //     planListRefresh();
+
+            //     tar.val("");
+            // });
         }
     });
 }
@@ -889,6 +968,23 @@ function removeFolderClick() {
             wishPageRenew();
         });
     });
+    $("#innerRemoveBtn").click(function(event) {
+
+        $("body").addClass('waiting_body');
+        $(".waiting_fullblk").show();
+
+        var folderName = $("#ingFolderName").html();
+
+        var removeFolderUrl = "/account/removeFavoriteTripFolder?folder=" + folderName;
+        $.getJSON(removeFolderUrl, function(jsonResp) {
+
+            $(".ing_folder_blk").hide();
+            $(".folders").show();
+            $(".folder_blk>.dashed_line").show();
+            $("#ingFolderName").html("");
+            wishPageRenew();
+        });
+    });
 }
 
 function removeWish(wishId, folderPick) {
@@ -933,6 +1029,8 @@ function renameFolderClick() {
         $(".rename_folder_blk").hide();
     });
     $(".rename_folder_blk>.content_blk>.confirm_btn").click(function(event) {
+        $(".waiting_fullblk").show();
+        $("body").addClass('waiting_body');
         var tar = $(".rename_folder_blk>.content_blk>input");
         var tarEq = $(".ing_folder_blk").attr('data-ingfoldEq');
         if (tar.val() != "" && tar.val() != null) {
@@ -949,7 +1047,10 @@ function renameFolderClick() {
 function getWishHtml(strUserCurrency, strTitle, intUserCurrencyCost, strIntroduction, strLocation, intDurationHour, strOriginUrl, strImageUrl, intReviewStar, intReviewVisitor, intId, menuCon, folderBtnCon, intId) {
 
     var strIntroduction = strIntroduction.substr(0, 135);
-
+    var hrText = "HR";
+    if (intDurationHour > 1) {
+        hrText = "HRs";
+    }
     var strTripDataHtml = [
         "<div class=\"wish\" data-id=\"" + intId + "\">",
         "<div class=\"card active\" style=\"background-image:url(" + strImageUrl + ");\">",
@@ -957,7 +1058,7 @@ function getWishHtml(strUserCurrency, strTitle, intUserCurrencyCost, strIntroduc
         "<p>" + strTitle + "</p>",
         "</div>",
         "<p class=\"place\">" + strLocation + "</p>",
-        "<p class=\"duration\">" + intDurationHour + "<span>HR</span></p>",
+        "<p class=\"duration\">" + intDurationHour + "<span>"+hrText+"</span></p>",
         "<div class=\"price\">",
         "<span class=\"country\">" + strUserCurrency + "</span> $",
         "<span class=\"number\">" + intUserCurrencyCost + "</span>",
@@ -1328,7 +1429,7 @@ function dateDashToSlash(date) {
 
 function dateSlashToDash(date) {
     var dashArr = date.split("/");
-    var dash = dashArr[2] + "-" + dashArr[0] + "-" + dashArr[1]+"-00-00";
+    var dash = dashArr[2] + "-" + dashArr[0] + "-" + dashArr[1] + "-00-00";
     return dash;
 }
 
@@ -1598,25 +1699,49 @@ function dateMomentToDash(moment, planIng) {
         }
 
     }
-    tarDateDash = tarDatArr[0]+"-"+tarDatArr[1]+"-"+tarDatArr[2]+"-"+tarMoment;
+    tarDateDash = tarDatArr[0] + "-" + tarDatArr[1] + "-" + tarDatArr[2] + "-" + tarMoment;
     return tarDateDash;
 }
 
-function dateDotToDash(date){
+function dateDotToDash(date) {
     var dateArr = date.split(".");
-    var tarDate = dateArr[0]+"/"+dateArr[1]+"/"+dateArr[2];
+    var tarDate = dateArr[0] + "/" + dateArr[1] + "/" + dateArr[2];
     return tarDate;
 }
 
-function dateDashToMoment(dateDash){
+function dateDashToMoment(dateDash) {
     var dateArr = dateDash.split("-");
     var momentA = parseInt(dateArr[3]);
 
     if (dateArr[4] == "30") {
         var momentB = ".5";
-    }else if (dateArr[4] == "00"){
+    } else if (dateArr[4] == "00") {
         var momentB = "";
     }
     var moment = parseFloat(momentA + momentB);
     return moment;
+}
+
+function addWishFolderInit(tar) {
+    console.log(tar);
+    var getFavoUrl = "/account/getFavoriteTripFolder";
+    $.getJSON(getFavoUrl, function(jsonResp) {
+        var foldersOri = jsonResp.lstStrFavoriteTripFolder;
+        var folders = [];
+
+        for (var i = 0; i < foldersOri.length; i++) {
+            if (foldersOri[i] != "default_folder") {
+                folders.push(foldersOri[i]);
+            }
+        }
+        for (var i = 0; i < folders.length; i++) {
+            var tarCon = wishFolderLiCon(folders[i]);
+            $("#addToFolderBlk>.info>.multi_sel_btn>.menu").append(tarCon);
+        }
+    });
+}
+
+function wishFolderLiCon(name) {
+    var x = '<li><span>' + name + '</span><i class="icon-checkmark"></i></li>';
+    return x;
 }

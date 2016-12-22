@@ -53,8 +53,7 @@ function initMap() {
         $("#padLoginBtn").show();
         $(".logout_btns").show();
     } else {
-        $('#wishList').show();
-        $('#myPlans').show();
+        $(".login_btns").show();
         $('#logOut').show();
         $('#register').hide();
         $('#loginBtn').hide();
@@ -268,7 +267,7 @@ function homeRecomTour() {
                 }
                 $("#tourBlk").attr('data-ing', ingNumber);
                 homeRecShow(ingNumber);
-            }, 7000);
+            }, 3000);
         } else if (jsDetectWidth > 767) {
             var myLoop = setInterval(function() {
 
@@ -280,7 +279,7 @@ function homeRecomTour() {
                 }
                 $("#tourBlk").attr('data-ing', ingNumber);
                 homeRecShow(ingNumber);
-            }, 7000);
+            }, 3000);
         } else {
             var myLoop = setInterval(function() {
 
@@ -292,7 +291,7 @@ function homeRecomTour() {
                 }
                 $("#tourBlk").attr('data-ing', ingNumber);
                 homeRecShow(ingNumber);
-            }, 7000);
+            }, 3000);
         }
         $(window).resize(function(event) {
             jsDetectWidth = $(window).width();
@@ -312,7 +311,7 @@ function homeRecomTour() {
                     }
                     $("#tourBlk").attr('data-ing', ingNumber);
                     homeRecShow(ingNumber);
-                }, 7000);
+                }, 3000);
             } else if (jsDetectWidth > 767) {
                 myLoop = setInterval(function() {
 
@@ -324,7 +323,7 @@ function homeRecomTour() {
                     }
                     $("#tourBlk").attr('data-ing', ingNumber);
                     homeRecShow(ingNumber);
-                }, 7000);
+                }, 3000);
             } else {
                 myLoop = setInterval(function() {
 
@@ -336,7 +335,7 @@ function homeRecomTour() {
                     }
                     $("#tourBlk").attr('data-ing', ingNumber);
                     homeRecShow(ingNumber);
-                }, 7000);
+                }, 3000);
             }
         });
         $("#tourBlk").show();
@@ -370,6 +369,10 @@ function getHomeTripDataHtml(strUserCurrency, strTitle, intUserCurrencyCost, str
     if (isFavoriteTrip.toString() == "false") {
         favoriteTrip = "";
     }
+    var hrText = "HR";
+    if (intDurationHour > 1) {
+        hrText = "HRs"
+    }
     var strTripDataHtml = [
         "<div class=\"tour hometour\">",
         "<div class=\"card active\" style=\"background-image:url(" + strImageUrl + ");\">",
@@ -377,7 +380,7 @@ function getHomeTripDataHtml(strUserCurrency, strTitle, intUserCurrencyCost, str
         "<p>" + strTitle + "...</p>",
         "</div>",
         "<p class=\"place\">" + strLocation + "</p>",
-        "<p class=\"duration\">" + intDurationHour + "<span>HR</span></p>",
+        "<p class=\"duration\">" + intDurationHour + "<span>"+hrText+"</span></p>",
         "<div class=\"price\">",
         "<span class=\"country\">" + strUserCurrency + "</span> $",
         "<span class=\"number\">" + intUserCurrencyCost + "</span>",

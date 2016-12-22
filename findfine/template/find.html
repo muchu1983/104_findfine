@@ -9,7 +9,6 @@ Language、Availability、Attractions的功能完整化
 - 完成的FOOTER移入
 
 -->
-
 <!DOCTYPE html>
 <html lang="en">
 
@@ -83,14 +82,6 @@ Language、Availability、Attractions的功能完整化
                 <i class="icon-expand"></i>
                 <ul class="menu">
                     <div class="clear_btn">clear all</div>
-                    <li>
-                        <span>favorite</span>
-                        <i class="icon-checkmark"></i>
-                    </li>
-                    <li>
-                        <span>japan</span>
-                        <i class="icon-checkmark"></i>
-                    </li>
                 </ul>
             </div>
         </div>
@@ -108,20 +99,24 @@ Language、Availability、Attractions的功能完整化
         <div class="toolbox_blk">
             <div style="height: 50%"></div>
             <ul class="link_blk">
-                <li style="list-style-type:none;float:left;"><a target="_blank" href="https://www.skyscanner.com.tw/"                                                          title="Skyscanner"    ><img style="width: 25%;height: 30%" src="/static/img/skyscanner.png"     alt="Skyscanner" border="0"></a></li>
-                <li style="list-style-type:none;float:left;"><a target="_blank" href="https://www.hotelscombined.com/"                                                         title="hotelsCombined"><img style="width: 25%;height: 30%" src="/static/img/hotelsCombined.png" alt="hotelsCombined" border="0"></a></li>
-                <li style="list-style-type:none;float:left;"><a target="_blank" href="https://www.agoda.com/partners/partnersearch.aspx?cid=1765710&pcs=1&hl=en&sort=star5To1" title="Agoda"         ><img style="width: 100%;height: 10%" src="/static/img/Agoda.png"          alt="Agoda" border="0"></a></li>
+                <li style="list-style-type:none;float:left;">
+                    <a target="_blank" href="https://www.skyscanner.com.tw/" title="Skyscanner"><img style="width: 25%;height: 30%" src="/static/img/skyscanner.png" alt="Skyscanner" border="0"></a>
+                </li>
+                <li style="list-style-type:none;float:left;">
+                    <a target="_blank" href="https://www.hotelscombined.com/" title="hotelsCombined"><img style="width: 25%;height: 30%" src="/static/img/hotelsCombined.png" alt="hotelsCombined" border="0"></a>
+                </li>
+                <li style="list-style-type:none;float:left;">
+                    <a target="_blank" href="https://www.agoda.com/partners/partnersearch.aspx?cid=1765710&pcs=1&hl=en&sort=star5To1" title="Agoda"><img style="width: 100%;height: 10%" src="/static/img/Agoda.png" alt="Agoda" border="0"></a>
+                </li>
             </ul>
         </div>
         <div class="container">
-            <!-- Brand and toggle get grouped for better mobile display -->
             <div class="navbar-header page-scroll find">
                 <a class="icon-logo" id="logoTop"></a>
                 <div class="mini_searchbar">
                     <span class="icon-magnifier"></span>
                     <input type="text" name="" placeholder="Where are you going?" id="topSearch" class="blue_bg">
                 </div>
-
             </div>
             <div id="headBtn" class="head_btn" style="background-image: url(/static/img/head_sample.jpg);">
                 <div class="head_menu" id="headMenu">
@@ -132,14 +127,13 @@ Language、Availability、Attractions的功能完整化
                 <span id="strEmail" style="font-style:oblique;color:orange"></span>
                 <div class="noti_ing"></div>
             </div>
+            <div id="noLogHeadBtn" class="head_btn nolog" style="background-image: url(/static/img/head_logout.jpg);">
+            </div>
             <div class="header_btn_blk adjust" id="bs-example-navbar-collapse-1">
                 <div class="toolbox_btn icon-toolbox">
                     <span class="text">ToolBox</span>
                 </div>
                 <ul class="nav navbar-nav currency_sel_blk">
-                    <li class="hidden">
-                        <a href="#page-top"></a>
-                    </li>
                     <li>
                         <div class="CurrencyDiv navSelect">
                             <select id="moneySelect" name="" class="bsSelect">
@@ -157,35 +151,34 @@ Language、Availability、Attractions的功能完整化
                         </div>
                     </li>
                 </ul>
-                <div id="wishList" class="header_btn btn-info">
-                    <span class="icon_blk">                  
-                        <span class="icon-quill"></span>
-                    <span class="icon-scroll"></span>
-                    <span class="extend_line"></span>
-                    </span>
-                    <span class="text">Wishlist</span>
+                <div class="login_btns">
+                    <div id="wishList" class="header_btn btn-info">
+                        <span class="icon_blk">                  
+                            <span class="icon-quill"></span>
+                        <span class="icon-scroll"></span>
+                        <span class="extend_line"></span>
+                        </span>
+                        <span class="text">Wishlist</span>
+                    </div>
+                    <div id="myPlans" class="header_btn btn-info">
+                        <span class="icon_blk">
+                            <span class="icon-airplane"></span>
+                        <span class="icon-notebook"></span>
+                        <svg class="extend_dotted_line">
+                            <g fill="none" stroke="#ffffff" stroke-width="1">
+                                <path stroke-dasharray="5,5" d="M0 0 80 0" />
+                            </g>
+                        </svg>
+                        </span>
+                        <span class="text">My Plan</span>
+                    </div>
                 </div>
-                <div id="myPlans" class="header_btn btn-info">
-                    <span class="icon_blk">
-                        <span class="icon-airplane"></span>
-                    <span class="icon-notebook"></span>
-                    <svg class="extend_dotted_line">
-                        <g fill="none" stroke="#ffffff" stroke-width="1">
-                            <path stroke-dasharray="5,5" d="M0 0 80 0" />
-                        </g>
-                    </svg>
-                    </span>
-                    <span class="text">My Plan</span>
+                <div class="logout_btns">
+                    <div id="register" class="header_blk_btn">Sign Up</div>
+                    <div id="loginBtn" class="header_blk_btn">Log In</div>
                 </div>
-                <!-- <div id="myFriends" class="btn btn-info">my friends</div>
-                <div id="myMessages" class="btn btn-info">my messages</div> -->
-                <!-- <div id="loginBtn" class="header_btn btn-info">Log In</div> -->
-                <div id="register" class="header_blk_btn hide">Sign Up</div>
-                <div id="loginBtn" class="header_blk_btn hide">Log In</div>
                 <div id="padMenuBtn" class="header_menu_btn icon-menu"></div>
                 <div id="mobileMenuBtn" class="header_menu_btn icon-menu"></div>
-                <div id="noLogHeadBtn" class="head_btn" style="background-image: url(/static/img/head_logout.jpg);">
-                </div>
             </div>
             <!-- /.navbar-collapse -->
         </div>
@@ -193,7 +186,7 @@ Language、Availability、Attractions的功能完整化
     </nav>
     <div class="pad_menu" id="padMenu">
         <div class="close_btn icon-cancel"></div>
-        <div class="login_btns">            
+        <div class="login_btns">
             <div class="pad_menu_btn" id="padWishlist">
                 <span class="icon icon-wishlist"></span>
                 <span>Wishlist</span>
@@ -203,7 +196,7 @@ Language、Availability、Attractions的功能完整化
                 <span>My Plan</span>
             </div>
         </div>
-        <div class="logout_btns">            
+        <div class="logout_btns">
             <div id="padRegister" class="header_blk_btn">Sign Up</div>
             <div id="padLoginBtn" class="header_blk_btn">Log In</div>
         </div>
@@ -590,6 +583,7 @@ Language、Availability、Attractions的功能完整化
                     <ul class="lstTripData row tour_blk" id="TripDataBlk">
                     </ul>
                 </div>
+                <div class="no_find_blk">The results can not be found.</div>
             </div>
             <div class="page_link_blk">
                 <a href="javascript:void(0)" id="prev_page_link" class="long">
@@ -625,5 +619,5 @@ Language、Availability、Attractions的功能完整化
 
 </html>
 <script type="text/javascript">
-    $('#strEmail').html("Hi ! "+strEmail);
+$('#strEmail').html("Hi ! " + strEmail);
 </script>
