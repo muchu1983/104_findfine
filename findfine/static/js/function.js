@@ -61,6 +61,7 @@ function removeFavoriteTrip(intId) {
 
 // 加至wishlist按鈕點擊
 function addToWishlistBtnClick() {
+    var ingId = -1;
     $(".add_wish_btn").click(function(event) {
         var timer,
             tarId = $(this).data('id');
@@ -69,22 +70,41 @@ function addToWishlistBtnClick() {
             removeFavoriteTrip(tarId);
             $(this).removeClass('active');
         } else {
-            addFavoriteTrip(tarId);
+            ingId = tarId;
+            addFavoriteTrip(tarId);            
             $(this).addClass('active');
             $("#addToFolderBlk").css({
                 bottom: '10px',
             });
+
+            $("#addToFolderBlk>.info>.multi_sel_btn>.menu>li").off();
+            $("#addToFolderBlk>.info>.multi_sel_btn>.menu>li").click(function(event) {
+                $(this).toggleClass('active');
+
+
+                if ($(this).hasClass('active')) {
+                    var favoUrl = "/trip/addFavoriteTrip?intTripId="+ingId+"&add_folder="+$(this).children('span').html();
+                }else{
+                    var favoUrl = "/trip/addFavoriteTrip?intTripId="+ingId+"&remove_folder="+$(this).children('span').html();
+                }
+                $.getJSON(favoUrl, function(jsonResp) {
+                    console.log("add or remove success");
+                });
+
+            });
             timer = setTimeout(function() {
                 $("#addToFolderBlk").css({
-                    bottom: '-200px',
+                    bottom: '-500px',
                 });
+                ingId = -1;
             }, 5000);
             $("#addToFolderBlk").click(function(event) {
                 clearInterval(timer);
                 timer = setTimeout(function() {
                     $("#addToFolderBlk").css({
-                        bottom: '-200px',
+                        bottom: '<-5></-5>00px',
                     });
+                    ingId = -1;
                 }, 5000);
             });
         }
@@ -620,11 +640,7 @@ function wishFolderRenew(tarWish) {
             folders.push(tarLi.eq(i).children('span').html());
         }
     }
-
-
     console.log(folders);
-
-    // 刪除wish
 }
 
 function wishAddFolder(wishId, folderName) {
@@ -661,11 +677,11 @@ function addToFolderClick() {
         var folderName = $(this).children('span').html();
         if ($(this).hasClass('active')) {
             wishAddFolder(wishId, folderName);
+            folderTourQumRenew(folderName,1);
         } else {
             wishRemoveFolder(wishId, folderName);
+            folderTourQumRenew(folderName,-1);
         }
-
-
     });
 
     $(window).click(function() {
@@ -673,6 +689,31 @@ function addToFolderClick() {
             $(".wish>.menu").removeClass('active');
         }
     });
+}
+
+
+function folderTourQumRenew(folderName,change){
+    var tarFolder = getWishFolderByName(folderName);
+    console.log(tarFolder);
+    var tourQumBlk = tarFolder.children('.card').children('.text_blk').children('.tour_qua');
+    var ingQum = parseInt(tourQumBlk.html());
+    var tarQum = ingQum + change;
+    tourQumBlk.html(tarQum);
+}
+
+function getWishFolderByName(folderName){
+    console.log(folderName);
+    var tarEq = -1;
+    for (var i = 0; $(".folder").eq(i).length>0; i++) {
+        console.log($(".folder").eq(i).children('.card').children('.text_blk').children('.folder_name').html());
+        if ($(".folder").eq(i).children('.card').children('.text_blk').children('.folder_name').html() == folderName) {
+            tarEq = i;
+        }
+    }
+    console.log(tarEq);
+    if (tarEq >= 0) {
+        return $(".folder").eq(tarEq);
+    }
 }
 
 // 新增PLAN點選
@@ -971,6 +1012,8 @@ function renameFolderClick() {
         $(".rename_folder_blk").hide();
     });
     $(".rename_folder_blk>.content_blk>.confirm_btn").click(function(event) {
+        $(".waiting_fullblk").show();
+        $("body").addClass('waiting_body');
         var tar = $(".rename_folder_blk>.content_blk>input");
         var tarEq = $(".ing_folder_blk").attr('data-ingfoldEq');
         if (tar.val() != "" && tar.val() != null) {
@@ -1657,4 +1700,28 @@ function dateDashToMoment(dateDash) {
     }
     var moment = parseFloat(momentA + momentB);
     return moment;
+}
+
+function addWishFolderInit(tar) {
+    console.log(tar);
+    var getFavoUrl = "/account/getFavoriteTripFolder";
+    $.getJSON(getFavoUrl, function(jsonResp) {
+        var foldersOri = jsonResp.lstStrFavoriteTripFolder;
+        var folders = [];
+
+        for (var i = 0; i < foldersOri.length; i++) {
+            if (foldersOri[i] != "default_folder") {
+                folders.push(foldersOri[i]);
+            }
+        }
+        for (var i = 0; i < folders.length; i++) {
+            var tarCon = wishFolderLiCon(folders[i]);
+            $("#addToFolderBlk>.info>.multi_sel_btn>.menu").append(tarCon);
+        }
+    });
+}
+
+function wishFolderLiCon(name) {
+    var x = '<li><span>' + name + '</span><i class="icon-checkmark"></i></li>';
+    return x;
 }

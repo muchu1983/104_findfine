@@ -27,6 +27,7 @@
 
         // 登出動作
         logoutToHome("#logOut");
+        logoutToHome("#innerLogOut");
 
         planListRefresh();
 

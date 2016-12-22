@@ -38,8 +38,7 @@ function initMap() {
         $("#padLoginBtn").show();
         $(".logout_btns").show();
     } else {
-        $('#wishList').show();
-        $('#myPlans').show();
+        $(".login_btns").show();
         $('#logOut').show();
         $('#register').hide();
         $('#loginBtn').hide();
@@ -253,7 +252,7 @@ function homeRecomTour() {
                 }
                 $("#tourBlk").attr('data-ing', ingNumber);
                 homeRecShow(ingNumber);
-            }, 7000);
+            }, 3000);
         } else if (jsDetectWidth > 767) {
             var myLoop = setInterval(function() {
 
@@ -265,7 +264,7 @@ function homeRecomTour() {
                 }
                 $("#tourBlk").attr('data-ing', ingNumber);
                 homeRecShow(ingNumber);
-            }, 7000);
+            }, 3000);
         } else {
             var myLoop = setInterval(function() {
 
@@ -277,7 +276,7 @@ function homeRecomTour() {
                 }
                 $("#tourBlk").attr('data-ing', ingNumber);
                 homeRecShow(ingNumber);
-            }, 7000);
+            }, 3000);
         }
         $(window).resize(function(event) {
             jsDetectWidth = $(window).width();
@@ -297,7 +296,7 @@ function homeRecomTour() {
                     }
                     $("#tourBlk").attr('data-ing', ingNumber);
                     homeRecShow(ingNumber);
-                }, 7000);
+                }, 3000);
             } else if (jsDetectWidth > 767) {
                 myLoop = setInterval(function() {
 
@@ -309,7 +308,7 @@ function homeRecomTour() {
                     }
                     $("#tourBlk").attr('data-ing', ingNumber);
                     homeRecShow(ingNumber);
-                }, 7000);
+                }, 3000);
             } else {
                 myLoop = setInterval(function() {
 
@@ -321,7 +320,7 @@ function homeRecomTour() {
                     }
                     $("#tourBlk").attr('data-ing', ingNumber);
                     homeRecShow(ingNumber);
-                }, 7000);
+                }, 3000);
             }
         });
         $("#tourBlk").show();

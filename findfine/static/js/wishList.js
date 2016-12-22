@@ -36,6 +36,7 @@ function initWishList() {
 
     // 登出動作
     logoutToHome("#logOut");
+    logoutToHome("#innerLogOut");
 
 
     $("#wishList").click(function() {

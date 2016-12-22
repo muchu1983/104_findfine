@@ -40,8 +40,7 @@ function initFind() {
         $("#padLoginBtn").show();
         $(".logout_btns").show();
     } else {
-        $('#wishList').show();
-        $('#myPlans').show();
+        $(".login_btns").show();
         $('#logOut').show();
         $('#register').hide();
         $('#loginBtn').hide();
@@ -182,6 +181,9 @@ function initFind() {
 
     // 資料夾選擇初始化
     addWishFolderInit("#addToFolderBlk");
+
+    // 登出動作
+    logoutToHome("#logOut");
 
     //頁面按鈕點擊效果 RE@Q@ davidturtle
 

@@ -2224,10 +2224,22 @@
             var oriStartSlash = dateSlashToDash(planIng.startDay);
             var oriEndSlash = dateSlashToDash(planIng.endDay);
             var imgUrl = $(".plan_set_blk>.inner_blk>.checklist_blk>.map").css('background-image').replace('url(', '').replace(')', '');
-            var planDateChangeUrl = "trip/addTripPlan?strPlanName=" + planIng.planName + "&strImageUrl=" + imgUrl + "&strDatetimeFrom=" + oriStartSlash + "&strDatetimeTo=" + oriEndSlash;
-            $.getJSON(planDateChangeUrl, function(jsonResp) {
-                console.log("date set success");
-            });
+            // var planDateChangeUrl = "trip/addTripPlan?strPlanName=" + planIng.planName + "&strImageUrl=" + imgUrl + "&strDatetimeFrom=" + oriStartSlash + "&strDatetimeTo=" + oriEndSlash;
+            
+            // $.getJSON(planDateChangeUrl, function(jsonResp) {
+            //     console.log("date set success");
+            // });
+
+            $.post("/trip/addTripPlan", { csrfmiddlewaretoken: strCsrfToken, strPlanName: planIng.planName, strImageUrl: imgUrl, strDatetimeFrom: oriStartSlash, strDatetimeTo: oriEndSlash })
+                .done(function() {
+                    console.log("date set success");
+                })
+                .fail(function() {
+                    console.log("error");
+                })
+                .always(function() {
+                    console.log("complete");
+                });
         }
 
 
@@ -2256,9 +2268,20 @@
                 var oriEndSlash = dateSlashToDash(planIng.endDay);
 
                 planImgUploadUrl = "/trip/addTripPlan?strPlanName=" + name + "&strImageUrl=" + imgUrl + "&strDatetimeFrom=" + oriStartSlash + "&strDatetimeTo=" + oriEndSlash;
-                $.getJSON(planImgUploadUrl, function(jsonResp) {
-                    console.log("plan img set success");
-                });
+
+                // $.getJSON(planImgUploadUrl, function(jsonResp) {
+                //     console.log("plan img set success");
+                // });
+                $.post("/trip/addTripPlan", { csrfmiddlewaretoken: strCsrfToken, strPlanName: name, strImageUrl: imgUrl, strDatetimeFrom: oriStartSlash, strDatetimeTo: oriEndSlash })
+                    .done(function() {
+                        console.log("plan img set success");
+                    })
+                    .fail(function() {
+                        console.log("error");
+                    })
+                    .always(function() {
+                        console.log("complete");
+                    });
             });
             // var ok = 0;
             // var imgUrl = "";
