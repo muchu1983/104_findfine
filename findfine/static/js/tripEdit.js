@@ -122,6 +122,10 @@
         // 登出動作
         logoutToHome("#logOut");
 
+        setTopPlanNum();
+
+        setTopWishNum();
+
 
         $("#wishList").click(function() {
             window.location = "/page/wishList";

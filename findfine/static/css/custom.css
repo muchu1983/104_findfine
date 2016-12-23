@@ -3707,7 +3707,8 @@ input:-moz-placeholder {
 .sort_sel_blk > .sel>.icon-diagram_up.reverse {
     transform: rotate(180deg);
 }
-.no_find_blk{
+
+.no_find_blk {
     font-family: Roboto;
     font-size: 20px;
     font-weight: 500;
@@ -3717,6 +3718,7 @@ input:-moz-placeholder {
     height: 500px;
     line-height: 200px;
 }
+
 .page_link_blk {
     position: relative;
     clear: both;
@@ -8353,6 +8355,28 @@ input:-moz-placeholder {
     background-size: 60px;
     width: 100%;
     height: 260px;
+    text-align: center;
+}
+
+.static_content_blk>.gray_back_blk>.content>img {
+    
+    margin: auto 30px;
+}
+
+#wasaTeam {
+    width: 200px;
+}
+
+#agoda {
+    width: 100px;
+}
+
+#hotelsCombined {
+    width: 265px;
+}
+
+#skyscanner {
+    width: 120px;
 }
 
 .cancel_btn.icon-cancel {
@@ -8456,6 +8480,14 @@ input:-moz-placeholder {
 }
 
 @media (max-width: 1050px) {
+    .static_content_blk>.gray_back_blk{
+
+        height: 600px;
+    }
+    .static_content_blk>.gray_back_blk>.content>img {
+        display: block;
+    margin: 50px auto;
+    }
     .pad_menu {
         display: block;
     }
