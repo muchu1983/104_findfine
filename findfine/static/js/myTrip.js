@@ -19,7 +19,7 @@
 
         // 頭像點擊
         headBtnClick();
-
+        console.log("dada");
         // 設定上方wish 數量
         setTopWishNum();
 

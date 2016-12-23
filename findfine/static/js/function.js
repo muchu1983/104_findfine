@@ -852,6 +852,9 @@ function wishPageRenew(wishFolderPick) {
             var lstDicTripData = jsonResp["trip"];
 
             $("#wishTopNum").html(lstDicTripData.length);
+            $("#innerWishNum").html(lstDicTripData.length);
+            $("#innerFolderNum").html(folderJson.length);
+
             folderJson = renewFolders(folderJson, lstDicTripData);
             // 放入folders資料
             for (var i = 0; i < folderJson.length; i++) {
@@ -1753,6 +1756,7 @@ function setTopPlanNum(){
     $.getJSON(getPlanListUrl, function(jsonResp) {
         // console.log(jsonResp.plan);
         var planA = jsonResp.plan;
+        console.log(planA);
         $("#planTopNum").html(planA.length);
     });
 }

@@ -149,10 +149,10 @@ function initMap() {
         });
 
         // moretour按鈕點擊 @Q@ davidturtle
-        $("#moreBtn").click(function(event) {
-            window.location = "/page/find";
+        // $("#moreBtn").click(function(event) {
+        //     window.location = "/page/find";
 
-        });
+        // });
         $('#btnFindTrip').on('click', function() {
             //暫時改丟靜態頁,之後改後端接
             //若無googlemap資訊 將值帶到下一頁
@@ -243,7 +243,7 @@ function homeRecomTour() {
 
         if (jsDetectWidth > 1049) {
             var myLoop = setInterval(function() {
-
+                console.log(ingNumber);
                 homeRecHide(ingNumber);
                 ingNumber = parseInt($("#tourBlk").attr('data-ing'));
                 ingNumber = ingNumber + 3;
@@ -278,6 +278,58 @@ function homeRecomTour() {
                 homeRecShow(ingNumber);
             }, 3000);
         }
+        $("#moreBtn").click(function(event) {
+            jsDetectWidth = $(window).width();
+            $("#tourBlk").attr('data-ing', 0);
+            clearInterval(myLoop);
+            ingNumber = parseInt($("#tourBlk").attr('data-ing'));
+            ingNumber = ingNumber + 3;
+            if (ingNumber >= lstDicTripData.length) {
+                ingNumber = 0;
+            }
+            homeRecShow(ingNumber);
+            // 隔十秒換三張 
+            // homeRecAct(lstDicTripData.length);
+            console.log(ingNumber);
+            if (jsDetectWidth > 1049) {
+                myLoop = setInterval(function() {
+
+                    homeRecHide(ingNumber);
+                    ingNumber = parseInt($("#tourBlk").attr('data-ing'));
+                    ingNumber = ingNumber + 3;
+                    if (ingNumber >= lstDicTripData.length) {
+                        ingNumber = 0;
+                    }
+                    $("#tourBlk").attr('data-ing', ingNumber);
+                    homeRecShow(ingNumber);
+                }, 3000);
+            } else if (jsDetectWidth > 767) {
+                myLoop = setInterval(function() {
+
+                    homeRecHide(ingNumber);
+                    ingNumber = parseInt($("#tourBlk").attr('data-ing'));
+                    ingNumber = ingNumber + 2;
+                    if (ingNumber >= lstDicTripData.length) {
+                        ingNumber = 0;
+                    }
+                    $("#tourBlk").attr('data-ing', ingNumber);
+                    homeRecShow(ingNumber);
+                }, 3000);
+            } else {
+                myLoop = setInterval(function() {
+
+                    homeRecHide(ingNumber);
+                    ingNumber = parseInt($("#tourBlk").attr('data-ing'));
+                    ingNumber = ingNumber + 1;
+                    if (ingNumber >= lstDicTripData.length) {
+                        ingNumber = 0;
+                    }
+                    $("#tourBlk").attr('data-ing', ingNumber);
+                    homeRecShow(ingNumber);
+                }, 3000);
+            }
+
+        });
         $(window).resize(function(event) {
             jsDetectWidth = $(window).width();
             $("#tourBlk").attr('data-ing', 0);
