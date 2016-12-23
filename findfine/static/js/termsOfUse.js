@@ -45,7 +45,7 @@ function initStatus() {
         mobileMenuClick();
 
         // toolbox點擊
-        toolboxClick()
+        toolboxClick();
 
         homeInitCurrencySelect();
 
