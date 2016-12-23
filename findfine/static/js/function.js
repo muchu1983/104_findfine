@@ -76,12 +76,11 @@ function addToWishlistBtnClick() {
             $("#addToFolderBlk").css({
                 bottom: '10px',
             });
+            console.log(tarId);
 
             $("#addToFolderBlk>.info>.multi_sel_btn>.menu>li").off();
             $("#addToFolderBlk>.info>.multi_sel_btn>.menu>li").click(function(event) {
                 $(this).toggleClass('active');
-
-
                 if ($(this).hasClass('active')) {
                     var favoUrl = "/trip/addFavoriteTrip?intTripId="+ingId+"&add_folder="+$(this).children('span').html();
                 }else{
@@ -89,24 +88,25 @@ function addToWishlistBtnClick() {
                 }
                 $.getJSON(favoUrl, function(jsonResp) {
                     console.log("add or remove success");
+                    timer = setTimeout(function() {
+                        $("#addToFolderBlk").css({
+                            bottom: '-500px',
+                        });
+                        ingId = -1;
+                    }, 5000);
+                    $("#addToFolderBlk").click(function(event) {
+                        clearInterval(timer);
+                        timer = setTimeout(function() {
+                            $("#addToFolderBlk").css({
+                                bottom: '<-5></-5>00px',
+                            });
+                            ingId = -1;
+                        }, 5000);
+                    });
                 });
 
             });
-            timer = setTimeout(function() {
-                $("#addToFolderBlk").css({
-                    bottom: '-500px',
-                });
-                ingId = -1;
-            }, 5000);
-            $("#addToFolderBlk").click(function(event) {
-                clearInterval(timer);
-                timer = setTimeout(function() {
-                    $("#addToFolderBlk").css({
-                        bottom: '<-5></-5>00px',
-                    });
-                    ingId = -1;
-                }, 5000);
-            });
+            
         }
     });
 }
@@ -851,6 +851,7 @@ function wishPageRenew(wishFolderPick) {
             //trip data
             var lstDicTripData = jsonResp["trip"];
 
+            $("#wishTopNum").html(lstDicTripData.length);
             folderJson = renewFolders(folderJson, lstDicTripData);
             // 放入folders資料
             for (var i = 0; i < folderJson.length; i++) {
@@ -1589,6 +1590,7 @@ function planListRefresh() {
             $(".waiting_fullblk").hide();
             $("body").removeClass('waiting_body');
         }
+        $("#planTopNum").html(planA.length);
         for (var i = 0; i < planA.length; i++) {
             var tarPlan = planA[i];
             if (i == planA.length - 1) {
@@ -1659,7 +1661,7 @@ function planMoreClick() {
 function planClick() {
     $(".plan").off();
     $(".plan").click(function(event) {
-        if (!event.target.matches(".plan>.more_blk>.more_btn")) {
+        if (!event.target.matches(".plan>.more_blk>.more_btn") && !event.target.matches(".plan>.more_blk>.more_menu") && !event.target.matches(".plan>.more_blk>.more_menu *")) {
             var tarPlanId = $(this).attr('data-id');
             window.location = "/page/tripEdit?ingPlanId=" + tarPlanId;
         }
@@ -1744,4 +1746,23 @@ function addWishFolderInit(tar) {
 function wishFolderLiCon(name) {
     var x = '<li><span>' + name + '</span><i class="icon-checkmark"></i></li>';
     return x;
+}
+
+function setTopPlanNum(){
+    var getPlanListUrl = "/trip/getTripPlan"
+    $.getJSON(getPlanListUrl, function(jsonResp) {
+        // console.log(jsonResp.plan);
+        var planA = jsonResp.plan;
+        $("#planTopNum").html(planA.length);
+    });
+}
+
+function setTopWishNum(){
+    var getPlanListUrl = "/trip/getFavoriteTrip"
+    $.getJSON(getPlanListUrl, function(jsonResp) {
+        // console.log(jsonResp.plan);
+        var wishA = jsonResp.trip;
+        console.log(wishA);
+        $("#wishTopNum").html(wishA.length);
+    });
 }

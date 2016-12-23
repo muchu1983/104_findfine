@@ -63,6 +63,7 @@
     <link href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700,900" rel="stylesheet">
     <script type="text/javascript">
     var strEmail = "{{strEmail}}";
+    var strCsrfToken = "{{csrf_token}}";
     </script>
 </head>
 
@@ -205,12 +206,12 @@
             <div class="sub_header_blk">
                 <div class="inner_blk">
                     <div class="plans active">
-                        <div class="number">7</div>
+                        <div class="number" id="planTopNum">7</div>
                         <div class="text">Plans</div>
                         <div class="acting_line"></div>
                     </div>
                     <div class="wishes" id="wishesSel">
-                        <div class="number">43</div>
+                        <div class="number" id="wishTopNum">43</div>
                         <div class="text">Wishes</div>
                         <div class="acting_line"></div>
                     </div>
