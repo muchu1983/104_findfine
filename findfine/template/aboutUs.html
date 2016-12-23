@@ -32,6 +32,7 @@
     <!-- custom JavaScript -->
     <script src="/static/js/function.js"></script>
     <script src="/static/js/static.js"></script>
+    <script src="/static/js/aboutUs.js"></script>
     <!-- 低瀏覽器版本相容條件註解 -->
     <!--[if lt IE 9]>
         <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
@@ -74,7 +75,7 @@
             <div id="headBtn" class="head_btn" style="background-image: url(/static/img/head_sample.jpg);">
                 <div class="head_menu" id="headMenu">
                     <img src="/static/img/blk_triangle.png" class="triangle">
-                    <div id="logOut" class="logout_btn">log Out</div>
+                    <div id="logOut" class="logout_btn">Log Out</div>
                 </div>
                 <span>&nbsp;</span>
                 <span id="strEmail" style="font-style:oblique;color:orange"></span>
@@ -137,6 +138,7 @@
         </div>
         <!-- /.container-fluid -->
     </nav>
+    <!--
     <div class="pad_menu" id="padMenu">
         <div class="close_btn icon-cancel"></div>
         <div class="pad_menu_btn" id="padWishlist">
@@ -148,6 +150,34 @@
             <span>My Plan</span>
         </div>
     </div>
+    -->
+    <div class="pad_menu" id="padMenu">
+        <div class="close_btn icon-cancel"></div>
+        <div class="login_btns">            
+            <div class="pad_menu_btn" id="padWishlist">
+                <span class="icon icon-wishlist"></span>
+                <span>Wishlist</span>
+            </div>
+            <div class="pad_menu_btn" id="padMyPlan">
+                <span class="icon icon-myplan"></span>
+                <span>My Plan</span>
+            </div>
+        </div>
+        <div class="logout_btns">            
+            <div id="padRegister" class="header_blk_btn">Sign Up</div>
+            <div id="padLoginBtn" class="header_blk_btn">Log In</div>
+        </div>
+    </div>
+    <div class="plane_print_blk">
+        <svg class="plane_print">
+            <path class="cover" fill="none" stroke="#ffffff" stroke-width="1" stroke-linecap="square" stroke-dasharray="5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,2000" d="M0.568,255.942c0,0,299-45,215-129 c-19.879-19.879-20-55,72-56c24.94-0.271,169-2,169-2h737.507c0,0,2.607,0,20.493,0c25.011,0,40,4,54-13s8-42-5-50 c-29.304-18.033-73,11-45,54s279,76,279,76" />
+            </path>
+        </svg>
+    </div>
+    <div class="flying_plane_blk">
+        <div class="flying_plane icon-airplane"></div>
+    </div>
+    <!-- -->
     <div class="static_content_blk">
         <!-- <div class="page_title">About Us</div> -->
         <!-- <div class="main_pic_blk"></div> -->
