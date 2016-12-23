@@ -20,6 +20,9 @@
         // 頭像點擊
         headBtnClick();
 
+        // 設定上方wish 數量
+        setTopWishNum();
+
         // 通知止滑
         notiBlkPrevent();
         // 個人設定點選 @TODO 點擊後要將資料傳到後端 @Q@ davidturtle 

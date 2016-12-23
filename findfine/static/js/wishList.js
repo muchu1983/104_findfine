@@ -13,6 +13,9 @@ function initWishList() {
     // 頁面刷新
     wishPageRenew();
 
+    // 設定起頭PLAN數字
+    setTopPlanNum();
+
     // pad menu按鈕點擊
     padMenuAct();
 
