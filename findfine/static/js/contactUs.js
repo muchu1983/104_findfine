@@ -116,6 +116,59 @@ function initStatus() {
         $("#noLogHeadBtn").click(function() {
             window.location = "/account/login";
         });
+        
+
+    // LOGO 點擊
+    $('#logoTop').click(function(event) {
+        window.location = "/";
+    });
+
+    //搜尋按鈕 點擊
+    $("#btnSearch").click(function() {
+
+        // $("#current_page").html("1");
+        $("#current_page").val("1");
+        var sortCondition = [];
+        sortCondition[0] = $("#sortValBtn .sort_val").html();
+        sortCondition[1] = $("#sortWayBtn .sort_val").html();
+        $('html,body').animate({
+            scrollTop: $("#findContent").offset().top
+        }, 600);
+        search(sortCondition);
+
+    });
+
+    // PAD搜尋按鈕 點擊
+    $("#padBtnSearch").click(function() {
+
+        // $("#current_page").html("1");
+        $("#current_page").val("1");
+        var sortCondition = [];
+        sortCondition[0] = $("#sortValBtn .sort_val").html();
+        sortCondition[1] = $("#sortWayBtn .sort_val").html();
+        $('html,body').animate({
+            scrollTop: $("#findContent").offset().top
+        }, 600);
+        search(sortCondition);
+
+    });
+
+    // wishList 按鈕 點擊
+    $("#wishList").click(function() {
+        window.location = "/page/wishList";
+    });
+
+    // logOut 按鈕 點擊
+    $("#logOut").click(function() {
+        if ($("#logOut").html() == "Log Out") {
+            window.location = "/account/logout";
+        }
+    });
+
+    // myPlans 按鈕 點擊
+    $("#myPlans").click(function() {
+        window.location = "/page/myTrip";
+    });
     };
 
 })(jQuery);
