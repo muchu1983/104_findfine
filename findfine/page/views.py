@@ -62,19 +62,31 @@ def showFindPage(request):
     return render(request, "find.html", dicDataFromServer)
     
 def showAboutUsPage(request):
-    return render(request, "aboutUs.html", {})
+    dicRenderData = {}
+    #從 session 取得已登入的 使用者 email
+    strUserEmail = request.session.get("logined_user_email", None)
+    dicRenderData.setdefault("strEmail", strUserEmail)
+    return render(request, "aboutUs.html", dicRenderData)
     
 def showAdvertisementPage(request):
     return render(request, "advertisement.html", {})
     
 def showContactUsPage(request):
-    return render(request, "contactUs.html", {})
+    dicRenderData = {}
+    #從 session 取得已登入的 使用者 email
+    strUserEmail = request.session.get("logined_user_email", None)
+    dicRenderData.setdefault("strEmail", strUserEmail)
+    return render(request, "contactUs.html", dicRenderData)
     
 def showPartnershipPage(request):
     return render(request, "partnership.html", {})
     
 def showTermsOfUsePage(request):
-    return render(request, "termsOfUse.html", {})
+    dicRenderData = {}
+    #從 session 取得已登入的 使用者 email
+    strUserEmail = request.session.get("logined_user_email", None)
+    dicRenderData.setdefault("strEmail", strUserEmail)
+    return render(request, "termsOfUse.html", dicRenderData)
     
 def showNoticePage(request):
     return render(request, "notice.html", {})
@@ -121,5 +133,8 @@ def showTourSharePage(request):
     return render(request, "tripShare.html", {})
     
 def showCooperationPage(request):
-    #tour means collection of trips , tour 代表許多 trip 的集合
-    return render(request, "cooperation.html", {})
+    dicRenderData = {}
+    #從 session 取得已登入的 使用者 email
+    strUserEmail = request.session.get("logined_user_email", None)
+    dicRenderData.setdefault("strEmail", strUserEmail)
+    return render(request, "cooperation.html", dicRenderData)
