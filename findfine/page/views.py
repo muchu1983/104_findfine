@@ -138,3 +138,6 @@ def showCooperationPage(request):
     strUserEmail = request.session.get("logined_user_email", None)
     dicRenderData.setdefault("strEmail", strUserEmail)
     return render(request, "cooperation.html", dicRenderData)
+    
+def showDecember2016Page(request):
+    return render(request, "december2016.html", {})
