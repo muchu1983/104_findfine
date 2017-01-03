@@ -1,0 +1,233 @@
+<html>
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <title>FindFineTour</title>
+    <!-- favicon -->
+    <link rel="shortcut icon" type="image/png" href="/static/img/favicon.png">
+    <!-- Bootstrap Core CSS -->
+    <link href="/static/vendor/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/static/vendor/bootstrap-select/dist/css/bootstrap-select.min.css" rel="stylesheet">
+    <!-- Custom Fonts -->
+    <link href="/static/vendor/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+    <link href='https://fonts.googleapis.com/css?family=Raleway:400,600' rel='stylesheet' type='text/css'>
+    <link href='https://fonts.googleapis.com/css?family=Caudex|Cormorant+Garamond' rel='stylesheet' type='text/css'>
+    <!-- custom CSS -->
+    <link href="/static/css/custom.css" rel="stylesheet">
+    <link href="/static/css/bootstrapCustom.css" rel="stylesheet">
+    <!-- jQuery core-->
+    <script src="/static/vendor/jquery/dist/jquery.min.js"></script>
+    <!-- google map api -->
+    <script src="https://maps.googleapis.com/maps/api/js?v=3&sensor=false&signed_in=true&language=en&amp;libraries=places&signed_in=false&key=AIzaSyBNW1g69sGY8q_45F0Ob1lMbZn3fWyiL1o"></script>
+    <!-- Bootstrap Js -->
+    <script src="/static/vendor/bootstrap/dist/js/bootstrap.min.js"></script>
+    <!-- Bootstrap SelectPicker Js -->
+    <script src="/static/vendor/bootstrap-select/dist/js/bootstrap-select.min.js"></script>
+    <!-- velocity animation -->
+    <script src="/static/vendor/velocity/velocity.min.js"></script>
+    <!-- custom JavaScript -->
+    <script src="/static/js/custom.js"></script>
+    <script src="/static/js/function.js"></script>
+    <script src="/static/js/aboutUs.js"></script>
+    <!-- 低瀏覽器版本相容條件註解 -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+    <!-- icon-font -->
+    <link rel="stylesheet" href="/static/icon-font/style.css">
+    <!-- google font Roboto -->
+    <link href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700,900" rel="stylesheet">
+    <script type="text/javascript">
+    var strEmail = "{{strEmail}}";
+    </script>
+</head>
+
+<body id="page-top">
+    <nav id="mainNav" class="navbar navbar-default navbar-custom navbar-fixed-top blue_nav">
+        <!-- tool可放置於此 -->
+        <div class="toolbox_blk">
+        <div style="height: 30%"></div>
+        <div class="gray_back_blk">
+            <div class="content">
+                <a target="_blank" href="https://www.skyscanner.com.tw/"><img id="agoda" src="/static/img/agoda.png"></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                <a target="_blank" href="https://www.hotelscombined.com/"><img id="hotelsCombined" src="/static/img/hotelsCombined.png"></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                <a target="_blank" href="https://www.agoda.com/partners/partnersearch.aspx?cid=1765710&pcs=1&hl=en&sort=star5To1"><img id="skyscanner" src="/static/img/skyscanner.png"></a>
+            </div>
+        </div>
+        </div>
+        <div class="container">
+            <div class="navbar-header page-scroll find">
+                <a class="icon-logo" id="logoTop"></a>
+                <div class="mini_searchbar">
+                    <span class="icon-magnifier"></span>
+                    <input type="text" name="" placeholder="Where are you going?" id="topSearch" class="blue_bg">
+                </div>
+            </div>
+            <div id="headBtn" class="head_btn" style="background-image: url(/static/img/head_sample.jpg);">
+                <div class="head_menu" id="headMenu">
+                    <img src="/static/img/blk_triangle.png" class="triangle">
+                    <div id="logOut" class="logout_btn">Log Out</div>
+                </div>
+                <span>&nbsp;</span>
+                <span id="strEmail" style="font-style:oblique;color:orange"></span>
+                <div class="noti_ing"></div>
+            </div>
+            <div id="noLogHeadBtn" class="head_btn nolog" style="background-image: url(/static/img/head_logout.jpg);">
+            </div>
+            <div class="header_btn_blk adjust" id="bs-example-navbar-collapse-1">
+                <div class="toolbox_btn icon-toolbox">
+                    <span class="text">ToolBox</span>
+                </div>
+                <ul class="nav navbar-nav currency_sel_blk">
+                    <li>
+                        <div class="CurrencyDiv navSelect">
+                            <select id="moneySelect" name="" class="bsSelect">
+                                <option value="USD" data-content='USD'></option>
+                                <option value="EUR" data-content='EUR'></option>
+                                <option value="CNY" data-content='CNY'></option>
+                                <option value="GBP" data-content='GBP'></option>
+                                <option value="JPY" data-content='JPY'></option>
+                                <option value="AUD" data-content='AUD'></option>
+                                <option value="NZD" data-content='NZD'></option>
+                                <option value="SGD" data-content='SGD'></option>
+                                <option value="HKD" data-content='HKD'></option>
+                                <option value="TWD" data-content='TWD'></option>
+                            </select>
+                        </div>
+                    </li>
+                </ul>
+                <div class="login_btns">
+                    <div id="wishList" class="header_btn btn-info">
+                        <span class="icon_blk">                  
+                            <span class="icon-quill"></span>
+                        <span class="icon-scroll"></span>
+                        <span class="extend_line"></span>
+                        </span>
+                        <span class="text">Wishlist</span>
+                    </div>
+                    <div id="myPlans" class="header_btn btn-info">
+                        <span class="icon_blk">
+                            <span class="icon-airplane"></span>
+                        <span class="icon-notebook"></span>
+                        <svg class="extend_dotted_line">
+                            <g fill="none" stroke="#ffffff" stroke-width="1">
+                                <path stroke-dasharray="5,5" d="M0 0 80 0" />
+                            </g>
+                        </svg>
+                        </span>
+                        <span class="text">My Plan</span>
+                    </div>
+                </div>
+                <div class="logout_btns">
+                    <div id="register" class="header_blk_btn">Sign Up</div>
+                    <div id="loginBtn" class="header_blk_btn">Log In</div>
+                </div>
+                <div id="padMenuBtn" class="header_menu_btn icon-menu"></div>
+                <div id="mobileMenuBtn" class="header_menu_btn icon-menu"></div>
+            </div>
+            <!-- /.navbar-collapse -->
+        </div>
+        <!-- /.container-fluid -->
+    </nav>
+    <!--
+    <div class="pad_menu" id="padMenu">
+        <div class="close_btn icon-cancel"></div>
+        <div class="pad_menu_btn" id="padWishlist">
+            <span class="icon icon-wishlist"></span>
+            <span>Wishlist</span>
+        </div>
+        <div class="pad_menu_btn" id="padMyPlan">
+            <span class="icon icon-myplan"></span>
+            <span>My Plan</span>
+        </div>
+    </div>
+    -->
+    <div class="pad_menu" id="padMenu">
+        <div class="close_btn icon-cancel"></div>
+        <div class="login_btns">            
+            <div class="pad_menu_btn" id="padWishlist">
+                <span class="icon icon-wishlist"></span>
+                <span>Wishlist</span>
+            </div>
+            <div class="pad_menu_btn" id="padMyPlan">
+                <span class="icon icon-myplan"></span>
+                <span>My Plan</span>
+            </div>
+        </div>
+        <div class="logout_btns">            
+            <div id="padRegister" class="header_blk_btn">Sign Up</div>
+            <div id="padLoginBtn" class="header_blk_btn">Log In</div>
+        </div>
+    </div>
+    <div class="plane_print_blk">
+        <svg class="plane_print">
+            <path class="cover" fill="none" stroke="#ffffff" stroke-width="1" stroke-linecap="square" stroke-dasharray="5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,10,5,2000" d="M0.568,255.942c0,0,299-45,215-129 c-19.879-19.879-20-55,72-56c24.94-0.271,169-2,169-2h737.507c0,0,2.607,0,20.493,0c25.011,0,40,4,54-13s8-42-5-50 c-29.304-18.033-73,11-45,54s279,76,279,76" />
+            </path>
+        </svg>
+    </div>
+    <div class="flying_plane_blk">
+        <div class="flying_plane icon-airplane"></div>
+    </div>
+    <!-- -->
+    
+    
+
+        <div class="team_blk">
+            <div class="inner_blk">
+                <div class="image" style="background-image: url({{current_month_img_url}}); width:100%;">
+            </div>
+        </div>
+    
+    
+    <div class="static_content_blk">
+
+        <div class="title">Paris</div>
+        <div class="text">
+            &nbsp;&nbsp;Paris!  What’s your first impression on this city?
+                        Paris! An Amazing City!
+                        Fashionable, romantic, or cultural?
+                        Take myself as an example.  No matter how many times I visit Paris, there are still many interesting and charming things occurring during my trip.  Every year I am used to staying in Paris at least for a week and trying different ways to explore this city.  I put may local tours into my itinerary to see what may make this trip more attractive and memorizable.  It does work.  However, it also annoyed me to write this article.  I really don’t know how to introduce every part of Paris thoroughly in only one article so I will introduce some places from my must-go list in Paris. 
+                        In the very beginning, I would like to talk about FindFineTour, a meta search engine for local tours around the world. Let’s introduce myself first. I used to be a product manager in a big travel agency and in charge of the tour products of Europe and the United States. The main reason for customers to decide to join or not no based on the if there are enough scenic spots which are exactly they want. However, some of them are not so happy with the group tour. They may start to travel by themselves. Are they really good at planning their trip? Booking flight tickets and hotels is easy but arranging a satisfied itinerary is hard. Sometimes they do need some local tours to help them make their trips more colorful and meaningful.  They want to be flexible and well-planned.  As a result, we launch FindFineTour to help travelers to design their trips much easier. You just need to book some local tours offered by trustable local tour website. The most important function for FindFineTour is you can find all the information you want without searching one by one. It is convenient, isn’t it? 
+                        Everyone has different definition for local tours. 
+                        For me, it’s a efficient way to discover a city. I consider Paris a melting pot put into everything you want. Staying whole day along Seine River is my routine ceremony before leaving for another city. We are used to crabbing two bottles of white wines, two glasses, and some cheese. This is our way to worship every trip in Paris. Saying Hi and Goodbye to the passengers on the tourist cruise is . You can see people smile which shows that how much they enjoy the cruise.  It’s just that what my mom did in on the London Bridge. She cannot speak any English. However, when she waved her hand from the London Bridge to the passengers on the cruise boat, they waved back immediately.  At that time, they are merely the ones who enjoy the city together without speaking any words. 
+                        2014 was my fifth times fooling around in Paris. I booked an apartment nearby Notre-Dame de Paris.  Although I am not a Catholic, I still love to stay there and hear the inside voice of myself.  This time, my cousin and I booked a Skip the Line Eiffel Tower Tour for our second day in Paris. Usually, we just saw from a bar nearby Eiffel Tower and sometimes walked through the bottom of Eiffel Tower which was really like a garden party on the weekend. When we bought the tickets weeks before our trip, we didn’t expect too much about what we were going to see.  However,  I was  really glad we ended up doing this tour. The tour was totally worth it, because we didn’t have to be stuck in the long line. The tour stopped at all four sides of the tower.  At each location our guide pointed out significant landmarks and gave us interesting backstory and trivia about each site. It was entertaining enough that we could remember most of the details for the rest of our trip, and anywhere we went we could point out the landmarks and remember the most important facts about each location. We definitely felt more comfortable and familiar with the city after the tour. 
+                        The next day, we decided to go to Montmartre because my cousin’s major is Art. Montmartre is the home that nurtured most of the great artists and writers living in France for over 200 years. Picasso, van Gogh and countless others lived and worked in these narrow streets. In the popular tourist areas, Montmartre is filled with colorful cafes, watercolor paintings, and caricature artists hoping to paint your portrait, but there are some hidden, charming side streets as well that should not be missed. There is another place which I highly recommended for the ones who love to shop art-related products, Le Marais.  You just need to take metro to St. Paul. Then, start your shopping adventure here. The products here are so unique which can satisfy all picky buyers. We almost cannot remember when was the last time we visited 
+                        Galeries Lafayette Haussmann.  Le Marais is the center of fashion in Paris.  Even you just sat in Cafe along the road, you still can be involved into the atmosphere of Parisian style. Then, if you wanna know more about Morden Art, you cannot miss Centre Georges-Pompidou.  It’s worthy spending a whole day there. There are also lots of art gallery in that area. 
+                        Just stop here. You should explore Paris by yourself and in your way. 
+                        Find more local tours about Paris.  加上一個連結的按鍵
+        </div>
+
+
+    </div>
+    <footer>
+        <div class="container">
+            <ul class="link_blk">
+                <li><a href="/page/aboutUs">About Us</a></li>
+                <li><a href="/page/termsOfUse">Terms & Conditions</a></li>
+                <li><a href="/page/cooperation">Cooperation</a></li>
+                <li><a href="/page/contactUs">Contact Us</a></li>
+            </ul>
+            <div class="copyright_blk">Copyright © 2016 FindFineTour All rights reserved.</div>
+        </div>
+    </footer>
+    <!-- <H1>About Us</H1>
+    <span>
+    Tom and Karaa have been friends for years, and are the co-founder of FindFine Tour.  They both love backpack traveling; enjoy the process of planning the schedule, exploring the culture, making every trip a magical event.
+
+    However, they prefer to travel in very different ways.  Tom is a huge fan of railways, loves to travel by trains.  But as a physician, he doesn't get a long vacation, and when he does, he prefers to travel to as many spots as possible.  He was once delayed at Avignon, Tom joined a one-day tour around the town, and he was overwhelmed by the friendly guide and the tourist all over the world.  He then realized the different aspect of local tours, and started to receive friends from all over the world, even became a voluntary tour guide, to show them what a lovely country Taiwan is.  He had been dedicated to cultural exchange ever since.  
+
+    Karaa loves to explore the city, prefers to stay at a location for a period of time, joining the local cooking and dining courses, spends the whole wondering around the river, with wine and cheese in her hands, finding her little secret spots in every city, blending in with the locals, slowly savors every corner of the city.  She has been teaching after gotten her master degree of education in England, but threw herself into travel industry after believing the combined travel plans is the way to travel in the future.  Booking travel tickets and accommodation has become rather common; planning the schedule is the most difficult and time assuming part. 
+
+    Therefore, the two best friends co-founded FindFine Tour in June, 2016, dedicated in promoting destination travel plans, letting all the travel lovers to have more choices, collecting the information more easily, to paint the trip by themselves, making each trip a unique experience, to save to time in planning, and to make every trip a much easier plan!
+    </span> -->
+</body>
+
+</html>
+<script type="text/javascript">
+    $('#strEmail').html("Hi ! "+strEmail);
+</script>
