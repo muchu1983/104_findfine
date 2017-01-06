@@ -9932,17 +9932,6 @@ input:-moz-placeholder {
     .header_blk_btn#loginBtn {
         display: block !important;
     }
-    .icon_to {
-        margin-left: -5px;
-        margin-right: -5px;
-    }
-    .single_sel_btn.short {
-        width: 67px;
-        padding-left: 8px;
-    }
-    .single_sel_btn{
-        padding-left: 9px;
-    }
 }
 
 
