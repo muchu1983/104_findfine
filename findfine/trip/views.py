@@ -471,25 +471,25 @@ def addCustomizedTripPlanItem(request=None):
         #可更新欄位內容
         dicUpdateData = {
             #註解
-            strComment = strComment,
+            "strComment": strComment,
             #規劃開始日期
-            dtDatetimeFrom = currentTimezone.localize(dtDatetimeFrom) if dtDatetimeFrom else None,
+            "dtDatetimeFrom": currentTimezone.localize(dtDatetimeFrom) if dtDatetimeFrom else None,
             #規劃結束日期
-            dtDatetimeTo = currentTimezone.localize(dtDatetimeTo) if dtDatetimeTo else None,
+            "dtDatetimeTo": currentTimezone.localize(dtDatetimeTo) if dtDatetimeTo else None,
             #項目標題
-            strTitle = objTrip.strTitle if objTrip else None,
+            "strTitle": objTrip.strTitle if objTrip else None,
             #主要圖片 url
-            strImageUrl = objTrip.strImageUrl if objTrip else None,
+            "strImageUrl": objTrip.strImageUrl if objTrip else None,
             #地點
-            strLocation = objTrip.strLocation if objTrip else None,
+            "strLocation": objTrip.strLocation if objTrip else None,
             #金額 (USD)
-            intUsdCost = objTrip.intUsdCost if objTrip else None,
+            "intUsdCost": objTrip.intUsdCost if objTrip else None,
             #行程總時數 (Hour)
-            intDurationHour = objTrip.intDurationHour if objTrip else None,
+            "intDurationHour": objTrip.intDurationHour if objTrip else None,
             #經度
-            strLongitude = dicGeopyResult.get("longitude", None),
+            "strLongitude": dicGeopyResult.get("longitude", None),
             #緯度
-            strLatitude = dicGeopyResult.get("latitude", None)
+            "strLatitude": dicGeopyResult.get("latitude", None)
         }
         #upsert 行程規劃
         CustomizedTripPlanItem.objects.update_or_create(
