@@ -468,10 +468,8 @@ def addCustomizedTripPlanItem(request=None):
                 dicGeopyResult["location"] = location
                 dicGeopyResult["latitude"] = latitude
                 dicGeopyResult["longitude"] = longitude
-        #upsert 行程規劃
-        CustomizedTripPlanItem.objects.update_or_create(
-            #行程規劃 ForeignKey
-            fkCustomizedTripPlan = objCustomizedTripPlan,
+        #可更新欄位內容
+        dicUpdateData = {
             #註解
             strComment = strComment,
             #規劃開始日期
@@ -480,8 +478,6 @@ def addCustomizedTripPlanItem(request=None):
             dtDatetimeTo = currentTimezone.localize(dtDatetimeTo) if dtDatetimeTo else None,
             #項目標題
             strTitle = objTrip.strTitle if objTrip else None,
-            #原始 URL
-            strOriginUrl = objTrip.strOriginUrl if objTrip else None,
             #主要圖片 url
             strImageUrl = objTrip.strImageUrl if objTrip else None,
             #地點
@@ -494,6 +490,15 @@ def addCustomizedTripPlanItem(request=None):
             strLongitude = dicGeopyResult.get("longitude", None),
             #緯度
             strLatitude = dicGeopyResult.get("latitude", None)
+        }
+        #upsert 行程規劃
+        CustomizedTripPlanItem.objects.update_or_create(
+            #行程規劃 ForeignKey
+            fkCustomizedTripPlan = objCustomizedTripPlan,
+            #原始 URL
+            strOriginUrl = objTrip.strOriginUrl if objTrip else None,
+            #可更新欄位內容
+            defaults = dicUpdateData
         )
         return JsonResponse({"add_customized_trip_plan_item_status":"ok"}, safe=False)
     else:
