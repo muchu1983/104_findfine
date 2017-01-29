@@ -35,6 +35,7 @@ urlpatterns = [
     url(r'^account/register$', account_views.showRegisterPage),
     url(r'^account/userinfo$', account_views.showUserInfoPage),
     url(r'^account/googleOAuth2$', account_views.googleOAuth2),
+    url(r'^account/facebookOAuth2$', account_views.facebookOAuth2),
     url(r'^account/sendEmailVerification$', account_views.sendEmailVerification),
     url(r'^account/verifyEmail$', account_views.verifyEmail),
     url(r'^account/logout$', account_views.userLogout),

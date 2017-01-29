@@ -25,10 +25,15 @@ def showLoginPage(request):
     if request.method == "GET":
         #顯示登入界面
         dicOAuthSetting = {
+            # Google
             "strGoogleOauthScope":"https://www.googleapis.com/auth/userinfo.email https://www.googleapis.com/auth/userinfo.profile https://www.googleapis.com/auth/calendar",
             "strGoogleOauthState":"",
             "strGoogleOauthRedirectUri":"http://www.findfinetour.com:80/account/googleOAuth2",
-            "strGoogleOauthClientId":"985086432043-i429lmduehq54ltguuckc1780rabheot.apps.googleusercontent.com"
+            "strGoogleOauthClientId":"985086432043-i429lmduehq54ltguuckc1780rabheot.apps.googleusercontent.com",
+            # facebook
+            "strFacebookOauthClientId":"1296171130406248",
+            "strFacebookOauthScope":"public_profile,email&redirect_uri",
+            "strFacebookOauthRedirectUri":"http://www.findfinetour.com:80/account/facebookOAuth2"
         }
         return render(request, "login.html", dicOAuthSetting)
     elif request.method == "POST":
@@ -173,6 +178,58 @@ def googleOAuth2(request):
         defaults=dicUpdateData
     )
     logging.info("google OAuth account %s: %s"%(strUserEmail, "created" if isCreateNewData else "updated"))
+    #登入成功設定 session
+    request.session["logined_user_email"] = strUserEmail
+    #導回用戶資訊頁
+    return redirect("/account/userinfo")
+    
+# 透過 facebook OAuth2 取得用戶資料
+def facebookOAuth2(request):
+    #接收授權碼
+    strOAuthCode = request.GET.get("code", None)
+    if not strOAuthCode:
+        #OAuth 授權失敗，導回登入頁
+        return redirect("/account/login")
+    #Oauth 程序
+    strFbClientId = "1296171130406248"
+    strFbClientSecret = "f7361af1e158689d3b5b981190d410cb"
+    strRedirectUri = "http://www.findfinetour.com:80/account/facebookOAuth2"
+    #交付 授權碼 給 FB 取得 access token
+    dicAccessTokenData = {
+        "code":strOAuthCode,
+        "client_id":strFbClientId,
+        "client_secret":strFbClientSecret,
+        "redirect_uri":strRedirectUri
+    }
+    strAccessTokenUrl = "https://graph.facebook.com/oauth/access_token"
+    responseToken = urllib.request.urlopen(strAccessTokenUrl, urllib.parse.urlencode(dicAccessTokenData).encode("utf-8"))
+    strToken =  responseToken.read().decode(responseToken.headers.get_content_charset())
+    #以 access token 取得 使用者 資料
+    responseUserData = urllib.request.urlopen("https://graph.facebook.com/me?fields=id,name,email&" + strToken)
+    strUserData = responseUserData.read().decode(responseToken.headers.get_content_charset())
+    dicUserData = json.loads(strUserData)
+    logging.info("fb-oauth2: %s, %s, %s"%(dicUserData.get("id", ""), dicUserData.get("name", ""), dicUserData.get("email", "")))
+    #更新/新增 使用者資料
+    strUserEmail = dicUserData.get("email", None)
+    strUserFamilyName = dicUserData.get("family_name", None)
+    strUserGivenName = dicUserData.get("name", None)
+    strUserGender = dicUserData.get("gender", None)
+    strUserNationality = dicUserData.get("locale", None)
+    strUserThumbnailUrl = dicUserData.get("picture", None)
+    dicUpdateData = {
+        "strLevel":"Email verified.",
+        "strAuthType":"facebook_oauth2",
+        "strFamilyName":strUserFamilyName,
+        "strGivenName":strUserGivenName,
+        "strGender":strUserGender,
+        "strNationality":strUserNationality,
+        "strThumbnailUrl":strUserThumbnailUrl
+    }
+    (userAccountObj, isCreateNewData) = UserAccount.objects.update_or_create(
+        strEmail=strUserEmail,
+        defaults=dicUpdateData
+    )
+    logging.info("facebook OAuth account %s: %s"%(strUserEmail, "created" if isCreateNewData else "updated"))
     #登入成功設定 session
     request.session["logined_user_email"] = strUserEmail
     #導回用戶資訊頁
