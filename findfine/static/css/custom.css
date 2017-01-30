@@ -6603,6 +6603,36 @@ input:-moz-placeholder {
     padding-left: 35px;
 }
 
+.login_blk>.inner_blk >.fb_btn {
+    position: relative;
+    display: block;
+    width: 280px;
+    height: 45px;
+    border-radius: 100px;
+    background-color: #3b5998;
+    margin-top: 20px;
+    text-decoration: none;
+    line-height: 44px;
+}
+
+.login_blk>.inner_blk >.fb_btn>.icon-fb {
+    position: absolute;
+    top: 8px;
+    left: 42px;
+    font-size: 28px;
+    color: #ffffff;
+}
+
+.login_blk>.inner_blk >.fb_btn>.text {
+    font-family: Roboto;
+    font-size: 16px;
+    font-weight: 400;
+    letter-spacing: 0.7px;
+    text-align: center;
+    color: #ffffff;
+    padding-left: 35px;
+}
+
 .login_blk>.inner_blk >.input_blk {
     display: table;
     margin-bottom: 30px;
