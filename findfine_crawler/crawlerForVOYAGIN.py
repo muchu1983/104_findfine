@@ -116,7 +116,7 @@ class CrawlerForVOYAGIN:
             if "hour" in strDurationUnit:
                 intDurationHour = intDurationNum
             elif "day" in strDurationUnit:
-                intDurationHour = intDurationNum * 24
+                intDurationHour = intDurationNum * 8
             else:
                 intDurationHour = 1 #default
             #儲存 product 超連結至 localdb

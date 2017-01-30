@@ -119,7 +119,7 @@ class CrawlerForBMG:
                     intDays = 0
                 if not intHours:
                     intHours = 0
-                dicProductJson["intDurationHour"] = (24*intDays) + intHours
+                dicProductJson["intDurationHour"] = (8*intDays) + intHours
                 #strGuideLanguage
                 lstDicGuideLanguage = dicProductDetailData.get("guideLanguages", [])
                 lstStrName = []

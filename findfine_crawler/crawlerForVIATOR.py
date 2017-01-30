@@ -153,7 +153,7 @@ class CrawlerForVIATOR:
                 intTotalDurationHour = intTotalDurationHour + intDurationHour
             if mDurationDay:
                 intDurationDay = int(float(mDurationDay.group(1)))
-                intTotalDurationHour = intTotalDurationHour + (intDurationDay*24)
+                intTotalDurationHour = intTotalDurationHour + (intDurationDay*8)
             return intTotalDurationHour
             
     #下載 vapProducts.xml.zip
