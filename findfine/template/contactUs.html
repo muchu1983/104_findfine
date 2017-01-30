@@ -42,7 +42,8 @@
     <!-- google font Roboto -->
     <link href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700,900" rel="stylesheet">
     <script type="text/javascript">
-    var strEmail = "{{strEmail}}";
+        var strEmail = "{{strEmail}}";
+        var strCsrfToken = "{{csrf_token}}";
     </script>
 </head>
 
@@ -173,6 +174,7 @@
         <div class="text contact">
             Any comments are welcome, especially the ones that can improve our services and the website.
         </div>
+        <a id="sendBtn" href="javascript: void(0)">Send Contact us</a>
     </div>
     <footer class="bottom">
         <div class="container">

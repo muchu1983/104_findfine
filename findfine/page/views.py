@@ -9,6 +9,8 @@ This file is part of BSD license
 import json
 from django.shortcuts import render
 from dashboard.models import JsonDocument
+from django.http import JsonResponse
+from bennu.emailutility import EmailUtility
 
 # Create your views here.
 def showHomePage(request):
@@ -141,3 +143,36 @@ def showCooperationPage(request):
     
 def showDecember2016Page(request):
     return render(request, "december2016.html", {})
+    
+#使用者發出連絡 Email
+def sendContactUsEmail(request):
+    strUserEmail = request.session.get("logined_user_email", None)
+    if strUserEmail:
+        #確定已登入
+        pass
+    else:
+        #未登入
+        strUserEmail = request.POST.get("user_email", "")
+    strMsgTitle = request.POST.get("message_title", "")
+    strMsgContent = request.POST.get("message_content", "")
+    print(strUserEmail, strMsgTitle, strMsgContent)
+    strMsg = (
+        "<h2>FFT Message from %s,</h2>"
+        "<h3>%s</h3>"
+        "<div>"
+        "%s"
+        "</div>"%(strUserEmail, strMsgTitle, strMsgContent)
+    )
+    #寄出 email
+    emailUtil = EmailUtility()
+    emailUtil.sendEmail(
+        strSubject="FFT Message from user: %s"%strUserEmail,
+        strFrom=strUserEmail,
+        strTo="me",
+        strMsg=strMsg,
+        lstStrTarget=["findfine.service@gmail.com"],
+        strSmtp="smtp.gmail.com:587",
+        strAccount="findfine.service@gmail.com",
+        strPassword="a768768a"
+    )
+    return JsonResponse({"contact_status":"ok"}, safe=False)

@@ -169,8 +169,22 @@ function initStatus() {
     $("#myPlans").click(function() {
         window.location = "/page/myTrip";
     });
+    
+    $("#sendBtn").click(function(){
+        dicSendData = {
+            "user_email":"test@gmail.com",
+            "message_title":"test_title",
+            "message_content":"test_content",
+            "csrfmiddlewaretoken":strCsrfToken
+        };
+        //送出管理資料
+        $.post("/page/sendContactUsEmail", dicSendData, function(jsonResp){
+            console.log(jsonResp)
+        }, "json");
+    });
+    
     };
-
+    
 })(jQuery);
 
 
