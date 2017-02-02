@@ -123,7 +123,7 @@ class CrawlerForTRIPBAA:
         strLocation = self.driver.find_element_by_css_selector("div.mtKind p:nth-of-type(1)").text.split("/")[0]
         dicProductJson["strLocation"] = strLocation.strip()
         #intUsdCost
-        strUsdCost = self.driver.find_element_by_css_selector("#orderBox div.MobBox div.orPrice span.blue").text
+        strUsdCost = self.driver.find_element_by_css_selector("div.mtIntro_NoPic div.okListMoney span.import01 span.blue").text
         strUsdCost = re.sub("[^\d\.]", "", strUsdCost)
         intUsdCost = int(float(strUsdCost.strip()))
         dicProductJson["intUsdCost"] = intUsdCost
@@ -138,15 +138,26 @@ class CrawlerForTRIPBAA:
         strIntroduction = re.sub("\s", " ", strIntroduction)
         dicProductJson["strIntroduction"] = strIntroduction
         #intDurationHour
-        strDurationHour = self.driver.find_element_by_css_selector("div.okList span.import01:nth-of-type(2)").text.strip()
-        strDurationHour = re.sub("\s", " ", strDurationHour.lower())
-        intDurationHour = self.convertDurationStringToHourInt(strDurtation=strDurationHour)
+        intDurationHour = 0
+        lstStrSpanTextInOkList = []
+        for eleSpanInOkList in self.driver.find_elements_by_css_selector("div.okList span.import01"):
+            lstStrSpanTextInOkList.append(eleSpanInOkList.text)
+        for strSpanTextInOkList in lstStrSpanTextInOkList:
+            if "Duration" in strSpanTextInOkList:
+                strDurationHour = strSpanTextInOkList.strip()
+                strDurationHour = re.sub("\s", " ", strDurationHour.lower())
+                intDurationHour = self.convertDurationStringToHourInt(strDurtation=strDurationHour)
+                break
         dicProductJson["intDurationHour"] = intDurationHour
         #strGuideLanguage
-        strGuideLanguage = self.driver.find_element_by_css_selector("div.mtLang").text
-        strGuideLanguage = re.sub("[^a-zA-Z]", " ", strGuideLanguage.lower()).strip()
-        strGuideLanguage = re.sub("[\s]+", " ", strGuideLanguage).strip()
-        strGuideLanguage = re.match("^language (.*)$", strGuideLanguage).group(1).strip()
+        strGuideLanguage = "english"
+        for strSpanTextInOkList in lstStrSpanTextInOkList:
+            if "Language" in strSpanTextInOkList:
+                strGuideLanguage = strSpanTextInOkList
+                strGuideLanguage = re.sub("[^a-zA-Z]", " ", strGuideLanguage.lower()).strip()
+                strGuideLanguage = re.sub("[\s]+", " ", strGuideLanguage).strip()
+                strGuideLanguage = re.match("^language (.*)$", strGuideLanguage).group(1).strip()
+                break
         dicProductJson["strGuideLanguage"] = strGuideLanguage
         #strStyle
         strStyle = self.driver.find_element_by_css_selector("div.mtKind p:nth-of-type(1)").text.split("/")[1].strip()

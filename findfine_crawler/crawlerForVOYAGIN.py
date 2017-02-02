@@ -81,20 +81,33 @@ class CrawlerForVOYAGIN:
         
     #切換幣別為 USD
     def changePageCurrencyToUSD(self):
-        eleCurrency = self.driver.find_element_by_css_selector("nav#globalNav ul.g-menu li.settings div.set-currency")
-        eleUsd = self.driver.find_element_by_css_selector("div.setting-menu div.outer ul li a[data-value=USD]")
+        time.sleep(10)
+        eleCurrency = self.driver.find_element_by_css_selector("#header .set-currency")
+        eleUsd = self.driver.find_element_by_css_selector("div.modal_container ul li a[data-value=USD]")
         actHoverThenClick = ActionChains(self.driver)
-        actHoverThenClick.move_to_element(eleCurrency).move_to_element(eleUsd).click().perform()
+        actHoverThenClick.move_to_element(eleCurrency).click().move_to_element(eleUsd).click().perform()
         time.sleep(10)
         logging.info("change currency to USD success.")
+        
+    #切換語言為 en
+    def changePageLanguageToEN(self):
+        time.sleep(10)
+        eleLanguage = self.driver.find_element_by_css_selector("#header .set-language")
+        eleEn = self.driver.find_element_by_css_selector("div.modal_container ul li a[data-value=en]")
+        actHoverThenClick = ActionChains(self.driver)
+        actHoverThenClick.move_to_element(eleLanguage).click().move_to_element(eleEn).click().perform()
+        time.sleep(10)
+        logging.info("change language to EN success.")
         
     #爬取 index 頁面 
     def crawlIndexPage(self, uselessArg1=None):
         logging.info("crawl index page")
         #VOYAGIN index 頁面
-        self.driver.get("https://www.govoyagin.com/?lang=en")
+        self.driver.get("https://www.govoyagin.com/")
         #切換幣別為 USD
         self.changePageCurrencyToUSD()
+        #切換語言為 en
+        self.changePageLanguageToEN()
         #解析國家超連結
         lstEleCountryA = self.driver.find_elements_by_css_selector("#countries-list div.outer ul li a")
         for eleCountryA in lstEleCountryA:
@@ -105,9 +118,11 @@ class CrawlerForVOYAGIN:
             
     #解析 country 頁面
     def parseCountryPage(self, strCountryPage1Url=None):
+        time.sleep(random.randint(2,5)) #sleep random time
         #找尋 product 超連結
         elesProduct = self.driver.find_elements_by_css_selector("ul#discover-ul li.activity-list")
         for eleProduct in elesProduct:
+            time.sleep(random.randint(1,3)) #sleep random time
             strProductUrl = eleProduct.find_element_by_css_selector("a.act-body").get_attribute("href")
             strLocation = eleProduct.find_element_by_css_selector("a.act-body div.info span.location").text.strip()
             intDurationNum = int(float(eleProduct.find_element_by_css_selector("a.act-body div.info span.duration span.duration-number").text.strip()))
@@ -138,16 +153,18 @@ class CrawlerForVOYAGIN:
         lstStrNotObtainedCountryPage1Url = self.db.fetchallNotObtainedCountryUrl()
         for strNotObtainedCountryPage1Url in lstStrNotObtainedCountryPage1Url:
             #re 找出 country 名稱
-            strCountryName = re.match("^https://www.govoyagin.com/things_to_do/(.*)\?lang=en$", strNotObtainedCountryPage1Url).group(1)
+            strCountryName = re.match("^https://www.govoyagin.com/things_to_do/(.*)$", strNotObtainedCountryPage1Url).group(1)
             #country 頁面
             try:
                 intCountryPageNum = 1
                 #country 第1頁
                 time.sleep(random.randint(2,5)) #sleep random time
-                strCountryUrlPageSuffix = "&page=%d"%intCountryPageNum
+                strCountryUrlPageSuffix = "?page=%d"%intCountryPageNum
                 self.driver.get(strNotObtainedCountryPage1Url + strCountryUrlPageSuffix)
                 #切換幣別為 USD
                 self.changePageCurrencyToUSD()
+                #切換語言為 en
+                self.changePageLanguageToEN()
                 #解析 product 超連結
                 self.parseCountryPage(strCountryPage1Url=strNotObtainedCountryPage1Url)
                 #檢查 country 有無下一頁
@@ -155,7 +172,7 @@ class CrawlerForVOYAGIN:
                 while isNextCountryPageExist:
                     time.sleep(random.randint(120,300)) #sleep random time
                     intCountryPageNum = intCountryPageNum+1
-                    strCountryUrlPageSuffix = "&page=%d"%intCountryPageNum
+                    strCountryUrlPageSuffix = "?page=%d"%intCountryPageNum
                     self.driver.get(strNotObtainedCountryPage1Url + strCountryUrlPageSuffix)
                     #解析 product 超連結
                     self.parseCountryPage(strCountryPage1Url=strNotObtainedCountryPage1Url)
@@ -176,7 +193,7 @@ class CrawlerForVOYAGIN:
         #strSource
         dicProductJson["strSource"] = "Voyagin"
         #strOriginUrl
-        dicProductJson["strOriginUrl"] = strProductUrl + u"?lang=en&acode=findfinetour"
+        dicProductJson["strOriginUrl"] = strProductUrl + u"?acode=findfinetour"
         #strUpdateStatus
         dicProductJson["strUpdateStatus"] = "up-to-date"
         #strUpdateTime
@@ -251,9 +268,11 @@ class CrawlerForVOYAGIN:
             if not self.db.checkProductIsGot(strProductUrl=strProductUrl):
                 time.sleep(random.randint(120,300)) #sleep random time
                 try:
-                    self.driver.get(strProductUrl + "?lang=en")
+                    self.driver.get(strProductUrl)
                     #切換幣別為 USD
                     self.changePageCurrencyToUSD()
+                    #切換語言為 en
+                    self.changePageLanguageToEN()
                     #解析 product 頁面
                     self.parseProductPage(strProductUrl=strProductUrl)
                     #更新 product DB 為已爬取 (isGot = 1)

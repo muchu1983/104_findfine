@@ -103,7 +103,7 @@ class CrawlerForGYG:
             if strCityHref.startswith("https://www.getyourguide.com/"):
                 lstStrCityKeyWord = re.sub("https://www.getyourguide.com/", "", strCityHref).split("-")
                 strQ = u"q=" + u"%20".join(lstStrCityKeyWord[0:-1])
-                strLc = u"lc=" + re.sub("[^0-9]", "", lstStrCityKeyWord[-1])
+                strLc = u"lc=l" + re.sub("[^0-9]", "", lstStrCityKeyWord[-1])
                 strCityPage1Url = u"https://www.getyourguide.com/s/?" + strQ + u"&" + strLc
                 self.db.insertCityIfNotExists(strCityPage1Url=strCityPage1Url)
                 logging.info("save city url: %s"%strCityPage1Url)
@@ -126,7 +126,7 @@ class CrawlerForGYG:
         lstStrNotObtainedCityPage1Url = self.db.fetchallNotObtainedCityUrl()
         for strNotObtainedCityPage1Url in lstStrNotObtainedCityPage1Url:
             #re 找出 city 名稱
-            strCityName = re.sub("%20", " ", re.match("^https://www\.getyourguide\.com/s/\?q=(.*)&lc=[\d]+$", strNotObtainedCityPage1Url).group(1))
+            strCityName = re.sub("%20", " ", re.match("^https://www\.getyourguide\.com/s/\?q=(.*)&lc=l[\d]+$", strNotObtainedCityPage1Url).group(1))
             #city 頁面
             intCityPageNum = 1
             #city 第1頁
@@ -259,7 +259,7 @@ class CrawlerForGYG:
     def crawlProductPageWithGivenCityUrl(self, strCityPage1Url=None):
         logging.info("crawl product page with city %s"%strCityPage1Url)
         #re 找出 city 名稱
-        strCityName = re.sub("%20", " ", re.match("^https://www\.getyourguide\.com/s/\?q=(.*)&lc=[\d]+$", strCityPage1Url).group(1))
+        strCityName = re.sub("%20", " ", re.match("^https://www\.getyourguide\.com/s/\?q=(.*)&lc=l[\d]+$", strCityPage1Url).group(1))
         #取得 DB 紀錄中，指定 strCityPage1Url city 的 product url
         lstStrProductUrl = self.db.fetchallProductUrlByCityUrl(strCityPage1Url=strCityPage1Url)
         for strProductUrl in lstStrProductUrl:
