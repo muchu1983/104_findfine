@@ -35,7 +35,6 @@ function initMap() {
             };
         }
     });
-    $(".currency_sel_blk").hide();
     $('#myFriends').hide();
     $('#myMessages').hide();
     $('#logOut').hide();
