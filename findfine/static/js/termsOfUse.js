@@ -10,14 +10,23 @@ function initStatus() {
     $(".login_btns").hide();
     $(".logout_btns").hide();
     //strEmail 如已登入 不顯示login button 並顯示會員帳號
+    var screenWidth = $(window).width();
     if (strEmail == "None") {
         // 暫時隱藏 為測試方便使用
-        $('#register').show();
-        $('#loginBtn').show();
         $('#noLogHeadBtn').show();
         $("#padRegister").show();
         $("#padLoginBtn").show();
         $(".logout_btns").show();
+        if (screenWidth < 769) {
+            $('#register').show();
+            $('#loginBtn').show();
+        } else if (screenWidth < 1051) {
+            $('#register').hide();
+            $('#loginBtn').hide();
+        } else {
+            $('#register').show();
+            $('#loginBtn').show();
+        }
     } else {
         $(".login_btns").show();
         $('#logOut').show();
@@ -30,6 +39,21 @@ function initStatus() {
         $("#padMyPlan").show();
         $(".login_btns").show();
     }
+    $(window).resize(function(event) {
+        var screenWidth = $(window).width();
+        if (strEmail == "None") {
+            if (screenWidth < 769) {
+                $('#register').show();
+                $('#loginBtn').show();
+            } else if (screenWidth < 1051) {
+                $('#register').hide();
+                $('#loginBtn').hide();
+            } else {
+                $('#register').show();
+                $('#loginBtn').show();
+            }
+        }
+    });
 }
 
 (function($) {
@@ -43,6 +67,9 @@ function initStatus() {
 
         // mobile menu按鈕點擊
         mobileMenuClick();
+
+        // 選單搜尋初始化
+        initTopSearch();
 
         // toolbox點擊
         toolboxClick();
@@ -115,62 +142,54 @@ function initStatus() {
         $("#noLogHeadBtn").click(function() {
             window.location = "/account/login";
         });
-        
 
-    // LOGO 點擊
-    $('#logoTop').click(function(event) {
-        window.location = "/";
-    });
 
-    //搜尋按鈕 點擊
-    $("#btnSearch").click(function() {
+        // LOGO 點擊
+        $('#logoTop').click(function(event) {
+            window.location = "/";
+        });
 
-        // $("#current_page").html("1");
-        $("#current_page").val("1");
-        var sortCondition = [];
-        sortCondition[0] = $("#sortValBtn .sort_val").html();
-        sortCondition[1] = $("#sortWayBtn .sort_val").html();
-        $('html,body').animate({
-            scrollTop: $("#findContent").offset().top
-        }, 600);
-        search(sortCondition);
+        //搜尋按鈕 點擊
+        $("#btnSearch").click(function() {
 
-    });
+            // $("#current_page").html("1");
+            $("#current_page").val("1");
+            var sortCondition = [];
+            sortCondition[0] = $("#sortValBtn .sort_val").html();
+            sortCondition[1] = $("#sortWayBtn .sort_val").html();
+            $('html,body').animate({
+                scrollTop: $("#findContent").offset().top
+            }, 600);
+            search(sortCondition);
 
-    // PAD搜尋按鈕 點擊
-    $("#padBtnSearch").click(function() {
+        });
 
-        // $("#current_page").html("1");
-        $("#current_page").val("1");
-        var sortCondition = [];
-        sortCondition[0] = $("#sortValBtn .sort_val").html();
-        sortCondition[1] = $("#sortWayBtn .sort_val").html();
-        $('html,body').animate({
-            scrollTop: $("#findContent").offset().top
-        }, 600);
-        search(sortCondition);
+        // PAD搜尋按鈕 點擊
+        $("#padBtnSearch").click(function() {
 
-    });
+            // $("#current_page").html("1");
+            $("#current_page").val("1");
+            var sortCondition = [];
+            sortCondition[0] = $("#sortValBtn .sort_val").html();
+            sortCondition[1] = $("#sortWayBtn .sort_val").html();
+            $('html,body').animate({
+                scrollTop: $("#findContent").offset().top
+            }, 600);
+            search(sortCondition);
 
-    // wishList 按鈕 點擊
-    $("#wishList").click(function() {
-        window.location = "/page/wishList";
-    });
+        });
 
-    // logOut 按鈕 點擊
-    $("#logOut").click(function() {
-        if ($("#logOut").html() == "Log Out") {
-            window.location = "/account/logout";
-        }
-    });
+        // wishList 按鈕 點擊
+        $("#wishList").click(function() {
+            window.location = "/page/wishList";
+        });
 
-    // myPlans 按鈕 點擊
-    $("#myPlans").click(function() {
-        window.location = "/page/myTrip";
-    });
+        // logOut 按鈕 點擊
+        $("#logOut").click(function() {
+            if ($("#logOut").html() == "Log Out") {
+                window.location = "/account/logout";
+            }
+        });
     };
 
 })(jQuery);
-
-
-

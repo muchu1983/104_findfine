@@ -63,51 +63,56 @@ function removeFavoriteTrip(intId) {
 function addToWishlistBtnClick() {
     var ingId = -1;
     $(".add_wish_btn").click(function(event) {
-        var timer,
-            tarId = $(this).data('id');
-        clearInterval(timer);
-        if ($(this).hasClass('active')) {
-            removeFavoriteTrip(tarId);
-            $(this).removeClass('active');
+        if (strEmail == "None") {
+            window.location = "/account/login";
         } else {
-            ingId = tarId;
-            addFavoriteTrip(tarId);            
-            $(this).addClass('active');
-            $("#addToFolderBlk").css({
-                bottom: '10px',
-            });
-            console.log(tarId);
+            var timer,
+                tarId = $(this).data('id');
+            clearInterval(timer);
+            if ($(this).hasClass('active')) {
+                removeFavoriteTrip(tarId);
+                $(this).removeClass('active');
+            } else {
+                ingId = tarId;
+                addFavoriteTrip(tarId);
+                $(this).addClass('active');
+                $("#addToFolderBlk").css({
+                    bottom: '10px',
+                });
+                console.log(tarId);
 
-            $("#addToFolderBlk>.info>.multi_sel_btn>.menu>li").off();
-            $("#addToFolderBlk>.info>.multi_sel_btn>.menu>li").click(function(event) {
-                $(this).toggleClass('active');
-                if ($(this).hasClass('active')) {
-                    var favoUrl = "/trip/addFavoriteTrip?intTripId="+ingId+"&add_folder="+$(this).children('span').html();
-                }else{
-                    var favoUrl = "/trip/addFavoriteTrip?intTripId="+ingId+"&remove_folder="+$(this).children('span').html();
-                }
-                $.getJSON(favoUrl, function(jsonResp) {
-                    console.log("add or remove success");
-                    timer = setTimeout(function() {
-                        $("#addToFolderBlk").css({
-                            bottom: '-500px',
-                        });
-                        ingId = -1;
-                    }, 5000);
-                    $("#addToFolderBlk").click(function(event) {
-                        clearInterval(timer);
+                $("#addToFolderBlk>.info>.multi_sel_btn>.menu>li").off();
+                $("#addToFolderBlk>.info>.multi_sel_btn>.menu>li").click(function(event) {
+                    $(this).toggleClass('active');
+                    if ($(this).hasClass('active')) {
+                        var favoUrl = "/trip/addFavoriteTrip?intTripId=" + ingId + "&add_folder=" + $(this).children('span').html();
+                    } else {
+                        var favoUrl = "/trip/addFavoriteTrip?intTripId=" + ingId + "&remove_folder=" + $(this).children('span').html();
+                    }
+                    $.getJSON(favoUrl, function(jsonResp) {
+                        console.log("add or remove success");
                         timer = setTimeout(function() {
                             $("#addToFolderBlk").css({
-                                bottom: '<-5></-5>00px',
+                                bottom: '-500px',
                             });
                             ingId = -1;
                         }, 5000);
+                        $("#addToFolderBlk").click(function(event) {
+                            clearInterval(timer);
+                            timer = setTimeout(function() {
+                                $("#addToFolderBlk").css({
+                                    bottom: '<-5></-5>00px',
+                                });
+                                ingId = -1;
+                            }, 5000);
+                        });
                     });
+
                 });
 
-            });
-            
+            }
         }
+
     });
 }
 
@@ -335,6 +340,7 @@ function singleSelClick(oriText) {
 
 //幣別
 function initCurrencySelect() {
+    $(".currency_sel_blk").hide();
     //設定目前幣別
     var strUserCurrencyUrl = "/trip/userCurrency";
     $.getJSON(strUserCurrencyUrl, function(jsonResp) {
@@ -342,6 +348,7 @@ function initCurrencySelect() {
         $("#moneySelect").val(strUserCurrency);
         $("#moneySelect").selectpicker("refresh")
         console.log("init user currency selection: " + strUserCurrency);
+        $(".currency_sel_blk").show();
     });
     //切換目前幣別
     $("#moneySelect").change(function() {
@@ -358,6 +365,8 @@ function initCurrencySelect() {
 
 //幣別
 function homeInitCurrencySelect() {
+
+    $(".currency_sel_blk").hide();
     //設定目前幣別
     var strUserCurrencyUrl = "/trip/userCurrency";
     $.getJSON(strUserCurrencyUrl, function(jsonResp) {
@@ -365,6 +374,7 @@ function homeInitCurrencySelect() {
         $("#moneySelect").val(strUserCurrency);
         $("#moneySelect").selectpicker("refresh")
         console.log("init user currency selection: " + strUserCurrency);
+        $(".currency_sel_blk").show();
     });
     //切換目前幣別
     $("#moneySelect").change(function() {
@@ -374,6 +384,7 @@ function homeInitCurrencySelect() {
         $.getJSON(strChangeUserCurrencyUrl, function(jsonResp) {
             strUserCurrency = jsonResp["strUserCurrency"];
             console.log("switch user currency to: " + strUserCurrency);
+
         });
     });
 
@@ -677,10 +688,10 @@ function addToFolderClick() {
         var folderName = $(this).children('span').html();
         if ($(this).hasClass('active')) {
             wishAddFolder(wishId, folderName);
-            folderTourQumRenew(folderName,1);
+            folderTourQumRenew(folderName, 1);
         } else {
             wishRemoveFolder(wishId, folderName);
-            folderTourQumRenew(folderName,-1);
+            folderTourQumRenew(folderName, -1);
         }
     });
 
@@ -692,7 +703,7 @@ function addToFolderClick() {
 }
 
 
-function folderTourQumRenew(folderName,change){
+function folderTourQumRenew(folderName, change) {
     var tarFolder = getWishFolderByName(folderName);
     console.log(tarFolder);
     var tourQumBlk = tarFolder.children('.card').children('.text_blk').children('.tour_qua');
@@ -701,10 +712,10 @@ function folderTourQumRenew(folderName,change){
     tourQumBlk.html(tarQum);
 }
 
-function getWishFolderByName(folderName){
+function getWishFolderByName(folderName) {
     console.log(folderName);
     var tarEq = -1;
-    for (var i = 0; $(".folder").eq(i).length>0; i++) {
+    for (var i = 0; $(".folder").eq(i).length > 0; i++) {
         console.log($(".folder").eq(i).children('.card').children('.text_blk').children('.folder_name').html());
         if ($(".folder").eq(i).children('.card').children('.text_blk').children('.folder_name').html() == folderName) {
             tarEq = i;
@@ -902,7 +913,7 @@ function wishPageRenew(wishFolderPick) {
             wishMoreClick();
 
             // 選單止滑
-            scrollPrevent(".wish>.menu")
+            scrollPrevent(".wish>.menu");
 
             // 等待動畫
             $("body").removeClass('waiting_body');
@@ -1062,7 +1073,7 @@ function getWishHtml(strUserCurrency, strTitle, intUserCurrencyCost, strIntroduc
         "<p>" + strTitle + "</p>",
         "</div>",
         "<p class=\"place\">" + strLocation + "</p>",
-        "<p class=\"duration\">" + intDurationHour + "<span>"+hrText+"</span></p>",
+        "<p class=\"duration\">" + intDurationHour + "<span>" + hrText + "</span></p>",
         "<div class=\"price\">",
         "<span class=\"country\">" + strUserCurrency + "</span> $",
         "<span class=\"number\">" + intUserCurrencyCost + "</span>",
@@ -1751,7 +1762,7 @@ function wishFolderLiCon(name) {
     return x;
 }
 
-function setTopPlanNum(){
+function setTopPlanNum() {
     var getPlanListUrl = "/trip/getTripPlan"
     $.getJSON(getPlanListUrl, function(jsonResp) {
         // console.log(jsonResp.plan);
@@ -1761,12 +1772,11 @@ function setTopPlanNum(){
     });
 }
 
-function setTopWishNum(){
+function setTopWishNum() {
     var getPlanListUrl = "/trip/getFavoriteTrip"
     $.getJSON(getPlanListUrl, function(jsonResp) {
         // console.log(jsonResp.plan);
         var wishA = jsonResp.trip;
-        console.log(wishA);
         $("#wishTopNum").html(wishA.length);
     });
 }

@@ -90,10 +90,10 @@
 
         // 幣值設定
         initCurrencySelect();
-        
+
         // 時間區域設定 @Q@ davidturtle
         timeBlkSet();
-        
+
 
         // 頁面刷新
         wishPageRenew();
@@ -234,10 +234,6 @@
         });
         $("#wishList").click(function() {
             window.location = "/page/wishList";
-        });
-
-        $("#myPlans").click(function() {
-            window.location = "/page/myTrip";
         });
         $('#wishesSel').click(function(event) {
             window.location = "/page/wishList";
@@ -518,6 +514,7 @@
                     for (var i = tarPutCoun; i < tarPutCoun + tarCosHr * 2; i++) {
                         if (tarPut.eq(i).hasClass('infoin')) {
                             downCheck = 0;
+                            alert("time not enough");
                         }
                         if (tarPut.eq(i).hasClass('duration')) {
                             downCheck = 0;
@@ -536,15 +533,6 @@
                     }
                 }
             }
-            // console.log(ingPutEq);
-            // if (picker.attr('data-obj') != "tour" && ingPutEq >= 0) {
-
-            //     var cosHr = parseFloat(tarCancel.attr('data-coshr')),
-            //         min = parseFloat(tarCancel.attr('data-startmoment')),
-            //         max = min + cosHr - 0.5;
-            //     var fillCon = getPutCon(min, max);
-            //     tarCancel.replaceWith(fillCon);
-            // }
             if (ingPutEq < 0) {
                 var startMoment = picker.attr('data-startmoment');
                 ingPutEq = getTarPutEqByMoment(startMoment);
@@ -563,6 +551,10 @@
                 var strDatetimeTo = dateMomentToDash((startMoment + tarCosHr), planIng);
                 var intTripId = tarId;
                 planAddItem(strDatetimeFrom, strDatetimeTo, intTripId);
+            }
+            if (downCheck == 0) {
+
+                alert("time not enough");
             }
 
 
@@ -2229,7 +2221,7 @@
             var oriEndSlash = dateSlashToDash(planIng.endDay);
             var imgUrl = $(".plan_set_blk>.inner_blk>.checklist_blk>.map").css('background-image').replace('url(', '').replace(')', '');
             // var planDateChangeUrl = "trip/addTripPlan?strPlanName=" + planIng.planName + "&strImageUrl=" + imgUrl + "&strDatetimeFrom=" + oriStartSlash + "&strDatetimeTo=" + oriEndSlash;
-            
+
             // $.getJSON(planDateChangeUrl, function(jsonResp) {
             //     console.log("date set success");
             // });
@@ -2248,7 +2240,7 @@
 
 
         function setPlanImgUrl() {
-            var getItemUrl = "/trip/getTripPlanItem?intPlanId="+planIng.planId;
+            var getItemUrl = "/trip/getTripPlanItem?intPlanId=" + planIng.planId;
             $.getJSON(getItemUrl, function(jsonResp) {
                 var items = jsonResp.plan_item;
                 var ok = 0;
@@ -2309,7 +2301,7 @@
             // if (ok == 0) {
             //     imgUrl = "/static/img/empty_plan.png";
             // }
-            
+
         }
 
         // JSON CHECKLIST 更新

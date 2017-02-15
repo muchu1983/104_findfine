@@ -23,35 +23,57 @@ function initFind() {
 
     // @TODO 登入狀況判斷完成後修改此處
     $('#myFriends').hide();
-    $('#myMessages').hide();
-    $('#logOut').hide();
-    $('#noLogHeadBtn').hide();
-    $("#headBtn").hide();
-    $(".login_btns").hide();
-    $(".logout_btns").hide();
-    $("#addToFolderBlk").hide();
-    //strEmail 如已登入 不顯示login button 並顯示會員帳號
-    if (strEmail == "None") {
-        // 暫時隱藏 為測試方便使用
-        $('#register').show();
-        $('#loginBtn').show();
-        $('#noLogHeadBtn').show();
-        $("#padRegister").show();
-        $("#padLoginBtn").show();
-        $(".logout_btns").show();
-    } else {
-        $(".login_btns").show();
-        $('#logOut').show();
-        $('#register').hide();
-        $('#loginBtn').hide();
-        $('#myFriends').show();
-        $('#myMessages').show();
-        $("#headBtn").show();
-        $("#padWishlist").show();
-        $("#padMyPlan").show();
-        $(".login_btns").show();
-        $("#addToFolderBlk").show();
-    }
+        $('#myMessages').hide();
+        $('#logOut').hide();
+        $('#noLogHeadBtn').hide();
+        $("#headBtn").hide();
+        $(".login_btns").hide();
+        $(".logout_btns").hide();
+        //strEmail 如已登入 不顯示login button 並顯示會員帳號
+        var screenWidth = $(window).width();
+        if (strEmail == "None") {
+            // 暫時隱藏 為測試方便使用
+            $('#noLogHeadBtn').show();
+            $("#padRegister").show();
+            $("#padLoginBtn").show();
+            $(".logout_btns").show();
+            if (screenWidth < 769) {
+                $('#register').show();
+                $('#loginBtn').show();
+            } else if (screenWidth < 1051) {
+                $('#register').hide();
+                $('#loginBtn').hide();
+            } else {
+                $('#register').show();
+                $('#loginBtn').show();
+            }
+        } else {
+            $(".login_btns").show();
+            $('#logOut').show();
+            $('#register').hide();
+            $('#loginBtn').hide();
+            $('#myFriends').show();
+            $('#myMessages').show();
+            $("#headBtn").show();
+            $("#padWishlist").show();
+            $("#padMyPlan").show();
+            $(".login_btns").show();
+        }
+        $(window).resize(function(event) {
+            var screenWidth = $(window).width();
+            if (strEmail == "None") {
+                if (screenWidth < 769) {
+                    $('#register').show();
+                    $('#loginBtn').show();
+                } else if (screenWidth < 1051) {
+                    $('#register').hide();
+                    $('#loginBtn').hide();
+                } else {
+                    $('#register').show();
+                    $('#loginBtn').show();
+                }
+            }
+        });
 
     //登入按鈕
     $("#loginBtn").click(function() {
@@ -119,7 +141,7 @@ function initFind() {
 
     // myPlans 按鈕 點擊
     $("#myPlans").click(function() {
-        window.location = "/page/myTrip";
+        window.location = "/page/myPlan";
     });
 
 
@@ -171,6 +193,10 @@ function initFind() {
 
     // 通知止滑
     notiBlkPrevent();
+
+    // 
+    scrollPrevent(".single_sel_btn >.menu");
+    scrollPrevent(".multi_sel_btn >.menu");
 
     // 日期選擇初始化
     $("#startFrom").datepicker();

@@ -10,14 +10,23 @@ function initStatus() {
     $(".login_btns").hide();
     $(".logout_btns").hide();
     //strEmail 如已登入 不顯示login button 並顯示會員帳號
+    var screenWidth = $(window).width();
     if (strEmail == "None") {
         // 暫時隱藏 為測試方便使用
-        $('#register').show();
-        $('#loginBtn').show();
         $('#noLogHeadBtn').show();
         $("#padRegister").show();
         $("#padLoginBtn").show();
         $(".logout_btns").show();
+        if (screenWidth < 769) {
+            $('#register').show();
+            $('#loginBtn').show();
+        } else if (screenWidth < 1051) {
+            $('#register').hide();
+            $('#loginBtn').hide();
+        } else {
+            $('#register').show();
+            $('#loginBtn').show();
+        }
     } else {
         $(".login_btns").show();
         $('#logOut').show();
@@ -30,6 +39,21 @@ function initStatus() {
         $("#padMyPlan").show();
         $(".login_btns").show();
     }
+    $(window).resize(function(event) {
+        var screenWidth = $(window).width();
+        if (strEmail == "None") {
+            if (screenWidth < 769) {
+                $('#register').show();
+                $('#loginBtn').show();
+            } else if (screenWidth < 1051) {
+                $('#register').hide();
+                $('#loginBtn').hide();
+            } else {
+                $('#register').show();
+                $('#loginBtn').show();
+            }
+        }
+    });
 }
 
 (function($) {
@@ -43,6 +67,9 @@ function initStatus() {
 
         // mobile menu按鈕點擊
         mobileMenuClick();
+
+        // 選單搜尋初始化
+        initTopSearch();
 
         // toolbox點擊
         toolboxClick();
@@ -163,11 +190,6 @@ function initStatus() {
         if ($("#logOut").html() == "Log Out") {
             window.location = "/account/logout";
         }
-    });
-
-    // myPlans 按鈕 點擊
-    $("#myPlans").click(function() {
-        window.location = "/page/myTrip";
     });
     
     $("#sendBtn").click(function(){

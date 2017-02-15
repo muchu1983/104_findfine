@@ -8,9 +8,9 @@ function initMap() {
     var input = (document.getElementById('autocomplete'));
     var autocomplete = new google.maps.places.Autocomplete(input);
     autocomplete.addListener('place_changed', function() {
-        
-    var geocoder = new google.maps.Geocoder();
-    
+
+        var geocoder = new google.maps.Geocoder();
+
         var place = autocomplete.getPlace();
         if (!place.geometry) {
             //未獲得地點資訊
@@ -18,16 +18,16 @@ function initMap() {
             var geocoder = new google.maps.Geocoder();
             geocoder.geocode({
                 'address': document.getElementById('autocomplete').value
-            }, function (results, status) {
+            }, function(results, status) {
                 if (status == google.maps.GeocoderStatus.OK) {
                     tour.sendData = {
-                    keyword: document.getElementById('autocomplete').value,
-                    lat: results[0].geometry.location.lat(),
-                    lng: results[0].geometry.location.lng()
+                        keyword: document.getElementById('autocomplete').value,
+                        lat: results[0].geometry.location.lat(),
+                        lng: results[0].geometry.location.lng()
                     };
                 }
             });
-        }else{
+        } else {
             tour.sendData = {
                 keyword: document.getElementById('autocomplete').value,
                 lat: place.geometry.location.lat(),
@@ -35,7 +35,7 @@ function initMap() {
             };
         }
     });
-
+    $(".currency_sel_blk").hide();
     $('#myFriends').hide();
     $('#myMessages').hide();
     $('#logOut').hide();
@@ -44,14 +44,23 @@ function initMap() {
     $(".login_btns").hide();
     $(".logout_btns").hide();
     //strEmail 如已登入 不顯示login button 並顯示會員帳號
+    var screenWidth = $(window).width();
     if (strEmail == "None") {
         // 暫時隱藏 為測試方便使用
-        $('#register').show();
-        $('#loginBtn').show();
         $('#noLogHeadBtn').show();
         $("#padRegister").show();
         $("#padLoginBtn").show();
         $(".logout_btns").show();
+        if (screenWidth < 769) {
+            $('#register').show();
+            $('#loginBtn').show();
+        } else if (screenWidth < 1051) {
+            $('#register').hide();
+            $('#loginBtn').hide();
+        } else {
+            $('#register').show();
+            $('#loginBtn').show();
+        }
     } else {
         $(".login_btns").show();
         $('#logOut').show();
@@ -64,6 +73,21 @@ function initMap() {
         $("#padMyPlan").show();
         $(".login_btns").show();
     }
+    $(window).resize(function(event) {
+        var screenWidth = $(window).width();
+        if (strEmail == "None") {
+            if (screenWidth < 769) {
+                $('#register').show();
+                $('#loginBtn').show();
+            } else if (screenWidth < 1051) {
+                $('#register').hide();
+                $('#loginBtn').hide();
+            } else {
+                $('#register').show();
+                $('#loginBtn').show();
+            }
+        }
+    });
 }
 
 (function($) {
@@ -71,7 +95,7 @@ function initMap() {
     $(document).ready(initHome);
 
     function initHome() {
-        
+
 
         // 抓取推薦行程
         homeRecommedTourGet();
@@ -432,7 +456,7 @@ function getHomeTripDataHtml(strUserCurrency, strTitle, intUserCurrencyCost, str
         "<p>" + strTitle + "...</p>",
         "</div>",
         "<p class=\"place\">" + strLocation + "</p>",
-        "<p class=\"duration\">" + intDurationHour + "<span>"+hrText+"</span></p>",
+        "<p class=\"duration\">" + intDurationHour + "<span>" + hrText + "</span></p>",
         "<div class=\"price\">",
         "<span class=\"country\">" + strUserCurrency + "</span> $",
         "<span class=\"number\">" + intUserCurrencyCost + "</span>",
