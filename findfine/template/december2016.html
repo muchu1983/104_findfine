@@ -33,6 +33,7 @@
     <script src="/static/js/custom.js"></script>
     <script src="/static/js/function.js"></script>
     <script src="/static/js/aboutUs.js"></script>
+    <script src="/static/js/monthly.js"></script>
     <!-- 低瀏覽器版本相容條件註解 -->
     <!--[if lt IE 9]>
         <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
@@ -48,23 +49,141 @@
 </head>
 
 <body id="page-top">
-    <div class="image"     style="background-image: url(/static/img/paris.png); width:100%;height:100%;background-repeat:no-repeat;"></div>
-
-    <div class="static_content_blk">
-        <div class="title">Paris</div>
-        <div class="text">
-            &nbsp;&nbsp;Paris!  What’s your first impression on this city?
-                        Paris! An Amazing City!
-                        Fashionable, romantic, or cultural?
-                        Take myself as an example.  No matter how many times I visit Paris, there are still many interesting and charming things occurring during my trip.  Every year I am used to staying in Paris at least for a week and trying different ways to explore this city.  I put may local tours into my itinerary to see what may make this trip more attractive and memorizable.  It does work.  However, it also annoyed me to write this article.  I really don’t know how to introduce every part of Paris thoroughly in only one article so I will introduce some places from my must-go list in Paris. 
-                        In the very beginning, I would like to talk about FindFineTour, a meta search engine for local tours around the world. Let’s introduce myself first. I used to be a product manager in a big travel agency and in charge of the tour products of Europe and the United States. The main reason for customers to decide to join or not no based on the if there are enough scenic spots which are exactly they want. However, some of them are not so happy with the group tour. They may start to travel by themselves. Are they really good at planning their trip? Booking flight tickets and hotels is easy but arranging a satisfied itinerary is hard. Sometimes they do need some local tours to help them make their trips more colorful and meaningful.  They want to be flexible and well-planned.  As a result, we launch FindFineTour to help travelers to design their trips much easier. You just need to book some local tours offered by trustable local tour website. The most important function for FindFineTour is you can find all the information you want without searching one by one. It is convenient, isn’t it? 
-                        Everyone has different definition for local tours. 
-                        For me, it’s a efficient way to discover a city. I consider Paris a melting pot put into everything you want. Staying whole day along Seine River is my routine ceremony before leaving for another city. We are used to crabbing two bottles of white wines, two glasses, and some cheese. This is our way to worship every trip in Paris. Saying Hi and Goodbye to the passengers on the tourist cruise is . You can see people smile which shows that how much they enjoy the cruise.  It’s just that what my mom did in on the London Bridge. She cannot speak any English. However, when she waved her hand from the London Bridge to the passengers on the cruise boat, they waved back immediately.  At that time, they are merely the ones who enjoy the city together without speaking any words. 
-                        2014 was my fifth times fooling around in Paris. I booked an apartment nearby Notre-Dame de Paris.  Although I am not a Catholic, I still love to stay there and hear the inside voice of myself.  This time, my cousin and I booked a Skip the Line Eiffel Tower Tour for our second day in Paris. Usually, we just saw from a bar nearby Eiffel Tower and sometimes walked through the bottom of Eiffel Tower which was really like a garden party on the weekend. When we bought the tickets weeks before our trip, we didn’t expect too much about what we were going to see.  However,  I was  really glad we ended up doing this tour. The tour was totally worth it, because we didn’t have to be stuck in the long line. The tour stopped at all four sides of the tower.  At each location our guide pointed out significant landmarks and gave us interesting backstory and trivia about each site. It was entertaining enough that we could remember most of the details for the rest of our trip, and anywhere we went we could point out the landmarks and remember the most important facts about each location. We definitely felt more comfortable and familiar with the city after the tour. 
-                        The next day, we decided to go to Montmartre because my cousin’s major is Art. Montmartre is the home that nurtured most of the great artists and writers living in France for over 200 years. Picasso, van Gogh and countless others lived and worked in these narrow streets. In the popular tourist areas, Montmartre is filled with colorful cafes, watercolor paintings, and caricature artists hoping to paint your portrait, but there are some hidden, charming side streets as well that should not be missed. There is another place which I highly recommended for the ones who love to shop art-related products, Le Marais.  You just need to take metro to St. Paul. Then, start your shopping adventure here. The products here are so unique which can satisfy all picky buyers. We almost cannot remember when was the last time we visited 
-                        Galeries Lafayette Haussmann.  Le Marais is the center of fashion in Paris.  Even you just sat in Cafe along the road, you still can be involved into the atmosphere of Parisian style. Then, if you wanna know more about Morden Art, you cannot miss Centre Georges-Pompidou.  It’s worthy spending a whole day there. There are also lots of art gallery in that area. 
-                        Just stop here. You should explore Paris by yourself and in your way. 
-                        Find more local tours about Paris.
+    <div id="heightDetector"></div>
+    <nav id="mainNav" class="navbar navbar-default navbar-custom navbar-fixed-top blue_nav">
+        <!-- tool可放置於此 -->
+        <div class="toolbox_blk">
+            <div class="gray_back_blk">
+                <div class="content">
+                    <div class="sep"></div>
+                    <a target="_blank" href="https://www.skyscanner.com.tw/">
+                        <img id="agoda" src="/static/img/agoda_fix.svg">
+                    </a>
+                    <div class="sep"></div>
+                    <a target="_blank" href="https://www.agoda.com/partners/partnersearch.aspx?cid=1765710&pcs=1&hl=en&sort=star5To1">
+                        <img id="skyscanner" src="/static/img/skyscanner_fix.svg">
+                    </a>
+                    <div class="sep"></div>
+                    <a target="_blank" href="https://www.hotelscombined.com/">
+                        <img id="hotelsCombined" src="/static/img/hotelsCombined.png">
+                    </a>
+                    <div class="sep"></div>
+                </div>
+            </div>
+        </div>
+        <div class="container">
+            <div class="navbar-header page-scroll find">
+                <a class="icon-logo" id="logoTop"></a>
+                <div class="mini_searchbar">
+                    <input type="text" name="" placeholder="Where are you going?" id="topSearch">
+                    <span class="icon-magnifier"></span>
+                </div>
+            </div>
+            <div id="headBtn" class="head_btn" style="background-image: url(/static/img/head_sample.jpg);">
+                <div class="head_menu" id="headMenu">
+                    <img src="/static/img/blk_triangle.png" class="triangle">
+                    <div id="logOut" class="logout_btn">Log Out</div>
+                </div>
+                <span>&nbsp;</span>
+                <span id="strEmail" style="font-style:oblique;color:orange"></span>
+                <div class="noti_ing"></div>
+            </div>
+            <div id="noLogHeadBtn" class="head_btn nolog" style="background-image: url(/static/img/head_logout.jpg);">
+            </div>
+            <div class="header_btn_blk adjust" id="bs-example-navbar-collapse-1">
+                <div class="toolbox_btn icon-toolbox">
+                    <span class="text">ToolBox</span>
+                </div>
+                <ul class="nav navbar-nav currency_sel_blk">
+                    <li>
+                        <div class="CurrencyDiv navSelect">
+                            <select id="moneySelect" name="" class="bsSelect">
+                                <option value="USD" data-content='USD'></option>
+                                <option value="EUR" data-content='EUR'></option>
+                                <option value="CNY" data-content='CNY'></option>
+                                <option value="GBP" data-content='GBP'></option>
+                                <option value="JPY" data-content='JPY'></option>
+                                <option value="AUD" data-content='AUD'></option>
+                                <option value="NZD" data-content='NZD'></option>
+                                <option value="SGD" data-content='SGD'></option>
+                                <option value="HKD" data-content='HKD'></option>
+                                <option value="TWD" data-content='TWD'></option>
+                            </select>
+                        </div>
+                    </li>
+                </ul>
+                <div class="login_btns">
+                    <div id="wishList" class="header_btn btn-info">
+                        <span class="icon_blk">                  
+                            <span class="icon-quill"></span>
+                        <span class="icon-scroll"></span>
+                        <span class="extend_line"></span>
+                        </span>
+                        <span class="text">Wishlist</span>
+                    </div>
+                    <div id="myPlans" class="header_btn btn-info">
+                        <span class="icon_blk">
+                            <span class="icon-airplane"></span>
+                        <span class="icon-notebook"></span>
+                        <svg class="extend_dotted_line">
+                            <g fill="none" stroke="#ffffff" stroke-width="1">
+                                <path stroke-dasharray="5,5" d="M0 0 80 0" />
+                            </g>
+                        </svg>
+                        </span>
+                        <span class="text">My Plan</span>
+                    </div>
+                </div>
+                <div class="logout_btns">
+                    <div id="register" class="header_blk_btn">Sign Up</div>
+                    <div id="loginBtn" class="header_blk_btn">Log In</div>
+                </div>
+                <div id="padMenuBtn" class="header_menu_btn icon-menu"></div>
+                <div id="mobileMenuBtn" class="header_menu_btn icon-menu"></div>
+            </div>
+            <!-- /.navbar-collapse -->
+        </div>
+        <!-- /.container-fluid -->
+    </nav>
+    <div class="pad_menu" id="padMenu">
+        <div class="close_btn icon-cancel"></div>
+        <div class="login_btns">
+            <div class="pad_menu_btn" id="padWishlist">
+                <span class="icon icon-wishlist"></span>
+                <span>Wishlist</span>
+            </div>
+            <div class="pad_menu_btn" id="padMyPlan">
+                <span class="icon icon-myplan"></span>
+                <span>My Plan</span>
+            </div>
+        </div>
+        <div class="logout_btns">
+            <div id="padRegister" class="header_blk_btn">Sign Up</div>
+            <div id="padLoginBtn" class="header_blk_btn">Log In</div>
+        </div>
+    </div>
+    <div class="static_bg" id="movingBg">
+        <div class="bg_1" style="background-image: url(/static/img/paris.png);"></div>
+        <div class="bg_2" style="background-image: url(/static/img/month_story_cloud_bg.svg);"></div>
+    </div>
+    <div class="month_story_content_blk">
+        <div class="img_blk">
+            <div class="img" style="background-image: url(/static/img/paris.png);"></div>
+            <div class="title" id="monthTitle">
+                <p class="text">——&nbsp;&nbsp;&nbsp;MONTHLY STORIES&nbsp;&nbsp;&nbsp;——</p>
+                <img class="bg" src="/static/img/month_story_title_bg.svg">
+            </div>
+        </div>
+        <div class="paragraph" id="paragraph">
+            <div class="title">Paris</div>
+            <div class="first">
+                <img src="/static/img/month_story_tag.svg">
+                <p class="text">Paris! What’s your first impression on this city?
+                </p>
+            </div>
+            <div class="text">
+                &nbsp;&nbsp;&nbsp;&nbsp;Paris! An Amazing City! Fashionable, romantic, or cultural? Take myself as an example. No matter how many times I visit Paris, there are still many interesting and charming things occurring during my trip. Every year I am used to staying in Paris at least for a week and trying different ways to explore this city. I put may local tours into my itinerary to see what may make this trip more attractive and memorizable. It does work. However, it also annoyed me to write this article. I really don’t know how to introduce every part of Paris thoroughly in only one article so I will introduce some places from my must-go list in Paris. In the very beginning, I would like to talk about FindFineTour, a meta search engine for local tours around the world. Let’s introduce myself first. I used to be a product manager in a big travel agency and in charge of the tour products of Europe and the United States. The main reason for customers to decide to join or not no based on the if there are enough scenic spots which are exactly they want. However, some of them are not so happy with the group tour. They may start to travel by themselves. Are they really good at planning their trip? Booking flight tickets and hotels is easy but arranging a satisfied itinerary is hard. Sometimes they do need some local tours to help them make their trips more colorful and meaningful. They want to be flexible and well-planned. As a result, we launch FindFineTour to help travelers to design their trips much easier. You just need to book some local tours offered by trustable local tour website. The most important function for FindFineTour is you can find all the information you want without searching one by one. It is convenient, isn’t it? Everyone has different definition for local tours. For me, it’s a efficient way to discover a city. I consider Paris a melting pot put into everything you want. Staying whole day along Seine River is my routine ceremony before leaving for another city. We are used to crabbing two bottles of white wines, two glasses, and some cheese. This is our way to worship every trip in Paris. Saying Hi and Goodbye to the passengers on the tourist cruise is . You can see people smile which shows that how much they enjoy the cruise. It’s just that what my mom did in on the London Bridge. She cannot speak any English. However, when she waved her hand from the London Bridge to the passengers on the cruise boat, they waved back immediately. At that time, they are merely the ones who enjoy the city together without speaking any words. 2014 was my fifth times fooling around in Paris. I booked an apartment nearby Notre-Dame de Paris. Although I am not a Catholic, I still love to stay there and hear the inside voice of myself. This time, my cousin and I booked a Skip the Line Eiffel Tower Tour for our second day in Paris. Usually, we just saw from a bar nearby Eiffel Tower and sometimes walked through the bottom of Eiffel Tower which was really like a garden party on the weekend. When we bought the tickets weeks before our trip, we didn’t expect too much about what we were going to see. However, I was really glad we ended up doing this tour. The tour was totally worth it, because we didn’t have to be stuck in the long line. The tour stopped at all four sides of the tower. At each location our guide pointed out significant landmarks and gave us interesting backstory and trivia about each site. It was entertaining enough that we could remember most of the details for the rest of our trip, and anywhere we went we could point out the landmarks and remember the most important facts about each location. We definitely felt more comfortable and familiar with the city after the tour. The next day, we decided to go to Montmartre because my cousin’s major is Art. Montmartre is the home that nurtured most of the great artists and writers living in France for over 200 years. Picasso, van Gogh and countless others lived and worked in these narrow streets. In the popular tourist areas, Montmartre is filled with colorful cafes, watercolor paintings, and caricature artists hoping to paint your portrait, but there are some hidden, charming side streets as well that should not be missed. There is another place which I highly recommended for the ones who love to shop art-related products, Le Marais. You just need to take metro to St. Paul. Then, start your shopping adventure here. The products here are so unique which can satisfy all picky buyers. We almost cannot remember when was the last time we visited Galeries Lafayette Haussmann. Le Marais is the center of fashion in Paris. Even you just sat in Cafe along the road, you still can be involved into the atmosphere of Parisian style. Then, if you wanna know more about Morden Art, you cannot miss Centre Georges-Pompidou. It’s worthy spending a whole day there. There are also lots of art gallery in that area. Just stop here. You should explore Paris by yourself and in your way. Find more local tours about Paris.
+            </div>
         </div>
     </div>
     <footer>
@@ -92,5 +211,5 @@
 
 </html>
 <script type="text/javascript">
-    $('#strEmail').html("Hi ! "+strEmail);
+$('#strEmail').html("Hi ! " + strEmail);
 </script>

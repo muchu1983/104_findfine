@@ -15,6 +15,7 @@
 -->
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -71,15 +72,23 @@
     <nav id="mainNav" class="navbar navbar-default navbar-custom navbar-fixed-top">
         <!-- tool可放置於此 -->
         <div class="toolbox_blk">
-        <div style="height: 30%"></div>
-        <div class="gray_back_blk">
-            <div class="content">
-                <a target="_blank" href="https://www.skyscanner.com.tw/"><img id="agoda" src="/static/img/agoda.png"></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                <a target="_blank" href="https://www.hotelscombined.com/"><img id="hotelsCombined" src="/static/img/hotelsCombined.png"></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                <a target="_blank" href="https://www.agoda.com/partners/partnersearch.aspx?cid=1765710&pcs=1&hl=en&sort=star5To1"><img id="skyscanner" src="/static/img/skyscanner.png"></a>
+            <div class="gray_back_blk">
+                <div class="content">
+                    <div class="sep"></div>
+                    <a target="_blank" href="https://www.skyscanner.com.tw/">
+                        <img id="agoda" src="/static/img/agoda_fix.svg">
+                    </a>
+                    <div class="sep"></div>
+                    <a target="_blank" href="https://www.agoda.com/partners/partnersearch.aspx?cid=1765710&pcs=1&hl=en&sort=star5To1">
+                        <img id="skyscanner" src="/static/img/skyscanner_fix.svg">
+                    </a>
+                    <div class="sep"></div>
+                    <a target="_blank" href="https://www.hotelscombined.com/">
+                        <img id="hotelsCombined" src="/static/img/hotelsCombined.png">
+                    </a>
+                    <div class="sep"></div>
+                </div>
             </div>
-        </div>
-
         </div>
         <div class="container">
             <div id="headBtn" class="head_btn" style="background-image: url(/static/img/head_sample.jpg);">
@@ -115,7 +124,7 @@
                         </div>
                     </li>
                 </ul>
-                <div class="login_btns">                    
+                <div class="login_btns">
                     <div id="wishList" class="header_btn btn-info">
                         <span class="icon_blk">                  
                             <span class="icon-quill"></span>
@@ -150,7 +159,7 @@
     </nav>
     <div class="pad_menu" id="padMenu">
         <div class="close_btn icon-cancel"></div>
-        <div class="login_btns">            
+        <div class="login_btns">
             <div class="pad_menu_btn" id="padWishlist">
                 <span class="icon icon-wishlist"></span>
                 <span>Wishlist</span>
@@ -160,7 +169,7 @@
                 <span>My Plan</span>
             </div>
         </div>
-        <div class="logout_btns">            
+        <div class="logout_btns">
             <div id="padRegister" class="header_blk_btn">Sign Up</div>
             <div id="padLoginBtn" class="header_blk_btn">Log In</div>
         </div>
@@ -398,9 +407,8 @@
         </div>
     </footer>
 </body>
-</html>
 
-    
+</html>
 <script type="text/javascript">
-    $('#strEmail').html("Hi ! "+strEmail);
+$('#strEmail').html("Hi ! " + strEmail);
 </script>

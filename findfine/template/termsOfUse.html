@@ -50,14 +50,23 @@
     <nav id="mainNav" class="navbar navbar-default navbar-custom navbar-fixed-top blue_nav">
         <!-- tool可放置於此 -->
         <div class="toolbox_blk">
-        <div style="height: 30%"></div>
-        <div class="gray_back_blk">
-            <div class="content">
-                <a target="_blank" href="https://www.skyscanner.com.tw/"><img id="agoda" src="/static/img/agoda.png"></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                <a target="_blank" href="https://www.hotelscombined.com/"><img id="hotelsCombined" src="/static/img/hotelsCombined.png"></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                <a target="_blank" href="https://www.agoda.com/partners/partnersearch.aspx?cid=1765710&pcs=1&hl=en&sort=star5To1"><img id="skyscanner" src="/static/img/skyscanner.png"></a>
+            <div class="gray_back_blk">
+                <div class="content">
+                    <div class="sep"></div>
+                    <a target="_blank" href="https://www.skyscanner.com.tw/">
+                        <img id="agoda" src="/static/img/agoda_fix.svg">
+                    </a>
+                    <div class="sep"></div>
+                    <a target="_blank" href="https://www.agoda.com/partners/partnersearch.aspx?cid=1765710&pcs=1&hl=en&sort=star5To1">
+                        <img id="skyscanner" src="/static/img/skyscanner_fix.svg">
+                    </a>
+                    <div class="sep"></div>
+                    <a target="_blank" href="https://www.hotelscombined.com/">
+                        <img id="hotelsCombined" src="/static/img/hotelsCombined.png">
+                    </a>
+                    <div class="sep"></div>
+                </div>
             </div>
-        </div>
         </div>
         <div class="container">
             <div class="navbar-header page-scroll find">
@@ -135,13 +144,19 @@
     </nav>
     <div class="pad_menu" id="padMenu">
         <div class="close_btn icon-cancel"></div>
-        <div class="pad_menu_btn" id="padWishlist">
-            <span class="icon icon-wishlist"></span>
-            <span>Wishlist</span>
+        <div class="login_btns">
+            <div class="pad_menu_btn" id="padWishlist">
+                <span class="icon icon-wishlist"></span>
+                <span>Wishlist</span>
+            </div>
+            <div class="pad_menu_btn" id="padMyPlan">
+                <span class="icon icon-myplan"></span>
+                <span>My Plan</span>
+            </div>
         </div>
-        <div class="pad_menu_btn" id="padMyPlan">
-            <span class="icon icon-myplan"></span>
-            <span>My Plan</span>
+        <div class="logout_btns">
+            <div id="padRegister" class="header_blk_btn">Sign Up</div>
+            <div id="padLoginBtn" class="header_blk_btn">Log In</div>
         </div>
     </div>
     <div class="static_content_blk">
@@ -181,14 +196,14 @@
         </div>
         <div class="title">Reasonableness</div>
         <div class="text">
-            By using this website, you agree that the exclusions and limitations of liability set out in this website disclaimer are reasonable.  
+            By using this website, you agree that the exclusions and limitations of liability set out in this website disclaimer are reasonable.
         </div>
         <div class="text">
-            If you do not think they are reasonable, you must not use this website.  
+            If you do not think they are reasonable, you must not use this website.
         </div>
         <div class="title">Privacy policy</div>
         <div class="text">
-            FindFineTour may collect and use the following kinds of personal information: 
+            FindFineTour may collect and use the following kinds of personal information:
             <br/>
             <br/>&nbsp;&nbsp;•&nbsp;&nbsp;<span class="static_content_blk">information about your use of this website;</span>
             <br/>&nbsp;&nbsp;•&nbsp;&nbsp;<span class="static_content_blk">information about any travel plan you made by you on this website;</span>
@@ -198,7 +213,7 @@
         </div>
         <div class="title">Using personal information</div>
         <div class="text">
-            FindFineTour may use your personal information to:  
+            FindFineTour may use your personal information to:
             <br/>
             <br/>&nbsp;&nbsp;•&nbsp;&nbsp;<span class="static_content_blk">administer this website;</span>
             <br/>&nbsp;&nbsp;•&nbsp;&nbsp;<span class="static_content_blk">personalize the website for you;</span>
@@ -252,5 +267,5 @@
 
 </html>
 <script type="text/javascript">
-    $('#strEmail').html("Hi ! "+strEmail);
+$('#strEmail').html("Hi ! " + strEmail);
 </script>

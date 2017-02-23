@@ -71,15 +71,25 @@
 
 <body id="page-top" class="waiting_body">
     <nav id="mainNav" class="navbar navbar-default navbar-custom navbar-fixed-top">
+        <!-- tool可放置於此 -->
         <div class="toolbox_blk">
-        <div style="height: 30%"></div>
-        <div class="gray_back_blk">
-            <div class="content">
-                <a target="_blank" href="https://www.skyscanner.com.tw/"><img id="agoda" src="/static/img/agoda.png"></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                <a target="_blank" href="https://www.hotelscombined.com/"><img id="hotelsCombined" src="/static/img/hotelsCombined.png"></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                <a target="_blank" href="https://www.agoda.com/partners/partnersearch.aspx?cid=1765710&pcs=1&hl=en&sort=star5To1"><img id="skyscanner" src="/static/img/skyscanner.png"></a>
+            <div class="gray_back_blk">
+                <div class="content">
+                    <div class="sep"></div>
+                    <a target="_blank" href="https://www.skyscanner.com.tw/">
+                        <img id="agoda" src="/static/img/agoda_fix.svg">
+                    </a>
+                    <div class="sep"></div>
+                    <a target="_blank" href="https://www.agoda.com/partners/partnersearch.aspx?cid=1765710&pcs=1&hl=en&sort=star5To1">
+                        <img id="skyscanner" src="/static/img/skyscanner_fix.svg">
+                    </a>
+                    <div class="sep"></div>
+                    <a target="_blank" href="https://www.hotelscombined.com/">
+                        <img id="hotelsCombined" src="/static/img/hotelsCombined.png">
+                    </a>
+                    <div class="sep"></div>
+                </div>
             </div>
-        </div>
         </div>
         <div class="container">
             <div id="headBtn" class="head_btn" style="background-image: url(/static/img/head_sample.jpg);">
@@ -402,7 +412,6 @@
 
 </html>
 <script type="text/javascript">
-    $('#strEmail').html("Hi ! "+strEmail);
-    $('#userName').html(strEmail);
-    
+$('#strEmail').html("Hi ! " + strEmail);
+$('#userName').html(strEmail);
 </script>

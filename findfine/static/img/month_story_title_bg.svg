@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="857px" height="112px" viewBox="0 0 857 112" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: sketchtool 42 (36781) - http://www.bohemiancoding.com/sketch -->
+    <title>8AB29C51-E253-489C-B74A-384ACAA9332F</title>
+    <desc>Created with sketchtool.</desc>
+    <defs>
+        <filter x="-50%" y="-50%" width="200%" height="200%" filterUnits="objectBoundingBox" id="filter-1">
+            <feOffset dx="0" dy="-2" in="SourceAlpha" result="shadowOffsetOuter1"></feOffset>
+            <feGaussianBlur stdDeviation="4" in="shadowOffsetOuter1" result="shadowBlurOuter1"></feGaussianBlur>
+            <feColorMatrix values="0 0 0 0 0   0 0 0 0 0   0 0 0 0 0  0 0 0 0.64880548 0" type="matrix" in="shadowBlurOuter1" result="shadowMatrixOuter1"></feColorMatrix>
+            <feMerge>
+                <feMergeNode in="shadowMatrixOuter1"></feMergeNode>
+                <feMergeNode in="SourceGraphic"></feMergeNode>
+            </feMerge>
+        </filter>
+    </defs>
+    <g id="FFT-公版頁_1129" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="1440_Monthly-Stories" transform="translate(-292.000000, -584.000000)">
+            <g id="Group-6" transform="translate(300.000000, 594.000000)">
+                <g id="Page-1" filter="url(#filter-1)">
+                    <path d="M818.923206,89.253612 L818.923206,94.4262442 C818.923206,95.3898987 819.877505,96.17 821.052745,96.17 L828.246291,96.17 C835.247939,96.17 840.944688,91.5038387 840.944688,85.7678 L840.944688,23.2696219 C840.944688,18.1131355 835.82363,13.9186041 829.530445,13.9186041 L19.9469192,13.9186041 L19.9469192,1.74375577 C19.9469192,0.780951047 18.9936577,0 17.818418,0 L12.6983976,0 C5.69674885,0 -5.68434189e-14,2.96659424 -5.68434189e-14,8.70348273 L-5.68434189e-14,79.9042938 C-5.68434189e-14,85.0607802 5.12105773,89.2553116 11.4142433,89.2553116 L818.923206,89.253612 Z" id="Path" fill="#228E9C"></path>
+                    <path d="M4,15 C6.24571399,16.6400822 9.20196567,17.6394276 12.4403579,17.6394276 L829.272405,17.6394276 C833.218223,17.6394276 836.428609,20.2686578 836.428609,23.502084 C836.428609,27.3142129 832.641495,30.4159227 827.988251,30.4159227 L820.794705,30.4159227 C819.618428,30.4159227 818.665167,31.1968737 818.665167,32.1596784 L818.665167,85.996863 L11.1572409,85.9994124 C7.2103856,85.9994124 4,83.3693324 4,80.1367559 L4,15 Z" id="Fill-1" fill="#FFFFFF"></path>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>
