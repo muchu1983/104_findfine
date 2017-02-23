@@ -8656,6 +8656,7 @@ input:-moz-placeholder {
 }
 
 .month_story_content_blk>.paragraph {
+    position: relative;
     width: 800px;
     opacity: 0.9;
     border-radius: 20px;
@@ -8663,15 +8664,15 @@ input:-moz-placeholder {
     box-shadow: 0 0 12px 0 rgba(0, 0, 0, 0.4);
     margin: auto;
     margin-top: 120px;
-    top: 100px;
+    top: 50px;
     opacity: 0;
-    transition: all 0.8s;
-    -webkit-transition: all 0.8s;
-    -moz-transition: all 0.8s;
+    transition: all 1.0s;
+    -webkit-transition: all 1.0s;
+    -moz-transition: all 1.0s;
 }
 
 .month_story_content_blk>.paragraph.active {
-    top: 0;
+    top: 0px;
     opacity: 1;
 }
 
