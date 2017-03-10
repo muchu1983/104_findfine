@@ -514,7 +514,7 @@
                     for (var i = tarPutCoun; i < tarPutCoun + tarCosHr * 2; i++) {
                         if (tarPut.eq(i).hasClass('infoin')) {
                             downCheck = 0;
-                            alert("time not enough");
+                            // alert("time not enough");
                         }
                         if (tarPut.eq(i).hasClass('duration')) {
                             downCheck = 0;
@@ -554,7 +554,8 @@
             }
             if (downCheck == 0) {
 
-                alert("time not enough");
+                // alert("time not enough");
+                alertShow();
             }
 
 

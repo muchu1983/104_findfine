@@ -62,58 +62,63 @@ function removeFavoriteTrip(intId) {
 // 加至wishlist按鈕點擊
 function addToWishlistBtnClick() {
     var ingId = -1;
-    $(".add_wish_btn").click(function(event) {
-        if (strEmail == "None") {
-            window.location = "/account/login";
-        } else {
-            var timer,
-                tarId = $(this).data('id');
-            clearInterval(timer);
-            if ($(this).hasClass('active')) {
-                removeFavoriteTrip(tarId);
-                $(this).removeClass('active');
-            } else {
-                ingId = tarId;
-                addFavoriteTrip(tarId);
-                $(this).addClass('active');
-                $("#addToFolderBlk").css({
-                    bottom: '10px',
-                });
-                console.log(tarId);
+    var dirUrl = "/account/getFavoriteTripFolder";
+    $.getJSON(dirUrl, function(jsonResp) {
+        var dirArr = jsonResp.lstStrFavoriteTripFolder;
+        var dirqua = dirArr.length;
 
-                $("#addToFolderBlk>.info>.multi_sel_btn>.menu>li").off();
-                $("#addToFolderBlk>.info>.multi_sel_btn>.menu>li").click(function(event) {
-                    $(this).toggleClass('active');
-                    if ($(this).hasClass('active')) {
-                        var favoUrl = "/trip/addFavoriteTrip?intTripId=" + ingId + "&add_folder=" + $(this).children('span').html();
-                    } else {
-                        var favoUrl = "/trip/addFavoriteTrip?intTripId=" + ingId + "&remove_folder=" + $(this).children('span').html();
-                    }
-                    $.getJSON(favoUrl, function(jsonResp) {
-                        console.log("add or remove success");
-                        timer = setTimeout(function() {
-                            $("#addToFolderBlk").css({
-                                bottom: '-500px',
-                            });
-                            ingId = -1;
-                        }, 5000);
-                        $("#addToFolderBlk").click(function(event) {
-                            clearInterval(timer);
-                            timer = setTimeout(function() {
-                                $("#addToFolderBlk").css({
-                                    bottom: '<-5></-5>00px',
-                                });
-                                ingId = -1;
-                            }, 5000);
+        $(".add_wish_btn").click(function(event) {
+
+            if (strEmail == "None") {
+                window.location = "/account/login";
+            } else {
+                var tarId = $(this).data('id');
+                if ($(this).hasClass('active')) {
+                    removeFavoriteTrip(tarId);
+                    $(this).removeClass('active');
+
+                    $("#TripDataBlk").finish();
+                    $("#addToFolderBlk").removeClass('active');
+                } else {
+                    ingId = tarId;
+                    addFavoriteTrip(tarId);
+                    $(this).addClass('active');
+                    $("#TripDataBlk").finish();
+                    $("#addToFolderBlk").addClass('active');
+                    $("#TripDataBlk").delay(5000).queue(function(next) {
+                        $("#addToFolderBlk").removeClass('active');
+                        next();
+                    });
+                    var tarLi = $("#addToFolderBlk>.info>.multi_sel_btn>.menu>li");
+                    console.log(tarId);
+
+                    tarLi.removeClass('active');
+                    tarLi.off();
+                    tarLi.click(function(event) {
+                        $("#TripDataBlk").finish();
+                        $("#addToFolderBlk").addClass('active');
+                        $("#TripDataBlk").delay(5000).queue(function(next) {
+                            $("#addToFolderBlk").removeClass('active');
+                            next();
                         });
+                        $(this).toggleClass('active');
+                        if ($(this).hasClass('active')) {
+                            var favoUrl = "/trip/addFavoriteTrip?intTripId=" + ingId + "&add_folder=" + $(this).children('span').html();
+                        } else {
+                            var favoUrl = "/trip/addFavoriteTrip?intTripId=" + ingId + "&remove_folder=" + $(this).children('span').html();
+                        }
+                        $.getJSON(favoUrl, function(jsonResp) {
+                            console.log("add or remove success");
+                        });
+
                     });
 
-                });
-
+                }
             }
-        }
 
+        });
     });
+
 }
 
 // 選單隨畫面下移改變為down樣
@@ -1234,6 +1239,16 @@ function detailRefresh(tarInfo) {
 
 // 選單搜尋地點
 function initTopSearch() {
+    $("#topSearch").click(function(event) {
+        $(this).addClass('active')
+
+    });
+    $(document).click(function(event) {
+        if (!event.target.matches("#topSearch") && !event.target.matches("#topSearch *")) {
+            $("#topSearch").removeClass('active');
+        }
+    });
+
     var tour = {};
     tour.sendData = {};
     var input = (document.getElementById('topSearch'));
@@ -1260,6 +1275,14 @@ function initTopSearch() {
         var tarPlace = $(this).val();
         if (key == 13) {
             headerSearch(tour);
+        }
+    });
+
+    var tarBtn = $(".mini_searchbar>.icon-magnifier");
+    tarBtn.click(function(event) {
+        if ($("#topSearch").hasClass('active')) {
+            headerSearch(tour);
+
         }
     });
 }
@@ -1778,5 +1801,27 @@ function setTopWishNum() {
         // console.log(jsonResp.plan);
         var wishA = jsonResp.trip;
         $("#wishTopNum").html(wishA.length);
+    });
+}
+
+function alertShow() {
+    $("#alertTextBlk").show();
+    var closeBtn = $("#alertTextBlk>.content_blk>.close_btn");
+    var okBtn = $("#alertTextBlk>.content_blk>.confirm_btn");
+    var bg = $("#alertTextBlk>.bg");
+
+    closeBtn.off();
+    closeBtn.click(function(event) {
+        $("#alertTextBlk").hide();
+    });
+
+    okBtn.off();
+    okBtn.click(function(event) {
+        $("#alertTextBlk").hide();
+    });
+
+    bg.off();
+    bg.click(function(event) {
+        $("#alertTextBlk").hide();
     });
 }
