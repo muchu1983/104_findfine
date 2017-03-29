@@ -155,7 +155,10 @@ function getTripDataHtml(strUserCurrency, strTitle, intUserCurrencyCost, strIntr
     }
     // @Q@設定文字擷取字數
     var strIntroduction = strIntroduction.substr(0, 75);
-    var strTitle = strTitle.substr(0, 25);
+    console.log(strTitle.length);
+    if (strTitle.length > 60) {
+        var strTitle = strTitle.substr(0, 60)+"...";
+    }
 
     var favoriteTrip;
 
@@ -180,7 +183,7 @@ function getTripDataHtml(strUserCurrency, strTitle, intUserCurrencyCost, strIntr
         "<div class=\"tour\">",
         "<div class=\"card active\" style=\"background-image:url(" + strImageUrl + ");\">",
         "<div class=\"name\">",
-        "<p>" + strTitle + "...</p>",
+        "<p>" + strTitle + "</p>",
         "</div>",
         "<p class=\"place\">" + strLocation + "</p>",
         strIntDurationHour,

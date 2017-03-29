@@ -433,7 +433,10 @@ function getHomeTripDataHtml(strUserCurrency, strTitle, intUserCurrencyCost, str
     }
     // @Q@設定文字擷取字數
     var strIntroduction = strIntroduction.substr(0, 75);
-    var strTitle = strTitle.substr(0, 50);
+    if (strTitle.length > 60) {
+
+        var strTitle = strTitle.substr(0, 60)+"...";
+    }
 
     var favoriteTrip;
 
@@ -452,7 +455,7 @@ function getHomeTripDataHtml(strUserCurrency, strTitle, intUserCurrencyCost, str
         "<div class=\"tour hometour\">",
         "<div class=\"card active\" style=\"background-image:url(" + strImageUrl + ");\">",
         "<div class=\"name\">",
-        "<p>" + strTitle + "...</p>",
+        "<p>" + strTitle + "</p>",
         "</div>",
         "<p class=\"place\">" + strLocation + "</p>",
         "<p class=\"duration\">" + intDurationHour + "<span>" + hrText + "</span></p>",

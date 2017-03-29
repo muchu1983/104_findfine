@@ -713,10 +713,10 @@ fieldset[disabled] #page-top .btn-xl.active {
     -webkit-text-fill-color: transparent;
     -webkit-background-clip: text;
     background-image: url(../img/cloud-04.png);
-    -webkit-background-size: 86px;
-    -moz-background-size: 86px;
-    background-size: 86px;
-    -o-background-size: 86px;
+    -webkit-background-size: 150px;
+    -moz-background-size: 150px;
+    background-size: 150px;
+    -o-background-size: 150px;
 }
 
 #page-top header .intro-text .intro-heading {
@@ -2460,9 +2460,9 @@ body {
     position: absolute;
     width: 80%;
     left: 10%;
-    top: 100px;
+    top: 80px;
     font-family: Roboto;
-    font-size: 18px;
+    font-size: 16px;
     font-weight: 900;
     line-height: 1.25;
     letter-spacing: 1.8px;
